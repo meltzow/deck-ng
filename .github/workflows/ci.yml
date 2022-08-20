@@ -12,16 +12,13 @@ jobs:
       - run : npm i -D -E @angular/cli
       - uses: actions/checkout@v2
         name: checkout
-      - name: Setup Ionic
-        uses: coturiv/setup-ionic@v1.0.4
-        with:
-          install-java: 1.8
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
           java-version: 8
+      - run: npm install -g ionic
       - run: |
-          npm i -D -E @angular/cli
+          ionic capacitor update
           npx cap sync
           npm run build-android-ci
   test: # make sure the action works on a clean machine without building
