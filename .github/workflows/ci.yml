@@ -17,7 +17,7 @@ jobs:
           distribution: 'adopt' # See 'Supported distributions' for available options
           java-version: 8
       - run: npm install -g ionic
-      - run: npx cap doctor
+#      - run: npx cap doctor
       - run: ionic capacitor update
       - run: npx cap sync
       - run: npm run build-android-ci
