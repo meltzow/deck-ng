@@ -22,7 +22,7 @@ jobs:
           java-version: 8
       - run: |
           npm i -D -E @angular/cli
-          ionic capacitor add android
+          npx cap sync
           npm run build-android-ci
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
