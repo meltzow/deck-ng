@@ -17,7 +17,7 @@ jobs:
       - run: npm install -g ionic
       - run: npm install
       - run: ionic build
-      - run: npx cap doctor
+#      - run: npx cap doctor
       - run: ionic capacitor update
       - run: npx cap sync
       - run: npm run build-android-ci
