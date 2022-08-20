@@ -13,7 +13,7 @@ jobs:
       - name: Setup Ionic
         uses: coturiv/setup-ionic@v1.0.4
         with:
-          java-version: 1.8
+          install-java: 1.8
       - uses: actions/checkout@v2
         name: checkout
       - uses: actions/setup-java@v2
@@ -22,7 +22,8 @@ jobs:
           java-version: 8
       - run: |
           npm i -D -E @angular/cli
-#          npm run build-android-ci
+          ionic capacitor add android
+          npm run build-android-ci
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
