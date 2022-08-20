@@ -28,5 +28,6 @@ jobs:
         uses: coturiv/setup-ionic@v1.0.4
       - name: build android
         run: |
+          npm i -D -E @angular/cli
           ionic capacitor platform add android@latest
           npm run build-android-ci
