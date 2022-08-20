@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run : npm i -D -E @angular/cli
+      - uses: actions/checkout@v2
+        name: checkout
       - name: Setup Ionic
         uses: coturiv/setup-ionic@v1.0.4
         with:
           install-java: 1.8
-      - uses: actions/checkout@v2
-        name: checkout
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
@@ -28,10 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run : npm i -D -E @angular/cli
-      - name: Setup Ionic
-        uses: coturiv/setup-ionic@v1.0.4
       - uses: actions/checkout@v2
         name: checkout
+      - name: Setup Ionic
+        uses: coturiv/setup-ionic@v1.0.4
       - name: run test
         run: |
           npm i -D -E @angular/cli
