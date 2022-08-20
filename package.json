@@ -12,6 +12,7 @@
     "build-android": "export CAPACITOR_ANDROID_STUDIO_PATH=/usr/local/bin/studio && ionic capacitor build android",
     "build-android-ci": "ionic capacitor copy android && cd android && ./gradlew assembleDebug && cd ..",
     "test": "ng test",
+    "test-ci": "ng test --watch=false --code-coverage --source-map true",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "generate": "openapi-generator-cli generate -g typescript-angular -i ./deckAPI.yaml -o ./src/app --global-property models,apis,supportingFiles"

@@ -43,7 +43,7 @@ describe('HomePage', () => {
   describe('test', ()=> {
     it('should display list of boards', () => {
 
-      component.boards = [{title: 'foobob'}]
+      // component.boards = [{title: 'foobob'}]
 
       fixture.detectChanges();
 
