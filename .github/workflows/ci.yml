@@ -13,6 +13,7 @@ jobs:
         uses: coturiv/setup-ionic@v1.0.4
       - uses: actions/checkout@v2
       - run: |
+          npm i -D -E @angular/cli
           npm run build-android-ci
           npm run all
   test: # make sure the action works on a clean machine without building
@@ -27,6 +28,5 @@ jobs:
         uses: coturiv/setup-ionic@v1.0.4
       - name: build android
         run: |
-          npm global install ionic
           ionic capacitor platform add android@latest
           npm run build-android-ci
