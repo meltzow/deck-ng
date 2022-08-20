@@ -14,13 +14,17 @@ jobs:
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
           java-version: 8
-      - run: npm install -g ionic
+#      - run: npm install --location=global ionic
       - run: npm install
       - run: ionic build
 #      - run: npx cap doctor
       - run: ionic capacitor update
       - run: npx cap sync
       - run: npm run build-android-ci
+      - uses: actions/upload-artifact@v2
+        with:
+          name: debug apk
+          path: app/build/outputs/apk/debug/app-debug.apk
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
