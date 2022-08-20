@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: checkout
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
           java-version: 8
       - run: npm install -g ionic
       - run: npm install
+      - run: ionic build
 #      - run: npx cap doctor
       - run: ionic capacitor update
       - run: npx cap sync
@@ -25,9 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: checkout
-      - name: Setup Ionic
-        uses: coturiv/setup-ionic@v1.0.4
       - name: run test
         run: |
           npm i -D -E @angular/cli
