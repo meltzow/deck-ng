@@ -1,0 +1,20 @@
+<ion-card *ngIf="board">
+    <ion-item detail="true" routerLink="/board/{{board.id}}">
+      <ion-avatar slot="start" [ngStyle]="{'background-color': '#' + board.color}"></ion-avatar>
+      <ion-label>
+        <h2>{{board.title}}</h2>
+        <p><ion-chip [outline]="true">
+          <ion-icon name="time-outline"></ion-icon>
+          <ion-label>{{board.lastModified * 1000 | date:'short':'+0200' }}</ion-label>
+        </ion-chip>
+        </p>
+      </ion-label>
+      <ion-spinner *ngIf="stacksLoading" name="lines"></ion-spinner>
+      <ion-badge *ngIf="!stacksLoading" slot="end">{{stacks.getValue()?.length || 0}}</ion-badge>
+  </ion-item>
+
+<!--  <ion-card-content>-->
+<!--    This is content, without any paragraph or header tags,-->
+<!--    within an ion-card-content element.-->
+<!--  </ion-card-content>-->
+</ion-card>

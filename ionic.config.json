@@ -1,0 +1,8 @@
+{
+  "name": "deck-ng-angular",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "9156fc4e"
+}

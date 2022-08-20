@@ -1,0 +1,458 @@
+openapi: 3.0.3
+info:
+  title: nextcloud deck api
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/index.php'
+paths:
+  /login/v2:
+    post:
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  poll:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                      endpoint:
+                        type: string
+                  login:
+                    type: string
+      summary: test login
+  /apps/deck/api/v1/boards:
+    get:
+      tags:
+        - board
+      security:
+        - basicAuth: []
+      operationId: getBoards
+      summary: Get a list of boards
+      parameters:
+#        - in: header
+#          name: OCS-APIRequest
+#          schema:
+#            type: string
+#          required: true
+#        - in: header
+#          name: If-Modified-Since
+#          schema:
+#            type: string
+        - in: query
+          name: details
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BoardItem'
+        '300':
+          description: |-
+            300 response
+    post:
+      tags:
+        - board
+      operationId: createBoard
+      summary: Create a new board
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                color:
+                  type: string
+      responses:
+        '200':
+          description: successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardItem'
+  /apps/deck/api/v1/boards/{boardId}:
+    get:
+      security:
+        - basicAuth: [ ]
+      tags:
+        - board
+      operationId: getBoard
+      summary: Get a board
+      parameters:
+        - in: path
+          name: boardId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the board to get
+        - in: header
+          name: OCS-APIRequest
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: If-Modified-Since
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoardItem'
+              examples:
+                foo:
+                  value:
+                    {
+                      "title": "Board title",
+                      "owner": {
+                        "primaryKey": "admin",
+                        "uid": "admin",
+                        "displayname": "Administrator"
+                      },
+                      "color": "ff0000",
+                      "archived": false,
+                      "labels": [
+                        {
+                          "title": "Finished",
+                          "color": "31CC7C",
+                          "boardId": "10",
+                          "cardId": null,
+                          "id": 37
+                        },
+                        {
+                          "title": "To review",
+                          "color": "317CCC",
+                          "boardId": "10",
+                          "cardId": null,
+                          "id": 38
+                        },
+                        {
+                          "title": "Action needed",
+                          "color": "FF7A66",
+                          "boardId": "10",
+                          "cardId": null,
+                          "id": 39
+                        },
+                        {
+                          "title": "Later",
+                          "color": "F1DB50",
+                          "boardId": "10",
+                          "cardId": null,
+                          "id": 40
+                        }
+                      ],
+                      "acl": [ ],
+                      "permissions": {
+                        "PERMISSION_READ": true,
+                        "PERMISSION_EDIT": true,
+                        "PERMISSION_MANAGE": true,
+                        "PERMISSION_SHARE": true
+                      },
+                      "users": [
+                        {
+                          "primaryKey": "admin",
+                          "uid": "admin",
+                          "displayname": "Administrator"
+                        }
+                      ],
+                      "deletedAt": 0,
+                      "id": 10
+                    }
+        '300':
+          description: |-
+            300 response
+          content:
+            application/json:
+              examples:
+                foo:
+                  value: |
+                    {
+                     "versions": [
+                           {
+                             "status": "CURRENT",
+                             "updated": "2011-01-21T11:33:21Z",
+                             "id": "v2.0",
+                             "links": [
+                                 {
+                                     "href": "http://127.0.0.1:8774/v2/",
+                                     "rel": "self"
+                                 }
+                             ]
+                         },
+                         {
+                             "status": "EXPERIMENTAL",
+                             "updated": "2013-07-23T11:33:21Z",
+                             "id": "v3.0",
+                             "links": [
+                                 {
+                                     "href": "http://127.0.0.1:8774/v3/",
+                                     "rel": "self"
+                                 }
+                             ]
+                         }
+                     ]
+                    }
+
+  /apps/deck/api/v1/boards/{boardId}/stacks:
+    get:
+      tags:
+        - stack
+      security:
+        - basicAuth: [ ]
+      operationId: getStacks
+      summary: Get all stack of a board
+      parameters:
+        - in: path
+          name: boardId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the board to get
+        - in: header
+          name: OCS-APIRequest
+          schema:
+            type: string
+        - in: header
+          name: If-Modified-Since
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StackItem'
+              examples:
+                foo:
+                  value:
+                    {
+                      "title": "ToDo",
+                      "boardId": 2,
+                      "deletedAt": 0,
+                      "lastModified": 1541426139,
+                      "cards": [ ... ],
+                      "order": 999,
+                      "id": 4
+                    }
+        '300':
+          description: |-
+            300 response
+  /apps/deck/api/v1/boards/{boardId}/stacks/{stackId}/cards/{cardId} :
+     put:
+       security:
+         - basicAuth: [ ]
+       operationId: updateCard
+       summary: updates a card
+       requestBody:
+         description: the card data
+         required: true
+         content:
+           application/json:
+             schema:
+               $ref: '#/components/schemas/Card'
+       parameters:
+         - in: path
+           name: boardId
+           schema:
+             type: integer
+           required: true
+           description: Numeric ID of the board to get
+         - in: path
+           name: stackId
+           schema:
+             type: integer
+           required: true
+           description: Numeric ID of the stack to get
+         - in: path
+           name: cardId
+           schema:
+             type: integer
+           required: true
+           description: Numeric ID of the card to get
+         - in: header
+           name: OCS-APIRequest
+           schema:
+             type: string
+           required: true
+         - in: header
+           name: If-Modified-Since
+           schema:
+             type: string
+       responses:
+         '200':
+           description: |-
+             200 response
+           content:
+             application/json:
+               schema:
+                 $ref: '#/components/schemas/Card'
+         '300':
+           description: |-
+             300 response
+
+
+security:
+  - basicAuth: []
+
+components:
+  securitySchemes:
+    basicAuth: # <-- arbitrary name for the security scheme
+      type: http
+      scheme: basic
+  schemas:
+    Card:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        stackId:
+          type: number
+        type:
+          type: string
+        lastModified:
+          type: number
+        createdAt:
+          type: number
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        assignedUsers:
+          type: array
+          items:
+            type: number
+        attachments:
+          type: array
+          items:
+            type: string
+        attachmentCount:
+          type: number
+        owner:
+          type: string
+        order:
+          type: number
+        archived:
+          type: boolean
+        duedate:
+          type: string
+        deletedAt:
+          type: number
+        commentsUnread:
+          type: number
+        id:
+          type: number
+        overdue:
+          type: number
+    Label:
+      type: object
+      properties:
+        title:
+          type: string
+        color:
+          type: number
+        boardId:
+          type: string
+        lastModified:
+          type: string
+        id:
+          type: number
+        ETAG:
+          type: string
+        cardId:
+          type: number
+    StackItem:
+      type: object
+      properties:
+        title:
+          type: string
+        boardId:
+          type: number
+        deletedAt:
+          type: string
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        order:
+          type: number
+        id:
+          type: number
+    BoardItem:
+      type: object
+      properties:
+        title:
+          type: string
+        owner:
+          type: object
+          properties:
+            primaryKey:
+              type: string
+            uid:
+              type: string
+            displayname:
+              type: string
+        color:
+          type: string
+        archived:
+          type: boolean
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        acl:
+          type: array
+          items:
+            type: string
+        permissions:
+          type: object
+          properties:
+            PERMISSION_READ:
+              type: boolean
+            PERMISSION_EDIT:
+              type: boolean
+            PERMISSION_MANAGE:
+              type: boolean
+            PERMISSION_SHARE:
+              type: boolean
+        users:
+          type: array
+          items:
+            type: number
+        shared:
+          type: number
+        deletedAt:
+          type: number
+        id:
+          type: number
+        lastModified:
+          type: number
+        settings:
+          type: object
+          properties:
+            notify-due:
+              type: string
+            calendar:
+              type: boolean

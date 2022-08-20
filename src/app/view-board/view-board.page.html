@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="board | async">{{ (board | async).title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="board | async" scroll-y="false">
+
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+        <ion-fab-list>
+          <ion-fab-button color="light" (click)="presentToastWithOptions('thanks for clicking')">
+            <ion-icon name="flag-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="light">
+            <ion-icon name="list-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="light">
+            <ion-icon name="build-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab-list>
+  </ion-fab>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list-header>
+    <ion-icon name="flag-outline"></ion-icon>
+    Schlagworte
+  </ion-list-header>
+  <ion-item>
+    <ion-chip [ngStyle]="{'background-color': '#' + label.color, 'color':'#363232'}"
+              *ngFor="let label of (board | async).labels">
+      <ion-label>{{label.title}}</ion-label>
+    </ion-chip>
+  </ion-item>
+
+  <ion-list-header>
+    <ion-icon name="list-outline"></ion-icon>
+    Listen
+  </ion-list-header>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col *ngFor="let stack of (stacks | async)">
+        <app-stack-preview [stack]="stack"></app-stack-preview>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list-header>
+    <ion-icon name="build-outline"></ion-icon>
+    Aufgaben
+
+  </ion-list-header>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col *ngFor="let card of (cards | async)">
+        <app-task-preview [card]="card" [board]="board | async"></app-task-preview>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
