@@ -61,9 +61,10 @@ export class AuthenticationService {
     //   })
 
     const user = new User()
-    user.username = 'admin'
+    user.username = username
+    user.password = password
+    user.authdata = window.btoa(user.username + ':' + user.password);
     this.storage.set("user", user).then(() => {
-      user.authdata = window.btoa('admin' + ':' + 'admin');
       this.userSubject.next(user);
       return window.dispatchEvent(new CustomEvent('user:login'));
     })

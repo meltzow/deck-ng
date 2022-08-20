@@ -72,7 +72,4 @@ export class HomePage implements OnInit {
     this.getBoards().finally(event.target.complete())
   }
 
-  login() {
-    this.autService.login("foo", "bar")
-  }
 }
