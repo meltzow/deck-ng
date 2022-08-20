@@ -9,6 +9,7 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
+      - run : npm i -D -E @angular/cli
       - name: Setup Ionic
         uses: coturiv/setup-ionic@v1.0.4
       - uses: actions/checkout@v2
@@ -23,9 +24,11 @@ jobs:
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - run : npm i -D -E @angular/cli
       - name: Setup Ionic
         uses: coturiv/setup-ionic@v1.0.4
+      - uses: actions/checkout@v2
+        name: checkout
       - name: run test
         run: |
           npm i -D -E @angular/cli
