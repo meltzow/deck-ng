@@ -24,12 +24,15 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: debug apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: run test
-        run: |
-          npm i -D -E @angular/cli
-          npm run test-ci
+      - run: npm i -D -E @angular/cli
+      - run: npm run test-ci
+      - uses: actions/upload-artifact@v2
+        with:
+          name: debug apk
+          path:
+            coverage/ngv
