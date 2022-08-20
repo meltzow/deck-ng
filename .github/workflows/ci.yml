@@ -12,6 +12,11 @@ jobs:
       - name: Setup Ionic
         uses: coturiv/setup-ionic@v1.0.4
       - uses: actions/checkout@v2
+        name: checkout
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt' # See 'Supported distributions' for available options
+          java-version: 8
       - run: |
           npm i -D -E @angular/cli
           npm run build-android-ci
@@ -19,12 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: 8
       - name: Setup Ionic
         uses: coturiv/setup-ionic@v1.0.4
       - name: run test
         run: |
+          npm i -D -E @angular/cli
           npm run test
