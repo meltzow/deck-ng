@@ -90,26 +90,18 @@ export class StackService {
     /**
      * Get all stack of a board
      * @param boardId Numeric ID of the board to get
-     * @param oCSAPIRequest 
-     * @param ifModifiedSince 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStacks(boardId: number, oCSAPIRequest?: string, ifModifiedSince?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Array<StackItem>>;
-    public getStacks(boardId: number, oCSAPIRequest?: string, ifModifiedSince?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Array<StackItem>>>;
-    public getStacks(boardId: number, oCSAPIRequest?: string, ifModifiedSince?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Array<StackItem>>>;
-    public getStacks(boardId: number, oCSAPIRequest?: string, ifModifiedSince?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getStacks(boardId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Array<StackItem>>;
+    public getStacks(boardId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Array<StackItem>>>;
+    public getStacks(boardId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Array<StackItem>>>;
+    public getStacks(boardId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (boardId === null || boardId === undefined) {
             throw new Error('Required parameter boardId was null or undefined when calling getStacks.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (oCSAPIRequest !== undefined && oCSAPIRequest !== null) {
-            localVarHeaders = localVarHeaders.set('OCS-APIRequest', String(oCSAPIRequest));
-        }
-        if (ifModifiedSince !== undefined && ifModifiedSince !== null) {
-            localVarHeaders = localVarHeaders.set('If-Modified-Since', String(ifModifiedSince));
-        }
 
         let localVarCredential: string | undefined;
         // authentication (basicAuth) required

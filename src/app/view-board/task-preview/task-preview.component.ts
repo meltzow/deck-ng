@@ -24,6 +24,6 @@ export class TaskPreviewComponent implements OnInit {
   changeTitle($event: string) {
     console.log ("the new String value: " + $event)
     this.card.title = $event
-    this.cardService.updateCard(this.board.id, this.card.stackId, this.card.id, "true",this.card).subscribe(value => console.log(value),error => console.warn(error))
+    this.cardService.updateCard(this.board.id, this.card.stackId, this.card.id, this.card).subscribe(value => console.log(value),error => console.warn(error))
   }
 }

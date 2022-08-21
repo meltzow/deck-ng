@@ -163,29 +163,18 @@ export class BoardService {
     /**
      * Get a board
      * @param boardId Numeric ID of the board to get
-     * @param oCSAPIRequest 
-     * @param ifModifiedSince 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBoard(boardId: number, oCSAPIRequest: string, ifModifiedSince?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<BoardItem>;
-    public getBoard(boardId: number, oCSAPIRequest: string, ifModifiedSince?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<BoardItem>>;
-    public getBoard(boardId: number, oCSAPIRequest: string, ifModifiedSince?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<BoardItem>>;
-    public getBoard(boardId: number, oCSAPIRequest: string, ifModifiedSince?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getBoard(boardId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<BoardItem>;
+    public getBoard(boardId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<BoardItem>>;
+    public getBoard(boardId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<BoardItem>>;
+    public getBoard(boardId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (boardId === null || boardId === undefined) {
             throw new Error('Required parameter boardId was null or undefined when calling getBoard.');
         }
-        if (oCSAPIRequest === null || oCSAPIRequest === undefined) {
-            throw new Error('Required parameter oCSAPIRequest was null or undefined when calling getBoard.');
-        }
 
         let localVarHeaders = this.defaultHeaders;
-        if (oCSAPIRequest !== undefined && oCSAPIRequest !== null) {
-            localVarHeaders = localVarHeaders.set('OCS-APIRequest', String(oCSAPIRequest));
-        }
-        if (ifModifiedSince !== undefined && ifModifiedSince !== null) {
-            localVarHeaders = localVarHeaders.set('If-Modified-Since', String(ifModifiedSince));
-        }
 
         let localVarCredential: string | undefined;
         // authentication (basicAuth) required

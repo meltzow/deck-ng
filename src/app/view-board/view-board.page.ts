@@ -33,7 +33,7 @@ export class ViewBoardPage implements OnInit {
   }
 
   private getBoard(id: string): Promise<void | BoardItem> {
-    return this.boardService.getBoard(parseInt(id, 10), "true").toPromise().then(
+    return this.boardService.getBoard(parseInt(id, 10)).toPromise().then(
       board => {
         this.board.next(board)
         this.stackService.getStacks(parseInt(id, 10)).toPromise().then(stacks => {

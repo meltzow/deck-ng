@@ -36,15 +36,6 @@ paths:
       operationId: getBoards
       summary: Get a list of boards
       parameters:
-#        - in: header
-#          name: OCS-APIRequest
-#          schema:
-#            type: string
-#          required: true
-#        - in: header
-#          name: If-Modified-Since
-#          schema:
-#            type: string
         - in: query
           name: details
           schema:
@@ -99,15 +90,6 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the board to get
-        - in: header
-          name: OCS-APIRequest
-          schema:
-            type: string
-          required: true
-        - in: header
-          name: If-Modified-Since
-          schema:
-            type: string
       responses:
         '200':
           description: |-
@@ -225,14 +207,6 @@ paths:
             type: integer
           required: true
           description: Numeric ID of the board to get
-        - in: header
-          name: OCS-APIRequest
-          schema:
-            type: string
-        - in: header
-          name: If-Modified-Since
-          schema:
-            type: string
       responses:
         '200':
           description: |-
@@ -250,7 +224,7 @@ paths:
                       "title": "ToDo",
                       "boardId": 2,
                       "deletedAt": 0,
-                      "lastModified": 1541426139,
+                      "last  ied": 1541426139,
                       "cards": [ ... ],
                       "order": 999,
                       "id": 4
@@ -290,15 +264,6 @@ paths:
              type: integer
            required: true
            description: Numeric ID of the card to get
-         - in: header
-           name: OCS-APIRequest
-           schema:
-             type: string
-           required: true
-         - in: header
-           name: If-Modified-Since
-           schema:
-             type: string
        responses:
          '200':
            description: |-

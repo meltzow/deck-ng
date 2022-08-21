@@ -155,16 +155,14 @@ export class DefaultService {
      * @param boardId Numeric ID of the board to get
      * @param stackId Numeric ID of the stack to get
      * @param cardId Numeric ID of the card to get
-     * @param oCSAPIRequest 
      * @param card the card data
-     * @param ifModifiedSince 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateCard(boardId: number, stackId: number, cardId: number, oCSAPIRequest: string, card: Card, ifModifiedSince?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Card>;
-    public updateCard(boardId: number, stackId: number, cardId: number, oCSAPIRequest: string, card: Card, ifModifiedSince?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Card>>;
-    public updateCard(boardId: number, stackId: number, cardId: number, oCSAPIRequest: string, card: Card, ifModifiedSince?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Card>>;
-    public updateCard(boardId: number, stackId: number, cardId: number, oCSAPIRequest: string, card: Card, ifModifiedSince?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public updateCard(boardId: number, stackId: number, cardId: number, card: Card, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Card>;
+    public updateCard(boardId: number, stackId: number, cardId: number, card: Card, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Card>>;
+    public updateCard(boardId: number, stackId: number, cardId: number, card: Card, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Card>>;
+    public updateCard(boardId: number, stackId: number, cardId: number, card: Card, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (boardId === null || boardId === undefined) {
             throw new Error('Required parameter boardId was null or undefined when calling updateCard.');
         }
@@ -174,20 +172,11 @@ export class DefaultService {
         if (cardId === null || cardId === undefined) {
             throw new Error('Required parameter cardId was null or undefined when calling updateCard.');
         }
-        if (oCSAPIRequest === null || oCSAPIRequest === undefined) {
-            throw new Error('Required parameter oCSAPIRequest was null or undefined when calling updateCard.');
-        }
         if (card === null || card === undefined) {
             throw new Error('Required parameter card was null or undefined when calling updateCard.');
         }
 
         let localVarHeaders = this.defaultHeaders;
-        if (oCSAPIRequest !== undefined && oCSAPIRequest !== null) {
-            localVarHeaders = localVarHeaders.set('OCS-APIRequest', String(oCSAPIRequest));
-        }
-        if (ifModifiedSince !== undefined && ifModifiedSince !== null) {
-            localVarHeaders = localVarHeaders.set('If-Modified-Since', String(ifModifiedSince));
-        }
 
         let localVarCredential: string | undefined;
         // authentication (basicAuth) required
