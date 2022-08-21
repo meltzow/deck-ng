@@ -9,19 +9,20 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
         // add header with basic auth credentials if user is logged in and request is to the api url
         const user = this.authenticationService.userValue;
         const isLoggedIn = user && user.authdata;
         const isApiUrl = request.url.startsWith(environment.deckApiUrl);
         if (isLoggedIn && isApiUrl) {
-            request = request.clone({
-                setHeaders: {
-                  // eslint-disable-next-line @typescript-eslint/naming-convention
-                    Authorization: 'Basic ' + user.authdata
-                }
-            });
+          request = request.clone({
+            setHeaders: {
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              Authorization: 'Basic ' + user.authdata
+            }
+          });
         }
 
-        return next.handle(request);
+      return next.handle(request);
     }
 }

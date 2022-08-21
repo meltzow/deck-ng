@@ -5,6 +5,7 @@ import { ToastController } from "@ionic/angular";
 import { StackItem } from "@app/model";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "@app/services";
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,12 @@ export class HomePage implements OnInit {
     private boardService: BoardService,
     private defaultService: DefaultService,
     public toastController: ToastController,
-    private autService: AuthenticationService
+    private autService: AuthenticationService,
+    private storage: Storage,
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.autService.ngOnInit()
     this.getBoards();
   }
 

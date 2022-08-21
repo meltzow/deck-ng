@@ -10,10 +10,10 @@ const routes: Routes = [
     path: 'board/:id',
     loadChildren: () => import('./view-board/view-board.module').then( m => m.ViewBoardModule)
   },
-  {
-    path: 'account',
-    loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
-  },
+  // {
+  //   path: 'account',
+  //   loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
+  // },
   // {
   //   path: 'support',
   //   loadChildren: () => import('./pages/support/support.module').then(m => m.SupportModule)

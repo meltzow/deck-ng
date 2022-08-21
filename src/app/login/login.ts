@@ -29,7 +29,6 @@ export class LoginPage {
 
     if (form.valid) {
       this.authenticationService.login(this.login.username, this.login.password);
-      this.router.navigateByUrl('/home');
     }
   }
 

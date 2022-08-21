@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -9,8 +9,8 @@ import { User } from '@app/model';
 import { DefaultService } from "@app/api/default.service";
 
 @Injectable({providedIn: 'root'})
-export class AuthenticationService {
-  public user: Observable<User>;
+export class AuthenticationService implements OnInit {
+  // public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
   constructor(
@@ -19,12 +19,16 @@ export class AuthenticationService {
     private defaultService: DefaultService,
     public storage: Storage
   ) {
-    this.userSubject = new BehaviorSubject<User>(null);
-    this.user = this.userSubject.asObservable();
+    this.userSubject = new BehaviorSubject<User>(null)
+    // this.user = this.userSubject.asObservable();
+  }
 
-    storage.get('user').then(value => {
-      this.userSubject = new BehaviorSubject<User>(value);
-      this.user = this.userSubject.asObservable();
+  async ngOnInit() {
+    await this.storage.ready()
+    await this.storage.get('user').then(value => {
+      if (value)
+        this.userSubject = new BehaviorSubject<User>(value);
+      // this.user = this.userSubject.asObservable();
     })
   }
 
@@ -71,14 +75,14 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.storage.remove('user');
+    this.storage.remove("user");
     this.userSubject.next(null);
     this.router.navigate(['/login']);
   }
 
   isLoggedIn(): Promise<boolean> {
-    return this.storage.get('user').then((value) => {
-      return value === true;
+    return this.storage.get("user").then((value) => {
+      return value != null;
     });
   }
 }

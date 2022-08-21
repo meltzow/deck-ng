@@ -28,35 +28,14 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private router: Router,
     private storage: Storage,
-    // private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
     private authService: AuthenticationService
   ) {}
 
   async ngOnInit() {
-    // await this.storage.create();
-    this.checkLoginStatus();
+    await this.storage.ready();
+    await this.checkLoginStatus();
     this.listenForLoginEvents();
-
-    // this.swUpdate.available.subscribe(async res => {
-    //   const toast = await this.toastCtrl.create({
-    //     message: 'Update available!',
-    //     position: 'bottom',
-    //     buttons: [
-    //       {
-    //         role: 'cancel',
-    //         text: 'Reload'
-    //       }
-    //     ]
-    //   });
-    //
-    //   await toast.present();
-    //
-    //   toast
-    //     .onDidDismiss()
-    //     .then(() => this.swUpdate.activateUpdate())
-    //     .then(() => window.location.reload());
-    // });
   }
 
   checkLoginStatus() {
@@ -73,6 +52,7 @@ export class AppComponent implements OnInit {
 
   listenForLoginEvents() {
     window.addEventListener('user:login', () => {
+      this.router.navigateByUrl('/home');
       this.updateLoggedInStatus(true);
     });
 
@@ -86,7 +66,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-
+    this.authService.logout()
   }
 
   openTutorial() {
