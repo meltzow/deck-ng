@@ -10,7 +10,6 @@ import { DefaultService } from "@app/api/default.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
-  // public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
   constructor(
@@ -20,7 +19,6 @@ export class AuthenticationService implements OnInit {
     public storage: Storage
   ) {
     this.userSubject = new BehaviorSubject<User>(null)
-    // this.user = this.userSubject.asObservable();
   }
 
   async ngOnInit() {
@@ -28,7 +26,6 @@ export class AuthenticationService implements OnInit {
     await this.storage.get('user').then(value => {
       if (value)
         this.userSubject = new BehaviorSubject<User>(value);
-      // this.user = this.userSubject.asObservable();
     })
   }
 
@@ -75,9 +72,9 @@ export class AuthenticationService implements OnInit {
   }
 
   logout() {
-    this.storage.remove("user");
-    this.userSubject.next(null);
-    this.router.navigate(['/login']);
+    // this.storage.remove("user");
+    // this.userSubject.next(null);
+    // this.router.navigate(['/login']);
   }
 
   isLoggedIn(): Promise<boolean> {
@@ -85,18 +82,4 @@ export class AuthenticationService implements OnInit {
       return value != null;
     });
   }
-}
-
-interface Login1 {
-  poll: {
-    token: string
-    endpoint: string
-  }
-  login: string
-}
-
-interface Login2 {
-  server: string
-  loginName: string
-  appPassword: string
 }

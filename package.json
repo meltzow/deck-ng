@@ -43,6 +43,7 @@
     "cordova-plugin-inappbrowser": "5.0.0",
     "core-js": "^3.6.4",
     "karma-coverage": "^2.2.0",
+    "md5-typescript": "^1.0.5",
     "rxjs": "^6.5.4",
     "sw-toolbox": "3.6.0",
     "swiper": "8.0.7",

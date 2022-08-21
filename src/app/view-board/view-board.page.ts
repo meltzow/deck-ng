@@ -27,7 +27,7 @@ export class ViewBoardPage implements OnInit {
     public toastController: ToastController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.boardId = this.activatedRoute.snapshot.paramMap.get('id');
     this.getBoard(this.boardId);
   }

@@ -24,4 +24,8 @@ describe('ViewBoardPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('use basic auth if logged in', () => {
+
+  });
 });
