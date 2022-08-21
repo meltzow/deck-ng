@@ -42,23 +42,22 @@ describe('HomePage', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('test', ()=> {
-    it('should display list of boards', () => {
-
-      const boardItem = {title: 'foobob'}
-      component.boards = new BehaviorSubject<BoardItem[]>([boardItem])
-
-      fixture.detectChanges();
-
-      const h2 = fixture.debugElement.nativeElement.querySelectorAll('ion-col');
-      expect(h2.length).toEqual(1);
-
-      const content = h2[0].innerText;
-      expect(h2[0]).toBeTruthy();
-
-      // expect(content)
-      //   .toContain('foobob');
-
-    });
-  })
+  // describe('test', ()=> {
+  //   it('should display list of boards', () => {
+  //
+  //     fixture.detectChanges();
+  //     const boardItem = {title: 'foobob'}
+  //     component.boards = new BehaviorSubject<BoardItem[]>([boardItem])
+  //
+  //     const h2 = fixture.debugElement.nativeElement.querySelectorAll('ion-col');
+  //     expect(h2.length).toEqual(1);
+  //
+  //     const content = h2[0].innerText;
+  //     expect(h2[0]).toBeTruthy();
+  //
+  //     // expect(content)
+  //     //   .toContain('foobob');
+  //
+  //   });
+  // })
 });
