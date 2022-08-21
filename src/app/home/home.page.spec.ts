@@ -5,8 +5,10 @@ import { MessageComponentModule } from '../message/message.module';
 
 import { HomePage } from './home.page';
 import { DefaultService } from "@app/api/default.service";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { BoardItem } from "@app/model/boardItem";
+import { HttpClientModule } from "@angular/common/http";
+import { IonicStorageModule } from "@ionic/storage";
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -25,7 +27,7 @@ describe('HomePage', () => {
 
     TestBed.configureTestingModule({
       declarations: [ HomePage ],
-      imports: [IonicModule.forRoot(), MessageComponentModule, RouterModule.forRoot([])],
+      imports: [IonicModule.forRoot(), MessageComponentModule, RouterModule.forRoot([]), HttpClientModule, IonicStorageModule.forRoot()],
       providers: [{ provide: DefaultService, useValue: boardServiceSpy }],
     }).compileComponents();
 
@@ -43,7 +45,8 @@ describe('HomePage', () => {
   describe('test', ()=> {
     it('should display list of boards', () => {
 
-      // component.boards = [{title: 'foobob'}]
+      const boardItem = {title: 'foobob'}
+      component.boards = new BehaviorSubject<BoardItem[]>([boardItem])
 
       fixture.detectChanges();
 

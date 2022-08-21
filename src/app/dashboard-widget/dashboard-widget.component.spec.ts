@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardWidgetComponent } from './dashboard-widget.component';
+import { HttpClientModule } from "@angular/common/http";
+import { BoardItem } from "@app/model/boardItem";
 
 describe('DashboardWidgetComponent', () => {
   let component: DashboardWidgetComponent;
@@ -8,6 +10,7 @@ describe('DashboardWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       declarations: [ DashboardWidgetComponent ]
     })
     .compileComponents();
@@ -20,6 +23,7 @@ describe('DashboardWidgetComponent', () => {
   });
 
   it('should create', () => {
+    component.board =  {id: 1}
     expect(component).toBeTruthy();
   });
 });

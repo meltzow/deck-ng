@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.storage.ready();
+    await this.authService.ngOnInit();
     await this.checkLoginStatus();
     this.listenForLoginEvents();
   }

@@ -21,6 +21,7 @@ export class DashboardWidgetComponent implements OnInit {
   }
 
   getStacks() {
+    if (!this.board) return
     return this.stackService.getStacks(this.board.id).toPromise().then(value => {
       this.stacks.next(value);
     }).finally(() =>
