@@ -14,9 +14,21 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-     - name: Upload Android Release to Play Store
-       uses: r0adkll/upload-google-play@v1.0.17
-       with:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt' # See 'Supported distributions' for available options
+          java-version: 11
+      - run: npm install --location=global ionic
+      - run: npm install
+      - run: ionic build
+      #      - run: npx cap doctor
+      - run: ionic capacitor update
+      - run: npx cap sync
+      - run: npm run build-android-ci
+      - name: Upload Android Release to Play Store
+        uses: r0adkll/upload-google-play@v1.0.17
+        with:
          serviceAccountJsonPlainText: ${{ github.event.inputs.serviceAccountJsonPlainText }}
          packageName: net.meltzow.deckng
          track: ${{ github.event.inputs.track }}
