@@ -1,0 +1,22 @@
+name: "release"
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: 'which track should be used'
+        required: true
+        default: 'alpha'
+      serviceAccountJsonPlainText:
+        required: true
+        description: 'Test scenario tags'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Upload Android Release to Play Store
+       uses: r0adkll/upload-google-play@v1.0.17
+       with:
+         serviceAccountJsonPlainText: ${{ github.event.inputs.serviceAccountJsonPlainText }}
+         packageName: net.meltzow.deckng
+         track: ${{ github.event.inputs.track }}
