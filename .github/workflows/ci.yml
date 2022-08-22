@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
-          java-version: 8
+          java-version: 11
       - run: npm install --location=global ionic
       - run: npm install
       - run: ionic build
