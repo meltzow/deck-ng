@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package net.meltzow.deckng;
 
 import com.getcapacitor.BridgeActivity;
 
