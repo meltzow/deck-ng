@@ -8,7 +8,7 @@ on:
         default: 'alpha'
       serviceAccountJsonPlainText:
         required: true
-        description: 'Test scenario tags'
+        description: 'the complete json file'
 
 jobs:
   release:
@@ -20,3 +20,4 @@ jobs:
          serviceAccountJsonPlainText: ${{ github.event.inputs.serviceAccountJsonPlainText }}
          packageName: net.meltzow.deckng
          track: ${{ github.event.inputs.track }}
+         releaseFiles: android/app/build/outputs/apk/debug/app-debug.apk
