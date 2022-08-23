@@ -31,9 +31,8 @@ jobs:
       - run: npm run build-android-ci
       - name: Upload Android Release to Play Store
         uses: r0adkll/upload-google-play@v1.0.17
-        env:
-          serviceAccountJsonPlainText: ${{ secrets.sSERVICE_ACCOUNT_JSON }}
         with:
+         serviceAccountJsonPlainText: ${{ secrets.sSERVICE_ACCOUNT_JSON }}
          packageName: net.meltzow.deckng
          track: ${{ github.event.inputs.track }}
          releaseFiles: android/app/build/outputs/apk/debug/app-debug.apk
