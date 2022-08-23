@@ -7,14 +7,32 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar></ion-searchbar>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Listen</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-chip *ngFor="let stack of (stacks | async)">
+          <ion-label>{{stack.title}}</ion-label>
+        </ion-chip>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
 </ion-header>
 
 <ion-content [fullscreen]="true" *ngIf="board | async" scroll-y="false">
 
-  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
-
-    <ion-fab-button>
+  <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
+    <ion-fab-button disabled="true" >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
         <ion-fab-list>
@@ -33,39 +51,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list-header>
-    <ion-icon name="list-outline"></ion-icon>
-    Listen
-  </ion-list-header>
+  <ion-list *ngFor="let stack of (stacks | async)">
+    <ion-list-header >
+      {{stack.title}}
+    </ion-list-header>
 
-    <ion-chip *ngFor="let stack of (stacks | async)">
-      <ion-label>{{stack.title}}</ion-label>
-    </ion-chip>
+   <app-task-preview [card]="card" *ngFor="let card of stack.cards" [board]="board | async">
 
-  <ion-list-header>
-    <ion-icon name="flag-outline"></ion-icon>
-    Schlagworte
-  </ion-list-header>
-  <ion-item>
-    <ion-chip [ngStyle]="{'background-color': '#' + label.color, 'color':'#363232'}"
-              *ngFor="let label of (board | async).labels">
-      <ion-label>{{label.title}}</ion-label>
-    </ion-chip>
-  </ion-item>
+   </app-task-preview>
 
-
-
-  <ion-list-header>
-    <ion-icon name="build-outline"></ion-icon>
-    Aufgaben
-
-  </ion-list-header>
-
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col *ngFor="let card of (cards | async)">
-        <app-task-preview [card]="card" [board]="board | async"></app-task-preview>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  </ion-list>
 </ion-content>

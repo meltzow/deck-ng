@@ -6,6 +6,7 @@ import { StackItem } from "@app/model/stackItem";
 import { Card } from "@app/model/card";
 import { ToastController } from "@ionic/angular";
 import { StackService, BoardService } from "@app/api/api";
+import { AuthenticationService } from "@app/services";
 
 @Component({
   selector: 'app-view-board',
@@ -24,11 +25,13 @@ export class ViewBoardPage implements OnInit {
     private boardService: BoardService,
     private stackService: StackService,
     private activatedRoute: ActivatedRoute,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private authService: AuthenticationService
   ) { }
 
   async ngOnInit() {
     this.boardId = this.activatedRoute.snapshot.paramMap.get('id');
+    await this.authService.ngOnInit()
     this.getBoard(this.boardId);
   }
 
