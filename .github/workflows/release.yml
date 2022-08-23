@@ -6,10 +6,13 @@ on:
         description: 'which track should be used'
         required: true
         default: 'alpha'
-      serviceAccountJsonPlainText:
-        required: true
-        description: 'the complete json file'
-
+      releaseName:
+        required: false
+        description: 'A user-friendly update name, e.g. v1.0.0'
+      status:
+        required: false
+        description: 'One of completed, inProgress, halted, draft'
+        default: 'inProgress'
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -29,7 +32,8 @@ jobs:
       - name: Upload Android Release to Play Store
         uses: r0adkll/upload-google-play@v1.0.17
         with:
-         serviceAccountJsonPlainText: ${{ github.event.inputs.serviceAccountJsonPlainText }}
+         serviceAccountJsonPlainText: ${{ SERVICE_ACCOUNT_JSON }}
          packageName: net.meltzow.deckng
          track: ${{ github.event.inputs.track }}
          releaseFiles: android/app/build/outputs/apk/debug/app-debug.apk
+
