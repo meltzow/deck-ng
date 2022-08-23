@@ -10,7 +10,7 @@
     "build": "ng build",
     "build-prod": "ng build --configuration production",
     "build-android": "export CAPACITOR_ANDROID_STUDIO_PATH=/usr/local/bin/studio && ionic capacitor build android",
-    "build-android-ci": "ionic capacitor copy android && cd android && ./gradlew assembleDebug && cd ..",
+    "build-android-ci": "ionic capacitor copy android && cd android && ./gradlew bundleRelease && cd ..",
     "test": "ng test",
     "test-ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage --source-map true",
     "lint": "ng lint",
