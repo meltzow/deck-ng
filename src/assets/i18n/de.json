@@ -1,0 +1,7 @@
+{
+  "TITLE": "Hallo Mein Herr",
+  "TITLE_2": "Hallo {{value}}",
+  "description": "Ooohh .... hast du diesen Text übersetzt ?",
+  "data": {
+    "name": "Mein Name ist {{name_value}}"}
+}

@@ -3,11 +3,13 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '@app/services/authentication.service';
+import { environment } from "@environments/environment.prod";
 
 
 export interface UserOptions {
   username: string;
   password: string;
+  url: string
 }
 
 @Component({
@@ -16,7 +18,7 @@ export interface UserOptions {
   styleUrls: ['./login.scss'],
 })
 export class LoginPage {
-  login: UserOptions = { username: '', password: '' };
+  login: UserOptions = { url:'', username: '', password: '' };
   submitted = false;
 
   constructor(
@@ -28,11 +30,9 @@ export class LoginPage {
     this.submitted = true;
 
     if (form.valid) {
+      environment.deckApiUrl =
       this.authenticationService.login(this.login.username, this.login.password);
     }
   }
 
-  onSignup() {
-    this.router.navigateByUrl('/signup');
-  }
 }
