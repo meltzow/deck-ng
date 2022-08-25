@@ -30,8 +30,7 @@ export class LoginPage {
     this.submitted = true;
 
     if (form.valid) {
-      environment.deckApiUrl =
-      this.authenticationService.login(this.login.username, this.login.password);
+      this.authenticationService.login(this.login.url, this.login.username, this.login.password);
     }
   }
 

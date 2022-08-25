@@ -5,35 +5,29 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { interval } from "rxjs/internal/observable/interval";
 import { startWith, switchMap } from "rxjs/operators";
 import { Storage } from '@ionic/storage';
-import { User } from '@app/model';
+import { Account } from '@app/model';
 import { DefaultService } from "@app/api/default.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
-  private userSubject: BehaviorSubject<User>;
+  public account: BehaviorSubject<Account> = new BehaviorSubject<any>({});
 
   constructor(
     private router: Router,
     private http: HttpClient,
     private defaultService: DefaultService,
     public storage: Storage
-  ) {
-    this.userSubject = new BehaviorSubject<User>(null)
-  }
+  ) { }
 
   async ngOnInit() {
     await this.storage.ready()
     await this.storage.get('user').then(value => {
       if (value)
-        this.userSubject = new BehaviorSubject<User>(value);
+        this.account = new BehaviorSubject<Account>(value);
     })
   }
 
-  public get userValue(): User {
-    return this.userSubject.value;
-  }
-
-  login(username: string, password: string) {
+  login(url: string, username: string, password: string) {
     // see https://docs.nextcloud.com/server/latest/developer_manual/client_apis/LoginFlow/index.html#login-flow-v2
     // curl -X POST https://cloud.example.com/index.php/login/v2
     // let polling
@@ -61,20 +55,21 @@ export class AuthenticationService implements OnInit {
     //     })
     //   })
 
-    const user = new User()
-    user.username = username
-    user.password = password
-    user.authdata = window.btoa(user.username + ':' + user.password);
-    this.storage.set("user", user).then(() => {
-      this.userSubject.next(user);
+    const account1 = new Account()
+    account1.username = username
+    account1.password = password
+    account1.authdata = window.btoa(account1.username + ':' + account1.password);
+    account1.url = url
+    this.storage.set("user", account1).then(() => {
+      this.account.next(account1);
       return window.dispatchEvent(new CustomEvent('user:login'));
     })
   }
 
   logout() {
-    // this.storage.remove("user");
-    // this.userSubject.next(null);
-    // this.router.navigate(['/login']);
+    this.storage.remove("user");
+    this.account.next(null);
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn(): Promise<boolean> {

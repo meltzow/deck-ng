@@ -1,0 +1,83 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
+import { IonicModule } from "@ionic/angular";
+import { MessageComponentModule } from "@app/message/message.module";
+import { RouterModule } from "@angular/router";
+import { IonicStorageModule } from "@ionic/storage";
+import { AuthenticationService } from "@app/services";
+import { BoardService } from "@app/services/board.service";
+import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from "@angular/common/http";
+import { BoardItem } from "@app/model/boardItem";
+import { BehaviorSubject } from "rxjs";
+import { Account } from "@app/model";
+
+describe('BoardService', () => {
+  let service: BoardService;
+  let boards: BoardItem[]
+  let httpMock: HttpTestingController
+  let httpClient: HttpClient
+  let authServiceSpy: AuthenticationService
+
+  beforeEach(waitForAsync(() => {
+
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isLoggedIn'])
+
+    TestBed.configureTestingModule({
+      imports:[HttpClientTestingModule],
+      providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
+    });
+    service = TestBed.inject(BoardService);
+    httpMock = TestBed.inject(HttpTestingController)
+    httpClient = TestBed.inject(HttpClient)
+
+  //   TestBed.configureTestingModule({
+  //     declarations: [BoardService],
+  //     schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  //     imports: [IonicModule.forRoot(), MessageComponentModule, RouterModule.forRoot([]), IonicStorageModule.forRoot()],
+  //     providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
+  //   }).compileComponents();
+  }));
+
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
+
+  it('check getBoards() request for expectations', () => {
+
+    boards = [{title :'TheCodeBuzz', id: 2131}]
+    authServiceSpy.account = new BehaviorSubject({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'})
+
+    service.getBoards().subscribe((emp)=>{
+      expect(emp).toEqual(boards);
+    });
+
+    const req = httpMock.expectOne('https://foo.bar' + '/apps/deck/api/v1/boards');
+    expect(req.request.method).toEqual("GET")
+    expect(req.request.headers.get('Access-Control-Allow-Credentials')).toBeTruthy()
+    expect(req.request.headers.get('Authorization')).toEqual('Basic foobar')
+    req.flush(boards)
+
+    httpMock.verify();
+
+  });
+
+  it('getBoards() ist not allowed if not logged in', () => {
+
+    (authServiceSpy.isLoggedIn as any).and.returnValue(new Promise<boolean>((resolve, reject) => false))
+    authServiceSpy.account = new BehaviorSubject(null)
+
+    service.getBoards().subscribe((emp)=>{
+      console.log("no op")
+      fail("ist not allowed")
+    }, error => {
+      console.log("error ist handled")
+    });
+
+    httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
+    httpMock.verify();
+
+  });
+
+});

@@ -7,7 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { BasicAuthInterceptor } from '@app/helper/basic.auth.interceptor';
 import { ErrorInterceptor } from '@app/helper/error.interceptor';
 import { IonicStorageModule } from "@ionic/storage";
 import { FormsModule } from "@angular/forms";
@@ -34,7 +33,6 @@ export function apiConfigFactory (): Configuration {
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     MyRenderer
   ],
