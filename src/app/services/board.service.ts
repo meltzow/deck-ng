@@ -47,7 +47,7 @@ export class BoardService {
     }
 
 
-    private addDefaultHeaders():HttpHeaders  {
+    private addDefaultHeaders(): HttpHeaders {
       let localVarHeaders = new HttpHeaders();
 
       const authData = this.authService.account && this.authService.account.getValue() ? this.authService.account.getValue().authdata:null

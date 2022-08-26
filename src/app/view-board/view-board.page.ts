@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BoardItem } from "@app/model/boardItem";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { StackItem } from "@app/model/stackItem";
 import { Card } from "@app/model/card";
-import { ToastController } from "@ionic/angular";
+import { IonModal, ToastController } from "@ionic/angular";
 import { AuthenticationService, BoardService, StackService} from "@app/services";
+import { OverlayEventDetail } from '@ionic/core/components';
 
 @Component({
   selector: 'app-view-board',
@@ -17,25 +18,24 @@ export class ViewBoardPage implements OnInit {
   color: any = 'rgb(255,51,0)';
   stacks: BehaviorSubject<StackItem[]> = new BehaviorSubject<StackItem[]>(null)
   cards: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>(null)
-  name = 'dfdd';
+  private searchedCards: Card[];
   private boardId;
+  @ViewChild(IonModal) modal: IonModal;
 
   constructor(
     private boardService: BoardService,
     private stackService: StackService,
     private activatedRoute: ActivatedRoute,
-    public toastController: ToastController,
-    private authService: AuthenticationService
+    public toastController: ToastController
   ) { }
 
   async ngOnInit() {
     this.boardId = this.activatedRoute.snapshot.paramMap.get('id');
-    await this.authService.ngOnInit()
     this.getBoard(this.boardId);
   }
 
-  private getBoard(id: string): Promise<void | BoardItem> {
-    return this.boardService.getBoard(parseInt(id, 10)).toPromise().then(
+  private getBoard(id: string) {
+    this.boardService.getBoard(parseInt(id, 10)).subscribe(
       board => {
         this.board.next(board)
         this.stackService.getStacks(parseInt(id, 10)).toPromise().then(stacks => {
@@ -47,13 +47,13 @@ export class ViewBoardPage implements OnInit {
           })
           this.stacks.next(stacks)
           this.cards.next(cards)
+          this.searchedCards = cards
         })
       },
       error => {
         this.presentToastWithOptions(error)
         console.log(error)
-      },
-    )
+      })
   }
 
   getBackButtonText() {
@@ -102,4 +102,19 @@ export class ViewBoardPage implements OnInit {
     console.log('onDidDismiss resolved with role', role);
   }
 
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss(null, 'confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      //this.message = `Hello, ${ev.detail.data}!`;
+      console.log("filter confirmed")
+    }
+  }
 }

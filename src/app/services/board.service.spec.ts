@@ -71,13 +71,18 @@ describe('BoardService', () => {
 
     (authServiceSpy.isLoggedIn as any).and.returnValue(new Promise<boolean>((resolve, reject) => false))
     authServiceSpy.account = new BehaviorSubject(null)
+    try {
+      service.getBoards().subscribe((emp)=>{
+        console.log("no op")
+        fail("ist not allowed")
+      }, error => {
+        console.log("error ist handled")
+      });
+      fail("no error was thrown")
+    } catch (exception) {
+      expect(exception.message).toEqual("user is not logged in")
+    }
 
-    service.getBoards().subscribe((emp)=>{
-      console.log("no op")
-      fail("ist not allowed")
-    }, error => {
-      console.log("error ist handled")
-    });
 
     httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
     httpMock.verify();

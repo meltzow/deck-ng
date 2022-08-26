@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { BoardItem } from "@app/model/boardItem";
 import { HttpClientModule } from "@angular/common/http";
 import { IonicStorageModule } from "@ionic/storage";
+import { BoardService } from "@app/services";
 
 describe('HomePage', () => {
   let component: HomePage;
@@ -16,20 +17,20 @@ describe('HomePage', () => {
   let h2: HTMLElement;
 
   beforeEach(waitForAsync(() => {
-    const boardServiceSpy = jasmine.createSpyObj('DefaultService',['boards'])
-    const response = new Observable<BoardItem>((observer) => {
+    const boardServiceSpy = jasmine.createSpyObj('BoardService',['getBoards'])
+    const response = new Observable<BoardItem[]>((observer) => {
       // observable execution
-      observer.next({title: 'foobar'});
+      observer.next([{title: 'foobar'}]);
       observer.complete();
     });
-
-    boardServiceSpy.boards.and.returnValue(response)
 
     TestBed.configureTestingModule({
       declarations: [ HomePage ],
       imports: [IonicModule.forRoot(), MessageComponentModule, RouterModule.forRoot([]), HttpClientModule, IonicStorageModule.forRoot()],
-      providers: [{ provide: DefaultService, useValue: boardServiceSpy }],
+      providers: [{ provide: BoardService, useValue: boardServiceSpy }],
     }).compileComponents();
+
+    boardServiceSpy.getBoards.and.returnValue(response)
 
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
