@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       track:
-        description: 'which track should be used'
+        description: 'which track should be used? One of internal, alpha (means closed), beta (means open), production'
         required: true
-        default: 'alpha'
+        default: 'internal'
       status:
         required: false
         description: 'One of completed, inProgress, halted, draft'
