@@ -19,8 +19,6 @@ import { AuthenticationService } from "@app/services/authentication.service";
 })
 export class BoardService {
 
-    protected basePath = 'http://localhost:8080/index.php';
-    public defaultHeaders = new HttpHeaders();
     public encoder: HttpParameterCodec;
 
     constructor(protected httpClient: HttpClient, private authService: AuthenticationService) {
@@ -34,73 +32,52 @@ export class BoardService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createBoard(createBoardRequest?: CreateBoardRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<BoardItem>;
-    public createBoard(createBoardRequest?: CreateBoardRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<BoardItem>>;
-    public createBoard(createBoardRequest?: CreateBoardRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<BoardItem>>;
-    public createBoard(createBoardRequest?: CreateBoardRequest, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public createBoard(createBoardRequest?: CreateBoardRequest): Observable<BoardItem> {
+        const localVarHeaders = this.addDefaultHeaders();
 
-        let localVarHeaders = this.defaultHeaders;
-        if (!this.authService.account.getValue().authdata) throwError("user is not logged in")
-        localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + this.authService.account.getValue().authdata);
-
-        localVarHeaders = localVarHeaders.set('Accept', 'application/json');
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        localVarHeaders = localVarHeaders.set('Content-Type',  'application/json');
-
-        return this.httpClient.post<BoardItem>(`${this.basePath}/apps/deck/api/v1/boards`,
+        return this.httpClient.post<BoardItem>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards`,
             createBoardRequest,
             {
-                context: localVarHttpContext,
+                context: new HttpContext(),
                 responseType: "json",
-                withCredentials: true,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
+                withCredentials: false,
+                headers: localVarHeaders
             }
         );
+    }
+
+
+    private addDefaultHeaders():HttpHeaders  {
+      let localVarHeaders = new HttpHeaders();
+
+      const authData = this.authService.account && this.authService.account.getValue() ? this.authService.account.getValue().authdata:null
+      if (!authData) {
+        throw new Error("user is not logged in")
+      }
+
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
+      localVarHeaders = localVarHeaders.set('Accept', 'application/json');
+      // localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
+      return localVarHeaders
     }
 
     /**
      * Get a board
      * @param boardId Numeric ID of the board to get
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
      */
-    public getBoard(boardId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<BoardItem>;
-    public getBoard(boardId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<BoardItem>>;
-    public getBoard(boardId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<BoardItem>>;
-    public getBoard(boardId: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getBoard(boardId: number): Observable<BoardItem> {
         if (boardId === null || boardId === undefined) {
             throw new Error('Required parameter boardId was null or undefined when calling getBoard.');
         }
 
-        let localVarHeaders = this.defaultHeaders;
+        const localVarHeaders = this.addDefaultHeaders()
 
-        if (!this.authService.account.getValue().authdata) throwError("user is not logged in")
-        localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + this.authService.account.getValue().authdata);
-
-        localVarHeaders = localVarHeaders.set('Accept',  'application/json');
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
-        return this.httpClient.get<BoardItem>(`${this.basePath}/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
+        return this.httpClient.get<BoardItem>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
             {
-                context: localVarHttpContext,
+                context: new HttpContext(),
                 responseType: "json",
-                withCredentials: true,
+                withCredentials: false,
                 headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
             }
         );
     }
@@ -118,16 +95,7 @@ export class BoardService {
         //     <any>details, 'details');
         }
 
-        let localVarHeaders = this.defaultHeaders;
-
-        const authData = this.authService.account && this.authService.account.getValue() ? this.authService.account.getValue().authdata:null
-        if (!authData) {
-          return throwError("user is not logged in")
-        }
-
-        localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
-        localVarHeaders = localVarHeaders.set('Accept', 'application/json');
-        // localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
+      const localVarHeaders = this.addDefaultHeaders()
 
         return this.httpClient.get<Array<BoardItem>>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards`,
             {
