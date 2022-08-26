@@ -111,12 +111,8 @@ export class BoardService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBoards(details?: boolean, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Array<BoardItem>>;
-    public getBoards(details?: boolean, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Array<BoardItem>>>;
-    public getBoards(details?: boolean, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Array<BoardItem>>>;
-    public getBoards(details?: boolean, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getBoards(details?: boolean): Observable<Array<BoardItem>> {
 
-        const localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (details !== undefined && details !== null) {
         //   localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
         //     <any>details, 'details');
@@ -133,21 +129,13 @@ export class BoardService {
         localVarHeaders = localVarHeaders.set('Accept', 'application/json');
         // localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
 
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-
         return this.httpClient.get<Array<BoardItem>>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards`,
             {
-                context: localVarHttpContext,
-                params: localVarQueryParameters,
+                context: new HttpContext(),
+                params: new HttpParams({encoder: this.encoder}),
                 responseType: 'json',
                 withCredentials: false,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
+                headers: localVarHeaders
             }
         );
     }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BoardItem } from "@app/model/boardItem";
-import { StackService } from "@app/api/api";
+import { StackService } from "@app/services";
 import { StackItem } from "@app/model";
 import { BehaviorSubject } from "rxjs";
 

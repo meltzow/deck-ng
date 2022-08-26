@@ -5,8 +5,7 @@ import { BehaviorSubject } from "rxjs";
 import { StackItem } from "@app/model/stackItem";
 import { Card } from "@app/model/card";
 import { ToastController } from "@ionic/angular";
-import { StackService } from "@app/api/api";
-import { AuthenticationService, BoardService } from "@app/services";
+import { AuthenticationService, BoardService, StackService} from "@app/services";
 
 @Component({
   selector: 'app-view-board',
