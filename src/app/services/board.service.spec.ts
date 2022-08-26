@@ -53,10 +53,14 @@ describe('BoardService', () => {
       expect(emp).toEqual(boards);
     });
 
-    const req = httpMock.expectOne('https://foo.bar' + '/apps/deck/api/v1/boards');
+    const req = httpMock.expectOne('https://foo.bar' + '/index.php/apps/deck/api/v1/boards');
     expect(req.request.method).toEqual("GET")
-    expect(req.request.headers.get('Access-Control-Allow-Credentials')).toBeTruthy()
     expect(req.request.headers.get('Authorization')).toEqual('Basic foobar')
+    //this header is not allowed by server see response header Access-Control-Allow-Headers
+    expect(req.request.headers.get('OCS-APIRequest')).toBeNull()
+    //OPTIONS response header says: "Access-Control-Allow-Credentials: false"
+    expect(req.request.withCredentials).toBeFalse()
+
     req.flush(boards)
 
     httpMock.verify();

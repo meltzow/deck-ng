@@ -17,13 +17,20 @@
     <ion-list>
       <ion-item>
         <ion-label position="stacked" color="primary">Server Url</ion-label>
-        <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="text" #url="ngModel" spellcheck="false" autocapitalize="off"  required>
+        <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="text" #url="ngModel" spellcheck="false" autocapitalize="off"
+                   autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text" required="true">
         </ion-input>
       </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="url.valid || submitted === false" class="ion-padding-start">
+          url is required
+        </p>
+      </ion-text>
+
       <ion-item>
         <ion-label color="primary" position="floating">Username</ion-label>
         <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
-                   autocorrect="off" autofocus="on" clearInput="true" clearOnEdit="true" color="primary" inputmode="text"
+                   autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text"
                   required="true">
         </ion-input>
       </ion-item>
@@ -36,7 +43,7 @@
 
       <ion-item>
         <ion-label color="primary" position="floating">App-password</ion-label>
-        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" autocorrect="off" autofocus="on" clearInput="true" clearOnEdit="true" color="primary" inputmode="text" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" required="true"></ion-input>
+        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" autocorrect="off" autofocus="on" clearInput="true"  color="primary" inputmode="text" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" required="true"></ion-input>
         <ion-icon name="information-circle-outline" color="primary" slot="end" (click)="tooltip()" class="ion-align-self-end"></ion-icon>
       </ion-item>
 

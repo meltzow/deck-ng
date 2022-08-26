@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { ErrorInterceptor } from '@app/helper/error.interceptor';
 import { IonicStorageModule } from "@ionic/storage";
 import { FormsModule } from "@angular/forms";
@@ -28,7 +28,7 @@ export function apiConfigFactory (): Configuration {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule,  HttpClientModule, FormsModule,
+  imports: [BrowserModule,  HttpClientModule, HttpClientXsrfModule.disable(), FormsModule,
     IonicModule.forRoot(),IonicStorageModule.forRoot(), AppRoutingModule, ApiModule.forRoot(apiConfigFactory),
   ],
   providers: [

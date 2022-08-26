@@ -131,6 +131,7 @@ export class BoardService {
 
         localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
         localVarHeaders = localVarHeaders.set('Accept', 'application/json');
+        // localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
 
         let localVarHttpContext: HttpContext | undefined = options && options.context;
         if (localVarHttpContext === undefined) {
@@ -143,7 +144,7 @@ export class BoardService {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,
                 responseType: 'json',
-                withCredentials: true,
+                withCredentials: false,
                 headers: localVarHeaders,
                 observe: observe,
                 reportProgress: reportProgress
