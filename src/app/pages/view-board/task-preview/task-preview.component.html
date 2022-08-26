@@ -1,11 +1,8 @@
-<ion-item *ngIf="card">
+<ion-item *ngIf="card" detail="true">
           <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit>
-                <ion-avatar slot="start">
-                  <img src="https://gravatar.com/avatar/{{md5()}}?d=identicon&f=y">
-         </ion-avatar>
 
-  <ion-chip>
-    <ion-label>{{card.lastModified * 1000 | date:'short':'+0200' }}</ion-label>
+  <ion-chip outline="true">
+    <ion-label >{{card.lastModified * 1000 | date:'short':'+0200' }}</ion-label>
     <ion-icon name="timer-outline"></ion-icon>
   </ion-chip>
 

@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
-import { MessageComponentModule } from '../message/message.module';
 import { DashboardWidgetComponent } from "@app/dashboard-widget/dashboard-widget.component";
 
 @NgModule({
@@ -13,7 +12,6 @@ import { DashboardWidgetComponent } from "@app/dashboard-widget/dashboard-widget
     CommonModule,
     FormsModule,
     IonicModule,
-    MessageComponentModule,
     HomePageRoutingModule
   ],
     declarations: [HomePage, DashboardWidgetComponent]

@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewBoardPageRoutingModule } from './view-board-routing.module';
 import { InlineEditComponent } from "@app/inline-edit/inline-edit.component";
-import { StackPreviewComponent } from './stack-preview/stack-preview.component';
 import { TaskPreviewComponent } from './task-preview/task-preview.component';
 
 @NgModule({
@@ -17,6 +16,6 @@ import { TaskPreviewComponent } from './task-preview/task-preview.component';
     IonicModule,
     ViewBoardPageRoutingModule
   ],
-  declarations: [ViewBoardPage, InlineEditComponent, StackPreviewComponent, TaskPreviewComponent]
+  declarations: [ViewBoardPage, InlineEditComponent, TaskPreviewComponent]
 })
 export class ViewBoardModule {}

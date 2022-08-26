@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BoardItem } from "@app/model/boardItem";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { StackItem } from "@app/model/stackItem";
 import { Card } from "@app/model/card";
 import { IonModal, ToastController } from "@ionic/angular";
-import { AuthenticationService, BoardService, StackService} from "@app/services";
+import { BoardService, StackService} from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 
 @Component({

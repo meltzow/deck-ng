@@ -40,22 +40,6 @@
       </ng-template>
     </ion-modal>
   </ion-toolbar>
-
-
-
-  <ion-accordion-group>
-    <ion-accordion value="first">
-      <ion-item slot="header" color="light">
-        <ion-label>Listen</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <ion-chip *ngFor="let stack of (stacks | async)">
-          <ion-label>{{stack.title}}</ion-label>
-        </ion-chip>
-      </div>
-    </ion-accordion>
-  </ion-accordion-group>
-
 </ion-header>
 
 <ion-content [fullscreen]="true" *ngIf="board | async" scroll-y="false">

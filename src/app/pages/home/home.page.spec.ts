@@ -1,11 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { MessageComponentModule } from '../message/message.module';
 
 import { HomePage } from './home.page';
-import { DefaultService } from "@app/api/default.service";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { BoardItem } from "@app/model/boardItem";
 import { HttpClientModule } from "@angular/common/http";
 import { IonicStorageModule } from "@ionic/storage";
@@ -26,7 +24,7 @@ describe('HomePage', () => {
 
     TestBed.configureTestingModule({
       declarations: [ HomePage ],
-      imports: [IonicModule.forRoot(), MessageComponentModule, RouterModule.forRoot([]), HttpClientModule, IonicStorageModule.forRoot()],
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([]), HttpClientModule, IonicStorageModule.forRoot()],
       providers: [{ provide: BoardService, useValue: boardServiceSpy }],
     }).compileComponents();
 

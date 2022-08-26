@@ -4,11 +4,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'board/:id',
-    loadChildren: () => import('./view-board/view-board.module').then( m => m.ViewBoardModule)
+    loadChildren: () => import('./pages/view-board/view-board.module').then( m => m.ViewBoardModule)
   },
   // {
   //   path: 'account',
@@ -20,7 +20,7 @@ const routes: Routes = [
   // },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
   {
     path: '',
