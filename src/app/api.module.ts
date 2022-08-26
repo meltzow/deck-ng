@@ -2,9 +2,6 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
-import { DefaultService } from './api/default.service';
-import { StackService } from './api/stack.service';
-
 @NgModule({
   imports:      [],
   declarations: [],

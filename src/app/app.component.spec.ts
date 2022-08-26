@@ -3,7 +3,6 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { IonicModule } from "@ionic/angular";
-import { MessageComponentModule } from "@app/message/message.module";
 import { RouterModule } from "@angular/router";
 import { IonicStorageModule } from "@ionic/storage";
 import { AuthenticationService } from "@app/services";
@@ -18,7 +17,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [IonicModule.forRoot(), MessageComponentModule, RouterModule.forRoot([]), IonicStorageModule.forRoot()],
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([]), IonicStorageModule.forRoot()],
       providers: [{ provide: AuthenticationService, useValue: boardServiceSpy }],
     }).compileComponents();
   }));

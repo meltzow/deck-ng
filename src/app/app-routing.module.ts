@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'board/:id',
     loadChildren: () => import('./pages/view-board/view-board.module').then( m => m.ViewBoardModule)
   },
+  {
+    path: 'card/:id',
+    loadChildren: () => import('./pages/card/card.module').then( m => m.CardModule)
+  },
   // {
   //   path: 'account',
   //   loadChildren: () => import('./account/account.module').then(m => m.AccountModule)

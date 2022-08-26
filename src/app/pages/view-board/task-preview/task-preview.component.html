@@ -2,14 +2,13 @@
           <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit>
 
   <ion-chip outline="true">
-    <ion-label >{{card.lastModified * 1000 | date:'short':'+0200' }}</ion-label>
+    <ion-label>{{card.lastModified * 1000 | date:'short':'+0200' }}</ion-label>
     <ion-icon name="timer-outline"></ion-icon>
   </ion-chip>
 
-        <ion-chip [ngStyle]="{'background-color': '#' + label.color, 'color':'#363232'}"
-                  *ngFor="let label of card.labels">
-            <ion-label>{{label.title}}</ion-label>
-
-        </ion-chip>
+  <ion-chip [ngStyle]="{'background-color': '#' + label.color, 'color':'#363232'}"
+            *ngFor="let label of card.labels">
+   {{label.title}}
+  </ion-chip>
 
 </ion-item>

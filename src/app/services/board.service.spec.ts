@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IonicModule } from "@ionic/angular";
-import { MessageComponentModule } from "@app/message/message.module";
 import { RouterModule } from "@angular/router";
 import { IonicStorageModule } from "@ionic/storage";
 import { AuthenticationService } from "@app/services";
