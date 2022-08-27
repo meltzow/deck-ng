@@ -11,6 +11,8 @@ import { HttpClient } from "@angular/common/http";
 import { BoardItem } from "@app/model/boardItem";
 import { BehaviorSubject } from "rxjs";
 import { Account } from "@app/model";
+import { ServiceHelper } from "@app/helper/serviceHelper";
+import { AppComponent } from "@app/app.component";
 
 describe('BoardService', () => {
   let service: BoardService;
@@ -25,7 +27,10 @@ describe('BoardService', () => {
 
     TestBed.configureTestingModule({
       imports:[HttpClientTestingModule],
-      providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
+      providers: [
+        { provide: AuthenticationService, useValue: authServiceSpy },
+        { provide: ServiceHelper}
+      ],
     });
     service = TestBed.inject(BoardService);
     httpMock = TestBed.inject(HttpTestingController)

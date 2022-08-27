@@ -3,6 +3,7 @@ import { Card } from "@app/model/card";
 import { DefaultService } from "@app/api/default.service";
 import { BoardItem } from "@app/model/boardItem";
 import {Md5} from "md5-typescript";
+import { CardsService } from "@app/services/cards.service";
 
 @Component({
   selector: 'app-task-preview',
@@ -14,7 +15,7 @@ export class TaskPreviewComponent implements OnInit {
   @Input() card: Card;
   @Input() board: BoardItem
 
-  constructor(private cardService: DefaultService) {
+  constructor(private cardService: CardsService) {
   }
 
   ngOnInit(): void {

@@ -8,9 +8,8 @@ import { Observable, throwError } from 'rxjs';
 import { BoardItem } from '../model/boardItem';
 import { CreateBoardRequest } from '../model/createBoardRequest';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
 import { AuthenticationService } from "@app/services/authentication.service";
+import { ServiceHelper } from "@app/helper/serviceHelper"
 
 
 
@@ -19,10 +18,7 @@ import { AuthenticationService } from "@app/services/authentication.service";
 })
 export class BoardService {
 
-    public encoder: HttpParameterCodec;
-
-    constructor(protected httpClient: HttpClient, private authService: AuthenticationService) {
-        this.encoder =  new CustomHttpParameterCodec();
+    constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
     }
 
 
@@ -33,7 +29,7 @@ export class BoardService {
      * @param reportProgress flag to report request and response progress.
      */
     public createBoard(createBoardRequest?: CreateBoardRequest): Observable<BoardItem> {
-        const localVarHeaders = this.addDefaultHeaders();
+        const localVarHeaders = this.serviceHelper.addDefaultHeaders();
 
         return this.httpClient.post<BoardItem>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards`,
             createBoardRequest,
@@ -47,20 +43,6 @@ export class BoardService {
     }
 
 
-    private addDefaultHeaders(): HttpHeaders {
-      let localVarHeaders = new HttpHeaders();
-
-      const authData = this.authService.account && this.authService.account.getValue() ? this.authService.account.getValue().authdata:null
-      if (!authData) {
-        throw new Error("user is not logged in")
-      }
-
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
-      localVarHeaders = localVarHeaders.set('Accept', 'application/json');
-      // localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
-      return localVarHeaders
-    }
-
     /**
      * Get a board
      * @param boardId Numeric ID of the board to get
@@ -70,15 +52,10 @@ export class BoardService {
             throw new Error('Required parameter boardId was null or undefined when calling getBoard.');
         }
 
-        const localVarHeaders = this.addDefaultHeaders()
+        const localVarHeaders = this.serviceHelper.addDefaultHeaders()
 
         return this.httpClient.get<BoardItem>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
-            {
-                context: new HttpContext(),
-                responseType: "json",
-                withCredentials: false,
-                headers: localVarHeaders,
-            }
+            this.serviceHelper.getHttpOptions()
         );
     }
 
@@ -95,16 +72,10 @@ export class BoardService {
         //     <any>details, 'details');
         }
 
-      const localVarHeaders = this.addDefaultHeaders()
+      const localVarHeaders = this.serviceHelper.addDefaultHeaders()
 
         return this.httpClient.get<Array<BoardItem>>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards`,
-            {
-                context: new HttpContext(),
-                params: new HttpParams({encoder: this.encoder}),
-                responseType: 'json',
-                withCredentials: false,
-                headers: localVarHeaders
-            }
+            this.serviceHelper.getHttpOptions()
         );
     }
 

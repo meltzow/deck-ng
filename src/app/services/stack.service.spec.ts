@@ -7,6 +7,7 @@ import { HttpClientTestingModule, HttpTestingController } from "@angular/common/
 import { HttpClient } from "@angular/common/http";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { BehaviorSubject } from "rxjs";
+import { ServiceHelper } from "@app/helper/serviceHelper";
 
 describe('StackService', () => {
   let service: StackService;
@@ -20,7 +21,10 @@ describe('StackService', () => {
 
     TestBed.configureTestingModule({
       imports:[HttpClientTestingModule],
-      providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
+      providers: [
+        { provide: AuthenticationService, useValue: authServiceSpy },
+        {provide: ServiceHelper}
+      ],
     });
     service = TestBed.inject(StackService);
     httpMock = TestBed.inject(HttpTestingController)
