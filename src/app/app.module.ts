@@ -14,6 +14,7 @@ import { ApiModule } from "@app/api.module";
 import { Configuration, ConfigurationParameters } from "@app/configuration";
 import { MyRenderer } from "@app/services";
 import { environment } from "@environments/environment";
+import { AuthGuard } from "@app/helper/auth-guard";
 
 
 export function apiConfigFactory (): Configuration {
@@ -34,7 +35,8 @@ export function apiConfigFactory (): Configuration {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    MyRenderer
+    MyRenderer,
+    AuthGuard
   ],
   bootstrap: [AppComponent],
 })

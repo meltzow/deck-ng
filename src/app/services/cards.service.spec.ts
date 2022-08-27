@@ -11,7 +11,7 @@ describe('CardsService', () => {
 
   beforeEach(() => {
 
-    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isLoggedIn'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated'])
 
     TestBed.configureTestingModule({
       imports:[HttpClientTestingModule],

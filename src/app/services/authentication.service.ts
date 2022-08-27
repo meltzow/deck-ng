@@ -7,17 +7,31 @@ import { startWith, switchMap } from "rxjs/operators";
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
 import { DefaultService } from "@app/api/default.service";
+import { Platform } from "@ionic/angular";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
   public account: BehaviorSubject<Account> = new BehaviorSubject<any>({});
+  authState = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    private defaultService: DefaultService,
+    private platform: Platform,
     public storage: Storage
-  ) { }
+  ) {
+    this.platform.ready().then(() => {
+      this.ifLoggedIn();
+    });
+  }
+
+  ifLoggedIn() {
+    this.storage.get('USER_INFO').then((response) => {
+      if (response) {
+        this.authState.next(true);
+      }
+    });
+  }
 
   async ngOnInit() {
     await this.storage.ready()
@@ -62,19 +76,21 @@ export class AuthenticationService implements OnInit {
     account1.url = url
     this.storage.set("user", account1).then(() => {
       this.account.next(account1);
-      return window.dispatchEvent(new CustomEvent('user:login'));
+      this.authState.next(true);
+      this.router.navigate(['home']);
     })
   }
 
   logout() {
-    this.storage.remove("user");
-    this.account.next(null);
-    this.router.navigate(['/login']);
+    this.storage.remove("user").then(value => {
+      this.account.next(null);
+      this.authState.next(false)
+      this.router.navigate(['/login']);
+    })
   }
 
-  isLoggedIn(): Promise<boolean> {
-    return this.storage.get("user").then((value) => {
-      return value != null;
-    });
-  }
+    isAuthenticated() {
+      return this.authState.value;
+    }
+
 }

@@ -20,12 +20,11 @@ export class HomePage implements OnInit {
     private boardService: BoardService,
     private defaultService: DefaultService,
     public toastController: ToastController,
-    private autService: AuthenticationService,
-    private storage: Storage,
+    private authService: AuthenticationService
   ) {}
 
   async ngOnInit() {
-    await this.autService.ngOnInit()
+    await this.authService.ngOnInit()
     this.getBoards();
   }
 

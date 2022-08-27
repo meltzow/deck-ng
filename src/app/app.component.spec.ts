@@ -11,8 +11,8 @@ describe('AppComponent', () => {
 
   beforeEach(waitForAsync(() => {
 
-    const boardServiceSpy = jasmine.createSpyObj('AuthenticationService',['isLoggedIn'])
-    boardServiceSpy.isLoggedIn.and.returnValue(new Promise<boolean>((resolve, reject) => true))
+    const boardServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated'])
+    boardServiceSpy.isAuthenticated.and.returnValue(true)
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],

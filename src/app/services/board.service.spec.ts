@@ -23,7 +23,7 @@ describe('BoardService', () => {
 
   beforeEach(waitForAsync(() => {
 
-    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isLoggedIn'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated'])
 
     TestBed.configureTestingModule({
       imports:[HttpClientTestingModule],
@@ -73,7 +73,7 @@ describe('BoardService', () => {
 
   it('getBoards() ist not allowed if not logged in', () => {
 
-    (authServiceSpy.isLoggedIn as any).and.returnValue(new Promise<boolean>((resolve, reject) => false))
+    (authServiceSpy.isAuthenticated as any).and.returnValue(false)
     authServiceSpy.account = new BehaviorSubject(null)
     try {
       service.getBoards().subscribe((emp)=>{

@@ -3,7 +3,7 @@ import { HttpContext, HttpHeaders, HttpParams } from "@angular/common/http";
 import { AuthenticationService } from "@app/services";
 import { CustomHttpParameterCodec } from "@app/encoder";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ServiceHelper {
 
   constructor(private authService: AuthenticationService) {
