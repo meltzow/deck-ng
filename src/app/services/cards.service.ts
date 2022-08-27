@@ -12,6 +12,21 @@ export class CardsService {
 
   constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) { }
 
+  public getCard(boardId: number, stackId: number, cardId: number): Observable<Card> {
+    if (boardId === null || boardId === undefined) {
+      throw new Error('Required parameter boardId was null or undefined when calling updateCard.');
+    }
+    if (stackId === null || stackId === undefined) {
+      throw new Error('Required parameter stackId was null or undefined when calling updateCard.');
+    }
+    if (cardId === null || cardId === undefined) {
+      throw new Error('Required parameter cardId was null or undefined when calling updateCard.');
+    }
+    return this.httpClient.get<Card>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks/${encodeURIComponent(String(stackId))}/cards/${encodeURIComponent(String(cardId))}`,
+      this.serviceHelper.getHttpOptions()
+    );
+  }
+
   /**
    * updates a card
    * @param boardId Numeric ID of the board to get

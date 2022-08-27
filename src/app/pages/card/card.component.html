@@ -17,8 +17,12 @@
   </ion-refresher>
 
 <ion-card>
-  <ion-label>
-    {{(card | async).title}}
-  </ion-label>
+  <ion-card-header>
+    <ion-card-title>{{(card | async).title}}</ion-card-title>
+
+  </ion-card-header>
+  <ion-card-content>
+    {{(card | async).description}}
+  </ion-card-content>
 </ion-card>
 </ion-content>
