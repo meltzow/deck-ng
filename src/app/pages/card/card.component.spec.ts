@@ -7,18 +7,22 @@ import { ServiceHelper } from "@app/helper/serviceHelper";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 import { Observable, of } from "rxjs";
 import { Card } from "@app/model/card";
+import { MarkdownModule, MarkdownService } from "ngx-markdown";
 
 describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
   let cardServiceSpy
+  let markdownServiceSpy
 
   beforeEach(async () => {
     cardServiceSpy = jasmine.createSpyObj('CardService', ['getCard'])
+    markdownServiceSpy = jasmine.createSpyObj('MarkdownService', ['parse'])
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MarkdownModule],
       providers: [
+        { provide: MarkdownService, useValue: markdownServiceSpy },
         { provide: CardsService, useValue: cardServiceSpy },
         { provide: ServiceHelper},
         {

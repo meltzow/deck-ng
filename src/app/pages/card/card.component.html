@@ -18,11 +18,33 @@
 
 <ion-card>
   <ion-card-header>
+    <ion-card-subtitle>{{(card | async).type}}</ion-card-subtitle>
     <ion-card-title>{{(card | async).title}}</ion-card-title>
 
   </ion-card-header>
   <ion-card-content>
-    {{(card | async).description}}
+    <ion-item>
+    <ion-toggle color="secondary" [(ngModel)]="toggleVal" checked="toggleVal" (ionChange)="convert()"></ion-toggle>
+    </ion-item>
+    <ion-item [hidden]="toggleVal">
+      <ion-textarea rows="6" [(ngModel)]="plainText"  placeholder="Strat writing your markdown below..."></ion-textarea>
+    </ion-item>
+
+
+    <ion-chip *ngIf="(card | async).duedate">
+      {{(card | async).duedate}}
+    </ion-chip>
+
+
+
+    <ion-chip *ngFor="let attachment of (card | async).attachments" >
+      {{attachment}}
+    </ion-chip>
+
+    <ion-chip *ngFor="let label of (card | async).labels" >
+      {{label.title}}
+    </ion-chip>
   </ion-card-content>
 </ion-card>
+  <div [hidden]="!toggleVal"  [innerHTML]="content" ></div>
 </ion-content>
