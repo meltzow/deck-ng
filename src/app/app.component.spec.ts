@@ -4,8 +4,8 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { IonicModule } from "@ionic/angular";
 import { RouterModule } from "@angular/router";
-import { IonicStorageModule } from "@ionic/storage";
 import { AuthenticationService } from "@app/services";
+import { IonicStorageModule } from "@ionic/storage-angular";
 
 describe('AppComponent', () => {
 

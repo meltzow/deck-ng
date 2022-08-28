@@ -34,7 +34,7 @@ export class AuthenticationService implements OnInit {
   }
 
   async ngOnInit() {
-    await this.storage.ready()
+    await this.storage.create()
     await this.storage.get('user').then(value => {
       if (value)
         this.account = new BehaviorSubject<Account>(value);

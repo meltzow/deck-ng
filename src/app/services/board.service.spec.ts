@@ -3,7 +3,6 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IonicModule } from "@ionic/angular";
 import { RouterModule } from "@angular/router";
-import { IonicStorageModule } from "@ionic/storage";
 import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services/board.service";
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';

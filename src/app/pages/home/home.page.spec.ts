@@ -6,8 +6,8 @@ import { HomePage } from './home.page';
 import { Observable } from "rxjs";
 import { BoardItem } from "@app/model/boardItem";
 import { HttpClientModule } from "@angular/common/http";
-import { IonicStorageModule } from "@ionic/storage";
 import { BoardService } from "@app/services";
+import { IonicStorageModule } from "@ionic/storage-angular";
 
 describe('HomePage', () => {
   let component: HomePage;
