@@ -76,7 +76,7 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "cordova-res": "0.15.4",
-    "eslint": "^8.23.0",
+    "eslint": "8.22.0",
     "eslint-plugin-import": "^2.26.0",
     "jasmine-ajax": "^4.0.0",
     "jasmine-core": "~4.3.0",
