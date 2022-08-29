@@ -85,7 +85,7 @@ export class AuthenticationService implements OnInit {
     this.storage.remove("user").then(value => {
       this.account.next(null);
       this.authState.next(false)
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
     })
   }
 
