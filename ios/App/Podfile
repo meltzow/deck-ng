@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
 
->>>>>>> 7ea92534ea89aa23cd9afce3f4185ca489938cf5
 platform :ios, '13.0'
 use_frameworks!
 
