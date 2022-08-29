@@ -15,7 +15,7 @@
     "test-ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage --source-map true",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate:ressources": "cordova-res android --skip-config --copy"
+    "generate:ressources": "cordova-res ios android --skip-config --copy"
   },
   "private": true,
   "dependencies": {
