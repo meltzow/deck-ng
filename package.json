@@ -15,7 +15,6 @@
     "test-ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage --source-map true",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate:api": "openapi-generator-cli generate -g typescript-angular -i ./deckAPI.yaml -o ./src/app --global-property models,apis,supportingFiles",
     "generate:ressources": "cordova-res android --skip-config --copy"
   },
   "private": true,
@@ -35,7 +34,6 @@
     "@capacitor/ios": "4.1.0",
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/splash-screen": "4.0.1",
-    "@capacitor/status-bar": "4.0.1",
     "@ionic-native/core": "5.36.0",
     "@ionic-native/in-app-browser": "5.36.0",
     "@ionic/angular": "6.2.4",
