@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { AuthenticationService } from "@app/services";
 import { Storage } from '@ionic/storage';
+import { SplashScreen } from "@capacitor/splash-screen";
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,9 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     await this.authService.ngOnInit();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
   }
 
   get loggedIn() {
