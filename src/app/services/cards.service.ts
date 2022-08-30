@@ -49,7 +49,7 @@ export class CardsService {
       throw new Error('Required parameter card was null or undefined when calling updateCard.');
     }
 
-    return this.httpClient.put<Card>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks/${encodeURIComponent(String(stackId))}/cards/${encodeURIComponent(String(cardId))}`,
+    return this.httpClient.put<Card>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`,
       card,
       this.serviceHelper.getHttpOptions()
     );

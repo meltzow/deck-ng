@@ -26,25 +26,26 @@
     <ion-item>
     <ion-toggle color="secondary" [(ngModel)]="toggleVal" checked="toggleVal" (ionChange)="convert()"></ion-toggle>
     </ion-item>
+    <div [hidden]="!toggleVal"  [innerHTML]="content" ></div>
     <ion-item [hidden]="toggleVal">
       <ion-textarea rows="6" [(ngModel)]="plainText"  placeholder="Strat writing your markdown below..."></ion-textarea>
+
     </ion-item>
 
 
-    <ion-chip *ngIf="(card | async).duedate">
-      {{(card | async).duedate}}
+    <ion-chip *ngIf="(card | async).duedate" [outline]="true">
+      {{(card | async).duedate | date: 'short'}}
     </ion-chip>
 
-
-
-    <ion-chip *ngFor="let attachment of (card | async).attachments" >
-      {{attachment}}
+    <ion-chip *ngFor="let attachment of (card | async).attachments" [outline]="true" >
+      <ion-icon name="attach-outline"></ion-icon>
+      <ion-label>{{attachment.extendedData.info.basename}}</ion-label>
     </ion-chip>
 
-    <ion-chip *ngFor="let label of (card | async).labels" >
+    <ion-chip *ngFor="let label of (card | async).labels" [outline]="true">
       {{label.title}}
     </ion-chip>
   </ion-card-content>
 </ion-card>
-  <div [hidden]="!toggleVal"  [innerHTML]="content" ></div>
+
 </ion-content>
