@@ -45,6 +45,11 @@
     <ion-chip *ngFor="let label of (card | async).labels" [outline]="true">
       {{label.title}}
     </ion-chip>
+
+    <ion-chip *ngFor="let assignee of (card | async).assignedUsers" [outline]="true" >
+      <ion-icon name="people-outline"></ion-icon>
+      <ion-label>{{assignee.participant.displayname}}</ion-label>
+    </ion-chip>
   </ion-card-content>
 </ion-card>
 

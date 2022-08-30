@@ -11,6 +11,8 @@
  */
 import { Label } from './label';
 import { Attachement } from "@app/model/attachement";
+import { User } from "@app/model/user";
+import { Assignment } from "@app/model/assignment";
 
 
 export interface Card {
@@ -21,7 +23,7 @@ export interface Card {
     lastModified?: number;
     createdAt?: number;
     labels?: Array<Label>;
-    assignedUsers?: Array<number>;
+    assignedUsers?: Array<Assignment>;
     attachments?: Array<Attachement>;
     attachmentCount?: number;
     owner?: string;
