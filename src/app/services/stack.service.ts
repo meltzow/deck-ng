@@ -11,7 +11,6 @@ import {
 import { Observable, throwError } from "rxjs";
 import { StackItem } from "@app/model";
 import { AuthenticationService } from "@app/services/authentication.service";
-import { CustomHttpParameterCodec } from "@app/encoder";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 
 @Injectable({

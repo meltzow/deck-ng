@@ -1,13 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+      <ion-back-button [text]="getBackButtonText()" ></ion-back-button>
       <ion-title *ngIf="card | async">{{ (card | async).title }}</ion-title>
     </ion-buttons>
-    <ion-title>
-      <ion-icon name="clipboard-outline"></ion-icon>
-      <ion-label>Boards</ion-label>
-    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -34,7 +30,8 @@
 
 
     <ion-chip *ngIf="(card | async).duedate" [outline]="true">
-      {{(card | async).duedate | date: 'short'}}
+      <ion-icon name="hourglass-outline"></ion-icon>
+      <ion-label>{{(card | async).duedate | date: 'short'}}</ion-label>
     </ion-chip>
 
     <ion-chip *ngFor="let attachment of (card | async).attachments" [outline]="true" >

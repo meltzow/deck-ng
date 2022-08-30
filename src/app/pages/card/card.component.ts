@@ -14,7 +14,7 @@ import { MarkdownService } from "ngx-markdown";
 })
 export class CardComponent implements OnInit {
   public card: BehaviorSubject<Card> = new BehaviorSubject({title: "foobar"});
-  private boardId;
+  boardId;
   private stackId;
   private cardId;
   toggleVal: boolean;
@@ -50,7 +50,7 @@ export class CardComponent implements OnInit {
     console.log(this.toggleVal);
     if(this.toggleVal==true){
       if(this.plainText && this.plainText!=''){
-        let plainText = this.plainText
+        const plainText = this.plainText
 
         this.markdownText = this.markdownService.parse(plainText.toString())
         this.content = this.markdownText

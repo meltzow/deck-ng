@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DefaultService } from "@app/api/api";
 import { BoardItem } from "@app/model/boardItem";
 import { ToastController } from "@ionic/angular";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "@app/services";
-import { Storage } from "@ionic/storage";
 import { BoardService } from "@app/services";
 
 @Component({
@@ -18,7 +16,6 @@ export class HomePage implements OnInit {
 
   constructor(
     private boardService: BoardService,
-    private defaultService: DefaultService,
     public toastController: ToastController,
     private authService: AuthenticationService
   ) {}

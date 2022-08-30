@@ -6,7 +6,6 @@ import { interval } from "rxjs/internal/observable/interval";
 import { startWith, switchMap } from "rxjs/operators";
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
-import { DefaultService } from "@app/api/default.service";
 import { Platform } from "@ionic/angular";
 
 @Injectable({providedIn: 'root'})
@@ -26,7 +25,7 @@ export class AuthenticationService implements OnInit {
   }
 
   ifLoggedIn() {
-    this.storage.get('USER_INFO').then((response) => {
+    this.storage.get('user').then((response) => {
       if (response) {
         this.authState.next(true);
       }

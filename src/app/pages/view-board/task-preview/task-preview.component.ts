@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Card } from "@app/model/card";
-import { DefaultService } from "@app/api/default.service";
 import { BoardItem } from "@app/model/boardItem";
 import {Md5} from "md5-typescript";
 import { CardsService } from "@app/services/cards.service";

@@ -2,7 +2,6 @@ import { Inject, Injectable, Optional }                      from '@angular/core
 import { HttpClient, HttpHeaders, HttpParams,
          HttpResponse, HttpEvent, HttpParameterCodec, HttpContext
         }       from '@angular/common/http';
-import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable, throwError } from 'rxjs';
 
 import { BoardItem } from '../model/boardItem';
