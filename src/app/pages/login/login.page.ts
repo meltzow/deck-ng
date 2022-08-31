@@ -14,8 +14,8 @@ export interface UserOptions {
 
 @Component({
   selector: 'page-login',
-  templateUrl: 'login.html',
-  styleUrls: ['./login.scss'],
+  templateUrl: 'login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
   login: UserOptions = { url:'', username: '', password: '' };

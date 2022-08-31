@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title>Login</ion-title>
+    <ion-title translate="">login</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,19 +16,19 @@
   <form #loginForm="ngForm" novalidate>
     <ion-list>
       <ion-item>
-        <ion-label position="stacked" color="primary">Server Url</ion-label>
+        <ion-label position="stacked" color="primary" translate="">server_url</ion-label>
         <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="text" #url="ngModel" spellcheck="false" autocapitalize="off"
                    autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text" required="true">
         </ion-input>
       </ion-item>
       <ion-text color="danger">
-        <p [hidden]="url.valid || submitted === false" class="ion-padding-start">
-          url is required
+        <p [hidden]="url.valid || submitted === false" class="ion-padding-start" translate="">
+          url_required
         </p>
       </ion-text>
 
       <ion-item>
-        <ion-label color="primary" position="floating">Username</ion-label>
+        <ion-label color="primary" position="floating" translate="">username</ion-label>
         <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
                    autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text"
                   required="true">
@@ -36,23 +36,23 @@
       </ion-item>
 
       <ion-text color="danger">
-        <p [hidden]="username.valid || submitted === false" class="ion-padding-start">
-          Username is required
+        <p [hidden]="username.valid || submitted === false" class="ion-padding-start" translate="">
+          username_required
         </p>
       </ion-text>
 
       <ion-item>
-        <ion-label color="primary" position="floating">App-password</ion-label>
+        <ion-label color="primary" position="floating" translate="">app_password</ion-label>
         <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" autocorrect="off" autofocus="on" clearInput="true"  color="primary" inputmode="text" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" required="true"></ion-input>
         <ion-icon name="information-circle-outline" color="primary" slot="end" (click)="tooltip()" class="ion-align-self-end"></ion-icon>
       </ion-item>
 
       <ion-text color="danger">
-        <p [hidden]="password.valid || submitted === false" class="ion-padding-start">
-          Password is required
+        <p [hidden]="password.valid || submitted === false" class="ion-padding-start" translate="">
+          password_required
         </p>
       </ion-text>
-      <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
+      <ion-button (click)="onLogin(loginForm)" type="submit" expand="block" translate="">login</ion-button>
     </ion-list>
   </form>
 

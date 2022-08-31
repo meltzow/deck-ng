@@ -21,6 +21,7 @@ export class ViewBoardPage implements OnInit {
   private searchedCards: Card[];
   private boardId;
   @ViewChild(IonModal) modal: IonModal;
+  isLoading = true;
 
   constructor(
     private boardService: BoardService,
@@ -35,9 +36,11 @@ export class ViewBoardPage implements OnInit {
   }
 
   private getBoard(id: string) {
+    this.isLoading = true
     this.boardService.getBoard(parseInt(id, 10)).subscribe(
       board => {
         this.board.next(board)
+
         this.stackService.getStacks(parseInt(id, 10)).toPromise().then(stacks => {
           const cards = new Array<Card>()
           stacks.forEach(stackItem => {
@@ -48,6 +51,7 @@ export class ViewBoardPage implements OnInit {
           this.stacks.next(stacks)
           this.cards.next(cards)
           this.searchedCards = cards
+          this.isLoading = false
         })
       },
       error => {
@@ -63,13 +67,10 @@ export class ViewBoardPage implements OnInit {
   }
 
   doRefresh(event) {
+    this.board.next(null)
+    this.stacks.next([])
+    this.cards.next([])
     this.getBoard(this.boardId)
-    console.log('Begin async operation');
-
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      event.target.complete();
-    }, 2000);
   }
 
   async presentToastWithOptions(errorMsg: string) {
@@ -99,7 +100,6 @@ export class ViewBoardPage implements OnInit {
     await toast.present();
 
     const { role } = await toast.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
   }
 
   cancel() {

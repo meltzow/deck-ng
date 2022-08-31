@@ -1,7 +1,13 @@
 {
-  "TITLE": "Hello sir",
-  "TITLE_2": "Hello {{value}}",
-  "description": "Ooohh .... did you just translate this text ?",
-  "data": {
-    "name": "My name is {{name_value}}"}
+  "boards": "Boards",
+  "logout": "logout",
+  "login": "login",
+  "account": "account",
+  "server_url": "server URL",
+  "url_required": "server is required",
+  "username": "username",
+  "username_required": "username is required",
+  "app_password" : "app password",
+  "password_required": "app password is required"
+
 }
