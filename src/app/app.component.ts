@@ -6,6 +6,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { AuthenticationService } from "@app/services";
 import { Storage } from '@ionic/storage';
 import { SplashScreen } from "@capacitor/splash-screen";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -13,14 +14,6 @@ import { SplashScreen } from "@capacitor/splash-screen";
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-  ];
-
   dark = false;
 
   constructor(
@@ -29,8 +22,11 @@ export class AppComponent implements OnInit {
     private router: Router,
     private storage: Storage,
     private toastCtrl: ToastController,
-    private authService: AuthenticationService
-  ) {}
+    private authService: AuthenticationService,
+    private translate: TranslateService
+  ) {
+    this.translate.setDefaultLang('de');
+  }
 
   async ngOnInit() {
     await this.authService.ngOnInit();

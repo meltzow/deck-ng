@@ -39,6 +39,8 @@
     "@ionic/angular": "6.2.4",
     "@ionic/storage": "^3.0.6",
     "@ionic/storage-angular": "^3.0.6",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "cordova-plugin-inappbrowser": "5.0.0",
     "core-js": "^3.25.0",
     "karma-coverage": "^2.2.0",

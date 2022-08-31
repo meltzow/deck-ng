@@ -1,7 +1,13 @@
 {
-  "TITLE": "Hallo Mein Herr",
-  "TITLE_2": "Hallo {{value}}",
-  "description": "Ooohh .... hast du diesen Text übersetzt ?",
-  "data": {
-    "name": "Mein Name ist {{name_value}}"}
+  "boards": "Boards",
+  "logout": "Abmeldung",
+  "login": "Anmeldung",
+  "account": "Account",
+  "server_url": "Server URL",
+  "url_required": "Server URL wird benötigt",
+  "username": "Benutzername",
+  "username_required": "Benutzername wird benötigt",
+  "app_password" : "App Passwort",
+  "password_required": "Passwort wird benötigt"
+
 }

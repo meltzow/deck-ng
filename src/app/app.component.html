@@ -4,20 +4,19 @@
     <ion-menu contentId="main-content">
       <ion-content>
         <ion-list *ngIf="loggedIn" lines="none">
-          <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
-              <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
-              <ion-label>
-                {{p.title}}
+          <ion-menu-toggle autoHide="false" >
+            <ion-item routerLink="home" routerLinkActive="selected" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="clipboard-outline"></ion-icon>
+              <ion-label translate="">
+                boards
               </ion-label>
             </ion-item>
-
           </ion-menu-toggle>
         </ion-list>
 
         <ion-list *ngIf="loggedIn" lines="none">
           <ion-list-header>
-            Account
+           <ion-label translate="">account</ion-label>
           </ion-list-header>
 
 <!--          <ion-menu-toggle autoHide="false">-->
@@ -32,8 +31,8 @@
           <ion-menu-toggle autoHide="false">
             <ion-item button (click)="logout()" detail="false">
               <ion-icon slot="start" name="log-out"></ion-icon>
-              <ion-label>
-                Logout
+              <ion-label translate="">
+                logout
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
@@ -42,14 +41,14 @@
 
         <ion-list *ngIf="!loggedIn" lines="none">
           <ion-list-header>
-            Account
+            <ion-label translate="">account</ion-label>
           </ion-list-header>
 
           <ion-menu-toggle autoHide="false">
             <ion-item routerLink="/login" routerLinkActive="active" routerDirection="root" detail="false">
               <ion-icon slot="start" name="log-in"></ion-icon>
-              <ion-label>
-                Login
+              <ion-label translate="">
+                login
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

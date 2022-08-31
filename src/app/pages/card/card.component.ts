@@ -13,7 +13,7 @@ import { MarkdownService } from "ngx-markdown";
   styleUrls: ['./card.component.css']
 })
 export class CardComponent implements OnInit {
-  public card: BehaviorSubject<Card> = new BehaviorSubject({title: "foobar"});
+  public card: BehaviorSubject<Card> = new BehaviorSubject({});
   boardId;
   private stackId;
   private cardId;

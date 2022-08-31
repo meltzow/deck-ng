@@ -6,9 +6,9 @@
     <ion-title *ngIf="board | async">{{ (board | async).title }}</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar disabled="true"></ion-searchbar>
     <ion-buttons slot="primary">
-      <ion-button id="open-modal" expand="block">
+      <ion-button id="open-modal" expand="block" disabled="true">
         <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -41,9 +41,6 @@
     </ion-modal>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true" *ngIf="board | async" >
-
   <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
     <ion-fab-button disabled="true" >
       <ion-icon name="add"></ion-icon>
@@ -60,6 +57,8 @@
           </ion-fab-button>
         </ion-fab-list>
   </ion-fab>
+
+<ion-content [fullscreen]="true"  *ngIf="!isLoading">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -70,8 +69,30 @@
     </ion-list-header>
 
    <app-task-preview [card]="card" *ngFor="let card of stack.cards" [board]="board | async">
-
    </app-task-preview>
+  </ion-list>
+</ion-content>
 
+<ion-content *ngIf="isLoading">
+  <ion-list >
+    <ion-list-header>
+      <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+    </ion-list-header>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
   </ion-list>
 </ion-content>
