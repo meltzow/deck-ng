@@ -1,9 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
       <ion-back-button [text]="getBackButtonText()" ></ion-back-button>
-      <ion-title *ngIf="card | async">{{ (card | async).title }}</ion-title>
     </ion-buttons>
+    <ion-title *ngIf="card | async">
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <ion-label>{{ (card | async).title }}</ion-label>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
