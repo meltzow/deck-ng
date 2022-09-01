@@ -1,723 +1,788 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
 
-    <!-- Template Title -->
-    <title>Mobile App free one page responsive HTML5 landing page</title>
+  <!-- SITE TITTLE -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lifetrakr</title>
+  
+  <!-- PLUGINS CSS STYLE -->
+  <!-- Bootstrap -->
+  <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Themefisher Font -->  
+  <link href="plugins/themefisher-font/style.css" rel="stylesheet">
+  <!-- Slick Carousel -->
+  <link href="plugins/slick/slick.css" rel="stylesheet">
+  <!-- Slick Carousel Theme -->
+  <link href="plugins/slick/slick-theme.css" rel="stylesheet">
+  
+  <!-- CUSTOM CSS -->
+  <link href="css/style.css" rel="stylesheet">
 
-    <link rel="icon" href="" type="image/x-icon"/>
+  <!-- FAVICON -->
+  <link href="images/favicon.png" rel="shortcut icon">
 
-    <!-- Bootstrap 3.3.0 stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-    <!-- Font Awesome Icon stylesheet -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- Owl Carousel stylesheet -->
-    <link href="css/owl.carousel.css" rel="stylesheet">
-
-    <!-- Pretty Photo stylesheet -->
-    <link href="css/prettyphoto.css" rel="stylesheet">
-
-    <!-- Custom stylesheet -->
-    <link href="style.css" rel="stylesheet">
-
-
-    <!-- Custom Responsive stylesheet -->
-    <link href="css/responsive.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <!-- ====== Header Section ====== -->
-    <header id="top">
-      <div class="bg-color">
-        <div class="top section-padding">
-          <div class="container">
-            <div class="row">
-
-              <div class="col-sm-7 col-md-7">
-                <div class="content">
-                  <h1><strong>Mobile App</strong> Template</h1>
-				  <h2>The best one page responsive bootstrap landing page.</h2>
-                  <div class="button" id="download-app1">
-                    <a href="#download" class="btn btn-default btn-lg custom-btn">Download App</a>
-                  </div> <!-- end .button -->
-                </div> <!-- end .content -->
-              </div> <!-- end .top > .container> .row> .col-md-7 -->
-
-              <div class="col-sm-5 col-md-5">
-                <div class="photo-slide">
-                 <div id="carousel" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel" data-slide-to="1" class=""></li>
-                    <li data-target="#carousel" data-slide-to="2" class=""></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <div class="item">
-                      <img src="images/phone.png" alt="">
-                    </div>
-                    <div class="item active left">
-                      <img src="images/phone.png" alt="">
-                    </div>
-                    <div class="item next left">
-                      <img src="images/phone.png" alt="">
-                    </div>
-                  </div> <!-- end .carousel-inner -->
-                </div> <!-- end #carousel -->
-                </div> <!-- end .photo-slide -->
-              </div> <!-- end .top > .container> .row> .col-md-5 -->
-
-            </div> <!-- end .top> .container> .row -->
-          </div> <!-- end .top> .container -->
-        </div> <!-- end .top -->
-      </div> <!-- end .bg-color -->
-    </header>
-    <!-- ====== End Header Section ====== -->
+<body class="body-wrapper">
 
 
-    <!-- ====== Menu Section ====== -->
-    <section id="menu">
-      <div class="navigation">
-        <div id="main-nav" class="navbar navbar-default" role="navigation">
-          <div class="container">
+<nav class="navbar main-nav fixed-top navbar-expand-lg">
+  <div class="container">
+      <a class="navbar-brand" href="homepage.html"><img src="images/logo.png" alt="logo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="tf-ion-android-menu"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link scrollTo" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link scrollTo" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link scrollTo" href="#feature">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link scrollTo" href="#pricing">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link scrollTo" href="#team">Team</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link scrollTo" href="#contact">Contact</a>
+        </li>
+      </ul>
+      </div>
+  </div>
+</nav>
+<!--=====================================
+=            Homepage Banner            =
+======================================-->
 
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="">Mobile</a>
-            </div> <!-- end .navbar-header -->
+<section class="banner bg-1" id="home">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 align-self-center">
+				<!-- Contents -->
+				<div class="content-block">
+					<h1>Amazing App Best for business</h1>
+					<h5>Let you track everything in your life with a simple way</h5>
+					<!-- App Badge -->
+					<div class="app-badge">
+						<ul class="list-inline">
+							<li class="list-inline-item">
+								<a href="#"><img class="img-fluid" src="images/app-badge/google-play.png" alt="google-play"></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#"><img class="img-fluid" src="images/app-badge/app-store.png" alt="app-store"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<!-- App Image -->
+				<div class="image-block">
+					<img class="img-fluid" src="images/phones/iphone-banner.png" alt="iphone-banner">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-            <div class="navbar-collapse collapse">
-              <ul id="ulnav" class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#top">Home</a></li>
-                <li><a href="#aboutApp">About App</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#screenshots">Screenshots</a></li>
-                <li><a href="#testimonial">Reviews</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#price">Pricing</a></li>
-                <li><a href="#download">Download</a></li>
-                <li><a href="#contact">Contact</a></li>
-              </ul>
-            </div><!-- end .navbar-collapse -->
+<!--====  End of Homepage Banner  ====-->
 
-          </div> <!-- end .container -->
-        </div> <!-- end #main-nav -->
-      </div> <!-- end .navigation -->
-    </section>
-    <!-- ====== End Menu Section ====== -->
+<!--===========================
+=            About            =
+============================-->
 
-    <!-- ====== aboutApp Section ====== -->
-    <section id="aboutApp">
-      <div class="aboutApp">
-        <div class="aboutApp-one section-padding">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-5 col-md-6">
-                <div class="app-image">
-                  <img src="images/duel-phone-big1.png" alt="">
-                </div>
-              </div>
-              <div class="col-sm-7 col-md-6">
-                <div class="content">
-                  <h1>Our Mobile App</h1>
-                  <h4>Lorem ipsum dolor sit amet</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi aspernatur sit, officiis sunt voluptate dolorum odit quam. Recusandae tempore excepturi pariatur provident corrupti est quisquam ratione, consectetur nam omnis eius.
-                  <br>
-                  <br>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus aut non tempore, explicabo aliquam harum odio et libero.
-                  <br>
-                  <br>
-				  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi aspernatur sit, officiis sunt voluptate dolorum odit quam. Recusandae tempore excepturi pariatur provident corrupti est quisquam ratione, consectetur nam omnis eius.
-                  <br>
-                </div>
-              </div>
-            </div> <!-- .container> .row -->
-          </div> <!-- .container -->
-        </div> <!-- end .aboutApp-one -->
-      </div> <!-- end .aboutApp -->
-    </section>
-    <!-- ====== End aboutApp Section ====== -->
+<section class="about section bg-2" id="about">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-5 mr-auto">
+				<!-- Image Content -->
+				<div class="image-block">
+					<img src="images/phones/iphone-feature.png" alt="iphone-feature" class="img-fluid">
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-10 m-md-auto align-self-center ml-auto">
+				<div class="about-block">
+					<!-- About 01 -->
+					<div class="about-item">
+						<div class="icon">
+							<i class="tf-ion-ios-paper-outline"></i>
+						</div>
+						<div class="content">
+							<h5>Creative Design</h5>
+							<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete accounta</p>
+						</div>
+					</div>
+					<!-- About 02 -->
+					<div class="about-item active">
+						<div class="icon">
+							<i class="tf-globe"></i>
+						</div>
+						<div class="content">
+							<h5>Easy to Use</h5>
+							<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete accounta</p>
+						</div>
+					</div>
+					<!-- About 03 -->
+					<div class="about-item">
+						<div class="icon">
+							<i class="tf-circle-compass"></i>
+						</div>
+						<div class="content">
+							<h5>Best User Experience</h5>
+							<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete accounta</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-    <!-- ====== Features Section ====== -->
-    <section id="features">
-      <div class="features section-padding dark-bg">
-        <div class="container">
+<!--====  End of About  ====-->
 
-          <div class="header">
-            <h1>Amazing Features</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis nesciunt eos, ipsum id, architecto velit sequi fuga minima commodi, porro vitae officiis, voluptatibus minus voluptates ab. Dolore, dolor repellat quasi.</p>
-            <div class="underline">
-            </div>
-          </div> <!-- end .container> .header -->
-<div class="row"> <!-- row -->
+<!--==============================
+=            Features            =
+===============================-->
 
-                <div class="col-md-5 text-right">  <!-- Left Content Col 6 -->
-                    <div class="media service"> <!-- Service #1 -->
-                        <div class="media-body">
+<section class="section feature" id="feature">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="section-title">
+					<h2>App Features</h2>
+					<p>Demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee idea of denouncing pleasure and praising</p>
+				</div>
+			</div>
+		</div>
+		<div class="row bg-elipse">
+			<div class="col-lg-4 align-self-center text-center text-lg-right">
+				<!-- Feature Item -->
+				<div class="feature-item">
+					<!-- Icon -->
+					<div class="icon">
+						<i class="tf-circle-compass"></i>
+					</div>
+					<!-- Content -->
+					<div class="content">
+						<h5>Beautiful Interface Design</h5>
+						<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising</p>
+					</div>
+				</div>
+				<!-- Feature Item -->
+				<div class="feature-item">
+					<!-- Icon -->
+					<div class="icon">
+						<i class="tf-tools-2"></i>
+					</div>
+					<!-- Content -->
+					<div class="content">
+						<h5>Unlimited Features</h5>
+						<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 text-center">
+				<!-- Feature Item -->
+				<div class="feature-item mb-0">
+					<!-- Icon -->
+					<div class="icon">
+						<i class="tf-chat"></i>
+					</div>
+					<!-- Content -->
+					<div class="content">
+						<h5>Full free chat</h5>
+						<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising</p>
+					</div>
+				</div>
+				<div class="app-screen">
+					<img class="img-fluid" src="images/phones/i-phone-screen.png" alt="app-screen">
+				</div>
+				<!-- Feature Item -->
+				<div class="feature-item">
+					<!-- Icon -->
+					<div class="icon">
+						<i class="tf-hourglass"></i>
+					</div>
+					<!-- Content -->
+					<div class="content">
+						<h5>24/7 support by real people</h5>
+						<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 text-center text-lg-left align-self-center">
+				<!-- Feature Item -->
+				<div class="feature-item">
+					<!-- Icon -->
+					<div class="icon">
+						<i class="tf-mobile"></i>
+					</div>
+					<!-- Content -->
+					<div class="content">
+						<h5>Retina ready greaphics</h5>
+						<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising</p>
+					</div>
+				</div>
+				<!-- Feature Item -->
+				<div class="feature-item">
+					<!-- Icon -->
+					<div class="icon">
+						<i class="tf-layers"></i>
+					</div>
+					<!-- Content -->
+					<div class="content">
+						<h5>IOS & android version </h5>
+						<p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-                            <h4 class="media-heading">Brand Identity</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                      <div class="media-right media-middle">
-                            <i class="fa fa-users"></i>
-                        </div>
-                    </div><!-- End Service #1 -->
+<!--====  End of Features  ====-->
 
-                    <div class="media service"> <!-- Service #2 -->
-                        <div class="media-body">
+<!--=================================
+=            Promo Video            =
+==================================-->
 
-                            <h4 class="media-heading">Graphics Design</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-						<div class="media-right media-middle">
-                            <i class="fa fa-arrows"></i>
-                        </div>
-                    </div><!-- End Service #2 -->
+<section class="section promo-video bg-3 overlay">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<!-- Promo Video -->
+				<div class="video">
+					<img class="img-fluid" src="images/backgrounds/promo-video-bg.jpg" alt="video-thumbnail">
+					<div class="video-button video-box">
+						<!-- Video Play Button -->
+						<a href="javascript:void(0)">
+							<span class="icon" data-video="https://www.youtube.com/embed/g3-VxLQO7do?autoplay=1">
+								<i class="tf-ion-ios-play-outline"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-                    <div class="media service"> <!-- Service #3 -->
-                        <div class="media-body">
+<!--====  End of Promo Video  ====-->
 
-                            <h4 class="media-heading">Videography</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-						<div class="media-right media-middle">
-                            <i class="fa fa-camera-retro"></i>
-                        </div>
-                    </div> <!-- End Service #3 -->
-                </div> <!-- End Left Content Col 6 -->
-  <div class="col-md-2">
-              <div class="featured-item-img">
-                <img src="images/phone.png" alt="">
-              </div>
-            </div>
-                <div class="col-md-5"> <!-- Right Content Col 6 -->
-                    <div class="media service"> <!-- Service #4 -->
-						  <div class="media-left media-middle">
-                            <i class="fa fa-android"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">UI/UX Design</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
+<!--===================================
+=            Pricing Table            =
+====================================-->
 
-                    </div><!-- end Service #4 -->
+<section class="pricing section bg-shape" id="pricing">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="section-title">
+					<h2>Choose Your Subscription Plan</h2>
+					<p>Demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee idea of denouncing pleasure and praising</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 col-md-6">
+				<!-- Pricing Table -->
+<div class="pricing-table text-center">	
+	<!-- Title -->
+	<div class="title">	
+		<h5>Free</h5>
+	</div>
+	<!-- Price Tag -->
+	<div class="price">	
+		<p>$0<span>/month</span></p>
+	</div>
+	<!-- Features -->
+	<ul class="feature-list">
+		<li>Android App</li>
+		<li>One time payment</li>
+		<li>Build & Publish</li>
+		<li>Life time support</li>
+	</ul>
+	<!-- Take Action -->
+	<div class="action-button">
+		<a href="" class="btn btn-main-rounded">Start Now</a>
+	</div>
+</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<!-- Pricing Table -->
+<div class="pricing-table featured text-center">	
+	<!-- Title -->
+	<div class="title">	
+		<h5>Basic</h5>
+	</div>
+	<!-- Price Tag -->
+	<div class="price">	
+		<p>$19<span>/month</span></p>
+	</div>
+	<!-- Features -->
+	<ul class="feature-list">
+		<li>Android App</li>
+		<li>One time payment</li>
+		<li>Build & Publish</li>
+		<li>Life time support</li>
+	</ul>
+	<!-- Take Action -->
+	<div class="action-button">
+		<a href="" class="btn btn-main-rounded">Start Now</a>
+	</div>
+</div>
+			</div>
+			<div class="col-lg-4 col-md-6 m-md-auto">
+				<!-- Pricing Table -->
+<div class="pricing-table text-center">	
+	<!-- Title -->
+	<div class="title">	
+		<h5>Advance</h5>
+	</div>
+	<!-- Price Tag -->
+	<div class="price">	
+		<p>$99<span>/month</span></p>
+	</div>
+	<!-- Features -->
+	<ul class="feature-list">
+		<li>Android App</li>
+		<li>One time payment</li>
+		<li>Build & Publish</li>
+		<li>Life time support</li>
+	</ul>
+	<!-- Take Action -->
+	<div class="action-button">
+		<a href="" class="btn btn-main-rounded">Start Now</a>
+	</div>
+</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-                    <div class="media service"> <!-- Service #5 -->
+<!--====  End of Pricing Table  ====-->
 
-						  <div class="media-left media-middle">
-                            <i class="fa fa-apple"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">Application</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div> <!-- end Service #5 -->
+<!--=============================================
+=            Call to Action Download            =
+==============================================-->
 
-                    <div class="media service"> <!-- Service #6 -->
-                         <div class="media-left media-middle">
-                            <i class="fa fa-play"></i>
-                        </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">SEO/Online Marketing</h4>
-                            <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div> <!-- end Service #6 -->
-                </div><!-- end Right Content Col 6 -->
+<section class="cta-download bg-3 overlay">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="image-block"><img class="img-fluid" src="images/phones/iphone-chat.png" alt=""></div>
+			</div>
+			<div class="col-lg-7">
+				<div class="content-block">
+					<!-- Title -->
+					<h2>Free Download Now</h2>
+					<!-- Desctcription -->
+					<p>Demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee idea of denouncing pleasure and praising</p>
+					<!-- App Badge -->
+					<div class="app-badge">
+						<ul class="list-inline">
+							<li class="list-inline-item">
+								<a href="#"><img class="img-fluid" src="images/app-badge/google-play.png" alt="google-play"></a>
+							</li>
+							<li class="list-inline-item">
+								<a href="#"><img class="img-fluid" src="images/app-badge/app-store.png" alt="app-store"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
-            </div>
+<!--====  End of Call to Action Download  ====-->
 
-        </div> <!-- end .container -->
-      </div> <!-- end .features -->
-    </section>
-    <!-- ====== End Features Section ====== -->
+<!--=============================
+=            Counter            =
+==============================-->
+
+<section class="section counter bg-gray">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-6">
+				<div class="counter-item">
+					<!-- Counter Number -->
+					<h3>29k</h3>
+					<!-- Counter Name -->
+					<p>Download</p>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="counter-item">
+					<!-- Counter Number -->
+					<h3>200k</h3>
+					<!-- Counter Name -->
+					<p>Active Account</p>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="counter-item">
+					<!-- Counter Number -->
+					<h3>60k</h3>
+					<!-- Counter Name -->
+					<p>Happy User</p>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="counter-item">
+					<!-- Counter Number -->
+					<h3>300k<sup>+</sup></h3>
+					<!-- Counter Name -->
+					<p>Download</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!--====  End of Counter  ====-->
+
+<!--==========================
+=            Team            =
+===========================-->
+
+<section class="section team bg-shape-two" id="team">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="section-title">
+					<h2>Our Creative Team</h2>
+					<p>Demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee idea of denouncing pleasure and praising</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-3 col-md-6">
+				<!-- Team Member -->
+<div class="team-member text-center">
+	<div class="image">
+		<img class="img-fluid" src="images/team/member-one.jpg" alt="team-member">
+	</div>
+	<div class="name">
+		<h5>Johnny Depp</h5>
+	</div>
+	<div class="position">
+		<p>Production Designer</p>
+	</div>
+	<div class="skill-bar">
+		<div class="progress" data-percent="85%">
+		  	<div class="progress-bar"></div>
+		</div>
+		<span>85%</span>
+	</div>
+	<ul class="social-icons list-inline">
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-facebook"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-twitter"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-linkedin"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-instagram-outline"></i></a>
+		</li>
+	</ul>
+</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<!-- Team Member -->
+<div class="team-member text-center">
+	<div class="image">
+		<img class="img-fluid" src="images/team/member-two.jpg" alt="team-member">
+	</div>
+	<div class="name">
+		<h5>cristin milioti</h5>
+	</div>
+	<div class="position">
+		<p>UX Researcher</p>
+	</div>
+	<div class="skill-bar">
+		<div class="progress" data-percent="95%">
+		  	<div class="progress-bar"></div>
+		</div>
+		<span>95%</span>
+	</div>
+	<ul class="social-icons list-inline">
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-facebook"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-twitter"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-linkedin"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-instagram-outline"></i></a>
+		</li>
+	</ul>
+</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<!-- Team Member -->
+<div class="team-member text-center">
+	<div class="image">
+		<img class="img-fluid" src="images/team/member-three.jpg" alt="team-member">
+	</div>
+	<div class="name">
+		<h5>john doe</h5>
+	</div>
+	<div class="position">
+		<p>Head of Ideas</p>
+	</div>
+	<div class="skill-bar">
+		<div class="progress" data-percent="80%">
+		  	<div class="progress-bar"></div>
+		</div>
+		<span>80%</span>
+	</div>
+	<ul class="social-icons list-inline">
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-facebook"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-twitter"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-linkedin"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-instagram-outline"></i></a>
+		</li>
+	</ul>
+</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<!-- Team Member -->
+<div class="team-member text-center">
+	<div class="image">
+		<img class="img-fluid" src="images/team/member-four.jpg" alt="team-member">
+	</div>
+	<div class="name">
+		<h5>mario gotze</h5>
+	</div>
+	<div class="position">
+		<p>UX/UI designer</p>
+	</div>
+	<div class="skill-bar">
+		<div class="progress" data-percent="75%">
+		  	<div class="progress-bar"></div>
+		</div>
+		<span>75%</span>
+	</div>
+	<ul class="social-icons list-inline">
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-facebook"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-twitter"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-linkedin"></i></a>
+		</li>
+		<li class="list-inline-item">
+			<a href=""><i class="tf-ion-social-instagram-outline"></i></a>
+		</li>
+	</ul>
+</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!--====  End of Team  ====-->
+
+<!--=================================
+=            Testimonial            =
+==================================-->
+
+<section class="section testimonial bg-primary-shape" id="testimonial">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="section-title">
+					<h2 class="text-white">Our Happy Customers</h2>
+					<p class="text-white">Demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee idea of denouncing pleasure and praising</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 m-auto">
+				<!-- Testimonial Carosel -->
+<div class="testimonial-slider">
+	<!-- testimonial item -->
+	<div class="testimonial-item">
+		<div class="content">
+			<div class="name">
+				<h5>Kris lazy Cistin Miloti</h5>
+			</div>
+			<div class="pos-in-com">
+				<p>CEO at <span>Themefisher</span></p>
+			</div>
+			<div class="speech">
+				<p>Explain to you how all this mistaken idea of denouncing tis pleasure and praising pain was born and I will give you a complete praising the account is account the. </p>
+			</div>
+			<ul class="rating list-inline">
+				<li class="list-inline-item">
+					<i class="tf-ion-android-star"></i>
+					<i class="tf-ion-android-star"></i>
+					<i class="tf-ion-android-star"></i>
+					<i class="tf-ion-android-star"></i>
+					<i class="tf-ion-android-star"></i>
+				</li>
+			</ul>		</div>
+		<div class="image">
+			<img class="img-fluid" src="images/testimonial/review-person-one.png" alt="testimonial-person">
+		</div>
+	</div>
+	<!-- testimonial item -->
+	<div class="testimonial-item">
+		<div class="content">
+			<div class="name">
+				<h5>Kris lazy Cistin Miloti</h5>
+			</div>
+			<div class="pos-in-com">
+				<p>CEO at<span>Themefisher</span></p>
+			</div>
+			<div class="speech">
+				<p>Explain to you how all this mistaken idea of denouncing tis pleasure and praising pain was born and I will give you a complete praising the account is account the. </p>
+			</div>
+			<div class="rating">
+				<ul class="rating list-inline">
+					<li class="list-inline-item">
+						<i class="tf-ion-android-star"></i>
+						<i class="tf-ion-android-star"></i>
+						<i class="tf-ion-android-star"></i>
+						<i class="tf-ion-android-star"></i>
+						<i class="tf-ion-android-star"></i>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="image">
+			<img class="img-fluid" src="images/testimonial/review-person-one.png" alt="testimonial-person">
+		</div>
+	</div>
+</div>
+			</div>
+		</div>
+	</div>
+</section>
 
 
-    <!-- ====== Screenshots Section ====== -->
-    <section id="screenshots">
-      <div class="screenshots section-padding">
-        <div class="container">
+<!--====  End of Testimonial  ====-->
 
-          <div class="header">
-            <h1>App Screenshots</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis nesciunt eos, ipsum id, architecto velit sequi fuga minima commodi, porro vitae officiis, voluptatibus minus voluptates ab. Dolore, dolor repellat quasi.</p>
-            <div class="underline"></div>
+<section class="section cta-subscribe" id="contact">
+	<div class="container">
+		<div class="row bg-elipse-red">
+			<div class="col-lg-4">
+				<div class="image"><img src="images/phones/iphone-banner.png" alt="iphone-app"></div>
+			</div>
+			<div class="col-lg-8 align-self-center">
+				<div class="content">
+					<div class="title">
+						<h2>Subscribe Our Newsletter</h2>
+					</div>
+					<div class="description">
+						<p>Demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee idea of denouncing pleasure and praising</p>
+					</div>
+					<form action="#">
+						<div class="input-group">
+						    <input type="text" class="form-control main" placeholder="Enter your email address">
+						    <span class="input-group-addon tf-ion-android-send" id="btnGroupAddon"></span>
+						  </div>
+					</form>
+					<div class="subscription-tag text-right">
+						<p>Subscribe To Our Newsletter & Stay Updated</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!--============================
+=            Footer            =
+=============================-->
+
+<footer class="footer-main">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 mr-auto">
+          <div class="footer-logo">
+            <img src="images/logo.png" alt="footer-logo">
           </div>
-
-          <div class="owl-carousel owl-theme">
-            <div class="item">
-              <a href="images/app.jpg" data-rel="prettyPhoto"><img src="images/app.jpg" alt="item photo"></a>
-            </div> <!-- end item -->
-            <div class="item">
-              <a href="images/app2.jpg" data-rel="prettyPhoto"><img src="images/app2.jpg" alt="item photo"></a>
-            </div> <!-- end item -->
-            <div class="item">
-              <a href="images/app.jpg" data-rel="prettyPhoto"><img src="images/app.jpg" alt="item photo"></a>
-            </div> <!-- end item -->
-            <div class="item">
-              <a href="images/app2.jpg" data-rel="prettyPhoto"><img src="images/app2.jpg" alt="item photo"></a>
-            </div> <!-- end item -->
-            <div class="item">
-              <a href="images/app.jpg" data-rel="prettyPhoto"><img src="images/app.jpg" alt="item photo"></a>
-            </div> <!-- end item -->
-            <div class="item">
-              <a href="images/app2.jpg" data-rel="prettyPhoto"><img src="images/app2.jpg" alt="item photo"></a>
-            </div> <!-- end item -->
-          </div> <!-- end owl carousel -->
-
-        </div> <!-- .container -->
-      </div> <!-- end .screenshots -->
-    </section>
-    <!-- ====== End Screenshots Section ====== -->
-
-    <!-- ====== Testimonial Section ====== -->
-    <section id="testimonial">
-      <div class="bg-color bg-testimonial">
-        <div class="testimonial section-padding">
-          <div class="container">
-            <div class="testimonial-slide">
-              <div id="carousel-testimonial" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                  <li data-target="#carousel-testimonial" data-slide-to="0" class="active"></li>
-                  <li data-target="#carousel-testimonial" data-slide-to="1" class=""></li>
-                  <li data-target="#carousel-testimonial" data-slide-to="2" class=""></li>
-                </ol>
-                <div class="carousel-inner">
-
-                  <div class="item">
-                    <div class="image">
-                      <img src="images/01.jpg" alt="">
-                    </div> <!-- end .image -->
-                    <div class="content">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dignissimos ipsam obcaecati corrupti modi, deserunt facere asperiores. Voluptatum laudantium ut, minus nam. Libero facilis aspernatur cumque, quisquam quod sint odit.</p>
-                      <h4>Jon Doe</h4>
-                      <h5>Web developer</h5>
-                    </div> <!-- end .content -->
-                  </div> <!-- end .item (1) -->
-
-                  <div class="item active left">
-                    <div class="image">
-                      <img src="images/02.jpg" alt="">
-                    </div> <!-- end .image -->
-                    <div class="content">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dignissimos ipsam obcaecati corrupti modi, deserunt facere asperiores. Voluptatum laudantium ut, minus nam. Libero facilis aspernatur cumque, quisquam quod sint odit.</p>
-                      <h4>Jon Doe</h4>
-                      <h5>Web developer</h5>
-                    </div> <!-- end .content -->
-                  </div> <!-- end .item (2) -->
-
-                  <div class="item next left">
-                    <div class="image">
-                      <img src="images/03.jpg" alt="">
-                    </div> <!-- end .image -->
-                    <div class="content">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dignissimos ipsam obcaecati corrupti modi, deserunt facere asperiores. Voluptatum laudantium ut, minus nam. Libero facilis aspernatur cumque, quisquam quod sint odit.</p>
-                      <h4>Jon Doe</h4>
-                      <h5>Web developer</h5>
-                    </div> <!-- end .content -->
-                  </div> <!-- end .item (3) -->
-
-                </div> <!-- end .carousel-inner -->
-              </div> <!-- end #carousel-testimonial -->
-            </div> <!-- end .testimonial-slide -->
-          </div> <!-- end .container -->
-        </div> <!-- end .testimonial -->
-      </div> <!-- end .bg-testimonial -->
-    </section>
-    <!-- ====== End Testimonial Section ====== -->
-
-
-    <!-- ====== Team Section ====== -->
-    <section id="team">
-      <div class="team section-padding">
-        <div class="container">
-
-          <div class="header">
-            <h1>Who develop the App</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui hic laboriosam odio doloribus suscipit error nostrum totam dignissimos esse numquam voluptatum, aspernatur est.</p>
-            <div class="underline"></div>
-          </div> <!-- end .container> .header -->
-
-          <div class="row">
-            <div class="app-dev">
-
-              <div class="col-sm-6 col-md-6 col-lg-3 info">
-              <div class="member">
-                  <img src="images/01.jpg" alt="">
-                  <div class="details">
-                    <div class="social icon">
-                      <ul>
-                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                        <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                      </ul>
-                    </div> <!-- end .icon -->
-                  </div> <!-- end .details -->
-                </div> <!-- end .member -->
-                <div class="title">
-                  <h4>Kristin Doe</h4>
-                  <h5>General Manager</h5>
-                </div> <!-- end .title -->
-              </div> <!-- end .info (1) -->
-
-              <div class="col-sm-6 col-md-6 col-lg-3 info">
-                <div class="member">
-                  <img src="images/02.jpg" alt="">
-                  <div class="details">
-                    <div class="social icon">
-                      <ul>
-                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                        <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                      </ul>
-                    </div> <!-- end .icon -->
-                  </div> <!-- end .details -->
-                </div> <!-- end .member -->
-                <div class="title">
-                  <h4>Michelline</h4>
-                  <h5>Developer</h5>
-                </div> <!-- end .title -->
-              </div> <!-- end .info (2) -->
-
-              <div class="col-sm-6 col-md-6 col-lg-3 info">
-                <div class="member">
-                  <img src="images/03.jpg" alt="">
-                  <div class="details">
-                    <div class="social icon">
-                      <ul>
-                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                        <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                      </ul>
-                    </div> <!-- end .icon -->
-                  </div> <!-- end .details -->
-                </div> <!-- end .member -->
-                <div class="title">
-                  <h4>John Doe</h4>
-                  <h5>Front End Developer</h5>
-                </div> <!-- end .title -->
-              </div> <!-- end .info (3) -->
-
-              <div class="col-sm-6 col-md-6 col-lg-3 info">
-                <div class="member">
-                  <img src="images/04.jpg" alt="">
-                  <div class="details">
-                    <div class="social icon">
-                      <ul>
-                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                        <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                      </ul>
-                    </div> <!-- end .icon -->
-                  </div> <!-- end .details -->
-                </div> <!-- end .member -->
-                <div class="title">
-                  <h4>Harry Potter</h4>
-                  <h5>Manager</h5>
-                </div> <!-- end .title -->
-              </div> <!-- end .info (4) -->
-
-            </div> <!-- end .app-dev -->
-          </div> <!-- end .container> .row -->
-
-        </div> <!-- end .container -->
-      </div> <!-- end .team -->
-    </section>
-    <!-- ====== Team Section ====== -->
-
-
-    <!-- ====== Price Section ====== -->
-    <section id="price">
-      <div class="price section-padding dark-bg">
-        <div class="container"> <!-- container -->
-       <div class="header">
-            <h1>Pricing</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui hic laboriosam odio doloribus suscipit error nostrum totam dignissimos esse numquam voluptatum, aspernatur est.</p>
-            <div class="underline"></div>
-          </div> <!-- end .container> .header -->
-
-            <div class="row"> <!-- outer row -->
-                <div class="col-md-10 col-md-offset-1"> <!-- col 10 with offset 1 to centered -->
-                    <div class="row"> <!-- nested row -->
-
-                        <div class="col-md-4 nopadding"><!-- Price table #1 -->
-                            <div class="panel panel-default price"> <!-- pricing table wrapper -->
-                                <div class="panel-heading">Basic Plan</div>
-                                <div class="panel-body">
-                                    <h1><sup>$</sup>25<small>/mon</small></h1> <!-- Plan Price -->
-                                </div>
-
-                                <!-- Plan Feature Lists -->
-                                <ul class="list-unstyled">
-                                    <li>60 Users</li>
-                                    <li>Unlimited Forums</li>
-                                    <li>Unlimited Reports</li>
-                                    <li>3,000 Entries per Month</li>
-                                    <li>200 MB Storage</li>
-                                    <li>
-                                        <button type="button" class="btn btn-primary btn-block tf-btn">Get Started Now</button>
-                                        <small class="text-uppercase">30 Days Free Trial</small>
-                                    </li>
-                                </ul><!-- end Plan Feature Lists -->
-                            </div><!-- end pricing table wrapper -->
-                        </div><!-- end Price table #1 -->
-
-                        <div class="col-md-4 nopadding"><!-- Price table #2 -->
-                            <div class="panel panel-default price featured"><!-- pricing table wrapper -->
-                                <div class="panel-heading">Best Plan</div>
-                                <div class="panel-body">
-                                    <h1><sup>$</sup>49<small>/mon</small></h1><!-- Plan Price -->
-                                </div>
-
-                                <!-- Plan Feature Lists -->
-                                <ul class="list-unstyled">
-                                    <li>60 Users</li>
-                                    <li>Unlimited Forums</li>
-                                    <li>Unlimited Reports</li>
-                                    <li>3,000 Entries per Month</li>
-                                    <li>200 MB Storage</li>
-                                    <li>
-                                        <button type="button" class="btn btn-primary btn-block tf-btn color">Get Started Now</button>
-                                        <small class="text-uppercase">30 Days Free Trial</small>
-                                    </li>
-                                </ul><!-- end Plan Feature Lists -->
-                            </div><!-- end pricing table wrapper -->
-                        </div><!-- end Price table #2 -->
-
-                        <div class="col-md-4 nopadding"> <!-- Price table #3 -->
-                            <div class="panel panel-default price"> <!-- pricing table wrapper -->
-                                <div class="panel-heading">Premium Plan</div>
-                                <div class="panel-body">
-                                    <h1><sup>$</sup>99<small>/mon</small></h1><!-- Plan Price -->
-                                </div>
-
-                                <!-- Plan Feature Lists -->
-                                <ul class="list-unstyled">
-                                    <li>60 Users</li>
-                                    <li>Unlimited Forums</li>
-                                    <li>Unlimited Reports</li>
-                                    <li>3,000 Entries per Month</li>
-                                    <li>200 MB Storage</li>
-                                    <li>
-                                        <button type="button" class="btn btn-primary btn-block tf-btn">Get Started Now</button>
-                                        <small class="text-uppercase">30 Days Free Trial</small>
-                                    </li>
-                                </ul><!-- end Plan Feature Lists -->
-                            </div><!-- end pricing table wrapper -->
-                        </div><!-- end Price table #3 -->
-
-                    </div> <!-- end nested row -->
-                </div> <!-- end col 10 with offset 1 to centered -->
-            </div> <!-- end outer row -->
+          <div class="copyright">
+            <p>@2018 Themefisher All Rights Reserved  |  Design By : <a href="https://themefisher.com/" target="_blank">Themefisher</a>  Team
+              <br>Get More <a href="https://themewagon.com/theme_tag/free/" target="_blank">Free Bootstrap Templates</a>
+            </p>
+          </div>
         </div>
-       </div> <!-- end .price -->
-    </section>
-    <!-- ====== End Price Section ====== -->
-
-
-    <!-- ====== Subscribe Section ====== -->
-    <section id="subscribe">
-      <div class="subscribe section-padding">
-        <div class="container">
-          <div class="subscribe-header">
-            <h1>Newsletter</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            <form action="" class="form subscribe-form">
-              <div class="form-group">
-                <div class="input-group">
-                  <label for="f-name" class="sr-only">Newsletter</label>
-                  <input type="text" class="form-control" id="f-name" placeholder="Enter your email address">
-                  <div class="input-group-addon">
-                    <button class="" type="submit">SUBMIT</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="social">
-            <ul>
-              <li><a class="twitter" href=""><i class="fa fa-twitter"></i></a></li>
-              <li><a class="facebook" href=""><i class="fa fa-facebook"></i></a></li>
-              <li><a class="google-plus" href=""><i class="fa fa-google-plus"></i></a></li>
-              <li><a class="youtube" href=""><i class="fa fa-youtube"></i></a></li>
-              <li><a class="linkedin" href=""><i class="fa fa-linkedin"></i></a></li>
-              <li><a class="pinterest" href=""><i class="fa fa-pinterest"></i></a></li>
-              <li><a class="dribbble" href=""><i class="fa fa-dribbble"></i></a></li>
-              <li><a class="flickr" href=""><i class="fa fa-flickr"></i></a></li>
-            </ul>
-          </div>
+        <div class="col-lg-6 text-lg-right">
+          <!-- Social Icons -->
+          <ul class="social-icons list-inline">
+            <li class="list-inline-item">
+              <a href=""><i class="tf-ion-social-facebook"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href=""><i class="tf-ion-social-twitter"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href=""><i class="tf-ion-social-linkedin"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href=""><i class="tf-ion-social-instagram-outline"></i></a>
+            </li>
+          </ul>
+          <!-- Footer Links -->
+          <ul class="footer-links list-inline">
+            <li class="list-inline-item">
+              <a href="#">ABOUT</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">TEAM</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">CONTACT</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
-    <!-- ====== End Subscribe Section ====== -->
+    </div>
+</footer>
 
 
-    <!-- ====== Download Section ====== -->
-    <section id="download">
-      <div class="bg-color">
-        <div class="download section-padding">
-          <div class="container">
 
-            <div class="header">
-              <h1>Start Download <strong>Mobile App</strong></h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam voluptatum hic, facere adipisci, placeat ipsa corporis suscipit officiis labore ipsam, laudantium earum ducimus.</p>
-              <div class="underline"></div>
-            </div> <!-- end .container > .header -->
+  <!-- JAVASCRIPTS -->
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI14J_PNWVd-m0gnUBkjmhoQyNyd7nllA" async defer></script>
 
-            <div class="row download-area">
+  <script src="plugins/jquery/jquery.js"></script>
+  <script src="plugins/popper/popper.min.js"></script>
+  <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="plugins/waypoints/jquery.waypoints.min.js"></script>
+  <script src="plugins/slick/slick.min.js"></script>
+  <script src="plugins/smoothscroll/SmoothScroll.min.js"></script>
+  <script src="js/custom.js"></script>
+  
+</body>
 
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                <a href="" class="btn btn-default custom-btn download-btn">
-                  <i class="fa fa-mobile"></i>
-                  <div class="app-download">
-                    <span>Download on the</span><strong>App Store</strong>
-                  </div>
-                </a>
-              </div> <!-- end .download-area> .col-lg-3 (1) -->
-
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                <a href="" class="btn btn-default custom-btn download-btn">
-                <img src="images/playstore.png" alt="">
-                <div class="app-download">
-                  <span>GET IT ON</span><strong>Google Play</strong>
-                </div></a>
-              </div> <!-- end .download-area> .col-lg-3 (2) -->
-
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                <a href="" class="btn btn-default custom-btn download-btn">
-                <i class="fa fa-windows"></i>
-                <div class="app-download">
-                  <span>Available for</span>Windows Phone
-                </div>
-                </a>
-              </div> <!-- end .download-area> .col-lg-3 (3) -->
-
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                <a href="" class="btn btn-default custom-btn download-btn">
-                <img src="images/amazon.png" alt="">
-                <div class="app-download">
-                  <span>Available at</span><strong>Aamazon</strong>
-                </div>
-                </a>
-              </div> <!-- end .download-area> .col-lg-3 (4) -->
-
-            </div> <!-- end .container > .row/.download-area -->
-
-          </div> <!-- end .container -->
-        </div> <!-- end .download -->
-      </div> <!-- end .bg-color -->
-    </section>
-    <!-- ====== End Download Section ====== -->
-
-
-    <!-- ====== Contact Section ====== -->
-    <footer id="contact">
-      <div class="footer section-padding">
-        <div class="container">
-          <h1>Contact Us</h1>
-          <form action="" class="form contact">
-
-            <div class="row">
-              <div class="col-xs-12 col-md-6">
-                <div class="form-group">
-                  <label for="name" class="sr-only">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Name">
-                </div> <!-- end .form-group -->
-
-                <div class="form-group">
-                  <label for="email" class="sr-only">Email</label>
-                  <input type="email" class="form-control" id="email" placeholder="Email">
-                </div> <!-- end .form-group -->
-
-                <div class="form-group">
-                  <label for="subject" class="sr-only">Subject</label>
-                  <input type="text" class="form-control" id="subject" placeholder="Subject">
-                </div> <!-- end .form-group -->
-              </div> <!-- end .form> .row> .col-md-4 -->
-
-              <div class="col-xs-12 col-md-6">
-                <div class="form-group">
-                  <label for="message" class="sr-only">Message</label>
-                  <textarea name="message" id="message" placeholder="Message"></textarea>
-                </div> <!-- end .form-group -->
-              </div>
-            </div> <!-- end .form> .row -->
-
-            <button class="btn btn-default contact-submit custom-btn" type="submit">SUBMIT</button>
-          </form> <!-- end .form -->
-        </div> <!-- end .container -->
-      </div> <!-- end .footer -->
-    </footer>
-    <!-- ====== End Contact Section ====== -->
-
-
-    <!-- ====== Copyright Section ====== -->
-    <section class="copyright dark-bg">
-      <div class="container">
-        <p>&copy; 2016 <a href="#">Mobile App</a>, All Rights Reserved - Template By: <a href="http://webthemez.com">Webthemez</a></p>
-      </div> <!-- end .container -->
-    </section>
-    <!-- ====== End Copyright Section ====== -->
-
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
-    <script src="js/jquery.js"></script>
-
-    <!-- Modernizr js -->
-    <script src="js/modernizr-latest.js"></script>
-
-    <!-- Bootstrap 3.2.0 js -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Owl Carousel plugin -->
-    <script src="js/owl.carousel.min.js"></script>
-
-    <!-- ScrollTo js -->
-    <script src="js/jquery.scrollto.min.js"></script>
-
-    <!-- LocalScroll js -->
-    <script src="js/jquery.localscroll.min.js"></script>
-
-    <!-- jQuery Parallax plugin -->
-    <script src="js/jquery.parallax-1.1.3.js"></script>
-
-    <!-- Skrollr js plugin -->
-    <script src="js/skrollr.min.js"></script>
-
-    <!-- jQuery One Page Nav Plugin -->
-    <script src="js/jquery.nav.js"></script>
-
-    <!-- jQuery Pretty Photo Plugin -->
-    <script src="js/jquery.prettyphoto.js"></script>
-
-
-    <!-- Custom JS -->
-    <script src="js/main.js"></script>
-
-    <script>
-      jQuery(document).ready(function($) {
-        "use strict";
-        jQuery("a[data-rel^='prettyPhoto']").prettyPhoto({social_tools:false});
-      });
-    </script>
-  </body>
 </html>
+
