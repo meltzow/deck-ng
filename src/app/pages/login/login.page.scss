@@ -11,3 +11,9 @@
 .list {
   margin-bottom: 0;
 }
+
+:host {
+  .background-image {
+    background: url('../../../assets/clouds.jpg') no-repeat 100% 100%;
+  }
+}

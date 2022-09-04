@@ -24,7 +24,11 @@ export class AppComponent implements OnInit {
     private toastCtrl: ToastController,
     private authService: AuthenticationService,
     private translate: TranslateService
-  ) { }
+  ) {
+    translate.addLangs(['de', 'en']);
+    translate.setDefaultLang('en');
+    translate.use(translate.getBrowserLang())
+  }
 
   async ngOnInit() {
     await this.authService.ngOnInit();

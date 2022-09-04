@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
       <ion-back-button [text]="getBackButtonText()" ></ion-back-button>
@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh()">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 

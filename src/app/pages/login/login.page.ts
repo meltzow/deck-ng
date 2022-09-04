@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from '@app/services/authentication.service';
 import { environment } from "@environments/environment.prod";
+import { TranslateService } from "@ngx-translate/core";
 
 
 export interface UserOptions {
@@ -24,7 +25,8 @@ export class LoginPage {
   constructor(
     public authenticationService: AuthenticationService,
     public router: Router
-  ) { }
+  ) {
+  }
 
   onLogin(form: NgForm) {
     this.submitted = true;
@@ -34,4 +36,7 @@ export class LoginPage {
     }
   }
 
+  tooltip() {
+
+  }
 }

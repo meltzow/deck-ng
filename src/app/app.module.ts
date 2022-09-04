@@ -11,7 +11,6 @@ import { ErrorInterceptor } from '@app/helper/error.interceptor';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { FormsModule } from "@angular/forms";
 import { MyRenderer } from "@app/services";
-import { environment } from "@environments/environment";
 import { AuthGuard } from "@app/helper/auth-guard";
 import { MarkdownModule } from 'ngx-markdown';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';

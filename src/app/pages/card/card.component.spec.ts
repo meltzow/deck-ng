@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardComponent } from './card.component';
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { CardsService } from "@app/services/cards.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
@@ -59,8 +59,6 @@ describe('CardComponent', () => {
   });
 
   it('should create', () => {
-
-
     expect(component).toBeTruthy();
   });
 });
