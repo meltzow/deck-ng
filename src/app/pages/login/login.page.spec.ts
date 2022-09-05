@@ -39,7 +39,7 @@ describe('Login', () => {
     expect(component).toBeTruthy();
   });
 
-  it('labels are translated', waitForAsync(() => {
+  it('labels are translated', () => {
     let labels, server_url
     expect(transService.getBrowserLang()).toEqual("de")
     fixture.detectChanges();
@@ -62,5 +62,5 @@ describe('Login', () => {
     server_url = labels[0].textContent;
     expect(server_url).toEqual('server URL');
 
-  }));
+  });
 });
