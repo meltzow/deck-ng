@@ -15,7 +15,7 @@
         </ion-list>
 
         <ion-list *ngIf="loggedIn" lines="none">
-          <ion-list-header>
+          <ion-list-header color="primary">
            <ion-label translate="">account</ion-label>
           </ion-list-header>
 
@@ -29,7 +29,7 @@
 <!--          </ion-menu-toggle>-->
 
           <ion-menu-toggle autoHide="false">
-            <ion-item button (click)="logout()" detail="false">
+            <ion-item button="" (click)="logout()" detail="false">
               <ion-icon slot="start" name="log-out"></ion-icon>
               <ion-label translate="">
                 logout

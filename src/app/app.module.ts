@@ -20,7 +20,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,  HttpClientModule, HttpClientXsrfModule.disable(), FormsModule,
-    IonicModule.forRoot(),IonicStorageModule.forRoot(), AppRoutingModule,
+    IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule,
     MarkdownModule.forRoot(), TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -38,6 +38,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

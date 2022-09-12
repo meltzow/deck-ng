@@ -1,11 +1,11 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
       <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="board | async">
-      <ion-icon name="clipboard-outline"></ion-icon>
+      <ion-icon name="clipboard-outline" slot="start"></ion-icon>
       <ion-label translate="">{{ (board | async).title }}</ion-label>
       </ion-title>
   </ion-toolbar>

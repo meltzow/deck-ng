@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     await this.authService.ngOnInit();
     setTimeout(() => {
       SplashScreen.hide();
-    }, 2000);
+    }, 1000);
   }
 
   get loggedIn() {
