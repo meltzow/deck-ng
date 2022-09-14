@@ -40,14 +40,14 @@ describe('Login', () => {
   });
 
   it('labels are translated', () => {
+    transService.use('de')
     let labels, server_url
-    expect(transService.getBrowserLang()).toEqual("de")
     fixture.detectChanges();
     labels = fixture.debugElement.nativeElement.querySelectorAll('ion-label');
     expect(labels.length).toEqual(3)
 
     server_url = labels[0].textContent;
-    expect(server_url).toEqual('server URL');
+    expect(server_url).toEqual('Server URL');
 
     transService.use('en')
     fixture.detectChanges();
