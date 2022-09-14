@@ -1,15 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpContext, HttpHeaders, HttpParams } from "@angular/common/http";
-import { AuthenticationService } from "@app/services";
 import { CustomHttpParameterCodec } from "@app/encoder";
+import { Account } from "@app/model";
 
 @Injectable({providedIn: 'root'})
 export class ServiceHelper {
 
-  constructor(private authService: AuthenticationService) {
-  }
-
-  public getHttpOptions(): {
+  public getHttpOptions(account: Account): {
     headers?: HttpHeaders | {
       [header: string]: string | string[];
     };
@@ -27,14 +24,14 @@ export class ServiceHelper {
       params: new HttpParams({encoder: new CustomHttpParameterCodec()}),
       responseType: 'json',
       withCredentials: false,
-      headers: this.addDefaultHeaders()
+      headers: this.addDefaultHeaders(account)
     }
   }
 
-  public addDefaultHeaders(): HttpHeaders {
+  public addDefaultHeaders(account: Account): HttpHeaders {
     let localVarHeaders = new HttpHeaders();
 
-    const authData = this.authService.account && this.authService.account.getValue() ? this.authService.account.getValue().authdata : null
+    const authData = account.authdata
     if (!authData) {
       throw new Error("user is not logged in")
     }

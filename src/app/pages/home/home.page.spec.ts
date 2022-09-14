@@ -16,11 +16,6 @@ describe('HomePage', () => {
 
   beforeEach(waitForAsync(() => {
     const boardServiceSpy = jasmine.createSpyObj('BoardService',['getBoards'])
-    const response = new Observable<BoardItem[]>((observer) => {
-      // observable execution
-      observer.next([{title: 'foobar'}]);
-      observer.complete();
-    });
 
     TestBed.configureTestingModule({
       declarations: [ HomePage ],
@@ -28,7 +23,7 @@ describe('HomePage', () => {
       providers: [{ provide: BoardService, useValue: boardServiceSpy }],
     }).compileComponents();
 
-    boardServiceSpy.getBoards.and.returnValue(response)
+    boardServiceSpy.getBoards.and.returnValue(Promise.resolve([{title: 'foobar'}]))
 
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;

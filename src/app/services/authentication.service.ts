@@ -1,43 +1,31 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { interval } from "rxjs/internal/observable/interval";
-import { startWith, switchMap } from "rxjs/operators";
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
-import { Platform } from "@ionic/angular";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
-  public account: BehaviorSubject<Account> = new BehaviorSubject<any>({});
-  authState = new BehaviorSubject(false);
+  public static KEY_USER = 'user'
 
   constructor(
     private router: Router,
-    private http: HttpClient,
-    private platform: Platform,
     public storage: Storage
   ) {
-    this.platform.ready().then(() => {
-      this.ifLoggedIn();
-    });
+
   }
 
-  ifLoggedIn() {
-    this.storage.get('user').then((response) => {
-      if (response) {
-        this.authState.next(true);
+  getAccount(): Promise<Account> {
+    return this.storage.get(AuthenticationService.KEY_USER).then(value => {
+      if (value) {
+        return Promise.resolve(value)
+      } else {
+        return Promise.reject('user not authenticated')
       }
-    });
+    })
   }
 
   async ngOnInit() {
     await this.storage.create()
-    await this.storage.get('user').then(value => {
-      if (value)
-        this.account = new BehaviorSubject<Account>(value);
-    })
   }
 
   login(url: string, username: string, password: string) {
@@ -73,23 +61,19 @@ export class AuthenticationService implements OnInit {
     account1.password = password
     account1.authdata = window.btoa(account1.username + ':' + account1.password);
     account1.url = url
-    this.storage.set("user", account1).then(() => {
-      this.account.next(account1);
-      this.authState.next(true);
+    this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
       this.router.navigate(['home']);
     })
   }
 
   logout() {
-    this.storage.remove("user").then(value => {
-      this.account.next(null);
-      this.authState.next(false)
+    this.storage.remove(AuthenticationService.KEY_USER).then(value => {
       this.router.navigate(['login']);
     })
   }
 
-    isAuthenticated() {
-      return this.authState.value;
+    isAuthenticated(): Promise<boolean> {
+      return this.getAccount().then(value => value!= null)
     }
 
 }

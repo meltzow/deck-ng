@@ -5,16 +5,14 @@ import { ViewBoardPageRoutingModule } from './view-board-routing.module';
 
 import { ViewBoardPage } from './view-board.page';
 import { HttpClientModule } from "@angular/common/http";
-import { AuthenticationService, BoardService, StackService } from "@app/services";
-import { Observable } from "rxjs";
-import { BoardItem } from "@app/model/boardItem";
-import { StackItem } from "@app/model";
+import { BoardService, StackService } from "@app/services";
+import { of } from "rxjs";
 
 describe('ViewBoardPage', () => {
   let component: ViewBoardPage;
   let fixture: ComponentFixture<ViewBoardPage>;
-  let boardServiceSpy: any
-  let stackServiceSpy: any
+  let boardServiceSpy
+  let stackServiceSpy
 
   beforeEach(waitForAsync(() => {
 
@@ -39,16 +37,8 @@ describe('ViewBoardPage', () => {
         }
       ],
     }).compileComponents();
-    boardServiceSpy.getBoard.and.returnValue(new Observable<BoardItem>((observer) => {
-      // observable execution
-      observer.next({title: 'foobar', id: 1});
-      observer.complete();
-    }));
-    stackServiceSpy.getStacks.and.returnValue(new Observable<StackItem[]>((observer) => {
-      // observable execution
-      observer.next([{title: 'foobar', id: 1}]);
-      observer.complete();
-    }));
+    boardServiceSpy.getBoard.and.returnValue(Promise.resolve({title: 'foobar', id: 1}))
+    stackServiceSpy.getStacks.and.returnValue(of([{title: 'foobar', id: 1}]))
 
     fixture = TestBed.createComponent(ViewBoardPage);
     component = fixture.componentInstance;
@@ -56,7 +46,6 @@ describe('ViewBoardPage', () => {
   }));
 
   it('should create', () => {
-
     expect(component).toBeTruthy();
   });
 

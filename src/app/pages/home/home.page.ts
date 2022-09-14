@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardItem } from "@app/model/boardItem";
 import { ToastController } from "@ionic/angular";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, firstValueFrom } from "rxjs";
 import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services";
 
@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
 
   getBoards(): Promise<any> {
     this.isLoading = true
-    return this.boardService.getBoards(true).toPromise()
+    return firstValueFrom(this.boardService.getBoards(true))
       .then(value => this.boards.next(value))
       .catch(reason => {
         this.presentToastWithOptions(reason)

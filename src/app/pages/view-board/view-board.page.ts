@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BoardItem } from "@app/model/boardItem";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, firstValueFrom } from "rxjs";
 import { StackItem } from "@app/model/stackItem";
 import { Card } from "@app/model/card";
 import { IonModal, ToastController } from "@ionic/angular";
@@ -37,11 +37,11 @@ export class ViewBoardPage implements OnInit {
 
   private getBoard(id: string) {
     this.isLoading = true
-    this.boardService.getBoard(parseInt(id, 10)).subscribe(
+    this.boardService.getBoard(parseInt(id, 10)).then(
       board => {
         this.board.next(board)
 
-        this.stackService.getStacks(parseInt(id, 10)).toPromise().then(stacks => {
+        firstValueFrom(this.stackService.getStacks(parseInt(id, 10))).then(stacks => {
           const cards = new Array<Card>()
           stacks.forEach(stackItem => {
             stackItem.cards?.forEach(card => {

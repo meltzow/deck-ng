@@ -1,23 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 
 import { StackService } from './stack.service';
-import { BoardItem } from "@app/model/boardItem";
 import { StackItem } from "@app/model";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { HttpClient } from "@angular/common/http";
 import { AuthenticationService } from "@app/services/authentication.service";
-import { BehaviorSubject } from "rxjs";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 
 describe('StackService', () => {
   let service: StackService;
   let stacks: StackItem[]
   let httpMock: HttpTestingController
-  let httpClient: HttpClient
-  let authServiceSpy: AuthenticationService
+  let authServiceSpy
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['getAccount'])
 
     TestBed.configureTestingModule({
       imports:[HttpClientTestingModule],
@@ -28,23 +24,24 @@ describe('StackService', () => {
     });
     service = TestBed.inject(StackService);
     httpMock = TestBed.inject(HttpTestingController)
-    httpClient = TestBed.inject(HttpClient)
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('check getStacks() request for expectations', () => {
+  it('check getStacks() request for expectations',  async () => {
 
     stacks = [{title :'TheCodeBuzz', id: 2131}]
-    authServiceSpy.account = new BehaviorSubject({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'})
+    authServiceSpy.getAccount.and.returnValue(Promise.resolve({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'}))
 
-    service.getStacks(1).subscribe((emp)=>{
+   await service.getStacks(1).subscribe((emp)=>{
       expect(emp).toEqual(stacks);
-    });
+    })
+     // .catch(reason => expect(reason).toEqual('user not auth'))
 
-    const req = httpMock.expectOne('https://foo.bar' + '/index.php/apps/deck/api/v1/boards/1/stacks');
+    const req = httpMock.expectOne('https://foo.bar/index.php/apps/deck/api/v1/boards/1/stacks');
+
     expect(req.request.method).toEqual("GET")
     expect(req.request.headers.get('Authorization')).toEqual('Basic foobar')
     //this header is not allowed by server see response header Access-Control-Allow-Headers

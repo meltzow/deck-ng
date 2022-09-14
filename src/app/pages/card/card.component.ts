@@ -33,7 +33,7 @@ export class CardComponent implements OnInit {
   }
 
   doRefresh() {
-      this.cardService.getCard(this.boardId, this.stackId, this.cardId).subscribe(value => {
+      this.cardService.getCard(this.boardId, this.stackId, this.cardId).then(value => {
         this.card.next(value)
         this.plainText = value.description
         this.content = this.markdownService.parse(value.description)

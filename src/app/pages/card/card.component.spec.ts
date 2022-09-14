@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from "@angular/common/
 import { CardsService } from "@app/services/cards.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { Card } from "@app/model/card";
 import { MarkdownModule, MarkdownService } from "ngx-markdown";
 
@@ -45,13 +45,8 @@ describe('CardComponent', () => {
 
   beforeEach(() => {
     const card = {title: "this is the title"}
-    const response = new Observable<Card>((observer) => {
-      // observable execution
-      observer.next(card);
-      observer.complete();
-    });
 
-    cardServiceSpy.getCard.and.returnValue(response)
+    cardServiceSpy.getCard.and.returnValue(Promise.resolve(card))
 
     fixture = TestBed.createComponent(CardComponent);
     component = fixture.componentInstance;

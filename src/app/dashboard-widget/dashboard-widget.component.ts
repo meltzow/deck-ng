@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BoardItem } from "@app/model/boardItem";
 import { StackService } from "@app/services";
 import { StackItem } from "@app/model";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, firstValueFrom } from "rxjs";
 
 @Component({
   selector: 'app-dashboard-widget',
@@ -22,7 +22,7 @@ export class DashboardWidgetComponent implements OnInit {
 
   getStacks() {
     if (!this.board) return
-    return this.stackService.getStacks(this.board.id).toPromise().then(value => {
+    return firstValueFrom(this.stackService.getStacks(this.board.id)).then(value => {
       this.stacks.next(value);
     }).finally(() =>
       this.stacksLoading = false

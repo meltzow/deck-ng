@@ -1,28 +1,21 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { IonicModule } from "@ionic/angular";
-import { RouterModule } from "@angular/router";
 import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services/board.service";
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from "@angular/common/http";
 import { BoardItem } from "@app/model/boardItem";
-import { BehaviorSubject } from "rxjs";
-import { Account } from "@app/model";
 import { ServiceHelper } from "@app/helper/serviceHelper";
-import { AppComponent } from "@app/app.component";
 
 describe('BoardService', () => {
   let service: BoardService;
   let boards: BoardItem[]
   let httpMock: HttpTestingController
-  let httpClient: HttpClient
-  let authServiceSpy: AuthenticationService
+  let authServiceSpy
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
 
-    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['getAccount'])
 
     TestBed.configureTestingModule({
       imports:[HttpClientTestingModule],
@@ -33,26 +26,18 @@ describe('BoardService', () => {
     });
     service = TestBed.inject(BoardService);
     httpMock = TestBed.inject(HttpTestingController)
-    httpClient = TestBed.inject(HttpClient)
-
-  //   TestBed.configureTestingModule({
-  //     declarations: [BoardService],
-  //     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  //     imports: [IonicModule.forRoot(), MessageComponentModule, RouterModule.forRoot([]), IonicStorageModule.forRoot()],
-  //     providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
-  //   }).compileComponents();
-  }));
+  })
 
     it('should be created', () => {
       expect(service).toBeTruthy();
     });
 
-  it('check getBoards() request for expectations', () => {
+  it('check getBoards() request for expectations', async () => {
 
     boards = [{title :'TheCodeBuzz', id: 2131}]
-    authServiceSpy.account = new BehaviorSubject({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'})
+    authServiceSpy.getAccount.and.returnValue(Promise.resolve({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'}))
 
-    service.getBoards().subscribe((emp)=>{
+    await service.getBoards().subscribe((emp)=>{
       expect(emp).toEqual(boards);
     });
 
@@ -70,26 +55,39 @@ describe('BoardService', () => {
 
   });
 
-  it('getBoards() ist not allowed if not logged in', () => {
+  it('getBoards() ist not allowed if not logged in', async function() {
 
-    (authServiceSpy.isAuthenticated as any).and.returnValue(false)
-    authServiceSpy.account = new BehaviorSubject(null)
-    try {
-      service.getBoards().subscribe((emp)=>{
+    // authServiceSpy.isAuthenticated.and.returnValue(Promise.resolve(false))
+    authServiceSpy.getAccount.and.returnValue(Promise.reject('user foo bar'))
+
+      await service.getBoards().subscribe((emp)=>{
         console.log("no op")
-        fail("ist not allowed")
-      }, error => {
-        console.log("error ist handled")
+        fail("is not allowed")
+      }, (error) => {
+        expect(error).toEqual('user foo bar')
       });
-      fail("no error was thrown")
-    } catch (exception) {
-      expect(exception.message).toEqual("user is not logged in")
-    }
-
 
     httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
     httpMock.verify();
 
   });
+
+  // it('should timeout with Promise+clock', (done: DoneFn): void => {
+  //   authServiceSpy.getAccount.and.returnValue(Promise.reject('user foo bar'))
+  //
+  //   jasmine.clock().install();
+  //   service.getBoards().then((value) => {
+  //       done.fail('was supposed to timeout error');
+  //     }).catch((error) => {
+  //       expect(error).toEqual('user foo bar');
+  //       done();
+  //     }
+  //   );
+  //   jasmine.clock().tick(3000);
+  //   jasmine.clock().uninstall()
+  //
+  //   httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
+  //   httpMock.verify();
+  // });
 
 });

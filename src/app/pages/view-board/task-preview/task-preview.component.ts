@@ -9,7 +9,7 @@ import { CardsService } from "@app/services/cards.service";
   templateUrl: './task-preview.component.html',
   styleUrls: ['./task-preview.component.css']
 })
-export class TaskPreviewComponent implements OnInit {
+export class TaskPreviewComponent {
 
   @Input() card: Card;
   @Input() board: BoardItem
@@ -17,13 +17,11 @@ export class TaskPreviewComponent implements OnInit {
   constructor(private cardService: CardsService) {
   }
 
-  ngOnInit(): void {
-  }
 
   changeTitle($event: string) {
     console.log ("the new String value: " + $event)
     this.card.title = $event
-    this.cardService.updateCard(this.board.id, this.card.stackId, this.card.id, this.card).subscribe(value => console.log(value),error => console.warn(error))
+    this.cardService.updateCard(this.board.id, this.card.stackId, this.card.id, this.card).then(value => console.log(value),error => console.warn(error))
   }
 
   md5(): string {

@@ -1,15 +1,11 @@
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec, HttpContext
-        }       from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpContext } from '@angular/common/http';
+import { firstValueFrom, from, Observable, switchMap } from 'rxjs';
 
-import { BoardItem } from '../model/boardItem';
-import { CreateBoardRequest } from '../model/createBoardRequest';
+import { BoardItem, CreateBoardRequest } from '@app/model';
 
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper"
-
 
 
 @Injectable({
@@ -17,65 +13,59 @@ import { ServiceHelper } from "@app/helper/serviceHelper"
 })
 export class BoardService {
 
-    constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
-    }
+  constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
+  }
 
 
-     /**
-     * Create a new board
-     * @param createBoardRequest
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public createBoard(createBoardRequest?: CreateBoardRequest): Observable<BoardItem> {
-        const localVarHeaders = this.serviceHelper.addDefaultHeaders();
-
-        return this.httpClient.post<BoardItem>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards`,
-            createBoardRequest,
-            {
-                context: new HttpContext(),
-                responseType: "json",
-                withCredentials: false,
-                headers: localVarHeaders
-            }
-        );
-    }
-
-
-    /**
-     * Get a board
-     * @param boardId Numeric ID of the board to get
-     */
-    public getBoard(boardId: number): Observable<BoardItem> {
-        if (boardId === null || boardId === undefined) {
-            throw new Error('Required parameter boardId was null or undefined when calling getBoard.');
+  /**
+   * Create a new board
+   * @param createBoardRequest
+   */
+  public createBoard(createBoardRequest?: CreateBoardRequest): Promise<BoardItem> {
+    return this.authService.getAccount().then((account) => {
+      return firstValueFrom(this.httpClient.post<BoardItem>(`${account.url}/index.php/apps/deck/api/v1/boards`,
+        createBoardRequest,
+        {
+          context: new HttpContext(),
+          responseType: "json",
+          withCredentials: false,
+          headers: this.serviceHelper.addDefaultHeaders(account)
         }
+      ))
+    })
+  }
 
-        const localVarHeaders = this.serviceHelper.addDefaultHeaders()
 
-        return this.httpClient.get<BoardItem>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
-            this.serviceHelper.getHttpOptions()
-        );
+  /**
+   * Get a board
+   * @param boardId Numeric ID of the board to get
+   */
+  public getBoard(boardId: number): Promise<BoardItem> {
+    if (boardId === null || boardId === undefined) {
+      throw new Error('Required parameter boardId was null or undefined when calling getBoard.');
     }
 
-    /**
-     * Get a list of boards
-     * @param details
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getBoards(details?: boolean): Observable<Array<BoardItem>> {
+    return this.authService.getAccount().then((account) => {
+      return firstValueFrom(this.httpClient.get<BoardItem>(`${account.url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
+        this.serviceHelper.getHttpOptions(account)
+      ))
+    })
+  }
 
-        if (details !== undefined && details !== null) {
-        //   localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-        //     <any>details, 'details');
-        }
+  /**
+   * Get a list of boards
+   * @param details
+   */
+  public getBoards(details?: boolean): Observable<Array<BoardItem>> {
 
-      const localVarHeaders = this.serviceHelper.addDefaultHeaders()
-
-        return this.httpClient.get<Array<BoardItem>>(`${this.authService.account.getValue().url}/index.php/apps/deck/api/v1/boards`,
-            this.serviceHelper.getHttpOptions()
+    const promiseObservable = from(this.authService.getAccount())
+    return promiseObservable.pipe(
+      switchMap((account) => {
+        return this.httpClient.get<Array<BoardItem>>(`${account.url}/index.php/apps/deck/api/v1/boards`,
+          this.serviceHelper.getHttpOptions(account)
         );
-    }
+      })
+    )
+  }
 
 }
