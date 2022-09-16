@@ -66,14 +66,16 @@ export class AuthenticationService implements OnInit {
     })
   }
 
-  logout() {
-    this.storage.remove(AuthenticationService.KEY_USER).then(value => {
+  logout():Promise<any> {
+   return  this.storage.remove(AuthenticationService.KEY_USER).then(value => {
       this.router.navigate(['login']);
     })
   }
 
-    isAuthenticated(): Promise<boolean> {
-      return this.getAccount().then(value => value!= null)
-    }
+  isAuthenticated(): Promise<boolean> {
+    return this.getAccount()
+      .then(value => value != null)
+      .catch(() => false)
+  }
 
 }

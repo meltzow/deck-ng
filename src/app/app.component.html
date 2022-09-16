@@ -3,7 +3,7 @@
 
     <ion-menu contentId="main-content">
       <ion-content>
-        <ion-list *ngIf="loggedIn" lines="none">
+        <ion-list *ngIf="(isAuthenticated() | async)" lines="none">
           <ion-menu-toggle autoHide="false" >
             <ion-item routerLink="home" routerLinkActive="selected" routerDirection="root" detail="false">
               <ion-icon slot="start" name="clipboard-outline"></ion-icon>
@@ -14,7 +14,7 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list *ngIf="loggedIn" lines="none">
+        <ion-list *ngIf="(isAuthenticated() | async)" lines="none">
           <ion-list-header color="primary">
            <ion-label translate="">account</ion-label>
           </ion-list-header>
@@ -39,7 +39,7 @@
 
         </ion-list>
 
-        <ion-list *ngIf="!loggedIn" lines="none">
+        <ion-list *ngIf="!(isAuthenticated() | async)" lines="none">
           <ion-list-header>
             <ion-label translate="">account</ion-label>
           </ion-list-header>

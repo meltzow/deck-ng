@@ -6,6 +6,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { AuthenticationService } from "@app/services";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
+import { from, Observable, of, share } from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class AppComponent implements OnInit {
   dark = false;
+  courseObs: Observable<boolean>;
 
   constructor(
     private menu: MenuController,
@@ -33,10 +35,11 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       SplashScreen.hide();
     }, 1000);
+    this.courseObs = from(this.authService.isAuthenticated())
   }
 
-  get loggedIn() {
-    return this.authService.isAuthenticated()
+  isAuthenticated(): Observable<boolean> {
+    return this.courseObs
   }
 
   logout() {

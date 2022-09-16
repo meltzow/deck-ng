@@ -4,15 +4,21 @@ import { AuthenticationService } from "@app/services/authentication.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { IonicStorageModule } from "@ionic/storage-angular";
 import { Storage } from '@ionic/storage';
+import { Router } from "@angular/router";
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
   let storage: Storage
+  let routerSpy
 
   beforeEach(() => {
+    routerSpy = {navigate: jasmine.createSpy('navigate')};
 
     TestBed.configureTestingModule({
       imports:[IonicStorageModule.forRoot()],
+      providers: [
+        { provide: Router, useValue: routerSpy }
+      ]
     });
     service = TestBed.inject(AuthenticationService);
     storage = TestBed.inject(Storage)
@@ -26,8 +32,28 @@ describe('AuthenticationService', () => {
     await service.ngOnInit()
     await service.logout()
 
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['login']);
+
     await service.getAccount()
       .then(value => fail('must not happend'))
       .catch(reason => expect(reason).toEqual('user not authenticated'))
   })
+
+  it('isAuthenticated is working', async function ()  {
+    await service.ngOnInit()
+    await service.logout()
+    // expect (routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+
+    let auth: boolean = await service.isAuthenticated()
+
+    expect(auth).toBeFalse()
+
+    await service.login('http://foo.bar/', 'bar', 'secret')
+    // expect (routerSpy.navigate).toHaveBeenCalledWith(['/home']);
+
+    auth = await service.isAuthenticated()
+
+    expect(auth).toBeTruthy()
+  })
+
 });
