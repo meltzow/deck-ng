@@ -22,6 +22,7 @@ export class ViewBoardPage implements OnInit {
   private boardId;
   @ViewChild(IonModal) modal: IonModal;
   isLoading = true;
+  selectedStack: number
 
   constructor(
     private boardService: BoardService,
@@ -49,6 +50,7 @@ export class ViewBoardPage implements OnInit {
             })
           })
           this.stacks.next(stacks)
+          this.selectedStack = stacks[0].id
           this.cards.next(cards)
           this.searchedCards = cards
           this.isLoading = false
@@ -117,4 +119,9 @@ export class ViewBoardPage implements OnInit {
       console.log("filter confirmed")
     }
   }
+
+  segmentChanged(ev: any) {
+    this.selectedStack = ev.detail.value
+  }
+
 }

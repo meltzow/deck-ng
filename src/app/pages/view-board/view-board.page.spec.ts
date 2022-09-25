@@ -38,7 +38,7 @@ describe('ViewBoardPage', () => {
       ],
     }).compileComponents();
     boardServiceSpy.getBoard.and.returnValue(Promise.resolve({title: 'foobar', id: 1}))
-    stackServiceSpy.getStacks.and.returnValue(of([{title: 'foobar', id: 1}]))
+    stackServiceSpy.getStacks.and.returnValue(of([{title: 'first', id: 2},{title: 'second', id: 1} ]))
 
     fixture = TestBed.createComponent(ViewBoardPage);
     component = fixture.componentInstance;
@@ -47,6 +47,12 @@ describe('ViewBoardPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('must select first stack', () => {
+    fixture.detectChanges();
+
+    expect(component.selectedStack).toEqual(2);
   });
 
 });

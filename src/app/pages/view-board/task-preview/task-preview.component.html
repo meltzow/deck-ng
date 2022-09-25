@@ -1,10 +1,5 @@
-<ion-item *ngIf="card" detail="true" routerLink="/board/{{board.id}}/stack/{{card.stackId}}/card/{{card.id}}" >
+<ion-item *ngIf="card && selectedStack == card.stackId" detail="true" routerLink="/board/{{board.id}}/stack/{{card.stackId}}/card/{{card.id}}" >
           <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit>
-
-  <ion-chip outline="true">
-    <ion-label>{{card.lastModified * 1000 | date:'short':'+0200' }}</ion-label>
-    <ion-icon name="timer-outline"></ion-icon>
-  </ion-chip>
 
   <ion-chip [ngStyle]="{'background-color': '#' + label.color, 'color':'#363232'}"
             *ngFor="let label of card.labels">

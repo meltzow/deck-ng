@@ -67,13 +67,19 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-list *ngFor="let stack of (stacks | async)">
-    <ion-list-header >
-      {{stack.title}}
-    </ion-list-header>
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true">
+    <ion-segment-button *ngFor="let stack of (stacks | async)" value="{{stack.id}}">
+      <ion-label>
+        {{stack.title}}
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-   <app-task-preview [card]="card" *ngFor="let card of stack.cards" [board]="board | async">
-   </app-task-preview>
+  <ion-list *ngFor="let stack of (stacks | async)" >
+    <ng-container *ngFor="let card of stack.cards">
+     <app-task-preview [card]="card" [selectedStack]="selectedStack"  [board]="board | async">
+     </app-task-preview>
+    </ng-container>
   </ion-list>
 </ion-content>
 

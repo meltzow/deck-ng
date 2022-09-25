@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Card } from "@app/model/card";
 import { BoardItem } from "@app/model/boardItem";
 import {Md5} from "md5-typescript";
@@ -13,6 +13,7 @@ export class TaskPreviewComponent {
 
   @Input() card: Card;
   @Input() board: BoardItem
+  @Input() selectedStack: number
 
   constructor(private cardService: CardsService) {
   }
