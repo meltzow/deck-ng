@@ -4,54 +4,97 @@
       <ion-menu-button></ion-menu-button>
       <ion-back-button [text]="getBackButtonText()" ></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="card | async">
-      <ion-icon name="clipboard-outline"></ion-icon>
-      <ion-label>{{ (card | async).title }}</ion-label>
+    <ion-title *ngIf="card">
+      <ion-icon name="build-outline"></ion-icon>
+      <ion-label>{{card.title}}</ion-label>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true">
+<ion-content fullscreen="true" *ngIf="!isLoading">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh()">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-<ion-card>
-  <ion-card-header>
-    <ion-card-subtitle>{{(card | async).type}}</ion-card-subtitle>
-    <ion-card-title>{{(card | async).title}}</ion-card-title>
-
-  </ion-card-header>
+  <ion-grid>
+  <ion-row>
+    <ion-col>
+      <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit>
+    </ion-col>
+  </ion-row>
+  </ion-grid>
+  <ion-card>
   <ion-card-content>
-    <ion-item>
-    <ion-toggle color="secondary" [(ngModel)]="toggleVal" checked="toggleVal" (ionChange)="convert()"></ion-toggle>
-    </ion-item>
-    <div [hidden]="!toggleVal"  [innerHTML]="content" ></div>
-    <ion-item [hidden]="toggleVal">
-      <ion-textarea rows="6" [(ngModel)]="plainText"  placeholder="Strat writing your markdown below..."></ion-textarea>
-
-    </ion-item>
 
 
-    <ion-chip *ngIf="(card | async).duedate" [outline]="true">
+
+    <ion-chip *ngIf="card.duedate" [outline]="true">
       <ion-icon name="hourglass-outline"></ion-icon>
-      <ion-label>{{(card | async).duedate | date: 'short'}}</ion-label>
+      <ion-label>{{card.duedate | date: 'short'}}</ion-label>
     </ion-chip>
 
-    <ion-chip *ngFor="let attachment of (card | async).attachments" [outline]="true" >
+    <ion-chip *ngFor="let attachment of card.attachments" [outline]="true" >
       <ion-icon name="attach-outline"></ion-icon>
       <ion-label>{{attachment.extendedData.info.basename}}</ion-label>
     </ion-chip>
 
-    <ion-chip *ngFor="let label of (card | async).labels" [outline]="true">
-      {{label.title}}
-    </ion-chip>
-
-    <ion-chip *ngFor="let assignee of (card | async).assignedUsers" [outline]="true" >
-      <ion-icon name="people-outline"></ion-icon>
-      <ion-label>{{assignee.participant.displayname}}</ion-label>
-    </ion-chip>
   </ion-card-content>
 </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col >
+        <ion-card>
+          <ion-card-content>
+        <ion-icon name="document-text-outline"></ion-icon>
+        <ion-textarea  #textareaDescription [hidden]="!descEditable" rows="6" [(ngModel)]="plainText" placeholder="add description in markdown here..." (ionBlur)="onBlurDescription()">
+        </ion-textarea>
+            <div *ngIf="!descEditable" [innerHTML]="content" (click)="onFocusDescription()" ></div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      <ion-icon name="pricetags-outline"></ion-icon>
+      <ion-label translate="">Schlagworte</ion-label>
+      <ion-select [compareWith]="labelPreselected"  placeholder="Select labels" [multiple]="true" (ionChange)="handlabelChange($event)"
+                  [ngModel]="card.labels">
+        <ion-select-option  *ngFor="let label of board.labels" [value]="label">{{label.title}}</ion-select-option>
+      </ion-select>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="people-outline"></ion-icon>
+        <ion-select [compareWith]="labelPreselected"  placeholder="Select assignees" [multiple]="true" disabled="true"
+                    [ngModel]="card.assignedUsers">
+          <ion-select-option  *ngFor="let assignee of card.assignedUsers" [value]="assignee">{{assignee.participant.displayname}}</ion-select-option>
+        </ion-select>
 
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-content *ngIf="isLoading">
+  <ion-list >
+    <ion-list-header>
+      <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+    </ion-list-header>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

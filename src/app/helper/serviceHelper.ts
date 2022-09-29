@@ -38,6 +38,7 @@ export class ServiceHelper {
 
     localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
     localVarHeaders = localVarHeaders.set('Accept', 'application/json');
+    localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
     // localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
     return localVarHeaders
   }

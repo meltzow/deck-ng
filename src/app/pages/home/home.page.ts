@@ -30,7 +30,7 @@ export class HomePage implements OnInit {
     return firstValueFrom(this.boardService.getBoards(true))
       .then(value => this.boards.next(value))
       .catch(reason => {
-        this.presentToastWithOptions(reason)
+        // this.presentToastWithOptions(reason)
         return []
       }).finally(() =>
         this.isLoading = false

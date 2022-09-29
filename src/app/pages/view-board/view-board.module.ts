@@ -10,12 +10,15 @@ import { InlineEditComponent } from "@app/inline-edit/inline-edit.component";
 import { TaskPreviewComponent } from './task-preview/task-preview.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ViewBoardPageRoutingModule
-  ],
-  declarations: [ViewBoardPage, InlineEditComponent, TaskPreviewComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ViewBoardPageRoutingModule
+    ],
+    exports: [
+        InlineEditComponent
+    ],
+    declarations: [ViewBoardPage, InlineEditComponent, TaskPreviewComponent]
 })
 export class ViewBoardModule {}

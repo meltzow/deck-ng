@@ -60,4 +60,96 @@ export class CardsService {
       ))
     })
   }
+
+  public assignLabel2Card(boardId: number, stackId: number, cardId: number, labelId: number): Promise<Card> {
+
+    if (boardId === null || boardId === undefined) {
+      throw new Error('Required parameter boardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (stackId === null || stackId === undefined) {
+      throw new Error('Required parameter stackId was null or undefined when calling assignLabel2Card.');
+    }
+    if (cardId === null || cardId === undefined) {
+      throw new Error('Required parameter cardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (labelId === null || labelId === undefined) {
+      throw new Error('Required parameter labelId was null or undefined when calling assignLabel2Card.');
+    }
+
+    return this.authService.getAccount().then((account) => {
+      return firstValueFrom(this.httpClient.put<Card>(`${account.url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}/assignLabel`,
+        {labelId:labelId},
+        this.serviceHelper.getHttpOptions(account)
+      ))
+    })
+  }
+
+  public removeLabel2Card(boardId: number, stackId: number, cardId: number, labelId: number): Promise<Card> {
+
+    if (boardId === null || boardId === undefined) {
+      throw new Error('Required parameter boardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (stackId === null || stackId === undefined) {
+      throw new Error('Required parameter stackId was null or undefined when calling assignLabel2Card.');
+    }
+    if (cardId === null || cardId === undefined) {
+      throw new Error('Required parameter cardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (labelId === null || labelId === undefined) {
+      throw new Error('Required parameter labelId was null or undefined when calling assignLabel2Card.');
+    }
+
+    return this.authService.getAccount().then((account) => {
+      return firstValueFrom(this.httpClient.put<Card>(`${account.url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}/removeLabel`,
+        {labelId:labelId},
+        this.serviceHelper.getHttpOptions(account)
+      ))
+    })
+  }
+
+  public assignUser2Card(boardId: number, stackId: number, cardId: number, userId: number): Promise<Card> {
+
+    if (boardId === null || boardId === undefined) {
+      throw new Error('Required parameter boardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (stackId === null || stackId === undefined) {
+      throw new Error('Required parameter stackId was null or undefined when calling assignLabel2Card.');
+    }
+    if (cardId === null || cardId === undefined) {
+      throw new Error('Required parameter cardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter labelId was null or undefined when calling assignLabel2Card.');
+    }
+
+    return this.authService.getAccount().then((account) => {
+      return firstValueFrom(this.httpClient.put<Card>(`${account.url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}/assignUser`,
+        {userId:userId},
+        this.serviceHelper.getHttpOptions(account)
+      ))
+    })
+  }
+
+  public unassignUser2Card(boardId: number, stackId: number, cardId: number, userId: number): Promise<Card> {
+
+    if (boardId === null || boardId === undefined) {
+      throw new Error('Required parameter boardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (stackId === null || stackId === undefined) {
+      throw new Error('Required parameter stackId was null or undefined when calling assignLabel2Card.');
+    }
+    if (cardId === null || cardId === undefined) {
+      throw new Error('Required parameter cardId was null or undefined when calling assignLabel2Card.');
+    }
+    if (userId === null || userId === undefined) {
+      throw new Error('Required parameter labelId was null or undefined when calling assignLabel2Card.');
+    }
+
+    return this.authService.getAccount().then((account) => {
+      return firstValueFrom(this.httpClient.put<Card>(`${account.url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}/unassignUser`,
+        {userId:userId},
+        this.serviceHelper.getHttpOptions(account)
+      ))
+    })
+  }
 }
