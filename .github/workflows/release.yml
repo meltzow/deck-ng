@@ -6,10 +6,22 @@ on:
         description: 'which track should be used? One of internal, alpha (means closed), beta (means open), production'
         required: true
         default: 'internal'
+        options:
+          - internal
+          - alpha
+          - beta
+          - production
+        type: choice
       status:
         required: false
         description: 'One of completed, inProgress, halted, draft'
         default: 'draft'
+        type: choice
+        options:
+          - completed
+          - inProgress
+          - halted
+          - draft
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -47,4 +59,8 @@ jobs:
          track: ${{ github.event.inputs.track }}
          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
          status: ${{ github.event.inputs.status }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app bundle
+          path: android/app/build/outputs/bundle/release/app-release.aab
 
