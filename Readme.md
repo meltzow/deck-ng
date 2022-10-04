@@ -16,3 +16,9 @@ use this:
 ## deeplink
 * https://capacitorjs.com/docs/guides/deep-links
 
+## icons
+* https://adaptiveicon.com/
+* https://developer.android.com/develop/ui/views/launch/icon_design_adaptive
+* https://developer.android.com/distribute/google-play/resources/icon-design-specifications
+
+
