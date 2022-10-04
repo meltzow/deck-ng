@@ -21,4 +21,7 @@ use this:
 * https://developer.android.com/develop/ui/views/launch/icon_design_adaptive
 * https://developer.android.com/distribute/google-play/resources/icon-design-specifications
 
+## stores
+* https://play.google.com/console/u/1/developers/
+
 
