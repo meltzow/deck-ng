@@ -51,6 +51,10 @@ jobs:
         env:
           # override default build-tools version (29.0.3) -- optional
           BUILD_TOOLS_VERSION: "30.0.2"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: app bundle
+          path: android/app/build/outputs/bundle/release/app-release.aab
       - name: Upload Android Release to Play Store
         uses: r0adkll/upload-google-play@v1.0.17
         with:
@@ -59,8 +63,5 @@ jobs:
          track: ${{ github.event.inputs.track }}
          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
          status: ${{ github.event.inputs.status }}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: app bundle
-          path: android/app/build/outputs/bundle/release/app-release.aab
+
 
