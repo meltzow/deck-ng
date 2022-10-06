@@ -23,5 +23,6 @@ use this:
 
 ## stores
 * https://play.google.com/console/u/1/developers/
+* https://appstoreconnect.apple.com/apps
 
 
