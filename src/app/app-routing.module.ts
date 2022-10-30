@@ -10,10 +10,12 @@ const routes: Routes = [
   },
   {
     path: 'board/:id',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/view-board/view-board.module').then( m => m.ViewBoardModule)
   },
   {
     path: 'board/:boardId/stack/:stackId/card/:cardId',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/card/card.module').then( m => m.CardModule)
   },
   // {
