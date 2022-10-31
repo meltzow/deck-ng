@@ -18,20 +18,22 @@ lane :beta do
   scheme = "App.#{api_environment}"
   build_app(export_xcargs: "-allowProvisioningUpdates", workspace: "./ios/App/App.xcworkspace", scheme: scheme,)
 
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true)
+  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "125543860")
   clean_build_artifacts
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
 
-lane :inc_version do
+lane :inc_version_ios do
 #ios
-#  increment_version_number(
-#    version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
-#    xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
-#  )
+ increment_version_number(
+   version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
+   xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
+ )
+end
+
+lane :inc_version_android do
  # android
  increment_version_name(
-   gradle_file_path: gradle_file_path,
    version_name: File.read("../VERSION")
  )
 end

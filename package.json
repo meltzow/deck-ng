@@ -11,7 +11,7 @@
     "build-prod": "ng build --configuration production",
     "build-android": "export CAPACITOR_ANDROID_STUDIO_PATH=/usr/local/bin/studio && ionic capacitor build android",
     "build-android-ci": "ionic capacitor sync android && cd android && ./gradlew bundleRelease && cd ..",
-    "build-ios-ci": "ionic capacitor copy ios && ionic capacitor update",
+    "build-ios-ci": "ionic capacitor sync ios",
     "test": "ng test",
     "test-ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage --source-map true",
     "lint": "ng lint",

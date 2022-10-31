@@ -21,10 +21,18 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Push a new beta build to TestFlight
 
-### inc_version
+### inc_version_ios
 
 ```sh
-[bundle exec] fastlane inc_version
+[bundle exec] fastlane inc_version_ios
+```
+
+
+
+### inc_version_android
+
+```sh
+[bundle exec] fastlane inc_version_android
 ```
 
 
