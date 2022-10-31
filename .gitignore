@@ -30,3 +30,13 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+/vendor/
+
+#fastlane
+***/fastlane/report.xml
+
+#config
+.env
+.env.production
+.env.testing
+
