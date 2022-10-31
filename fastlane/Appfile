@@ -8,8 +8,8 @@ team_id "F3C769M2C7"
 
 
 # To select a team for App Store Connect use
-# itc_team_name "Company Name"
-itc_team_id "125543860"
+# itc_team_name "Mario Meltzow"
+itc_team_id "F3C769M2C7"
 
 json_key_file "/home/mario/Nextcloud/infra/google play/pc-api-7989774826491590599-61-b0b0d29c9d33.json"
 package_name "net.meltzow.deckng"
