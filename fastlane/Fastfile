@@ -18,7 +18,7 @@ lane :beta do
   scheme = "App.#{api_environment}"
   build_app(export_xcargs: "-allowProvisioningUpdates", workspace: "./ios/App/App.xcworkspace", scheme: scheme,)
 
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true)
+  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "125543860")
   clean_build_artifacts
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
