@@ -18,7 +18,7 @@ lane :beta do
   scheme = "App.#{api_environment}"
   build_app(export_xcargs: "-allowProvisioningUpdates", workspace: "./ios/App/App.xcworkspace", scheme: scheme,)
 
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "125543860")
+  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true)
   clean_build_artifacts
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
@@ -36,4 +36,12 @@ lane :inc_version_android do
  increment_version_name(
    version_name: File.read("../VERSION")
  )
+end
+
+lane :playstore do
+  gradle(
+    task: 'assemble',
+    build_type: 'Release',
+    project_dir: "./android"
+  )
 end
