@@ -1,34 +1,44 @@
 project = "./ios/App/App.xcodeproj"
 gradle_file_path = "./android/app/build.gradle"
 
-desc "Push a new beta build to TestFlight"
-lane :beta do
-  ensure_git_branch(branch: ENV["BRANCH_NAME"])
-  ensure_git_status_clean
+for_platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    ensure_git_branch(branch: ENV["BRANCH_NAME"])
+    ensure_git_status_clean
 
-  get_certificates # invokes cert
-  get_provisioning_profile # invokes sigh
+    get_certificates # invokes cert
+    get_provisioning_profile # invokes sigh
 
-  app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
-  increment_build_number(xcodeproj: project, build_number: app_version+1)
-  identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-  update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
-  update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
-  api_environment = ENV["ENV"]
-  scheme = "App.#{api_environment}"
-  build_app(export_xcargs: "-allowProvisioningUpdates", workspace: "./ios/App/App.xcworkspace", scheme: scheme,)
+    app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
+    increment_build_number(xcodeproj: project, build_number: app_version+1)
+    identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
+    update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
+    api_environment = ENV["ENV"]
+    scheme = "App.#{api_environment}"
+    build_app(export_xcargs: "-allowProvisioningUpdates", workspace: "./ios/App/App.xcworkspace", scheme: scheme)
 
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true)
-  clean_build_artifacts
-  notification(subtitle: "Finished Building", message: "App uploaded")
-end
+    upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true)
+    clean_build_artifacts
+    notification(subtitle: "Finished Building", message: "App uploaded")
+  end
 
-lane :inc_version_ios do
-#ios
- increment_version_number(
-   version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
-   xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
- )
+  lane :release do
+    capture_screenshots                  # generate new screenshots for the App Store
+    sync_code_signing(type: "appstore")  # see code signing guide for more information
+    build_app(scheme: scheme)
+    upload_to_app_store                  # upload your app to App Store Connect
+    slack(message: "Successfully uploaded a new App Store build")
+  end
+
+  lane :inc_version do
+  #ios
+   increment_version_number(
+     version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
+     xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
+   )
+  end
 end
 
 lane :inc_version_android do
