@@ -1,7 +1,7 @@
 project = "./ios/App/App.xcodeproj"
 gradle_file_path = "./android/app/build.gradle"
 
-for_platform :ios do
+for_platform :ios  do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     ensure_git_branch(branch: ENV["BRANCH_NAME"])
@@ -15,7 +15,7 @@ for_platform :ios do
     identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
     update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
     update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
-    api_environment = ENV["ENV"]
+    api_environment = "Release"
     scheme = "App.#{api_environment}"
     build_app(export_xcargs: "-allowProvisioningUpdates", workspace: "./ios/App/App.xcworkspace", scheme: scheme)
 
