@@ -1,7 +1,7 @@
 project = "./ios/App/App.xcodeproj"
 gradle_file_path = "./android/app/build.gradle"
 
-for_platform :ios  do
+for_platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     ensure_git_branch(branch: ENV["BRANCH_NAME"])
@@ -25,7 +25,7 @@ for_platform :ios  do
   end
 
   lane :release do
-    capture_screenshots                  # generate new screenshots for the App Store
+    capture_screenshots(project: project)                  # generate new screenshots for the App Store
     sync_code_signing(type: "appstore")  # see code signing guide for more information
     build_app(scheme: scheme)
     upload_to_app_store                  # upload your app to App Store Connect
