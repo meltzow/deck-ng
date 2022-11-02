@@ -10,4 +10,4 @@
 
 # sdk("iphoneos9.0")
 
-output_directory("./ios/App/build")
+#output_directory("./ios/App/build")

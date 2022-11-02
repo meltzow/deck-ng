@@ -13,16 +13,16 @@ end
 desc "Push a new beta build to TestFlight"
 lane :beta do
   ensure_git_branch(branch: ENV["BRANCH_NAME"])
-  ensure_git_status_clean
+#   ensure_git_status_clean
 
   match(type: "appstore", readonly: is_ci)
 
-  app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
+#   app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
 #   increment_build_number(xcodeproj: project, build_number: app_version+1)
   identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-  update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
-  update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
-  api_environment = "Release"
+#   update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
+#   update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
+#   api_environment = "Release"
   build_app(clean: true, scheme: scheme, workspace: workspace)
 
   upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7")
@@ -69,3 +69,4 @@ end
 lane :tests_ios do
   run_tests(scheme: scheme, workspace: workspace)
 end
+
