@@ -13,6 +13,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### beta1
+
+```sh
+[bundle exec] fastlane beta1
+```
+
+
+
 ### beta
 
 ```sh
@@ -49,6 +57,22 @@ Push a new beta build to TestFlight
 
 ```sh
 [bundle exec] fastlane playstore
+```
+
+
+
+### tests_android
+
+```sh
+[bundle exec] fastlane tests_android
+```
+
+
+
+### tests_ios
+
+```sh
+[bundle exec] fastlane tests_ios
 ```
 
 

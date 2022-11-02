@@ -1,5 +1,14 @@
-project = "./ios/App/App.xcodeproj"
+ios_path = "./ios/App/"
+project = ios_path + "App.xcodeproj"
+workspace = ios_path + "App.xcworkspace"
 gradle_file_path = "./android/app/build.gradle"
+scheme = "App"
+
+lane :beta1 do
+  build_app(scheme: scheme,
+            workspace: workspace,
+            include_bitcode: true)
+end
 
 desc "Push a new beta build to TestFlight"
 lane :beta do
@@ -9,15 +18,14 @@ lane :beta do
   match(type: "appstore", readonly: is_ci)
 
   app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
-  increment_build_number(xcodeproj: project, build_number: app_version+1)
+#   increment_build_number(xcodeproj: project, build_number: app_version+1)
   identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
   update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
   update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
   api_environment = "Release"
-  scheme = "App"
-  build_app(project: project, scheme: scheme)
+  build_app(clean: true, scheme: scheme, workspace: workspace)
 
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true)
+  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7")
   clean_build_artifacts
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
@@ -26,7 +34,7 @@ lane :release do
   #capture_screenshots(project: project)                  # generate new screenshots for the App Store
 #   sync_code_signing(type: "appstore")# see code signing guide for more information
   match(type: "appstore", readonly: is_ci)
-  build_app(scheme: "App", project: project)
+  build_app(clean: true,scheme: scheme, workspace: workspace)
   upload_to_app_store                  # upload your app to App Store Connect
   slack(message: "Successfully uploaded a new App Store build")
 end
@@ -52,4 +60,12 @@ lane :playstore do
     build_type: 'Release',
     project_dir: "./android"
   )
+end
+
+lane :tests_android do
+  gradle(task: "test", project_dir: "./android")
+end
+
+lane :tests_ios do
+  run_tests(scheme: scheme, workspace: workspace)
 end
