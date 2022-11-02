@@ -14,7 +14,7 @@ lane :beta do
   update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
   update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
   api_environment = "Release"
-  scheme = "App.#{api_environment}"
+  scheme = "App"
   build_app(export_xcargs: "-allowProvisioningUpdates", workspace: "./ios/App/App.xcworkspace", scheme: scheme)
 
   upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true)
@@ -25,7 +25,7 @@ end
 lane :release do
   #capture_screenshots(project: project)                  # generate new screenshots for the App Store
   sync_code_signing(type: "appstore")  # see code signing guide for more information
-  build_app(scheme: scheme)
+  build_app(scheme: "App")
   upload_to_app_store                  # upload your app to App Store Connect
   slack(message: "Successfully uploaded a new App Store build")
 end
