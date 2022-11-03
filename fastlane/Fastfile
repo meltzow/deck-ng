@@ -36,7 +36,7 @@ lane :release do
 #   sync_code_signing(type: "appstore")# see code signing guide for more information
   match(type: "appstore", readonly: is_ci)
   build_app(clean: true,scheme: scheme, workspace: workspace)
-  upload_to_app_store(app_version: File.read('../VERSION'),                # upload your app to App Store Connect
+  upload_to_app_store(app_version: File.read('../VERSION')                # upload your app to App Store Connect
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
 
