@@ -20,7 +20,7 @@ lane :beta do
   update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
   update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
   api_environment = "Release"
-  build_app(clean: true, scheme: scheme,gi workspace: workspace)
+  build_app(clean: true, scheme: scheme,workspace: workspace)
 
   upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7")
   clean_build_artifacts
