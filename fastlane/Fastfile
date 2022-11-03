@@ -3,6 +3,7 @@ project = ios_path + "App.xcodeproj"
 workspace = ios_path + "App.xcworkspace"
 gradle_file_path = "./android/app/build.gradle"
 scheme = "App"
+version = File.read('../VERSION')
 
 desc "Push a new beta build to TestFlight"
 lane :beta do
@@ -11,7 +12,7 @@ lane :beta do
 
   match(type: "appstore", readonly: is_ci)
   increment_version_number(
-     version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
+     version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
      xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
    )
   app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
@@ -22,28 +23,28 @@ lane :beta do
   api_environment = "Release"
   build_app(clean: true, scheme: scheme,workspace: workspace)
 
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7", app_version: File.read('../VERSION'))
+  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7", app_version: version)
   clean_build_artifacts
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
 
 lane :release do
   increment_version_number(
-       version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
+       version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
        xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
      )
-  #capture_screenshots(project: project)                  # generate new screenshots for the App Store
+  #capture_screensh ots(project: project)                  # generate new screenshots for the App Store
 #   sync_code_signing(type: "appstore")# see code signing guide for more information
   match(type: "appstore", readonly: is_ci)
   build_app(clean: true,scheme: scheme, workspace: workspace)
-  upload_to_app_store(app_version: File.read('../VERSION'))                # upload your app to App Store Connect
+  upload_to_app_store(app_version: version)                # upload your app to App Store Connect
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
 
 lane :inc_version do
 #ios
  increment_version_number(
-   version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
+   version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
    xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
  )
 end
@@ -51,7 +52,7 @@ end
 lane :inc_version_android do
  # android
  increment_version_name(
-   version_name: File.read("../VERSION")
+   version_name: version
  )
 end
 
