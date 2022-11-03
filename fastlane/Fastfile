@@ -10,8 +10,8 @@ lane :beta do
 #   ensure_git_status_clean
 
   match(type: "appstore", readonly: is_ci)
-  latest_testflight_build_number(
-     version: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
+  increment_version_number(
+     version_number: File.read('../VERSION'),      # specify specific version number (optional, omitting it increments patch version number)
      xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
    )
   app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
