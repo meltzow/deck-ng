@@ -22,7 +22,7 @@ lane :beta do
   api_environment = "Release"
   build_app(clean: true, scheme: scheme,workspace: workspace)
 
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7")
+  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7", app_version: app_version)
   clean_build_artifacts
   notification(subtitle: "Finished Building", message: "App uploaded")
 end
