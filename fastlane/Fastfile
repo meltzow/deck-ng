@@ -58,10 +58,12 @@ end
 
 lane :playstore do
   gradle(
-    task: 'assemble',
+    task: 'clean assemble',
     build_type: 'Release',
     project_dir: "./android"
   )
+  upload_to_play_store(track: 'beta')
+  notification(subtitle: "Finished Building", message: "App uploaded")
 end
 
 lane :tests_android do
