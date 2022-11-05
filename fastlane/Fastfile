@@ -24,7 +24,7 @@ platform :ios do
     api_environment = "Release"
     build_app(clean: true, scheme: scheme,workspace: workspace)
 
-    upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7", app_version: version)
+    upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7", app_version: version )
     clean_build_artifacts
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
@@ -38,7 +38,18 @@ platform :ios do
   #   sync_code_signing(type: "appstore")# see code signing guide for more information
     match(type: "appstore", readonly: is_ci)
     build_app(clean: true,scheme: scheme, workspace: workspace)
-    upload_to_app_store(app_version: version)                # upload your app to App Store Connect
+    upload_to_app_store(app_version: version, submission_information: {
+                                                          add_id_info_uses_idfa: false,
+                                                          export_compliance_platform: 'ios',
+                                                          export_compliance_compliance_required: false,
+                                                          export_compliance_encryption_updated: false,
+                                                          export_compliance_app_type: nil,
+                                                          export_compliance_uses_encryption: false,
+                                                          export_compliance_is_exempt: false,
+                                                          export_compliance_contains_third_party_cryptography: false,
+                                                          export_compliance_contains_proprietary_cryptography: false,
+                                                          export_compliance_available_on_french_store: false
+                                                    } )                # upload your app to App Store Connect
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
@@ -62,8 +73,11 @@ platform :android do
   lane :playstore do
     # android
     previous_build_number = google_play_track_version_codes(
-      track: "internal"
+      track: "production"
     )[0]
+    previous_build_number = android_set_version_code(
+      gradle_file: gradle_file_path # optional
+     )
 
     current_build_number = previous_build_number + 1
 
@@ -76,11 +90,17 @@ platform :android do
        )
 
     gradle(
-      task: 'clean assemble',
+      task: 'clean bundle',
       build_type: 'Release',
-      project_dir: "./android"
+      project_dir: "./android",
+      properties: {
+          "android.injected.signing.store.file" => "/home/mario/Nextcloud/infra/google play/upload-keystore.jks",
+          "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+          "android.injected.signing.key.alias" => "upload",
+          "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],
+        }
     )
-    upload_to_play_store(track: 'beta')
+    upload_to_play_store(skip_upload_apk: true, track: "production", skip_upload_changelogs: true, skip_upload_metadata: true)
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
