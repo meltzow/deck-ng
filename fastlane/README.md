@@ -13,58 +13,68 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### beta
-
-```sh
-[bundle exec] fastlane beta
-```
-
-Push a new beta build to TestFlight
-
-### release
-
-```sh
-[bundle exec] fastlane release
-```
-
-
-
-### inc_version
-
-```sh
-[bundle exec] fastlane inc_version
-```
-
-
-
-### inc_version_android
-
-```sh
-[bundle exec] fastlane inc_version_android
-```
-
-
-
-### playstore
-
-```sh
-[bundle exec] fastlane playstore
-```
-
-
-
-### tests_android
-
-```sh
-[bundle exec] fastlane tests_android
-```
-
-
-
 ### tests_ios
 
 ```sh
 [bundle exec] fastlane tests_ios
+```
+
+
+
+----
+
+
+## iOS
+
+### ios beta
+
+```sh
+[bundle exec] fastlane ios beta
+```
+
+Push a new beta build to TestFlight
+
+### ios release
+
+```sh
+[bundle exec] fastlane ios release
+```
+
+
+
+### ios inc_version
+
+```sh
+[bundle exec] fastlane ios inc_version
+```
+
+
+
+----
+
+
+## Android
+
+### android inc_version
+
+```sh
+[bundle exec] fastlane android inc_version
+```
+
+
+
+### android playstore
+
+```sh
+[bundle exec] fastlane android playstore
+```
+
+
+
+### android tests_android
+
+```sh
+[bundle exec] fastlane android tests_android
 ```
 
 

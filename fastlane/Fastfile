@@ -5,84 +5,88 @@ gradle_file_path = "./android/app/build.gradle"
 scheme = "App"
 version = File.read('../VERSION').delete(" \t\r\n\ ")
 
-desc "Push a new beta build to TestFlight"
-lane :beta do
-  ensure_git_branch(branch: ENV["BRANCH_NAME"])
-#   ensure_git_status_clean
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    ensure_git_branch(branch: ENV["BRANCH_NAME"])
+  #   ensure_git_status_clean
 
-  match(type: "appstore", readonly: is_ci)
-  increment_version_number(
-     version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
-     xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
-   )
-  app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
-  increment_build_number(xcodeproj: project, build_number: app_version+1)
-  identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-  update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
-  update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
-  api_environment = "Release"
-  build_app(clean: true, scheme: scheme,workspace: workspace)
-
-  upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7", app_version: version)
-  clean_build_artifacts
-  notification(subtitle: "Finished Building", message: "App uploaded")
-end
-
-lane :release do
-  increment_version_number(
+    match(type: "appstore", readonly: is_ci)
+    increment_version_number(
        version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
        xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
      )
-  #capture_screensh ots(project: project)                  # generate new screenshots for the App Store
-#   sync_code_signing(type: "appstore")# see code signing guide for more information
-  match(type: "appstore", readonly: is_ci)
-  build_app(clean: true,scheme: scheme, workspace: workspace)
-  upload_to_app_store(app_version: version)                # upload your app to App Store Connect
-  notification(subtitle: "Finished Building", message: "App uploaded")
+    app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
+    increment_build_number(xcodeproj: project, build_number: app_version+1)
+    identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
+    update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
+    api_environment = "Release"
+    build_app(clean: true, scheme: scheme,workspace: workspace)
+
+    upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing:true, itc_provider: "F3C769M2C7", app_version: version)
+    clean_build_artifacts
+    notification(subtitle: "Finished Building", message: "App uploaded")
+  end
+
+  lane :release do
+    increment_version_number(
+         version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
+         xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
+       )
+    #capture_screensh ots(project: project)                  # generate new screenshots for the App Store
+  #   sync_code_signing(type: "appstore")# see code signing guide for more information
+    match(type: "appstore", readonly: is_ci)
+    build_app(clean: true,scheme: scheme, workspace: workspace)
+    upload_to_app_store(app_version: version)                # upload your app to App Store Connect
+    notification(subtitle: "Finished Building", message: "App uploaded")
+  end
+
+  lane :inc_version do
+  #ios
+   increment_version_number(
+     version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
+     xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
+   )
+  end
 end
 
-lane :inc_version do
-#ios
- increment_version_number(
-   version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
-   xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
- )
-end
+platform :android do
+  lane :inc_version do
+   # android
+   increment_version_name(
+     version_name: version
+   )
+  end
 
-lane :inc_version_android do
- # android
- increment_version_name(
-   version_name: version
- )
-end
+  lane :playstore do
+    # android
+    previous_build_number = google_play_track_version_codes(
+      track: "internal"
+    )[0]
 
-lane :playstore do
-  # android
-  previous_build_number = google_play_track_version_codes(
-    track: "internal"
-  )[0]
+    current_build_number = previous_build_number + 1
 
-  current_build_number = previous_build_number + 1
+    android_set_version_code(
+        gradle_file: gradle_file_path # optional
+      )
+     android_set_version_name(
+         version_name: version,
+         gradle_file: gradle_file_path # optional
+       )
 
-  android_set_version_code(
-      gradle_file: gradle_file_path # optional
+    gradle(
+      task: 'clean assemble',
+      build_type: 'Release',
+      project_dir: "./android"
     )
-   android_set_version_name(
-       version_name: version,
-       gradle_file: gradle_file_path # optional
-     )
+    upload_to_play_store(track: 'beta')
+    notification(subtitle: "Finished Building", message: "App uploaded")
+  end
 
-  gradle(
-    task: 'clean assemble',
-    build_type: 'Release',
-    project_dir: "./android"
-  )
-  upload_to_play_store(track: 'beta')
-  notification(subtitle: "Finished Building", message: "App uploaded")
-end
-
-lane :tests_android do
-  gradle(task: "test", project_dir: "./android")
+  lane :tests_android do
+    gradle(task: "test", project_dir: "./android")
+  end
 end
 
 lane :tests_ios do
