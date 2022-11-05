@@ -3,7 +3,7 @@ project = ios_path + "App.xcodeproj"
 workspace = ios_path + "App.xcworkspace"
 gradle_file_path = "./android/app/build.gradle"
 scheme = "App"
-version = File.read('../VERSION')
+version = File.read('../VERSION').delete(" \t\r\n\ ")
 
 desc "Push a new beta build to TestFlight"
 lane :beta do
@@ -57,6 +57,21 @@ lane :inc_version_android do
 end
 
 lane :playstore do
+  # android
+  previous_build_number = google_play_track_version_codes(
+    track: "internal"
+  )[0]
+
+  current_build_number = previous_build_number + 1
+
+  android_set_version_code(
+      gradle_file: gradle_file_path # optional
+    )
+   android_set_version_name(
+       version_name: version,
+       gradle_file: gradle_file_path # optional
+     )
+
   gradle(
     task: 'clean assemble',
     build_type: 'Release',
