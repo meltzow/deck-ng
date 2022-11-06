@@ -16,6 +16,11 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
 
+    @ClassRule public static final LocaleTestRule localeTestRule = new LocaleTestRule();
+
+    @Rule
+    public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
+
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
@@ -23,4 +28,14 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.getcapacitor.app", appContext.getPackageName());
     }
+
+  @Test
+  public void testTakeScreenshot() {
+    Screengrab.screenshot("before_button_click");
+
+    // Your custom onView...
+    onView(withId(R.id.fab)).perform(click());
+
+    Screengrab.screenshot("after_button_click");
+  }
 }

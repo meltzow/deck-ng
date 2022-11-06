@@ -107,6 +107,24 @@ platform :android do
   lane :tests_android do
     gradle(task: "test", project_dir: "./android")
   end
+
+  desc "Build debug and test APK for screenshots"
+  lane :build_for_screengrab do
+    gradle(
+      task: 'clean',
+      project_dir: "./android"
+    )
+    build_android_app(
+      task: 'assemble',
+      build_type: 'Debug',
+      project_dir: "./android"
+    )
+    build_android_app(
+      task: 'assemble',
+      build_type: 'AndroidTest',
+      project_dir: "./android"
+    )
+  end
 end
 
 lane :tests_ios do

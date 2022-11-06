@@ -79,6 +79,14 @@ Push a new beta build to TestFlight
 
 
 
+### android build_for_screengrab
+
+```sh
+[bundle exec] fastlane android build_for_screengrab
+```
+
+Build debug and test APK for screenshots
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
