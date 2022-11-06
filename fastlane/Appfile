@@ -12,5 +12,6 @@ apple_id "appstore@meltzow.net"  # Your Apple email address
 #itc_team_id "125543860"
 itc_provider "F3C769M2C7"
 
-json_key_file "/home/mario/Nextcloud/infra/google play/pc-api-7989774826491590599-61-b0b0d29c9d33.json"
+#json_key_file "/home/mario/Nextcloud/infra/google play/pc-api-7989774826491590599-61-b0b0d29c9d33.json"
+json_key_file "/home/mario/Nextcloud/infra/google play/pc-api-7989774826491590599-61-4108fd855219.json"
 package_name "net.meltzow.deckng"
