@@ -4,6 +4,7 @@ workspace = ios_path + "App.xcworkspace"
 gradle_file_path = "./android/app/build.gradle"
 scheme = "App"
 version = File.read('../VERSION').delete(" \t\r\n\ ")
+android_project_dir = "./android"
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
@@ -92,7 +93,7 @@ platform :android do
     gradle(
       task: 'clean bundle',
       build_type: 'Release',
-      project_dir: "./android",
+      project_dir: android_project_dir,
       properties: {
           "android.injected.signing.store.file" => "/home/mario/Nextcloud/infra/google play/upload-keystore.jks",
           "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
@@ -105,24 +106,24 @@ platform :android do
   end
 
   lane :tests_android do
-    gradle(task: "test", project_dir: "./android")
+    gradle(task: "test", project_dir: android_project_dir)
   end
 
   desc "Build debug and test APK for screenshots"
   lane :build_for_screengrab do
     gradle(
       task: 'clean',
-      project_dir: "./android"
+      project_dir: android_project_dir
     )
     build_android_app(
       task: 'assemble',
       build_type: 'Debug',
-      project_dir: "./android"
+      project_dir: android_project_dir
     )
     build_android_app(
       task: 'assemble',
       build_type: 'AndroidTest',
-      project_dir: "./android"
+      project_dir: android_project_dir
     )
   end
 end
