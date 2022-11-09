@@ -56,7 +56,7 @@ public class ExampleInstrumentedTest {
     // Your custom onView...
 //    onView(withId(R.id.fab)).perform(click());
 
-    Screengrab.screenshot("after_button_click");
+    Screengrab.screenshot("LoginScreen");
   }
 
 //  @Test
