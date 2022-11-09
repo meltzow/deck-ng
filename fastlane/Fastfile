@@ -101,7 +101,7 @@ platform :android do
           "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],
         }
     )
-    upload_to_play_store(skip_upload_apk: true, track: "production", skip_upload_changelogs: true, skip_upload_metadata: true)
+    upload_to_play_store(skip_upload_apk: true, track: "production", skip_upload_changelogs: true)
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
