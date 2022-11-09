@@ -42,4 +42,6 @@
 
   <!-- Allows changing locales -->
   <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
+  <uses-permission android:name="android.permission.DUMP" />
 </manifest>

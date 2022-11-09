@@ -105,16 +105,11 @@ platform :android do
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
-  lane :tests_android do
-    gradle(task: "test", project_dir: android_project_dir)
-  end
-
-  desc "Build debug and test APK for screenshots"
-  lane :build_for_screengrab do
-    gradle(
-      task: 'clean',
-      project_dir: android_project_dir
-    )
+  lane :snapshots do
+#     gradle(
+#           task: 'clean',
+#           project_dir: android_project_dir
+#      )
     build_android_app(
       task: 'assemble',
       build_type: 'Debug',
@@ -125,6 +120,7 @@ platform :android do
       build_type: 'AndroidTest',
       project_dir: android_project_dir
     )
+    capture_android_screenshots(device_type: 'phone')
   end
 end
 

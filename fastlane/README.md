@@ -71,21 +71,13 @@ Push a new beta build to TestFlight
 
 
 
-### android tests_android
+### android snapshots
 
 ```sh
-[bundle exec] fastlane android tests_android
+[bundle exec] fastlane android snapshots
 ```
 
 
-
-### android build_for_screengrab
-
-```sh
-[bundle exec] fastlane android build_for_screengrab
-```
-
-Build debug and test APK for screenshots
 
 ----
 
