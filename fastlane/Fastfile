@@ -31,7 +31,7 @@ platform :ios do
   end
 
   lane :sim do
-    build_app(clean: true, scheme: scheme, workspace: workspace, skip_package_ipa: true, skip_archive: true, destination: "generic/platform=iOS Simulator")
+    build_app(clean: true, scheme: scheme, workspace: workspace, skip_package_ipa: true, skip_archive: true, destination: "platform=iOS Simulator,name=iPhone 12")
   end
 
   lane :release do
