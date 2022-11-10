@@ -30,6 +30,10 @@ platform :ios do
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
+  lane :run do
+    build_app(clean: true, scheme: scheme, workspace: workspace, skip_package_ipa: true, skip_archive: true, destination: "generic/platform=iOS Simulator")
+  end
+
   lane :release do
     increment_version_number(
          version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
