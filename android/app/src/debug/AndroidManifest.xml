@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="net.meltzow.deckng">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="net.meltzow.deckng">
   <application
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
@@ -32,16 +32,16 @@
   <!-- Permissions -->
 
   <uses-permission android:name="android.permission.INTERNET" />
-  <!-- Allows unlocking your device and activating its screen so UI tests can succeed -->
-  <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-  <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
-  <!-- Allows for storing and retrieving screenshots -->
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <!-- Allows storing screenshots on external storage, where it can be accessed by ADB -->
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
 
   <!-- Allows changing locales -->
-  <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+  <uses-permission
+    android:name="android.permission.CHANGE_CONFIGURATION"
+    tools:ignore="ProtectedPermissions" />
 
-  <uses-permission android:name="android.permission.DUMP" />
+  <!-- Allows changing SystemUI demo mode -->
+  <uses-permission
+    android:name="android.permission.DUMP"
+    tools:ignore="ProtectedPermissions" />
 </manifest>
