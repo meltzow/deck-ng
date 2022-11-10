@@ -5,7 +5,6 @@
       <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="board | async">
-      <ion-icon name="clipboard-outline"></ion-icon>
       <ion-label>{{ (board | async).title }}</ion-label>
       </ion-title>
   </ion-toolbar>
