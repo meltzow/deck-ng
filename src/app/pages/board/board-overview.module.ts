@@ -3,19 +3,19 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
-import { HomePage } from './home.page';
-import { HomePageRoutingModule } from './home-routing.module';
 import { DashboardWidgetComponent } from "@app/dashboard-widget/dashboard-widget.component";
 import { TranslateModule } from "@ngx-translate/core";
+import { BoardOverviewPage } from "@app/pages/board/board-overview.page";
+import { BoardPageRoutingModule } from "@app/pages/board/board-routing.module";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        HomePageRoutingModule,
+        BoardPageRoutingModule,
         TranslateModule
     ],
-    declarations: [HomePage, DashboardWidgetComponent]
+    declarations: [BoardOverviewPage, DashboardWidgetComponent]
 })
-export class HomePageModule {}
+export class BoardOverviewPageModule {}

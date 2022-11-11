@@ -51,12 +51,6 @@ export class CardComponent implements OnInit {
     })
   }
 
-  getBackButtonText() {
-    const win = window as any;
-    const mode = win && win.Ionic && win.Ionic.mode;
-    return mode === 'ios' ? 'Inbox' : '';
-  }
-
   convert(this) {
     if (this.toggleVal == true) {
       if (this.plainText && this.plainText != '') {

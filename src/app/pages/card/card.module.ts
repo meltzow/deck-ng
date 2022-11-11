@@ -17,8 +17,7 @@ import { ViewBoardModule } from "@app/pages/view-board/view-board.module";
         IonicModule,
         CardPageRoutingModule,
         MarkdownModule,
-        FormsModule,
-        ViewBoardModule
+        FormsModule
     ],
 })
 export class CardModule { }

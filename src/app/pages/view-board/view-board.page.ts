@@ -62,12 +62,6 @@ export class ViewBoardPage implements OnInit {
       })
   }
 
-  getBackButtonText() {
-    const win = window as any;
-    const mode = win && win.Ionic && win.Ionic.mode;
-    return mode === 'ios' ? 'Inbox' : '';
-  }
-
   doRefresh(event) {
     this.board.next(null)
     this.stacks.next([])

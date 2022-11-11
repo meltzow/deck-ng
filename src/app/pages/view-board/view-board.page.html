@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/" text="" ></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="board | async">
       <ion-label>{{ (board | async).title }}</ion-label>

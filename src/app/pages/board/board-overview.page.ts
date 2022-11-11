@@ -6,11 +6,11 @@ import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-board-overview',
+  templateUrl: 'board-overview.page.html',
+  styleUrls: ['board-overview.page.scss'],
 })
-export class HomePage implements OnInit {
+export class BoardOverviewPage implements OnInit {
   boards: BehaviorSubject<BoardItem[]> = new BehaviorSubject<BoardItem[]>(null);
   isLoading = true
 

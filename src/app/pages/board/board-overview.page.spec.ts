@@ -2,30 +2,30 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { HomePage } from './home.page';
 import { Observable } from "rxjs";
 import { BoardItem } from "@app/model/boardItem";
 import { HttpClientModule } from "@angular/common/http";
 import { BoardService } from "@app/services";
 import { IonicStorageModule } from "@ionic/storage-angular";
+import { BoardOverviewPage } from "@app/pages/board/board-overview.page";
 
 describe('HomePage', () => {
-  let component: HomePage;
-  let fixture: ComponentFixture<HomePage>;
+  let component: BoardOverviewPage;
+  let fixture: ComponentFixture<BoardOverviewPage>;
   let h2: HTMLElement;
 
   beforeEach(waitForAsync(() => {
     const boardServiceSpy = jasmine.createSpyObj('BoardService',['getBoards'])
 
     TestBed.configureTestingModule({
-      declarations: [ HomePage ],
+      declarations: [ BoardOverviewPage ],
       imports: [IonicModule.forRoot(), RouterModule.forRoot([]), HttpClientModule, IonicStorageModule.forRoot()],
       providers: [{ provide: BoardService, useValue: boardServiceSpy }],
     }).compileComponents();
 
     boardServiceSpy.getBoards.and.returnValue(Promise.resolve([{title: 'foobar'}]))
 
-    fixture = TestBed.createComponent(HomePage);
+    fixture = TestBed.createComponent(BoardOverviewPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
 
