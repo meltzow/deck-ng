@@ -8,7 +8,7 @@ const config: CapacitorConfig = {
   plugins: {
     "SplashScreen": {
       "launchAutoHide": false,
-      "showSpinner": false
+      "showSpinner": true
     }
   }
 };
