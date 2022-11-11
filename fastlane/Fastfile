@@ -75,7 +75,7 @@ platform :android do
    )
   end
 
-  lane :playstore do
+  lane :release do
     # android
     previous_build_number = google_play_track_version_codes(
       track: "production"
@@ -105,7 +105,7 @@ platform :android do
           "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],
         }
     )
-    upload_to_play_store(skip_upload_apk: true, track: "production", skip_upload_changelogs: true)
+    upload_to_play_store(skip_upload_apk: true, track: "production")
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
