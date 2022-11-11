@@ -57,24 +57,9 @@ platform :ios do
                                                     } )                # upload your app to App Store Connect
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
-
-  lane :inc_version do
-  #ios
-   increment_version_number(
-     version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
-     xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
-   )
-  end
 end
 
 platform :android do
-  lane :inc_version do
-   # android
-   increment_version_name(
-     version_name: version
-   )
-  end
-
   lane :release do
     # android
     previous_build_number = google_play_track_version_codes(
