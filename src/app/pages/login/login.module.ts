@@ -8,6 +8,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { createTranslateLoader } from "@app/app.module";
 import { HttpClient } from "@angular/common/http";
+import { ShowHidePasswordComponent } from "@app/components/show-hide-password/show-hide-password.component";
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { HttpClient } from "@angular/common/http";
   ],
   declarations: [
     LoginPage,
+    ShowHidePasswordComponent
   ]
 })
 export class LoginModule { }

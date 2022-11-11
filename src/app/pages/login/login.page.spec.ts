@@ -44,22 +44,22 @@ describe('Login', () => {
     let labels, server_url
     fixture.detectChanges();
     labels = fixture.debugElement.nativeElement.querySelectorAll('ion-label');
-    expect(labels.length).toEqual(3)
+    expect(labels.length).toEqual(4)
 
-    server_url = labels[0].textContent;
+    server_url = labels[1].textContent;
     expect(server_url).toEqual('Server URL');
 
     transService.use('en')
     fixture.detectChanges();
     labels = fixture.nativeElement.querySelectorAll('ion-label');
-    server_url = labels[0].textContent;
+    server_url = labels[1].textContent;
     expect(server_url).toEqual('server URL');
 
 
     transService.use('fr')
     fixture.detectChanges();
     labels = fixture.nativeElement.querySelectorAll('ion-label');
-    server_url = labels[0].textContent;
+    server_url = labels[1].textContent;
     expect(server_url).toEqual('server URL');
 
   });

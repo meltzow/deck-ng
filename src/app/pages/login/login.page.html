@@ -44,9 +44,11 @@
       </ion-text>
 
       <ion-item>
-        <ion-label color="primary" position="floating" translate="">app_password</ion-label>
-        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" autocorrect="off" autofocus="on" clearInput="true"  color="primary" inputmode="text" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" required="true"></ion-input>
-        <ion-icon name="information-circle-outline" color="primary" slot="end" (click)="tooltip()" class="ion-align-self-end"></ion-icon>
+        <app-show-hide-password>
+          <ion-label color="primary" position="floating" translate="">app_password</ion-label>
+          <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" autocorrect="off" autofocus="on" clearInput="true"  color="primary" inputmode="text" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" required="true"></ion-input>
+          <ion-icon name="information-circle-outline" color="primary" slot="end" (click)="tooltip()" class="ion-align-self-end"></ion-icon>
+        </app-show-hide-password>
       </ion-item>
 
       <ion-text color="danger">
