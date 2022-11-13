@@ -18,10 +18,5 @@ https://meltzow.github.io/deck-ng/
 * https://developer.android.com/develop/ui/views/launch/icon_design_adaptive
 * https://developer.android.com/distribute/google-play/resources/icon-design-specifications
 
-## stores
-* https://play.google.com/console/u/0/developers/7989774826491590599/app/4976068423564949204/app-dashboard
-* https://appstoreconnect.apple.com/apps/6443334702/appstore/ios/version/inflight
-
-
 [![available at google play](https://meltzow.github.io/deck-ng/images/app-badge/google-play.png)](https://play.google.com/store/apps/details?id=net.meltzow.deckng)
 [![available at apple store](https://meltzow.github.io/deck-ng/images/app-badge/app-store.png)](https://apps.apple.com/us/app/deck-ng/id6443334702)
