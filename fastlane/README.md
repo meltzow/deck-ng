@@ -21,6 +21,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### update_metadata
+
+```sh
+[bundle exec] fastlane update_metadata
+```
+
+
+
 ----
 
 
@@ -46,14 +54,6 @@ Push a new beta build to TestFlight
 
 ```sh
 [bundle exec] fastlane ios release
-```
-
-
-
-### ios inc_version
-
-```sh
-[bundle exec] fastlane ios inc_version
 ```
 
 

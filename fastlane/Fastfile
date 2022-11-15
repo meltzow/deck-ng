@@ -95,6 +95,7 @@ platform :android do
   end
 
   lane :snapshots do
+#     sh("ionic", "cap", "sync", "android")
 #     gradle(
 #           task: 'clean',
 #           project_dir: android_project_dir
@@ -109,7 +110,7 @@ platform :android do
       build_type: 'AndroidTest',
       project_dir: android_project_dir
     )
-    capture_android_screenshots(device_type: 'phone')
+    capture_android_screenshots(device_type: 'phone', reinstall_app: true)
   end
 end
 
@@ -117,3 +118,8 @@ lane :tests_ios do
   run_tests(scheme: scheme, workspace: workspace)
 end
 
+lane :update_metadata do
+  upload_to_play_store(skip_upload_apk: true,
+ skip_upload_aab: true,
+ skip_upload_changelogs: true)
+end
