@@ -13,6 +13,8 @@ import { BoardService } from "@app/services";
 export class BoardOverviewPage implements OnInit {
   boards: BehaviorSubject<BoardItem[]> = new BehaviorSubject<BoardItem[]>(null);
   isLoading = true
+  handlerMessage = '';
+  roleMessage = '';
 
   constructor(
     private boardService: BoardService,
@@ -30,7 +32,7 @@ export class BoardOverviewPage implements OnInit {
     return firstValueFrom(this.boardService.getBoards(true))
       .then(value => this.boards.next(value))
       .catch(reason => {
-        // this.presentToastWithOptions(reason)
+        this.presentToastWithOptions(reason)
         return []
       }).finally(() =>
         this.isLoading = false
@@ -40,24 +42,20 @@ export class BoardOverviewPage implements OnInit {
   async presentToastWithOptions(errorMsg: string) {
     const toast = await this.toastController.create({
       header: 'Toast header',
-      message: 'Click to Close',
+      message: errorMsg,
+      duration: 3000,
       icon: 'information-circle',
-      position: 'top',
+      position: 'bottom',
       buttons: [
-        // {
-        //   side: 'start',
-        //   icon: 'star',
-        //   text: 'Favorite',
-        //   handler: () => {
-        //     console.log('Favorite clicked');
-        //   }
-        // },
         {
-          text: errorMsg,
+          text: 'More Info',
+          role: 'info',
+          handler: () => { this.handlerMessage = 'More Info clicked'; }
+        },
+        {
+          text: 'Dismiss',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
+          handler: () => { this.handlerMessage = 'Dismiss clicked'; }
         }
       ]
     });
@@ -69,6 +67,30 @@ export class BoardOverviewPage implements OnInit {
 
   doRefresh(event) {
     this.getBoards().finally(event.target.complete())
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Hello World!',
+      duration: 3000,
+      buttons: [
+        {
+          text: 'More Info',
+          role: 'info',
+          handler: () => { this.handlerMessage = 'More Info clicked'; }
+        },
+        {
+          text: 'Dismiss',
+          role: 'cancel',
+          handler: () => { this.handlerMessage = 'Dismiss clicked'; }
+        }
+      ]
+    });
+
+    await toast.present();
+
+    const { role } = await toast.onDidDismiss();
+    this.roleMessage = `Dismissed with role: ${role}`;
   }
 
 }
