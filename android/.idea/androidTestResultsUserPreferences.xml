@@ -22,7 +22,22 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Nexus_7_2012_API_30" value="120" />
                   <entry key="Pixel_5_API_25" value="120" />
+                  <entry key="Pixel_API_28" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1471757039">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Nexus_7_2012_API_30" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
               </option>
