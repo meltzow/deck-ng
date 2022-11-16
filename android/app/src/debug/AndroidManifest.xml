@@ -33,6 +33,10 @@
 
   <uses-permission android:name="android.permission.INTERNET" />
 
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-feature android:name="android.hardware.camera" />
+  <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
   <!-- Allows changing locales -->
   <uses-permission
     android:name="android.permission.CHANGE_CONFIGURATION"

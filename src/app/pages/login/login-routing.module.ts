@@ -5,11 +5,14 @@ import { LoginPage } from './login.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginPage
+  },
+  {
+    path: '',
+    loadChildren: () => import('./server-adress/server-adress.module').then( m => m.ServerAdressPageModule)
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
