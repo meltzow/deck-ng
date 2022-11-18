@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuController, Platform, ToastController } from '@ionic/angular';
+import { Component, OnInit, Optional } from '@angular/core';
+import { AlertController, IonRouterOutlet, MenuController, Platform, ToastController } from '@ionic/angular';
 
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { AuthenticationService } from "@app/services";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
 import { from, Observable, of, share } from "rxjs";
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-root',
@@ -23,11 +25,56 @@ export class AppComponent implements OnInit {
     private router: Router,
     private toastCtrl: ToastController,
     private authService: AuthenticationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private location: Location,
+    public alertCtrl: AlertController,
+    @Optional() private routerOutlet?: IonRouterOutlet
   ) {
     translate.addLangs(['de', 'en']);
     translate.setDefaultLang('en');
     translate.use(translate.getBrowserLang())
+    this.initializeApp();
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // this.statusBar.styleDefault();
+      // Hide the splash (you should do this on app launch)
+      SplashScreen.hide();
+    });
+
+
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      if (!this.routerOutlet.canGoBack()) {
+        this.confirmExitApp();
+      } else {
+        this.location.back();
+      }
+    });
+
+  }
+
+  async confirmExitApp() {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmation Exit',
+      message: 'Are you sure you want to exit ?',
+      backdropDismiss: false,
+      cssClass: 'confirm-exit-alert',
+      buttons: [{
+        text: 'Stay',
+        role: 'cancel',
+        handler: () => {
+          console.log('Application exit handler');
+        }
+      }, {
+        text: 'Exit app',
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    });
+
+    await alert.present();
   }
 
   async ngOnInit() {

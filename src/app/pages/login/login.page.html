@@ -18,18 +18,6 @@
   <form #loginForm="ngForm" novalidate>
     <ion-list>
       <ion-item>
-        <ion-label position="stacked" color="primary" translate="">server_url</ion-label>
-        <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="text" #url="ngModel" spellcheck="false" autocapitalize="off"
-                   autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text" required="true">
-        </ion-input>
-      </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="url.valid || submitted === false" class="ion-padding-start" translate="">
-          url_required
-        </p>
-      </ion-text>
-
-      <ion-item>
         <ion-label color="primary" position="floating" translate="">username</ion-label>
         <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
                    autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text"

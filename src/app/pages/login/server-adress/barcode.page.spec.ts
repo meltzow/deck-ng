@@ -3,22 +3,23 @@ import { IonicModule } from '@ionic/angular';
 
 import { ServerAdressPage } from './server-adress.page';
 import { AuthenticationService } from "@app/services";
+import { BarcodePage } from "@app/pages/login/server-adress/barcode.page";
 
-describe('ServerAdressPage', () => {
-  let component: ServerAdressPage;
-  let fixture: ComponentFixture<ServerAdressPage>;
+describe('BarcodePage', () => {
+  let component: BarcodePage;
+  let fixture: ComponentFixture<BarcodePage>;
 
   beforeEach(waitForAsync(() => {
     const authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated'])
     // boardServiceSpy.isAuthenticated.and.returnValue(true)
 
     TestBed.configureTestingModule({
-      declarations: [ ServerAdressPage ],
+      declarations: [ BarcodePage ],
       imports: [IonicModule.forRoot()],
       providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ServerAdressPage);
+    fixture = TestBed.createComponent(BarcodePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -27,4 +28,12 @@ describe('ServerAdressPage', () => {
     expect(component).toBeTruthy();
   });
 
+  it ('barcode is parseable', () => {
+    const content = "nc://login/user:foo&password:bar&server:https://my.nextcloud.org"
+    component.parseContent(content)
+
+    expect(component.barcode.url).toEqual("https://my.nextcloud.org")
+    expect(component.barcode.user).toEqual("foo")
+    expect(component.barcode.password).toEqual("bar")
+  })
 });

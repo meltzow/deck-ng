@@ -9,11 +9,11 @@
     <img src="assets/albums-outline.svg" alt="deckNG logo">
   </div>
 
-  <form #loginForm="ngForm" novalidate>
+  <form #serverForm="ngForm" novalidate>
     <ion-list>
       <ion-item>
         <ion-label color="primary" position="floating" translate="">server_url</ion-label>
-        <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="text" #url="ngModel" spellcheck="false" autocapitalize="off"
+        <ion-input [(ngModel)]="barcode.url" name="url" placeholder="https://xxx.xxx.xx" type="text" #url="ngModel" spellcheck="false" autocapitalize="off"
                    autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text" required="true">
         </ion-input>
         <ion-note slot="helper">The link to your Nextcloud web interface when you open it in the browser</ion-note>
@@ -25,9 +25,9 @@
           url_required
         </p>
       </ion-text>
-      <ion-button (click)="onBarcode(loginForm)" ><ion-icon name="barcode-outline"></ion-icon></ion-button>
+      <ion-button (click)="onBarcode()" ><ion-icon name="barcode-outline"></ion-icon></ion-button>
+      <ion-button (click)="nextStep(serverForm)" type="submit" translate="">next_step</ion-button>
     </ion-list>
   </form>
-
 
 </ion-content>
