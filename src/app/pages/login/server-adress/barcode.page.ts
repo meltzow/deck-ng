@@ -6,7 +6,7 @@ import { Platform } from "@ionic/angular";
 
 @Component({
   selector: 'app-barcode',
-  template: ''
+  template: '<ion-content fullscreen="true" ></ion-content>'
 })
 export class BarcodePage implements OnInit {
   barcode: barCodeItem = {url: ''}
