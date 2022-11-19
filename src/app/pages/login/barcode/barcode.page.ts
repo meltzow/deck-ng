@@ -2,25 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from "@app/services";
 import { Router } from "@angular/router";
 import { BarcodeScanner, CameraDirection } from '@capacitor-community/barcode-scanner';
-import { Platform } from "@ionic/angular";
+import { Platform, ToastController } from "@ionic/angular";
 
 @Component({
   selector: 'app-barcode',
   template: '<ion-content fullscreen="true" ></ion-content>'
 })
 export class BarcodePage implements OnInit {
-  barcode: barCodeItem = {url: ''}
+  barcode: barCodeItem
+  private handlerMessage: string;
 
   constructor(
     public authenticationService: AuthenticationService,
     public router: Router,
-    private platform: Platform
+    private platform: Platform,
+    public toastController: ToastController,
   ) { }
 
   ngOnInit() {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.stopScan()
-      this.router.navigate(['login/barcode']);
+      this.router.navigate(['login']);
     });
     this.onBarcode()
   }
@@ -45,7 +47,7 @@ export class BarcodePage implements OnInit {
 
     await BarcodeScanner.prepare();
 
-    const c = confirm('Do you want to scan a barcode?');
+    const c = confirm('Please scan a nextcloud login barcode.');
     if (c) {
       document.querySelector('body').classList.add('scanner-active');
       // make background of WebView transparent
@@ -59,6 +61,9 @@ export class BarcodePage implements OnInit {
         this.authenticationService.login(this.barcode.url, this.barcode.user, this.barcode.password)
         this.stopScan()
       }
+    } else {
+        this.stopScan()
+        this.router.navigate(['login']);
     }
   }
 
@@ -66,9 +71,15 @@ export class BarcodePage implements OnInit {
     console.log(content); // log the raw scanned content
 
     const ary = content.split('&')
+    this.barcode = {}
     this.barcode.user = ary[0].replace('nc://login/user:', '')
     this.barcode.password= ary[1].replace('password:','')
     this.barcode.url= ary[2].replace('server:','')
+
+    if (!this.barcode.url || !this.barcode.user || !this.barcode.password ) {
+      this.presentToastWithOptions("barcode must contain url, user and password")
+    }
+
   }
 
   private stopScan() {
@@ -76,10 +87,37 @@ export class BarcodePage implements OnInit {
     BarcodeScanner.showBackground();
     BarcodeScanner.stopScan();
   }
+
+  async presentToastWithOptions(errorMsg: string, header?: string) {
+    const toast = await this.toastController.create({
+      header: header? header : 'Toast header',
+      message: errorMsg,
+      duration: 3000,
+      icon: 'information-circle',
+      position: 'bottom',
+      buttons: [
+        {
+          text: 'More Info',
+          role: 'info',
+          handler: () => {
+            this.handlerMessage = 'More Info clicked';
+          }
+        },
+        {
+          text: 'Dismiss',
+          role: 'cancel',
+          handler: () => {
+            this.handlerMessage = 'Dismiss clicked';
+          }
+        }
+      ]
+    });
+    await toast.present();
+  }
 }
 
 interface barCodeItem {
-  url: string,
+  url?: string,
   password?: string,
   user?: string
 }

@@ -36,6 +36,10 @@ export class LoginPage {
     }
   }
 
+  onBarcode() {
+    this.router.navigate(['login/barcode'])
+  }
+
   tooltip() {
 
   }

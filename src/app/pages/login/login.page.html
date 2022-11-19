@@ -7,16 +7,27 @@
       <ion-label translate="">login</ion-label>
     </ion-title>
   </ion-toolbar>
-
 </ion-header>
 
-<ion-content class="background-image">
+<ion-content class="background-image" >
   <div class="login-logo">
     <img src="assets/albums-outline.svg" alt="deckNG logo">
   </div>
 
+  <ion-button  class="barcode-btn" (click)="onBarcode()" size="large" ><ion-icon name="barcode-outline"></ion-icon></ion-button>
   <form #loginForm="ngForm" novalidate>
     <ion-list>
+      <ion-item>
+        <ion-label position="stacked" color="primary" translate="">server_url</ion-label>
+        <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="text" #url="ngModel" spellcheck="false" autocapitalize="off"
+                   autocorrect="off" autofocus="on" clearInput="true" color="primary" inputmode="text" required="true">
+        </ion-input>
+      </ion-item>
+      <ion-text color="danger">
+        <p [hidden]="url.valid || submitted === false" class="ion-padding-start" translate="">
+          url_required
+        </p>
+      </ion-text>
       <ion-item>
         <ion-label color="primary" position="floating" translate="">username</ion-label>
         <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
@@ -44,7 +55,7 @@
           password_required
         </p>
       </ion-text>
-      <ion-button (click)="onLogin(loginForm)" type="submit" expand="block" translate="">login</ion-button>
+      <ion-button (click)="onLogin(loginForm)" type="submit"  translate="">login</ion-button>
     </ion-list>
   </form>
 

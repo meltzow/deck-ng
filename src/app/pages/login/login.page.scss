@@ -1,7 +1,12 @@
+.barcode-btn {
+  text-align: center;
+}
+
 .login-logo {
   padding: 20px 0;
   min-height: 200px;
   text-align: center;
+  //background: url(../../../assets/clouds.jpg) 0 0/100% 100% no-repeat !important;
 }
 
 .login-logo img {
@@ -12,8 +17,6 @@
   margin-bottom: 0;
 }
 
-:host {
-  .background-image {
-    background: url('../../../assets/clouds.jpg') no-repeat 100% 100%;
-  }
+ion-content {
+  text-align:center
 }
