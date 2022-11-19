@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ServerAdressPage } from './server-adress.page';
+import { UrlPage } from './url-page.component';
 import { AuthenticationService } from "@app/services";
 
 describe('ServerAdressPage', () => {
-  let component: ServerAdressPage;
-  let fixture: ComponentFixture<ServerAdressPage>;
+  let component: UrlPage;
+  let fixture: ComponentFixture<UrlPage>;
 
   beforeEach(waitForAsync(() => {
     const authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated'])
     // boardServiceSpy.isAuthenticated.and.returnValue(true)
 
     TestBed.configureTestingModule({
-      declarations: [ ServerAdressPage ],
+      declarations: [ UrlPage ],
       imports: [IonicModule.forRoot()],
       providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ServerAdressPage);
+    fixture = TestBed.createComponent(UrlPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

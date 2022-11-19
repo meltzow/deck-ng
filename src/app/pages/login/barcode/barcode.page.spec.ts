@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ServerAdressPage } from './server-adress.page';
 import { AuthenticationService } from "@app/services";
-import { BarcodePage } from "@app/pages/login/server-adress/barcode.page";
+import { BarcodePage } from "@app/pages/login/barcode/barcode.page";
 
 describe('BarcodePage', () => {
   let component: BarcodePage;

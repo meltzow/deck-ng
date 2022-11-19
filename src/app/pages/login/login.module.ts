@@ -9,6 +9,8 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { createTranslateLoader } from "@app/app.module";
 import { HttpClient } from "@angular/common/http";
 import { ShowHidePasswordComponent } from "@app/components/show-hide-password/show-hide-password.component";
+import { UrlPage } from "@app/pages/login/url/url.page";
+import { BarcodePage } from "@app/pages/login/barcode/barcode.page";
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import { ShowHidePasswordComponent } from "@app/components/show-hide-password/sh
   ],
   declarations: [
     LoginPage,
-    ShowHidePasswordComponent
+    ShowHidePasswordComponent,
+    UrlPage, BarcodePage
   ]
 })
 export class LoginModule { }

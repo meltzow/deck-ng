@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from "@app/services";
 import { Router } from "@angular/router";
-import { BarcodeScanner, CameraDirection } from '@capacitor-community/barcode-scanner';
 import { NgForm } from "@angular/forms";
 import { Platform } from "@ionic/angular";
 
 @Component({
-  selector: 'app-server-adress',
-  templateUrl: './server-adress.page.html',
-  styleUrls: ['./server-adress.page.scss'],
+  selector: 'app-url',
+  templateUrl: './url.page.html',
+  styleUrls: ['./url.page.scss'],
 })
-export class ServerAdressPage implements OnInit {
+export class UrlPage implements OnInit {
   barcode: barCodeItem = {url: ''}
   url: string
   submitted = false;
