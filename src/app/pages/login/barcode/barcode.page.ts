@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService } from "@app/services";
 import { Router } from "@angular/router";
 import { BarcodeScanner, CameraDirection } from '@capacitor-community/barcode-scanner';
@@ -6,9 +6,9 @@ import { Platform, ToastController } from "@ionic/angular";
 
 @Component({
   selector: 'app-barcode',
-  template: '<ion-content fullscreen="true" ></ion-content>'
+  templateUrl: './barcode.page.html'
 })
-export class BarcodePage implements OnInit {
+export class BarcodePage implements OnInit, OnDestroy {
   barcode: barCodeItem
   private handlerMessage: string;
 
@@ -19,12 +19,19 @@ export class BarcodePage implements OnInit {
     public toastController: ToastController,
   ) { }
 
+  ngOnDestroy(): void {
+        this.stopScan()
+    }
+
   ngOnInit() {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.stopScan()
       this.router.navigate(['login']);
     });
-    this.onBarcode()
+    if (!this.platform.is('desktop')) {
+      console.log("PLATT: ", this.platform.platforms());
+      this.onBarcode()
+    }
   }
 
   async onBarcode() {

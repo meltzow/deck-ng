@@ -71,6 +71,14 @@ Push a new beta build to TestFlight
 
 
 
+### android beta
+
+```sh
+[bundle exec] fastlane android beta
+```
+
+
+
 ### android snapshots
 
 ```sh
