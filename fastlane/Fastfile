@@ -3,7 +3,8 @@ project = ios_path + "App.xcodeproj"
 workspace = ios_path + "App.xcworkspace"
 gradle_file_path = "./android/app/build.gradle"
 scheme = "App"
-version = File.read('../VERSION').delete(" \t\r\n\ ")
+package = read_json(json_path: "./package.json")
+version = package[:version]
 android_project_dir = "./android"
 
 platform :ios do
