@@ -8,8 +8,5 @@
 			"launchAutoHide": false,
 			"showSpinner": true
 		}
-	},
-	"server": {
-		"url": "http://192.168.178.25:8100"
 	}
 }

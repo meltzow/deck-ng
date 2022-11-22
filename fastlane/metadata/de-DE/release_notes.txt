@@ -1,2 +1,3 @@
-fix strange UI-Bug in combination with headers in board/stack-overview
-fix back links in headers
+1.1.0 add barcode login
+1.0.5 fix strange UI-Bug in combination with headers in board/stack-overview
+1.0.5 fix back links in headers
