@@ -1,30 +1,20 @@
 package com.getcapacitor.myapp;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.web.sugar.Web.onWebView;
 import static androidx.test.espresso.web.webdriver.DriverAtoms.clearElement;
 import static androidx.test.espresso.web.webdriver.DriverAtoms.findElement;
-import static androidx.test.espresso.web.webdriver.DriverAtoms.getText;
 import static androidx.test.espresso.web.webdriver.DriverAtoms.webClick;
 import static androidx.test.espresso.web.webdriver.DriverAtoms.webKeys;
 
-import android.content.Context;
-
-import androidx.test.espresso.web.assertion.WebViewAssertions;
 import androidx.test.espresso.web.model.Atom;
 import androidx.test.espresso.web.model.ElementReference;
-import androidx.test.espresso.web.webdriver.DriverAtoms;
 import androidx.test.espresso.web.webdriver.Locator;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import net.meltzow.deckng.MainActivity;
-import net.meltzow.deckng.R;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -35,7 +25,6 @@ import org.junit.runner.RunWith;
 
 import tools.fastlane.screengrab.FalconScreenshotStrategy;
 import tools.fastlane.screengrab.Screengrab;
-import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
 import tools.fastlane.screengrab.cleanstatusbar.CleanStatusBar;
 import tools.fastlane.screengrab.locale.LocaleTestRule;
 
@@ -81,21 +70,24 @@ public class ExampleInstrumentedTest {
     String passwordInput= "//input[@name='password']";
     String loginBtn= "//ion-button[@type='submit']";
 
-    Atom<ElementReference> element4 = findElement(Locator.XPATH, passwordInput);
-    onWebView().withElement(element4).perform(webKeys("admin"));
+    Atom<ElementReference> elementPassword = findElement(Locator.XPATH, passwordInput);
+    onWebView().withElement(elementPassword).perform(webKeys("AppPassword"));
 
-    Atom<ElementReference> element2 = findElement(Locator.XPATH, usernameInput);
-    onWebView().withElement(element2).perform(webKeys("admin"));
+    Atom<ElementReference> elementUsername = findElement(Locator.XPATH, usernameInput);
+    onWebView().withElement(elementUsername).perform(webKeys("myUserName"));
 
-    Atom<ElementReference> element1 = findElement(Locator.XPATH, urlInputXPath);
-    onWebView().withElement(element1).perform(webKeys("http://192.168.178.25:8080"));
+    Atom<ElementReference> elementURL = findElement(Locator.XPATH, urlInputXPath);
+    onWebView().withElement(elementURL).perform(webKeys("https://my.nextcloud.org"));
 
     Screengrab.screenshot("LoginScreen");
 
+    onWebView().withElement(elementPassword).perform(clearElement()).perform(webKeys("admin"));
+    onWebView().withElement(elementUsername).perform(clearElement()).perform(webKeys("admin"));
+    onWebView().withElement(elementURL).perform(clearElement()).perform(webKeys("http://192.168.178.25:8080"));
     Atom<ElementReference> element3 = findElement(Locator.XPATH, loginBtn);
     onWebView().withElement(element3).perform(webClick());
 
-    Thread.sleep(2000);
+    Thread.sleep(3000);
 
     Screengrab.screenshot("BoardsScreen");
 
