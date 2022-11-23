@@ -4,12 +4,12 @@
     <ion-menu contentId="main-content">
       <ion-content>
         <ion-list *ngIf="(isAuthenticated() | async)" lines="none">
-          <ion-list-header color="primary">
+          <ion-list-header color="primary" [routerLink]="'/boards'" routerLinkActive="selected" routerDirection="root" >
             <ion-icon slot="start" name="clipboard-outline"></ion-icon>
             <ion-label translate="">boards</ion-label>
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let b of boardsSubj | async; let i = index">
-            <ion-item [routerLink]="'/board/' + b.id" routerLinkActive="selected" routerDirection="root" detail="false">
+            <ion-item [routerLink]="'/boards/' + b.id" routerLinkActive="selected" routerDirection="forward" detail="false">
               <ion-label>
                 {{b.title}}
               </ion-label>
