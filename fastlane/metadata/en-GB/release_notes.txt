@@ -1,3 +1,5 @@
+1.1.1 link all boards into menu
+      fix some value displaying bugs
 1.1.0 add barcode login
 1.0.5 fix strange UI-Bug in combination with headers in board/stack-overview
-1.0.5 fix back links in headers
+      fix back links in headers
