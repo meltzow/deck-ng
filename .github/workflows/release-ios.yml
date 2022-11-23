@@ -5,10 +5,12 @@ on:
       - 'master'
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v2
-      - run: gem install fastlane
+      - run: |
+          brew update
+          brew install fastlane
       - run: fastlane env
       - run: fastlane ios beta
         env:
