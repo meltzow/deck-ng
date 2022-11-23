@@ -50,7 +50,7 @@ export class ViewBoardPage implements OnInit {
             })
           })
           this.stacks.next(stacks)
-          this.selectedStack = stacks[0].id
+          this.selectedStack = stacks.length ? stacks[0].id : 0
           this.cards.next(cards)
           this.searchedCards = cards
           this.isLoading = false
