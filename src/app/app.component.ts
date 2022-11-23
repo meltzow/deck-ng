@@ -4,11 +4,12 @@ import { AlertController, IonRouterOutlet, MenuController, Platform, ToastContro
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
-import { AuthenticationService } from "@app/services";
+import { AuthenticationService, BoardService } from "@app/services";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
-import { from, Observable, of, share } from "rxjs";
+import { BehaviorSubject, from, Observable, of, share } from "rxjs";
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { BoardItem } from "@app/model";
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 })
 export class AppComponent implements OnInit {
   dark = false;
-  courseObs: Observable<boolean>;
+  boardsSubj = new BehaviorSubject<BoardItem[]>([])
 
   constructor(
     private menu: MenuController,
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private location: Location,
     public alertCtrl: AlertController,
-    @Optional() private routerOutlet?: IonRouterOutlet
+    private boardService: BoardService,
+    @Optional() private routerOutlet?: IonRouterOutlet,
   ) {
     translate.addLangs(['de', 'en']);
     translate.setDefaultLang('en');
@@ -79,21 +81,20 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     await this.authService.ngOnInit();
+    this.boardService.getBoards().subscribe(value => this.boardsSubj.next(value))
+
     setTimeout(() => {
       SplashScreen.hide();
     }, 1000);
-    this.courseObs = from(this.authService.isAuthenticated())
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.courseObs
+    return this.authService.isAuthSubj
   }
 
   logout() {
     this.authService.logout()
   }
 
-  openTutorial() {
 
-  }
 }

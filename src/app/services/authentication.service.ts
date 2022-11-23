@@ -2,10 +2,15 @@ import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
   public static KEY_USER = 'user'
+  public isAuthSubj = new BehaviorSubject<boolean>(false);
+  private share: Observable<boolean> = this.isAuthSubj.asObservable();
+
+
 
   constructor(
     private router: Router,
@@ -16,6 +21,7 @@ export class AuthenticationService implements OnInit {
 
   getAccount(): Promise<Account> {
     return this.storage.get(AuthenticationService.KEY_USER).then(value => {
+      this.isAuthSubj.next(value)
       if (value) {
         return Promise.resolve(value)
       } else {
@@ -28,7 +34,7 @@ export class AuthenticationService implements OnInit {
     await this.storage.create()
   }
 
-  login(url: string, username: string, password: string) {
+  login(url: string, username: string, password: string): Promise<void | boolean> {
     // see https://docs.nextcloud.com/server/latest/developer_manual/client_apis/LoginFlow/index.html#login-flow-v2
     // curl -X POST https://cloud.example.com/index.php/login/v2
     // let polling
@@ -61,13 +67,15 @@ export class AuthenticationService implements OnInit {
     account1.password = password
     account1.authdata = window.btoa(account1.username + ':' + account1.password);
     account1.url = url
-    this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
+    return this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
       this.router.navigate(['home']);
+      this.isAuthSubj.next(true)
     })
   }
 
   logout():Promise<any> {
    return  this.storage.remove(AuthenticationService.KEY_USER).then(value => {
+      this.isAuthSubj.next(false)
       this.router.navigate(['login']);
     })
   }
@@ -78,4 +86,7 @@ export class AuthenticationService implements OnInit {
       .catch(() => false)
   }
 
+  getShare(): Observable<boolean> {
+    return this.share
+  }
 }

@@ -28,6 +28,17 @@ describe('AuthenticationService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('test behavior', async function() {
+    await service.ngOnInit()
+    expect(service.isAuthSubj.value).toBeFalse()
+
+    await service.login("https://foo.bar", "foo", "bar")
+    expect(service.isAuthSubj.value).toBeTrue()
+
+    await service.logout()
+    expect(service.isAuthSubj.value).toBeFalse()
+  });
+
   it('deliver error if there is no saved user', async function ()  {
     await service.ngOnInit()
     await service.logout()

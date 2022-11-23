@@ -6,6 +6,7 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 import { HttpClient } from "@angular/common/http";
 import { BoardItem } from "@app/model/boardItem";
 import { ServiceHelper } from "@app/helper/serviceHelper";
+import { BehaviorSubject, from, Observable, of, share } from "rxjs";
 
 describe('BoardService', () => {
   let service: BoardService;
@@ -36,6 +37,9 @@ describe('BoardService', () => {
 
     boards = [{title :'TheCodeBuzz', id: 2131}]
     authServiceSpy.getAccount.and.returnValue(Promise.resolve({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'}))
+    // authServiceSpy.share = of<boolean>(true)
+    authServiceSpy.isAuthSubj = new BehaviorSubject(true)
+    authServiceSpy.share = authServiceSpy.isAuthSubj.asObservable();
 
     await service.getBoards().subscribe((emp)=>{
       expect(emp).toEqual(boards);
@@ -59,13 +63,14 @@ describe('BoardService', () => {
 
     // authServiceSpy.isAuthenticated.and.returnValue(Promise.resolve(false))
     authServiceSpy.getAccount.and.returnValue(Promise.reject('user foo bar'))
+    authServiceSpy.share = of(true)
 
-      await service.getBoards().subscribe((emp)=>{
-        console.log("no op")
-        fail("is not allowed")
-      }, (error) => {
-        expect(error).toEqual('user foo bar')
-      });
+    service.getBoards().subscribe(emp => {
+      console.log("no op");
+      fail("is not allowed");
+    }, (error) => {
+      expect(error).toEqual('user foo bar');
+    });
 
     httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
     httpMock.verify();

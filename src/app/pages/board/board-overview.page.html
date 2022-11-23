@@ -30,14 +30,14 @@
 <!--    </ion-fab-list>-->
   </ion-fab>
 
-  <ion-grid fixed *ngIf="!isLoading">
+  <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let board of boards | async">
         <app-dashboard-widget [board]="board"></app-dashboard-widget>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-list *ngIf="isLoading">
+  <ion-list *ngIf="isLoading | async">
     <ion-list-header>
       <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
     </ion-list-header>
