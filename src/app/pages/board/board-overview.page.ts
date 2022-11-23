@@ -11,32 +11,31 @@ import { BoardService } from "@app/services";
   styleUrls: ['board-overview.page.scss'],
 })
 export class BoardOverviewPage implements OnInit {
-  boards: BehaviorSubject<BoardItem[]> = new BehaviorSubject<BoardItem[]>(null);
-  isLoading = true
+  isLoading = new BehaviorSubject<boolean>(true);
   handlerMessage = '';
   roleMessage = '';
+  boards = new BehaviorSubject<BoardItem[]>([]);
 
   constructor(
     private boardService: BoardService,
     public toastController: ToastController,
     private authService: AuthenticationService
-  ) {}
+  ) {
+  }
 
   async ngOnInit() {
     await this.authService.ngOnInit()
     this.getBoards();
   }
 
-  getBoards(): Promise<any> {
-    this.isLoading = true
-    return firstValueFrom(this.boardService.getBoards(true))
-      .then(value => this.boards.next(value))
-      .catch(reason => {
-        this.presentToastWithOptions(reason)
-        return []
-      }).finally(() =>
-        this.isLoading = false
-      )
+  getBoards() {
+    this.isLoading.next(true)
+    this.boardService.getBoards().subscribe(
+      {
+        next: (boards: BoardItem[]) => this.boards.next(boards),
+        error: (err: Error) => console.error('Observer got an error: ' + err),
+        complete: () => this.isLoading.next(false)
+      })
   }
 
   async presentToastWithOptions(errorMsg: string) {
@@ -50,23 +49,27 @@ export class BoardOverviewPage implements OnInit {
         {
           text: 'More Info',
           role: 'info',
-          handler: () => { this.handlerMessage = 'More Info clicked'; }
+          handler: () => {
+            this.handlerMessage = 'More Info clicked';
+          }
         },
         {
           text: 'Dismiss',
           role: 'cancel',
-          handler: () => { this.handlerMessage = 'Dismiss clicked'; }
+          handler: () => {
+            this.handlerMessage = 'Dismiss clicked';
+          }
         }
       ]
     });
     await toast.present();
 
-    const { role } = await toast.onDidDismiss();
+    const {role} = await toast.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
   }
 
   doRefresh(event) {
-    this.getBoards().finally(event.target.complete())
+    this.getBoards()
   }
 
   async presentToast() {
@@ -77,19 +80,23 @@ export class BoardOverviewPage implements OnInit {
         {
           text: 'More Info',
           role: 'info',
-          handler: () => { this.handlerMessage = 'More Info clicked'; }
+          handler: () => {
+            this.handlerMessage = 'More Info clicked';
+          }
         },
         {
           text: 'Dismiss',
           role: 'cancel',
-          handler: () => { this.handlerMessage = 'Dismiss clicked'; }
+          handler: () => {
+            this.handlerMessage = 'Dismiss clicked';
+          }
         }
       ]
     });
 
     await toast.present();
 
-    const { role } = await toast.onDidDismiss();
+    const {role} = await toast.onDidDismiss();
     this.roleMessage = `Dismissed with role: ${role}`;
   }
 

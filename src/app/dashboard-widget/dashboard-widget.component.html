@@ -1,5 +1,5 @@
 <ion-card *ngIf="board">
-    <ion-item detail="true" routerLink="/board/{{board.id}}">
+    <ion-item detail="true" routerLink="/boards/{{board.id}}">
       <ion-avatar slot="start" [ngStyle]="{'background-color': '#' + board.color}"></ion-avatar>
       <ion-label>
         <h2>{{board.title}}</h2>
@@ -10,7 +10,7 @@
         </p>
       </ion-label>
       <ion-spinner *ngIf="stacksLoading" name="lines"></ion-spinner>
-      <ion-badge *ngIf="!stacksLoading" slot="end">{{stacks.getValue()?.length || 0}}</ion-badge>
+      <ion-badge *ngIf="!stacksLoading" slot="end">{{(stacks | async).value ?.length || 0}}</ion-badge>
   </ion-item>
 
 <!--  <ion-card-content>-->

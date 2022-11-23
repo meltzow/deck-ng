@@ -1,4 +1,4 @@
-<ion-item *ngIf="card && selectedStack == card.stackId" detail="true" routerLink="/board/{{board.id}}/stack/{{card.stackId}}/card/{{card.id}}" >
+<ion-item *ngIf="card && selectedStack == card.stackId" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}" >
           <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit>
 
   <ion-chip [ngStyle]="{'background-color': '#' + label.color, 'color':'#363232'}"

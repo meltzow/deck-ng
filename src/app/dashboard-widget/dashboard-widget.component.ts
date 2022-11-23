@@ -11,7 +11,7 @@ import { BehaviorSubject, firstValueFrom } from "rxjs";
 })
 export class DashboardWidgetComponent implements OnInit {
   @Input() board: BoardItem;
-  stacks: BehaviorSubject<StackItem[]> = new BehaviorSubject<StackItem[]>(null)
+  stacks = new BehaviorSubject<StackItem[]>(null)
   stacksLoading = true;
 
   constructor(private stackService: StackService) { }

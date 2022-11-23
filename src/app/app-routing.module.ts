@@ -4,17 +4,17 @@ import { AuthGuard } from "@app/helper/auth-guard";
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'boards',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/board/board-overview.module').then( m => m.BoardOverviewPageModule)
   },
   {
-    path: 'board/:id',
+    path: 'boards/:id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/view-board/view-board.module').then( m => m.ViewBoardModule)
   },
   {
-    path: 'board/:boardId/stack/:stackId/card/:cardId',
+    path: 'boards/:boardId/stacks/:stackId/cards/:cardId',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/card/card.module').then( m => m.CardModule)
   },
@@ -32,7 +32,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'boards',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    redirectTo: 'boards',
     pathMatch: 'full'
   },
 ];

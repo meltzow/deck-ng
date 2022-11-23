@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
-import { firstValueFrom, from, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, flatMap, from, Observable, switchMap, tap, of } from 'rxjs';
 
 import { BoardItem, CreateBoardRequest } from '@app/model';
 
@@ -56,8 +56,7 @@ export class BoardService {
    * Get a list of boards
    * @param details
    */
-  public getBoards(details?: boolean): Observable<Array<BoardItem>> {
-
+  public getBoards(): Observable<Array<BoardItem>> {
     const promiseObservable = from(this.authService.getAccount())
     return promiseObservable.pipe(
       switchMap((account) => {
