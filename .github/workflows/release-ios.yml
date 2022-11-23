@@ -9,7 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: gem install fastlane
-      - run: bundle exec fastlane ios beta
+      - run: fastlane env
+      - run: fastlane ios beta
         env:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
 
