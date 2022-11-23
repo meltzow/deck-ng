@@ -11,7 +11,10 @@ jobs:
       - run: |
           brew update
           brew install fastlane
-      - run: fastlane env
+          gem install bundler
+          bundle install
+          npm install --location=global @ionic/cli
+          npm install
       - run: fastlane ios beta
         env:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
