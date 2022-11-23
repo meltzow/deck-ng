@@ -20,7 +20,9 @@ export class BarcodePage implements OnInit, OnDestroy {
   ) { }
 
   ngOnDestroy(): void {
+      if (!this.platform.is('desktop')) {
         this.stopScan()
+      }
     }
 
   ngOnInit() {
@@ -29,7 +31,6 @@ export class BarcodePage implements OnInit, OnDestroy {
       this.router.navigate(['login']);
     });
     if (!this.platform.is('desktop')) {
-      console.log("PLATT: ", this.platform.platforms());
       this.onBarcode()
     }
   }
