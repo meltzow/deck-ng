@@ -12,12 +12,13 @@ import { ViewBoardModule } from "@app/pages/view-board/view-board.module";
   declarations: [
     CardComponent
   ],
-    imports: [
-        CommonModule,
-        IonicModule,
-        CardPageRoutingModule,
-        MarkdownModule,
-        FormsModule
-    ],
+  imports: [
+    CommonModule,
+    IonicModule,
+    CardPageRoutingModule,
+    MarkdownModule,
+    FormsModule,
+    ViewBoardModule
+  ],
 })
 export class CardModule { }
