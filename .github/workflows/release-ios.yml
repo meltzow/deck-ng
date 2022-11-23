@@ -11,6 +11,7 @@ jobs:
       - run: fastlane beta
         env:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+
 #name: "release-ios"
 #on:
 #  workflow_dispatch:
