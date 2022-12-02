@@ -7,10 +7,8 @@ import { BehaviorSubject, Observable } from "rxjs";
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
   public static KEY_USER = 'user'
-  public isAuthSubj = new BehaviorSubject<boolean>(false);
-  private share: Observable<boolean> = this.isAuthSubj.asObservable();
-
-
+  private _isAuthSubj = new BehaviorSubject<boolean>(false);
+  private share: Observable<boolean> = this._isAuthSubj.asObservable();
 
   constructor(
     private router: Router,
@@ -21,12 +19,12 @@ export class AuthenticationService implements OnInit {
 
   getAccount(): Promise<Account> {
     return this.storage.get(AuthenticationService.KEY_USER).then(value => {
-      this.isAuthSubj.next(value)
-      if (value) {
+      this._isAuthSubj.next(value)
+      // if (value) {
         return Promise.resolve(value)
-      } else {
-        return Promise.reject('user not authenticated')
-      }
+      // } else {
+      //   return Promise.reject('user not authenticated')
+      // }
     })
   }
 
@@ -35,6 +33,8 @@ export class AuthenticationService implements OnInit {
   }
 
   login(url: string, username: string, password: string): Promise<void | boolean> {
+
+
     // see https://docs.nextcloud.com/server/latest/developer_manual/client_apis/LoginFlow/index.html#login-flow-v2
     // curl -X POST https://cloud.example.com/index.php/login/v2
     // let polling
@@ -62,6 +62,10 @@ export class AuthenticationService implements OnInit {
     //     })
     //   })
 
+    return this.saveCredentials(url, username, password );
+  }
+
+  public saveCredentials(url: string, username: string, password: string):Promise<boolean | void> {
     const account1 = new Account()
     account1.username = username
     account1.password = password
@@ -69,13 +73,13 @@ export class AuthenticationService implements OnInit {
     account1.url = url
     return this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
       this.router.navigate(['home']);
-      this.isAuthSubj.next(true)
+      this._isAuthSubj.next(true)
     })
   }
 
-  logout():Promise<any> {
-   return  this.storage.remove(AuthenticationService.KEY_USER).then(value => {
-      this.isAuthSubj.next(false)
+  logout(): Promise<any> {
+    return this.storage.remove(AuthenticationService.KEY_USER).then(value => {
+      this._isAuthSubj.next(false)
       this.router.navigate(['login']);
     })
   }
@@ -88,5 +92,9 @@ export class AuthenticationService implements OnInit {
 
   getShare(): Observable<boolean> {
     return this.share
+  }
+
+  isAuthSubj(): BehaviorSubject<boolean> {
+    return this._isAuthSubj
   }
 }

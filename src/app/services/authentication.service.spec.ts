@@ -5,19 +5,23 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { IonicStorageModule } from "@ionic/storage-angular";
 import { Storage } from '@ionic/storage';
 import { Router } from "@angular/router";
+import { NotificationService } from "@app/services/notification.service";
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
   let storage: Storage
   let routerSpy
+  let noticationSpy
 
   beforeEach(() => {
     routerSpy = {navigate: jasmine.createSpy('navigate')};
+    noticationSpy = jasmine.createSpyObj('NotificationService',['msg'])
 
     TestBed.configureTestingModule({
       imports:[IonicStorageModule.forRoot()],
       providers: [
-        { provide: Router, useValue: routerSpy }
+        { provide: Router, useValue: routerSpy },
+        { provide: NotificationService, useValue: noticationSpy },
       ]
     });
     service = TestBed.inject(AuthenticationService);

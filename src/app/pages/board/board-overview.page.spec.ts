@@ -5,21 +5,26 @@ import { RouterModule } from '@angular/router';
 import { Observable, of } from "rxjs";
 import { BoardItem } from "@app/model/boardItem";
 import { HttpClientModule } from "@angular/common/http";
-import { BoardService } from "@app/services";
+import { AuthenticationService, BoardService } from "@app/services";
 import { IonicStorageModule } from "@ionic/storage-angular";
 import { BoardOverviewPage } from "@app/pages/board/board-overview.page";
 
 describe('BoardOverviewPage', () => {
   let component: BoardOverviewPage;
   let fixture: ComponentFixture<BoardOverviewPage>;
+  let authServiceSpy
 
   beforeEach(waitForAsync(() => {
     const boardServiceSpy = jasmine.createSpyObj('BoardService',['getBoards'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated', 'ngOnInit'])
 
     TestBed.configureTestingModule({
       declarations: [ BoardOverviewPage ],
       imports: [IonicModule.forRoot(), RouterModule.forRoot([]), HttpClientModule, IonicStorageModule.forRoot()],
-      providers: [{ provide: BoardService, useValue: boardServiceSpy }],
+      providers: [
+        { provide: BoardService, useValue: boardServiceSpy },
+        { provide: AuthenticationService, useValue: authServiceSpy },
+      ],
     }).compileComponents();
 
     // boardServiceSpy.getBoards.and.returnValue(Promise.resolve([{title: 'foobar'}]))

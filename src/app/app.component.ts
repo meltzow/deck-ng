@@ -10,6 +10,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject, from, Observable, of, share } from "rxjs";
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { BoardItem } from "@app/model";
+import { NotificationService } from "@app/services/notification.service";
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
     private menu: MenuController,
     private platform: Platform,
     private router: Router,
-    private toastCtrl: ToastController,
+    private navigation: NotificationService,
     private authService: AuthenticationService,
     private translate: TranslateService,
     private location: Location,
@@ -88,12 +89,13 @@ export class AppComponent implements OnInit {
     }, 1000);
   }
 
-  isAuthenticated(): Observable<boolean> {
-    return this.authService.isAuthSubj
+  isAuthenticated(): BehaviorSubject<boolean> {
+    return this.authService.isAuthSubj()
   }
 
   logout() {
     this.authService.logout()
+    this.navigation.msg("successfully logged out")
   }
 
 

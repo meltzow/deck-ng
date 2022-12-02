@@ -6,9 +6,12 @@ const config: CapacitorConfig = {
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {
-    "SplashScreen": {
-      "launchAutoHide": false,
-      "showSpinner": true
+    SplashScreen: {
+      launchAutoHide: false,
+      showSpinner: true
+    },
+    CapacitorHttp: {
+      enabled: true
     }
   }
 };

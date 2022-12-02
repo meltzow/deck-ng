@@ -15,6 +15,7 @@ import { AuthGuard } from "@app/helper/auth-guard";
 import { MarkdownModule } from 'ngx-markdown';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NotificationService } from "@app/services/notification.service";
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     MyRenderer,
-    AuthGuard
+    AuthGuard,
+    NotificationService
   ],
   bootstrap: [AppComponent],
 })
