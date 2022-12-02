@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angul
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
-import { AuthenticationService } from "@app/services";
+import { AuthenticationService, BoardService } from "@app/services";
 import { LoginPage } from "@app/pages/login/login.page";
 import { FormsModule } from "@angular/forms";
 import { TranslateTestingModule } from "ngx-translate-testing";
@@ -16,6 +16,7 @@ describe('Login', () => {
 
   beforeEach(waitForAsync(() => {
     const authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['login'])
+    const boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoards'])
 
     TestBed.configureTestingModule({
       declarations: [LoginPage],
@@ -26,7 +27,10 @@ describe('Login', () => {
           // eslint-disable-next-line @typescript-eslint/no-var-requires
           .withTranslations('en', require('../../../assets/i18n/en.json'))
       ],
-      providers: [{provide: AuthenticationService, useValue: authServiceSpy}],
+      providers: [
+        {provide: AuthenticationService, useValue: authServiceSpy},
+        {provide: BoardService, useValue: boardServiceSpy},
+      ],
     }).compileComponents();
 
     transService = TestBed.inject(TranslateService)
