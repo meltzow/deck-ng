@@ -89,8 +89,8 @@ export class AppComponent implements OnInit {
     }, 1000);
   }
 
-  isAuthenticated(): BehaviorSubject<boolean> {
-    return this.authService.isAuthSubj()
+  isAuthenticated(): Observable<boolean> {
+    return this.authService.isAuthObs()
   }
 
   logout() {

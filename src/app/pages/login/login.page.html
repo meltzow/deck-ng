@@ -22,7 +22,7 @@
         <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="url" #url="ngModel" spellcheck="false" autocapitalize="off"
                    autocorrect="off" autofocus="on" color="primary" inputmode="url" required="true" autocomplete="url">
         </ion-input>
-        <ion-note slot="helper">Enter a valid email</ion-note>
+        <ion-note slot="helper">Enter the url for your nextcloud server</ion-note>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="url.valid || submitted === false" class="ion-padding-start" translate="">
@@ -30,44 +30,7 @@
         </p>
       </ion-text>
 
-<!--      <ion-item fill="solid">-->
-<!--        <ion-label position="floating" color="primary" translate="">server_url</ion-label>-->
-<!--        <ion-input name="url" placeholder="https://xxx.xxx.xx" type="email" >-->
-<!--        </ion-input>-->
-<!--        <ion-note slot="helper">Enter a valid email</ion-note>-->
-<!--        <ion-note slot="error">Invalid email</ion-note>-->
-<!--      </ion-item>-->
-<!--      <ion-text color="danger">-->
-<!--        <p [hidden]="url.valid || submitted === false" class="ion-padding-start" translate="">-->
-<!--          url_required-->
-<!--        </p>-->
-<!--      </ion-text>-->
-<!--      <ion-item>-->
-<!--        <ion-label color="primary" position="floating" translate="">username</ion-label>-->
-<!--        <ion-input [(ngModel)]="username" name="username" type="text" spellcheck="false" autocapitalize="off"-->
-<!--                   autocorrect="off" autofocus="on" color="primary" inputmode="text"-->
-<!--                  required="true">-->
-<!--        </ion-input>-->
-<!--      </ion-item>-->
-
-<!--      <ion-text color="danger">-->
-<!--        <p [hidden]="username.valid || submitted === false" class="ion-padding-start" translate="">-->
-<!--          username_required-->
-<!--        </p>-->
-<!--      </ion-text>-->
-
-<!--      <ion-item>-->
-<!--          <ion-label color="primary" position="floating" translate="">app_password</ion-label>-->
-<!--          <ion-input [(ngModel)]="password" name="password" [type]=" showPassword ? 'text' : 'password' " autocorrect="off" autofocus="on" color="primary" inputmode="text" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" required="true"></ion-input>-->
-<!--          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'" color="primary" slot="end" (click)="showHidePassword()" class="ion-align-self-end"></ion-icon>-->
-<!--      </ion-item>-->
-
-<!--      <ion-text color="danger">-->
-<!--        <p [hidden]="password || submitted === false" class="ion-padding-start" translate="">-->
-<!--          password_required-->
-<!--        </p>-->
-<!--      </ion-text>-->
-      <ion-button (click)="onLogin(loginForm)" type="submit"  translate="">login</ion-button>
+      <ion-button (click)="onLogin(loginForm)" type="submit" translate="">login</ion-button>
     </ion-list>
   </form>
 

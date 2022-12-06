@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '@app/services/authentication.service';
 import { BoardService } from "@app/services";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subscription } from "rxjs";
 import { NotificationService } from "@app/services/notification.service";
-import { CapacitorHttp } from '@capacitor/core';
-
 
 export interface UserOptions {
-  username: string;
-  password: string;
   url: string
 }
 
@@ -22,10 +18,13 @@ export interface UserOptions {
 })
 export class LoginPage implements OnInit {
 
-  login: UserOptions = { url:'', username: '', password: '' };
+  subscription: Subscription
+  login: UserOptions = { url:''};
   submitted = false;
   isLoading = new BehaviorSubject<boolean>(false)
   showPassword = false
+
+  @ViewChild('loginForm') form: NgForm;
 
   constructor(
     public authenticationService: AuthenticationService,
@@ -35,37 +34,33 @@ export class LoginPage implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    this.authenticationService.getAccount().then(account => {
+  async ngOnInit() {
+    await this.authenticationService.getAccount().then(account => {
+      if (account.isAuthenticated) {
+        this.router.navigate(['home'])
+      }
       this.login.url = account?.url
-      this.login.username = account?.username
-      this.login.password = account?.password
     })
   }
 
-  onLogin(form: NgForm) {
+  ionViewWillLeave() {
+
+  }
+
+  async onLogin(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {
-      this.authenticationService.saveCredentials(this.login.url, this.login.username, this.login.password).then(value => {
-        // Example of a GET request
-        const options = {
-          url: this.login.url + '/index.php/apps/deck/api/v1/boards',
-          headers: {
-            'Authorization': 'Basic ' + window.btoa(this.login.username + ':' + this.login.password),
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        };
-        //TODO: this is a native request on devices, because of https://github.com/nextcloud/server/issues/34898
-        CapacitorHttp.get(options).then(value1 => {
+      this.authenticationService.isAuthObs().subscribe(success => {
+        if (success) {
           this.notification.msg("successfully logged in")
-        })
-          .catch(reason => {
-            console.error(reason)
-          })
-          .finally(this.isLoading.next(false));
+          this.router.navigate(['home'])
+          // this.subscription.unsubscribe()
+        } else {
+          this.notification.error("login not successful")
+        }
       })
+      await this.authenticationService.login(this.login.url)
     }
   }
 

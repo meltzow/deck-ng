@@ -1,12 +1,18 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "./tsconfig.json",
+
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"],
+      "@capacitor/*": ["__mocks__/@capacitor/*"]
+    }
   },
   "files": [
     "src/test.ts",

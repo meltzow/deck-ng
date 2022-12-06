@@ -2,13 +2,28 @@ import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, interval, Observable, switchMap, take } from "rxjs";
+import { CapacitorHttp } from "@capacitor/core";
+import { Browser } from "@capacitor/browser";
 
+interface Login1 {
+  poll: {
+    token: string,
+    endpoint: string
+  }
+  login: string
+}
+
+interface Login2  {
+  server: string,
+  loginName: string,
+  appPassword: string
+}
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
   public static KEY_USER = 'user'
   private _isAuthSubj = new BehaviorSubject<boolean>(false);
-  private share: Observable<boolean> = this._isAuthSubj.asObservable();
+  private _isAuthObs: Observable<boolean> = this._isAuthSubj.asObservable();
 
   constructor(
     private router: Router,
@@ -18,13 +33,13 @@ export class AuthenticationService implements OnInit {
   }
 
   getAccount(): Promise<Account> {
-    return this.storage.get(AuthenticationService.KEY_USER).then(value => {
-      this._isAuthSubj.next(value)
-      // if (value) {
+    return this.storage.get(AuthenticationService.KEY_USER).then((value: Account) => {
+        if (value) {
+          this._isAuthSubj.next(value.isAuthenticated)
+        } else {
+          this._isAuthSubj.next(false)
+        }
         return Promise.resolve(value)
-      // } else {
-      //   return Promise.reject('user not authenticated')
-      // }
     })
   }
 
@@ -32,66 +47,90 @@ export class AuthenticationService implements OnInit {
     await this.storage.create()
   }
 
-  login(url: string, username: string, password: string): Promise<void | boolean> {
+  async login(url: string): Promise<boolean> {
+   const options = {
+      url: url + '/index.php/login/v2',
+      // headers: {
+      //   'Accept': 'application/json',
+      //   'Content-Type': 'application/json'
+      // },
+    };
 
+    const resp1 = await CapacitorHttp.post(options)
+      .catch(reason => {
+        console.error(reason)
+      })
+      // .finally(this.isLoading.next(false));
+    return new Promise((resolve, reject) => {
+      if (resp1) {
+        const loginData = (resp1.data as Login1)
+        const options1 = {
+          url: loginData.poll.endpoint,
+          params: {token: loginData.poll.token},
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        };
+        Browser.open({url: loginData.login})
 
-    // see https://docs.nextcloud.com/server/latest/developer_manual/client_apis/LoginFlow/index.html#login-flow-v2
-    // curl -X POST https://cloud.example.com/index.php/login/v2
-    // let polling
-    // this.defaultService.loginV2Post()
-    //   //
-    //   // return this.http.post<Login1>(`${environment.nextcloudApiUrl}/index.php/login/v2`, {}, {
-    //   //   context: new HttpContext(),
-    //   //   params: new HttpParams({encoder:  new CustomHttpParameterCodec()}),
-    //   //   responseType: <any>'json',
-    //   //   withCredentials: false,
-    //   //   headers: new HttpHeaders(),
-    //   //   observe: 'body',
-    //   //   reportProgress: false
-    //   // })
-    //   .subscribe(loginValue1 => {
-    //     console.warn("please do a manual login at: ", loginValue1.login)
-    //     const formData = new FormData()
-    //     formData.append('token', loginValue1.poll.token)
-    //     polling = interval(2000).pipe(
-    //       startWith(0),
-    //       switchMap(() => this.http.post<Login2>(loginValue1.poll.endpoint, formData))
-    //     ).subscribe(loginValue2 => {
-    //       console.log("successfull login: ", loginValue2.loginName, loginValue2.appPassword);
-    //       polling.unsubscribe();
-    //     })
-    //   })
+        const obs = interval(2000)
+          .pipe(
+            take(60),
+            switchMap(() => CapacitorHttp.post(options1))
+          )
 
-    return this.saveCredentials(url, username, password );
+        const timeInterval = obs.subscribe(async resp2 => {
+          if (resp2.status == 200) {
+            const r2 = (resp2.data as Login2)
+            timeInterval.unsubscribe()
+            const succ: boolean = await this.saveCredentials(url, r2.loginName, r2.appPassword, true)
+            resolve(succ)
+          }
+        },error => {reject(error)}, () => resolve(false))
+        Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
+      } else {
+        reject('fooo bar error')
+      }
+    })
   }
 
-  public saveCredentials(url: string, username: string, password: string):Promise<boolean | void> {
+  public async saveCredentials(url: string, username: string, password: string, isAuth = false): Promise<boolean> {
     const account1 = new Account()
     account1.username = username
     account1.password = password
     account1.authdata = window.btoa(account1.username + ':' + account1.password);
     account1.url = url
-    return this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
-      this.router.navigate(['home']);
-      this._isAuthSubj.next(true)
+    account1.isAuthenticated = isAuth
+    await this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
+      this._isAuthSubj.next(isAuth)
     })
+    return Promise.resolve(true)
   }
 
   logout(): Promise<any> {
-    return this.storage.remove(AuthenticationService.KEY_USER).then(value => {
+    return this.storage.get(AuthenticationService.KEY_USER).then((value: Account) => {
+      if (value) {
+        value.isAuthenticated = false
+        this.storage.set(AuthenticationService.KEY_USER, value)
+      }
       this._isAuthSubj.next(false)
-      this.router.navigate(['login']);
+
+      this.router.navigate(['login'])
     })
   }
 
-  isAuthenticated(): Promise<boolean> {
-    return this.getAccount()
-      .then(value => value != null)
-      .catch(() => false)
+  async isAuthenticated(): Promise<boolean> {
+    const value = await this.getAccount()
+    if (!value) {
+      return Promise.resolve(false)
+    } else {
+      return Promise.resolve(value.isAuthenticated)
+    }
   }
 
-  getShare(): Observable<boolean> {
-    return this.share
+  isAuthObs(): Observable<boolean> {
+    return this._isAuthObs
   }
 
   isAuthSubj(): BehaviorSubject<boolean> {
