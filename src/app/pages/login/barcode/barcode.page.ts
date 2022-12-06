@@ -66,7 +66,7 @@ export class BarcodePage implements OnInit, OnDestroy {
       // if the result has content
       if (result.hasContent) {
         this.parseContent(result.content)
-        this.authenticationService.login(this.barcode.url, this.barcode.user, this.barcode.password)
+        this.authenticationService.saveCredentials(this.barcode.url, this.barcode.user, this.barcode.password, true)
         this.stopScan()
       }
     } else {
