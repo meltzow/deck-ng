@@ -47,7 +47,9 @@ export class LoginPage implements OnInit {
     this.submitted = true;
 
     if (form.valid) {
-      const succ = await this.authenticationService.login(this.login.url)
+      const succ = await this.authenticationService.login(this.login.url).catch(reason => {
+        this.notification.error(reason.message, "login not successful")
+      })
       if (succ) {
         this.notification.msg("successfully logged in")
         this.router.navigate(['home'])
