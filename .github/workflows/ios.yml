@@ -1,4 +1,4 @@
-name: build-ios-app
+name: "ci for ios"
 on:
   push:
     branches:
