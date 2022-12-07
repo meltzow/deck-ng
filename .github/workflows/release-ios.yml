@@ -1,13 +1,22 @@
-name: build-ios-app
+name: "release for ios"
 on:
-  push:
-    branches:
-      - 'master'
+  workflow_dispatch:
+    inputs:
+      track:
+        description: 'which track should be used? beta (means testflight), production'
+        required: true
+        default: 'beta'
+        options:
+          - beta
+          - production
+        type: choice
 jobs:
   build:
     runs-on: macos-12
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: 'master'
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0' # Not needed with a .ruby-version file
@@ -32,66 +41,3 @@ jobs:
       - run: fastlane ios beta
         env:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-
-#name: "release-ios"
-#on:
-#  workflow_dispatch:
-#    inputs:
-#      track:
-#        description: 'which track should be used? One of internal, alpha (means closed), beta (means open), production'
-#        required: true
-#        default: 'internal'
-#        options:
-#          - internal
-#          - alpha
-#          - beta
-#          - production
-#        type: choice
-#      status:
-#        required: false
-#        description: 'One of completed, inProgress, halted, draft'
-#        default: 'draft'
-#        type: choice
-#        options:
-#          - completed
-#          - inProgress
-#          - halted
-#          - draft
-#jobs:
-#  release:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - run: npm install --location=global @ionic/cli
-#      - run: npm install
-#      - run: bundle install
-#      - run: ionic build
-#      - run: ionic capacitor update
-#      - run: npx cap sync
-#      - run: npm run build-ios-ci
-#      - uses: sparkfabrik/ios-build-action@v2.0.0
-#        with:
-#          upload-to-testflight: true
-#          increment-build-number: true
-#          build-pods: true
-#          pods-path: 'ios/Podfile'
-#          configuration: Release
-#          export-method: app-store
-##          workspace-path: ${{ secrets.WORKSPACE_PATH }}
-##          project-path: ${{ secrets.PROJECT_PATH }}
-#          scheme: MyScheme
-#          output-path: build-${{ github.sha }}.ipa
-#          apple-key-id: ${{ secrets.APPLE_KEY_ID }}
-#          apple-key-issuer-id: ${{ secrets.APPLE_KEY_ISSUER_ID }}
-#          apple-key-content: ${{ secrets.APPLE_KEY_CONTENT }}
-#          team-id: ${{ secrets.APPLE_TEAM_ID }}
-#          team-name: ${{ secrets.APPLE_TEAM_NAME }}
-#          match-password: ${{ secrets.MATCH_PASSWORD }}
-#          match-git-url: ${{ secrets.MATCH_GIT_URL }}
-#          match-git-basic-authorization: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-#          match-build-type: 'appstore'
-#          browserstack-upload: false
-#          browserstack-username: ${{ secrets.BROWSERSTACK_USERNAME }}
-#          browserstack-access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-
-

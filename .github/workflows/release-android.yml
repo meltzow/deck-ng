@@ -1,32 +1,24 @@
-name: "release-android"
+name: "release for android"
 on:
   workflow_dispatch:
     inputs:
       track:
         description: 'which track should be used? One of internal, alpha (means closed), beta (means open), production'
         required: true
-        default: 'internal'
+        default: 'beta'
         options:
           - internal
           - alpha
           - beta
           - production
         type: choice
-      status:
-        required: false
-        description: 'One of completed, inProgress, halted, draft'
-        default: 'draft'
-        type: choice
-        options:
-          - completed
-          - inProgress
-          - halted
-          - draft
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: 'master'
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
@@ -63,5 +55,3 @@ jobs:
          track: ${{ github.event.inputs.track }}
          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
          status: ${{ github.event.inputs.status }}
-
-
