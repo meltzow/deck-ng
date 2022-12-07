@@ -37,7 +37,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-list *ngIf="isLoading | async">
+  <ion-list *ngIf="(isLoading | async)">
     <ion-list-header>
       <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
     </ion-list-header>

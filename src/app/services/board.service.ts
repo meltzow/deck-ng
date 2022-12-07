@@ -73,16 +73,15 @@ export class BoardService {
   }
 
   public async getBoardsProm(): Promise<Array<BoardItem>> {
-    // const account = await this.authService.getAccount()
-    // if (!account || !account.isAuthenticated) {
-    //   return Promise.resolve([])
-    // }
-    const account = {isAuthenticated: true, url: "https://foo.bar", authdata: "foobar"} as Account
+    const account = await this.authService.getAccount()
+    if (!account || !account.isAuthenticated) {
+      return Promise.resolve([])
+    }
     return new Promise((resolve, reject) =>
         this.httpClient.get<Array<BoardItem>>(`${account.url}/index.php/apps/deck/api/v1/boards`,
           this.serviceHelper.getHttpOptions(account)
         ).subscribe(value => {
-          // resolve([])
+          resolve(value)
         }, error => reject(error))
     )
   }
