@@ -6,7 +6,7 @@ import { BehaviorSubject, interval, Observable, switchMap, take } from "rxjs";
 import { CapacitorHttp } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
 
-interface Login1 {
+export interface Login1 {
   poll: {
     token: string,
     endpoint: string
@@ -14,7 +14,7 @@ interface Login1 {
   login: string
 }
 
-interface Login2  {
+export interface Login2  {
   server: string,
   loginName: string,
   appPassword: string
@@ -50,10 +50,10 @@ export class AuthenticationService implements OnInit {
   async login(url: string): Promise<boolean> {
    const options = {
       url: url + '/index.php/login/v2',
-      // headers: {
-      //   'Accept': 'application/json',
-      //   'Content-Type': 'application/json'
-      // },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
     };
 
     const resp1 = await CapacitorHttp.post(options)
@@ -80,7 +80,7 @@ export class AuthenticationService implements OnInit {
             switchMap(() => CapacitorHttp.post(options1))
           )
 
-        const timeInterval = obs.subscribe(async resp2 => {
+        const timeInterval = obs.subscribe(async (resp2) => {
           if (resp2.status == 200) {
             const r2 = (resp2.data as Login2)
             timeInterval.unsubscribe()
@@ -90,7 +90,7 @@ export class AuthenticationService implements OnInit {
         },error => {reject(error)}, () => resolve(false))
         Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
       } else {
-        reject('fooo bar error')
+        reject('Error while connecting ' + url)
       }
     })
   }

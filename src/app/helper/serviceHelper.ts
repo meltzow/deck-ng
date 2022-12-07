@@ -32,7 +32,7 @@ export class ServiceHelper {
     let localVarHeaders = new HttpHeaders();
 
     const authData = account.authdata
-    if (!authData) {
+    if (!authData || !account.isAuthenticated) {
       throw new Error("user is not logged in")
     }
 

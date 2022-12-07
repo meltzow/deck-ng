@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardItem } from "@app/model/boardItem";
-import { ToastController } from "@ionic/angular";
-import { BehaviorSubject, firstValueFrom } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services";
 import { NotificationService } from "@app/services/notification.service";
@@ -13,7 +11,8 @@ import { NotificationService } from "@app/services/notification.service";
 })
 export class BoardOverviewPage implements OnInit {
   isLoading = new BehaviorSubject<boolean>(true);
-  boards = new BehaviorSubject<BoardItem[]>([]);
+
+  boards = []
 
   constructor(
     private boardService: BoardService,
@@ -24,17 +23,13 @@ export class BoardOverviewPage implements OnInit {
 
   async ngOnInit() {
     await this.authService.ngOnInit()
-    this.getBoards();
+    await this.getBoards();
   }
 
-  getBoards() {
+  async getBoards() {
     this.isLoading.next(true)
-    this.boardService.getBoards().subscribe(
-      {
-        next: (boards: BoardItem[]) => this.boards.next(boards),
-        error: (err: Error) => this.notification.error(err.message),
-        complete: () => this.isLoading.next(false)
-      })
+    this.boards = await this.boardService.getBoardsProm()
+    this.isLoading.next(false)
   }
 
   doRefresh(event) {

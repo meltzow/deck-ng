@@ -22,7 +22,7 @@
         <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="url" #url="ngModel" spellcheck="false" autocapitalize="off"
                    autocorrect="off" autofocus="on" color="primary" inputmode="url" required="true" autocomplete="url">
         </ion-input>
-        <ion-note slot="helper">Enter the url for your nextcloud server</ion-note>
+        <ion-note slot="helper" translate="">url_helper</ion-note>
       </ion-item>
       <ion-text color="danger">
         <p [hidden]="url.valid || submitted === false" class="ion-padding-start" translate="">

@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services/board.service";
@@ -7,10 +7,10 @@ import { HttpClient } from "@angular/common/http";
 import { BoardItem } from "@app/model/boardItem";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 import { BehaviorSubject, from, Observable, of, share } from "rxjs";
+import { Account } from "@app/model";
 
 describe('BoardService', () => {
   let service: BoardService;
-  let boards: BoardItem[]
   let httpMock: HttpTestingController
   let authServiceSpy
 
@@ -35,9 +35,8 @@ describe('BoardService', () => {
 
   it('check getBoards() request for expectations', async () => {
 
-    boards = [{title :'TheCodeBuzz', id: 2131}]
-    authServiceSpy.getAccount.and.returnValue(Promise.resolve({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'}))
-    // authServiceSpy.share = of<boolean>(true)
+    const boards = [{title :'TheCodeBuzz', id: 2131}]
+    authServiceSpy.getAccount.and.returnValue(Promise.resolve({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar', isAuthenticated: true } as Account))
     authServiceSpy.isAuthSubj = new BehaviorSubject(true)
     authServiceSpy.share = authServiceSpy.isAuthSubj.asObservable();
 
@@ -59,18 +58,51 @@ describe('BoardService', () => {
 
   });
 
-  it('getBoards() ist not allowed if not logged in', async function() {
+  it('PROMISE check getBoards() request for expectations', fakeAsync((done: DoneFn) => {
 
-    // authServiceSpy.isAuthenticated.and.returnValue(Promise.resolve(false))
-    authServiceSpy.getAccount.and.returnValue(Promise.reject('user foo bar'))
-    authServiceSpy.share = of(true)
+    const boards = [{title: 'TheCodeBuzz', id: 2131}]
+    authServiceSpy.getAccount.and.returnValue(Promise.resolve({
+      authdata: "foobar",
+      username: 'user',
+      id: 1,
+      url: 'https://foo.bar',
+      isAuthenticated: true
+    } as Account))
+    authServiceSpy.isAuthSubj = new BehaviorSubject(true)
+    authServiceSpy.share = authServiceSpy.isAuthSubj.asObservable();
 
-    service.getBoards().subscribe(emp => {
-      console.log("no op");
-      fail("is not allowed");
-    }, (error) => {
-      expect(error).toEqual('user foo bar');
-    });
+    service.getBoardsProm().then(value => {
+      expect(value).toEqual(boards)
+    })
+    // const emp = prom
+
+    flush();
+    // tick();
+
+    const req = httpMock.expectOne('https://foo.bar' + '/index.php/apps/deck/api/v1/boards');
+    expect(req.request.method).toEqual("GET")
+    expect(req.request.headers.get('Authorization')).toEqual('Basic foobar')
+    //this header is not allowed by server see response header Access-Control-Allow-Headers
+    expect(req.request.headers.get('OCS-APIRequest')).toBeNull()
+    //OPTIONS response header says: "Access-Control-Allow-Credentials: false"
+    expect(req.request.withCredentials).toBeFalse()
+
+
+    req.flush(boards)
+
+
+    httpMock.verify();
+  })
+  );
+
+  it('getBoards() deliver empty boards if not logged in', async () => {
+
+    authServiceSpy.getAccount.and.returnValue(Promise.resolve())
+    authServiceSpy._isAuthSubj = of(false)
+
+    await service.getBoards().subscribe(boards => {
+      expect(boards).toEqual([])
+    })
 
     httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
     httpMock.verify();

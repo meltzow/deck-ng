@@ -76,7 +76,6 @@ describe('Login', () => {
     form.controls['url'].setValue("http://foo.bar")
     await component.onLogin(form)
 
-    expect(authServiceSpy.isAuthObs).toHaveBeenCalledTimes(1)
     expect(authServiceSpy.login).toHaveBeenCalledTimes(1)
 
   })
@@ -91,7 +90,6 @@ describe('Login', () => {
     form.controls['url'].setValue("http://foo.bar")
     await component.onLogin(form)
 
-    expect(authServiceSpy.isAuthObs).toHaveBeenCalledTimes(1)
     expect(authServiceSpy.login).toHaveBeenCalledTimes(1)
     expect(notifySpy.error).toHaveBeenCalledTimes(1)
 
