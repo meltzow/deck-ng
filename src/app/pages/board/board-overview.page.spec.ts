@@ -15,7 +15,7 @@ describe('BoardOverviewPage', () => {
   let authServiceSpy
 
   beforeEach(waitForAsync(() => {
-    const boardServiceSpy = jasmine.createSpyObj('BoardService',['getBoards'])
+    const boardServiceSpy = jasmine.createSpyObj('BoardService',['getBoards','getBoardsProm'])
     authServiceSpy = jasmine.createSpyObj('AuthenticationService',['isAuthenticated', 'ngOnInit'])
 
     TestBed.configureTestingModule({

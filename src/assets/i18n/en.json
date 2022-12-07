@@ -5,9 +5,6 @@
   "account": "account",
   "server_url": "server URL",
   "url_required": "server is required",
-  "username": "username",
-  "username_required": "username is required",
-  "app_password" : "app password",
-  "password_required": "app password is required"
+  "url_helper": "Enter the url for your nextcloud server"
 
 }

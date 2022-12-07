@@ -5,9 +5,6 @@
   "account": "Account",
   "server_url": "Server URL",
   "url_required": "Server URL wird benötigt",
-  "username": "Benutzername",
-  "username_required": "Benutzername wird benötigt",
-  "app_password" : "App Passwort",
-  "password_required": "Passwort wird benötigt"
+  "url_helper": "gib die URL deines nextcloud servers ein"
 
 }

@@ -18,7 +18,6 @@ export interface UserOptions {
 })
 export class LoginPage implements OnInit {
 
-  subscription: Subscription
   login: UserOptions = { url:''};
   submitted = false;
   isLoading = new BehaviorSubject<boolean>(false)
@@ -35,32 +34,26 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
-    await this.authenticationService.getAccount().then(account => {
-      if (account.isAuthenticated) {
+    const account = await this.authenticationService.getAccount()
+    if (account) {
+    if (account.isAuthenticated) {
         this.router.navigate(['home'])
       }
       this.login.url = account?.url
-    })
-  }
-
-  ionViewWillLeave() {
-
+    }
   }
 
   async onLogin(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {
-      this.authenticationService.isAuthObs().subscribe(success => {
-        if (success) {
-          this.notification.msg("successfully logged in")
-          this.router.navigate(['home'])
-          // this.subscription.unsubscribe()
-        } else {
-          this.notification.error("login not successful")
-        }
-      })
-      await this.authenticationService.login(this.login.url)
+      const succ = await this.authenticationService.login(this.login.url)
+      if (succ) {
+        this.notification.msg("successfully logged in")
+        this.router.navigate(['home'])
+      } else {
+        this.notification.error("login not successful")
+      }
     }
   }
 

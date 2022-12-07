@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { StackService } from './stack.service';
-import { StackItem } from "@app/model";
+import { Account, StackItem } from "@app/model";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
@@ -33,7 +33,7 @@ describe('StackService', () => {
   it('check getStacks() request for expectations',  async () => {
 
     stacks = [{title :'TheCodeBuzz', id: 2131}]
-    authServiceSpy.getAccount.and.returnValue(Promise.resolve({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar'}))
+    authServiceSpy.getAccount.and.returnValue(Promise.resolve({authdata: "foobar", username: 'user', id: 1, url: 'https://foo.bar',isAuthenticated: true } as Account))
 
    await service.getStacks(1).subscribe((emp)=>{
       expect(emp).toEqual(stacks);

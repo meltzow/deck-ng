@@ -1,14 +1,12 @@
 import { Component, OnInit, Optional } from '@angular/core';
-import { AlertController, IonRouterOutlet, MenuController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, MenuController, Platform } from '@ionic/angular';
 
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { SwUpdate } from '@angular/service-worker';
 import { AuthenticationService, BoardService } from "@app/services";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
-import { BehaviorSubject, from, Observable, of, share } from "rxjs";
-import { StatusBar, Style } from '@capacitor/status-bar';
+import { BehaviorSubject, Observable} from "rxjs";
 import { BoardItem } from "@app/model";
 import { NotificationService } from "@app/services/notification.service";
 
@@ -82,7 +80,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     await this.authService.ngOnInit();
-    this.boardService.getBoards().subscribe(value => this.boardsSubj.next(value))
+    this.boardService.currentBoardsObs.subscribe(value => this.boardsSubj.next(value))
 
     setTimeout(() => {
       SplashScreen.hide();
