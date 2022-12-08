@@ -23,7 +23,8 @@ jobs:
       - run: |
           brew update
           brew install fastlane
-      - run: fastlane ios beta
+      - run: cd ios/App && pod install
+      - run: bundle exec fastlane ios beta
         env:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}

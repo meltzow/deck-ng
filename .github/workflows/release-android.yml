@@ -23,7 +23,7 @@ jobs:
         with:
           ruby-version: '3.0' # Not needed with a .ruby-version file
           bundler-cache: true
-      - run: fastlane android beta
+      - run: bundle exec fastlane android beta
 #      - uses: r0adkll/sign-android-release@v1
 #        name: Sign app APK
 #        # ID used to access action output
