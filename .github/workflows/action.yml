@@ -1,0 +1,23 @@
+name: "CI for android"
+inputs:
+  branch:
+    description: "which branch should checked out?"
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.branch }}
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+        check-latest: true
+    - run: npm install
+    - run: npm install -g @ionic/cli
+    - run: ionic build
+    #      - run: npx cap doctor
+    - run: ionic capacitor update
+    - run: npx cap sync

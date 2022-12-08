@@ -7,7 +7,7 @@ on: # rebuild any PRs and main branch changes
 
 jobs:
   setup: # make sure build/ci work properly
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -25,7 +25,7 @@ jobs:
       - run: npx cap sync
 
   build: # make sure build/ci work properly
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: setup
     steps:
       - uses: actions/cache@v3
@@ -49,7 +49,7 @@ jobs:
           name: app bundle
           path: android/app/build/outputs/bundle/release/app-release.aab
   test: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: setup
     steps:
       - run: npm run test-ci
