@@ -68,6 +68,7 @@ describe('Login', () => {
 
   it ('with valid url there is a login try', async () => {
     authServiceSpy.isAuthObs.and.returnValue(of(true))
+    authServiceSpy.login.and.returnValue(Promise.resolve(true))
 
     component = await fixture.componentInstance;
     await fixture.detectChanges();
@@ -82,6 +83,7 @@ describe('Login', () => {
 
   it ('with auth not possible there must be a notification with error', async () => {
     authServiceSpy.isAuthObs.and.returnValue(of(false))
+    authServiceSpy.login.and.returnValue(Promise.resolve(false))
 
     component = await fixture.componentInstance;
     await fixture.detectChanges();

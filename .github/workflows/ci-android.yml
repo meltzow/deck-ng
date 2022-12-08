@@ -6,29 +6,10 @@ on: # rebuild any PRs and main branch changes
       - master
 
 jobs:
-#  setup: # make sure build/ci work properly
-#    runs-on: ubuntu-22.04
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          ref: ${{ inputs.branch }}
-#      - uses: actions/setup-node@v3
-#        with:
-#          node-version: 16
-#          cache: 'npm'
-#          check-latest: true
-#      - run: npm install
-#      - run: npm install -g @ionic/cli
-#      - run: ionic build
-#      #      - run: npx cap doctor
-#      - run: ionic capacitor update
-#      - run: npx cap sync
-
   build: # make sure build/ci work properly
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - run: ls -al /home/runner/work/deck-ng/deck-ng/
       - uses: ./.github/workflows/
       - uses: actions/cache@v3
         with:
@@ -50,13 +31,15 @@ jobs:
         with:
           name: app bundle
           path: android/app/build/outputs/bundle/release/app-release.aab
-#  test: # make sure the action works on a clean machine without building
-#    runs-on: ubuntu-22.04
-#    needs: setup
-#    steps:
-#      - run: npm run test-ci
-#      - uses: actions/upload-artifact@v2
-#        with:
-#          name: debug apk
-#          path:
-#            coverage/ngv
+  test: # make sure the action works on a clean machine without building
+    runs-on: ubuntu-22.04
+    needs: setup
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/
+      - run: npm run test-ci
+      - uses: actions/upload-artifact@v3
+        with:
+          name: coverage files
+          path:
+            coverage/ngv
