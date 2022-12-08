@@ -11,10 +11,16 @@ platform :ios do
 # npm install && ionic cap sync
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    setup_ci if ENV['CI']
+
     ensure_git_branch(branch: ENV["BRANCH_NAME"])
   #   ensure_git_status_clean
 
-    match(type: "appstore", readonly: is_ci)
+    if is_ci
+      match(type: "appstore", git_basic_authorization:  ENV['BASE64_BASIC_AUTH_CERTS_REPO'] , readonly: true)
+    else
+      match(type: "appstore", readonly: false)
+    end
 
     # not working currently
 #     sh "npm run build-ios-ci"
@@ -43,6 +49,7 @@ platform :ios do
   end
 
   lane :release do
+    setup_ci if ENV['CI']
     increment_version_number(
          version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
          xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
