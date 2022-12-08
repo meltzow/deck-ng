@@ -83,11 +83,11 @@ platform :android do
     sh "cd .. && ionic capacitor sync android"
     # android
     previous_build_number = google_play_track_version_codes(
-      track: "production"
+      track: "beta"
     )[0]
-    previous_build_number = android_set_version_code(
-      gradle_file: gradle_file_path # optional
-     )
+#     previous_build_number = android_set_version_code(
+#       gradle_file: gradle_file_path # optional
+#      )
 
     current_build_number = previous_build_number + 1
 
@@ -121,9 +121,9 @@ platform :android do
       previous_build_number = google_play_track_version_codes(
         track: "beta"
       )[0]
-      previous_build_number = android_set_version_code(
-        gradle_file: gradle_file_path # optional
-       )
+#       previous_build_number = android_set_version_code(
+#         gradle_file: gradle_file_path # optional
+#        )
 
       current_build_number = previous_build_number + 1
 
