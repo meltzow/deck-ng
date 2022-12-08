@@ -17,4 +17,4 @@ jobs:
           name: coverage files
           path:
             coverage/ngv
-      - run: npm run lint
+#      - run: npm run lint

@@ -15,8 +15,6 @@ jobs:
     runs-on: macos-12
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: 'master'
       - uses: ./.github/workflows/ionic
       - uses: ruby/setup-ruby@v1
         with:
@@ -25,20 +23,6 @@ jobs:
       - run: |
           brew update
           brew install fastlane
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - run: |
-          npm install --location=global @ionic/cli
-          npm install
       - run: fastlane ios beta
         env:
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}

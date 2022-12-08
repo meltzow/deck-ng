@@ -17,8 +17,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: 'master'
       - uses: ./.github/workflows/ionic
       - uses: ./.github/workflows/android
       - uses: r0adkll/sign-android-release@v1
