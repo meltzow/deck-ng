@@ -1,0 +1,26 @@
+name: "CI for android"
+inputs:
+  branch:
+    description: "which branch should checked out?"
+    type: string
+
+description: "setup environment"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/android/.gradle/caches
+          ~/android/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin' # See 'Supported distributions' for available options
+        java-version: 11
+        check-latest: true
+    - run: ls -al /home/runner/work/deck-ng/deck-ng/
+    - run: ionic capacitor sync android
+    - run: npm run build-android-ci

@@ -6,13 +6,14 @@ on: # rebuild any PRs and main branch changes
       - master
 
 jobs:
-  build: # make sure build/ci work properly
+  test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/
-      - uses: ./.github/workflows/android
+      - run: npm run test-ci
       - uses: actions/upload-artifact@v3
         with:
-          name: app-bundle
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          name: coverage files
+          path:
+            coverage/ngv
