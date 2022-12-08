@@ -1,4 +1,4 @@
-git_url("git@github.com:meltzow/deck-ng-certs.git")
+git_url("https://github.com/meltzow/deck-ng-certs.git")
 
 storage_mode("git")
 
