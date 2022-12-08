@@ -13,7 +13,7 @@ import { BoardItem } from "@app/model";
 export class BoardOverviewPage implements OnInit {
   isLoading = new BehaviorSubject<boolean>(true);
 
-  boards = new BehaviorSubject<BoardItem>([])
+  boards = new BehaviorSubject<BoardItem[]>([])
 
   constructor(
     private boardService: BoardService,
