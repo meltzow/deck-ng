@@ -1,9 +1,4 @@
 name: "setup for android"
-inputs:
-  branch:
-    description: "which branch should checked out?"
-    type: string
-
 description: "setup environment"
 runs:
   using: "composite"

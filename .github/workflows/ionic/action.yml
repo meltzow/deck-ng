@@ -1,9 +1,4 @@
 name: "setup for ionic"
-inputs:
-  branch:
-    description: "which branch should checked out?"
-    type: string
-
 description: "setup environment"
 runs:
   using: "composite"
@@ -17,10 +12,5 @@ runs:
       shell: bash
     - run: npm install -g @ionic/cli
       shell: bash
-    - run: ionic build
-      shell: bash
-    #      - run: npx cap doctor
-    - run: ionic capacitor update
-      shell: bash
-    - run: npx cap sync
+    - run: ionic capacitor sync
       shell: bash
