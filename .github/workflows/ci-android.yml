@@ -26,6 +26,8 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: 11
           check-latest: true
+      - run: ls -al /home/runner/work/deck-ng/deck-ng/
+      - run: ionic capacitor sync android
       - run: npm run build-android-ci
       - uses: actions/upload-artifact@v2
         with:
