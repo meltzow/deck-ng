@@ -16,7 +16,7 @@ platform :ios do
     ensure_git_branch(branch: ENV["BRANCH_NAME"])
   #   ensure_git_status_clean
 
-    if is_ci
+    if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
       match(type: "appstore", git_basic_authorization:  ENV['BASE64_BASIC_AUTH_CERTS_REPO'] , readonly: true)
     else
       match(type: "appstore", readonly: false)
