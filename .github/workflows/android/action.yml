@@ -1,4 +1,4 @@
-name: "CI for android"
+name: "setup for android"
 inputs:
   branch:
     description: "which branch should checked out?"
@@ -21,6 +21,7 @@ runs:
         distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: 11
         check-latest: true
-    - run: ls -al /home/runner/work/deck-ng/deck-ng/
     - run: ionic capacitor sync android
+      shell: bash
     - run: npm run build-android-ci
+      shell: bash

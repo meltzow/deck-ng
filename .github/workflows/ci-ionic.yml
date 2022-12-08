@@ -1,4 +1,4 @@
-name: "CI for android"
+name: "CI for ionic"
 on: # rebuild any PRs and main branch changes
   pull_request:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/
+      - uses: ./.github/workflows/ionic
       - run: npm run test-ci
       - uses: actions/upload-artifact@v3
         with:

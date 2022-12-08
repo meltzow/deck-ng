@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/
+      - uses: ./.github/workflows/ionic
       - uses: ./.github/workflows/android
       - uses: actions/upload-artifact@v3
         with:

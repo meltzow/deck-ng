@@ -1,4 +1,4 @@
-name: "CI for android"
+name: "setup for ionic"
 inputs:
   branch:
     description: "which branch should checked out?"
