@@ -25,14 +25,14 @@ jobs:
         with:
           name: app bundle
           path: android/app/build/outputs/bundle/release/app-release.aab
-    test: # make sure the action works on a clean machine without building
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - run: npm i -D -E @angular/cli
-        - run: npm run test-ci
-        - uses: actions/upload-artifact@v2
-          with:
-            name: debug apk
-            path:
-              coverage/ngv
+  test: # make sure the action works on a clean machine without building
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm i -D -E @angular/cli
+      - run: npm run test-ci
+      - uses: actions/upload-artifact@v2
+        with:
+          name: debug apk
+          path:
+            coverage/ngv
