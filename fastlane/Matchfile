@@ -1,8 +1,4 @@
-git_url("https://github.com/meltzow/deck-ng-certs.git")
-
 storage_mode("git")
-
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
 # app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
 # username("user@fastlcat ane.tools") # Your Apple Developer Portal username
