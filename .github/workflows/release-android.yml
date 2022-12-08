@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/ionic
       - uses: ./.github/workflows/android
+      - run : gem install bundler
       - run: bundler install
       - run: fastlane android beta
 #      - uses: r0adkll/sign-android-release@v1
