@@ -14,12 +14,7 @@ jobs:
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
           java-version: 11
-      - run: npm install --location=global @ionic/cli
-      - run: npm install
-      - run: ionic build
-      #      - run: npx cap doctor
-      - run: ionic capacitor update
-      - run: npx cap sync
+      - uses: ./.github/workflows/env-android.yml
       - run: npm run build-android-ci
       - uses: actions/upload-artifact@v2
         with:
@@ -29,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: ./.github/workflows/
       - run: npm i -D -E @angular/cli
       - run: npm run test-ci
       - uses: actions/upload-artifact@v2
