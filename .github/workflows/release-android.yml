@@ -21,7 +21,6 @@ jobs:
           ref: 'master'
       - uses: ./.github/workflows/ionic
       - uses: ./.github/workflows/android
-      - run: npm run build-android-ci
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         # ID used to access action output
@@ -46,4 +45,4 @@ jobs:
          packageName: net.meltzow.deckng
          track: ${{ github.event.inputs.track }}
          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-         status: ${{ github.event.inputs.status }}
+         status: completed
