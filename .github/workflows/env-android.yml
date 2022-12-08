@@ -16,8 +16,6 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-      - run: node --version
-      - run: npm --version
       - run: npm install
       - run: npm install -g @ionic/cli
       - run: ionic build
