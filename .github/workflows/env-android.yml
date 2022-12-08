@@ -1,11 +1,17 @@
 name: "CI for android"
 on:
   workflow_call:
+    inputs:
+      branch:
+        type: string
 
 jobs:
   install_env: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch }}
       - name: Get npm cache directory
         id: npm-cache-dir
         run: |

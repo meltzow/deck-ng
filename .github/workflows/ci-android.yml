@@ -9,12 +9,11 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/env-android.yml
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt' # See 'Supported distributions' for available options
           java-version: 11
-      - uses: ./.github/workflows/env-android.yml
       - run: npm run build-android-ci
       - uses: actions/upload-artifact@v2
         with:
