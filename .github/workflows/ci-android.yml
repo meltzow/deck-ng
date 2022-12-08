@@ -27,7 +27,7 @@ jobs:
   build: # make sure build/ci work properly
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/deck-ng
+      - uses: ./.github/workflows/action.yml
       - uses: actions/cache@v3
         with:
           path: |
