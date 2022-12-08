@@ -17,7 +17,7 @@ platform :ios do
   #   ensure_git_status_clean
 
     if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
-      match(type: "appstore", git_basic_authorization: Base64.encode64('meltzow:' + ENV['BASE64_BASIC_AUTH_CERTS_REPO']) , readonly: true)
+      match(type: "appstore", git_basic_authorization: ENV['BASE64_BASIC_AUTH_CERTS_REPO']) , readonly: true)
     else
       match(type: "appstore", readonly: false)
     end
