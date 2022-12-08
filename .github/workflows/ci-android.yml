@@ -19,6 +19,9 @@ jobs:
           java-version: 11
           cache: 'gradle'
           check-latest: true
+          path: |
+            ~/android/.gradle/caches
+            ~/android/.gradle/wrapper
       - run: npm run build-android-ci
       - uses: actions/upload-artifact@v2
         with:
