@@ -12,6 +12,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/ionic
       - uses: ./.github/workflows/android
+      - run: ionic capacitor sync android
+        shell: bash
+      - run: npm run build-android-ci
+        shell: bash
       - uses: actions/upload-artifact@v3
         with:
           name: app-bundle
