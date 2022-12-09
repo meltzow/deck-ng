@@ -24,28 +24,5 @@ jobs:
           ruby-version: '3.0' # Not needed with a .ruby-version file
           bundler-cache: true
       - run: bundle exec fastlane android beta
-#      - uses: r0adkll/sign-android-release@v1
-#        name: Sign app APK
-#        # ID used to access action output
-#        id: sign_app
-#        with:
-#          releaseDirectory: android/app/build/outputs/bundle/release
-#          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-#          alias: ${{ secrets.ALIAS }}
-#          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-#          keyPassword: ${{ secrets.KEY_PASSWORD }}
-#        env:
-#          # override default build-tools version (29.0.3) -- optional
-#          BUILD_TOOLS_VERSION: "30.0.2"
-#      - uses: actions/upload-artifact@v2
-#        with:
-#          name: app bundle
-#          path: android/app/build/outputs/bundle/release/app-release.aab
-#      - name: Upload Android Release to Play Store
-#        uses: r0adkll/upload-google-play@v1.0.17
-#        with:
-#         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-#         packageName: net.meltzow.deckng
-#         track: ${{ github.event.inputs.track }}
-#         releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
-#         status: completed
+        env:
+          GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
