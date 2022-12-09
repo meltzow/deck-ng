@@ -104,7 +104,7 @@ platform :android do
       build_type: 'Release',
       project_dir: android_project_dir,
       properties: {
-          "android.injected.signing.store.file" => "/home/mario/Nextcloud/infra/google play/upload-keystore.jks",
+          "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
           "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
           "android.injected.signing.key.alias" => "upload",
           "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],
@@ -141,7 +141,7 @@ platform :android do
         build_type: 'Release',
         project_dir: android_project_dir,
         properties: {
-            "android.injected.signing.store.file" => "/home/mario/Nextcloud/infra/google play/upload-keystore.jks",
+            "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
             "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
             "android.injected.signing.key.alias" => "upload",
             "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],

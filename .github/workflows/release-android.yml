@@ -23,6 +23,8 @@ jobs:
         with:
           ruby-version: '3.0' # Not needed with a .ruby-version file
           bundler-cache: true
+      - name: Generate .jks file
+        run: echo ${{secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }} | base64 -d > ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
       - run: bundle exec fastlane android beta
         env:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
