@@ -147,8 +147,12 @@ platform :android do
           "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
           }
       )
-      upload_to_play_store(skip_upload_apk: true, track: "beta")
-      notification(subtitle: "Finished Building", message: "App uploaded")
+      if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
+        upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], skip_upload_apk: true, track: "beta")
+      else
+        upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, track: "beta")
+      end
+
     end
 
   lane :snapshots do
