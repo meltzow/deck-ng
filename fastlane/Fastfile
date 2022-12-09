@@ -8,7 +8,6 @@ version = package[:version]
 android_project_dir = "./android"
 
 platform :ios do
-# npm install && ionic cap sync
   desc "Push a new beta build to TestFlight"
   lane :beta do
     setup_ci if ENV['CI']
@@ -25,10 +24,8 @@ platform :ios do
       match(git_url: "git@github.com:meltzow/deck-ng-certs.git", type: "appstore", readonly: false)
     end
 
-    # not working currently
-#     sh "npm run build-ios-ci"
     bundle_install
-    sh "ionic capacitor sync ios"
+    sh "ionic cap build ios && ionic cap update ios"
 
     increment_version_number(
        version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
@@ -62,7 +59,7 @@ platform :ios do
     #capture_screensh ots(project: project)                  # generate new screenshots for the App Store
   #   sync_code_signing(type: "appstore")# see code signing guide for more information
     match(type: "appstore", readonly: is_ci)
-    sh "cd .. && ionic capacitor sync ios"
+    sh "ionic cap build ios && ionic cap update ios"
     build_app(clean: true,scheme: scheme, workspace: workspace)
     upload_to_app_store(app_version: version, submission_information: {
                                                           add_id_info_uses_idfa: false,
@@ -83,7 +80,7 @@ end
 
 platform :android do
   lane :release do
-    sh "cd .. && ionic capacitor sync android"
+    sh "ionic cap build android && ionic cap update android"
     # android
     previous_build_number = google_play_track_version_codes(
       track: "beta"
@@ -119,7 +116,7 @@ platform :android do
 
   lane :beta do
 
-      sh "cd .. && ionic capacitor sync android"
+      sh "ionic cap build android && ionic cap update android"
       # android
       previous_build_number = google_play_track_version_codes(
         track: "beta"
@@ -154,7 +151,7 @@ platform :android do
     end
 
   lane :snapshots do
-      sh "cd .. && ionic capacitor sync android"
+      sh "ionic cap build android && ionic cap update android"
 #     gradle(
 #           task: 'clean',
 #           project_dir: android_project_dir
@@ -184,5 +181,5 @@ lane :update_metadata do
 end
 
 lane :compile do
-  sh "cd .. && ionic capacitor sync android"
+  sh "ionic cap build android && ionic cap update android"
 end
