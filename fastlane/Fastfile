@@ -28,7 +28,7 @@ platform :ios do
     # not working currently
 #     sh "npm run build-ios-ci"
     bundle_install
-    sh "cd .. && ionic capacitor sync ios"
+    sh "ionic capacitor sync ios"
 
     increment_version_number(
        version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
