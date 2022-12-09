@@ -82,12 +82,13 @@ platform :android do
   lane :release do
     sh "ionic cap build android && ionic cap update android"
     # android
-    previous_build_number = google_play_track_version_codes(
-      track: "beta"
-    )[0]
-#     previous_build_number = android_set_version_code(
-#       gradle_file: gradle_file_path # optional
-#      )
+    if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
+      eee
+    else
+      previous_build_number = google_play_track_version_codes(
+        track: "beta"
+      )[0]
+    end
 
     current_build_number = previous_build_number + 1
 
@@ -115,16 +116,17 @@ platform :android do
   end
 
   lane :beta do
+      sh "cd .. && ionic cap sync android"
 
-      sh "ionic cap build android && ionic cap update android"
-      # android
-      previous_build_number = google_play_track_version_codes(
-        track: "beta"
-      )[0]
-#       previous_build_number = android_set_version_code(
-#         gradle_file: gradle_file_path # optional
-#        )
+      if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
+        previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
+        previous_build_number_prod = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "prod")[0]
+      else
+        previous_build_number_beta = google_play_track_version_codes(track: "beta")[0]
+        previous_build_number_prod = google_play_track_version_codes(track: "beta")[0]
+      end
 
+      previous_build_number = [previous_build_number_beta, previous_build_number_prod].max
       current_build_number = previous_build_number + 1
 
       android_set_version_code(
