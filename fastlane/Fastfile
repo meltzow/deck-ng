@@ -36,7 +36,6 @@ platform :ios do
     identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
     update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
     update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
-    api_environment = "Release"
     build_app(clean: true, scheme: scheme,workspace: workspace)
 
     upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing: true, itc_provider: "F3C769M2C7", app_version: version )
@@ -120,9 +119,9 @@ platform :android do
 
       if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
         previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
-        previous_build_number_prod = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "prod")[0]
+        previous_build_number_prod = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "production")[0]
       else
-        previous_build_number_beta = google_play_track_version_codes(json_key_file: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "production")[0]
+        previous_build_number_beta = google_play_track_version_codes(json_key_file: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "beta")[0]
         previous_build_number_prod = google_play_track_version_codes(json_key_file: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "production")[0]
       end
 
