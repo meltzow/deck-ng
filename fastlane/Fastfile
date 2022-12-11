@@ -8,12 +8,8 @@ version = package[:version]
 android_project_dir = "./android"
 
 platform :ios do
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
-    setup_ci if ENV['CI']
-
-    ensure_git_branch(branch: ENV["BRANCH_NAME"])
-  #   ensure_git_status_clean
+  lane :build do |options|
+    ensure_git_branch(branch: 'master')
 
     if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
       apple_intermediate_certificate_path = "/tmp/AppleWWDRCAG3.cer"
@@ -28,18 +24,41 @@ platform :ios do
     sh "cd .. && ionic cap sync ios"
 
     increment_version_number(
-       version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
-       xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
-     )
-    app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
-    increment_build_number(xcodeproj: project, build_number: app_version+1)
-    identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-    update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
-    update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
-    build_app(clean: true, scheme: scheme,workspace: workspace)
+           version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
+           xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
+         )
+    previous_build_number_beta = latest_testflight_build_number(app_identifier:ENV["APP_IDENTIFIER"])
+    previous_build_number_prod = app_store_build_number(app_identifier: ENV["APP_IDENTIFIER"])
+    previous_build_number = [previous_build_number_beta, previous_build_number_prod].max
+    current_build_number = previous_build_number + 1
 
-    upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing: true, itc_provider: "F3C769M2C7", app_version: version )
-    clean_build_artifacts
+    increment_build_number(xcodeproj: project, build_number: current_build_number)
+
+    build_app(clean: true, scheme: scheme, workspace: workspace)
+
+    if options[:track] == 'beta'
+      upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing: true, itc_provider: "F3C769M2C7", app_version: version )
+    else
+      upload_to_app_store(app_version: version, submission_information: {
+                                                                add_id_info_uses_idfa: false,
+                                                                export_compliance_platform: 'ios',
+                                                                export_compliance_compliance_required: false,
+                                                                export_compliance_encryption_updated: false,
+                                                                export_compliance_app_type: nil,
+                                                                export_compliance_uses_encryption: false,
+                                                                export_compliance_is_exempt: false,
+                                                                export_compliance_contains_third_party_cryptography: false,
+                                                                export_compliance_contains_proprietary_cryptography: false,
+                                                                export_compliance_available_on_french_store: false
+                                                          } )                # upload your app to App Store Connect
+    end
+  end
+
+  lane :beta do
+    build(track: 'beta')
+#     identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+#     update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
+#     update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
@@ -48,112 +67,55 @@ platform :ios do
   end
 
   lane :release do
-    setup_ci if ENV['CI']
-    increment_version_number(
-         version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
-         xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
-       )
-    app_version = latest_testflight_build_number(version:ENV["APP_VERSION"], app_identifier:ENV["APP_IDENTIFIER"])
-    increment_build_number(xcodeproj: project, build_number: app_version+1)
-    #capture_screensh ots(project: project)                  # generate new screenshots for the App Store
-  #   sync_code_signing(type: "appstore")# see code signing guide for more information
-    match(type: "appstore", readonly: is_ci)
-    sh "ionic cap build ios && ionic cap update ios"
-    build_app(clean: true,scheme: scheme, workspace: workspace)
-    upload_to_app_store(app_version: version, submission_information: {
-                                                          add_id_info_uses_idfa: false,
-                                                          export_compliance_platform: 'ios',
-                                                          export_compliance_compliance_required: false,
-                                                          export_compliance_encryption_updated: false,
-                                                          export_compliance_app_type: nil,
-                                                          export_compliance_uses_encryption: false,
-                                                          export_compliance_is_exempt: false,
-                                                          export_compliance_contains_third_party_cryptography: false,
-                                                          export_compliance_contains_proprietary_cryptography: false,
-                                                          export_compliance_available_on_french_store: false
-                                                    } )                # upload your app to App Store Connect
+    build(track: 'production')
+
     notification(subtitle: "Finished Building", message: "App uploaded")
-    clean_build_artifacts
   end
 end
 
 platform :android do
   lane :release do
-    sh "ionic cap build android && ionic cap update android"
-    # android
-    if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
-      eee
-    else
-      previous_build_number = google_play_track_version_codes(
-        track: "beta"
-      )[0]
-    end
-
-    current_build_number = previous_build_number + 1
-
-    android_set_version_code(
-        gradle_file: gradle_file_path # optional
-      )
-     android_set_version_name(
-         version_name: version,
-         gradle_file: gradle_file_path # optional
-       )
-
-    gradle(
-      task: 'clean bundle',
-      build_type: 'Release',
-      project_dir: android_project_dir,
-      properties: {
-          "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
-          "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
-          "android.injected.signing.key.alias" => "upload",
-          "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
-        }
-    )
-    upload_to_play_store(skip_upload_apk: true, track: "production")
-    notification(subtitle: "Finished Building", message: "App uploaded")
+    build(track: 'production')
   end
 
   lane :beta do
-      sh "cd .. && ionic cap sync android"
+    build(track: 'beta')
+  end
 
-      if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
-        previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
-        previous_build_number_prod = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "production")[0]
-      else
-        previous_build_number_beta = google_play_track_version_codes(json_key_file: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "beta")[0]
-        previous_build_number_prod = google_play_track_version_codes(json_key_file: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "production")[0]
-      end
+  lane :build do |options|
+    ensure_git_branch(branch: 'master')
+    sh "cd .. && ionic cap sync android"
 
-      previous_build_number = [previous_build_number_beta, previous_build_number_prod].max
-      current_build_number = previous_build_number + 1
-
-      android_set_version_code(
-          gradle_file: gradle_file_path # optional
-        )
-       android_set_version_name(
-           version_name: version,
-           gradle_file: gradle_file_path # optional
-         )
-
-      gradle(
-        task: 'clean bundle',
-        build_type: 'Release',
-        project_dir: android_project_dir,
-        properties: {
-          "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
-          "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
-          "android.injected.signing.key.alias" => "upload",
-          "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
-          }
-      )
-      if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
-        upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], skip_upload_apk: true, track: "beta")
-      else
-        upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, track: "beta")
-      end
-
+    if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
+      previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
+      previous_build_number_prod = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "production")[0]
+    else
+      previous_build_number_beta = google_play_track_version_codes(json_key_file: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "beta")[0]
+      previous_build_number_prod = google_play_track_version_codes(json_key_file: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "production")[0]
     end
+
+    previous_build_number = [previous_build_number_beta, previous_build_number_prod].max
+    current_build_number = previous_build_number + 1
+
+    android_set_version_code(version_code: current_build_number, gradle_file: gradle_file_path)
+    android_set_version_name(version_name: version, gradle_file: gradle_file_path )
+    gradle(
+          task: 'clean bundle',
+          build_type: 'Release',
+          project_dir: android_project_dir,
+          properties: {
+              "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
+              "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
+              "android.injected.signing.key.alias" => "upload",
+              "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
+            }
+        )
+    if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
+      upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], skip_upload_apk: true, track: options[:track])
+    else
+      upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, track: options[:track])
+    end
+  end
 
   lane :snapshots do
       sh "ionic cap build android && ionic cap update android"

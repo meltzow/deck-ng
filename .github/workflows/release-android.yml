@@ -7,8 +7,6 @@ on:
         required: true
         default: 'beta'
         options:
-          - internal
-          - alpha
           - beta
           - production
         type: choice
@@ -25,7 +23,7 @@ jobs:
           bundler-cache: true
       - name: Generate .jks file
         run: echo ${{secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }} | base64 -d > ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
-      - run: bundle exec fastlane android beta
+      - run: "bundle exec fastlane android build track:"${{ inputs.track }}
         env:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
           FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
