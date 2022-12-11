@@ -1,12 +1,10 @@
-import { fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 
 import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services/board.service";
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient } from "@angular/common/http";
-import { BoardItem } from "@app/model/boardItem";
 import { ServiceHelper } from "@app/helper/serviceHelper";
-import { BehaviorSubject, from, Observable, of, share } from "rxjs";
+import { BehaviorSubject, of } from "rxjs";
 import { Account } from "@app/model";
 
 describe('BoardService', () => {
@@ -74,10 +72,10 @@ describe('BoardService', () => {
     service.getBoardsProm().then(value => {
       expect(value).toEqual(boards)
     })
-    // const emp = prom
 
     flush();
-    // tick();
+
+    expect(service.currentBoardsObs.subscribe).toEqual(boards)
 
     const req = httpMock.expectOne('https://foo.bar' + '/index.php/apps/deck/api/v1/boards');
     expect(req.request.method).toEqual("GET")

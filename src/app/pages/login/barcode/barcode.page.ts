@@ -71,7 +71,7 @@ export class BarcodePage implements OnInit, OnDestroy {
       }
     } else {
         this.stopScan()
-        this.router.navigate(['login']);
+      this.router.navigate(['login']);
     }
   }
 
@@ -89,8 +89,7 @@ export class BarcodePage implements OnInit, OnDestroy {
     }
 
   }
-
-  private stopScan() {
+  stopScan() {
     document.querySelector('body').classList.remove('scanner-active');
     BarcodeScanner.showBackground();
     BarcodeScanner.stopScan();

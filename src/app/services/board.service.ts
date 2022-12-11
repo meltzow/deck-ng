@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
-import { BehaviorSubject, firstValueFrom, flatMap, from, Observable, switchMap, tap, of } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, from, Observable, switchMap, of } from 'rxjs';
 
-import { Account, BoardItem, CreateBoardRequest } from '@app/model';
+import { BoardItem, CreateBoardRequest } from '@app/model';
 
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper"
@@ -12,9 +12,7 @@ import { ServiceHelper } from "@app/helper/serviceHelper"
   providedIn: 'root'
 })
 export class BoardService {
-
-  currentBoardsObs = new Observable<BoardItem[]>()
-
+  currentBoardsObs = new BehaviorSubject<BoardItem[]>([])
   constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
   }
 
@@ -81,6 +79,7 @@ export class BoardService {
         this.httpClient.get<Array<BoardItem>>(`${account.url}/index.php/apps/deck/api/v1/boards`,
           this.serviceHelper.getHttpOptions(account)
         ).subscribe(value => {
+          this.currentBoardsObs.next(value)
           resolve(value)
         }, error => reject(error))
     )

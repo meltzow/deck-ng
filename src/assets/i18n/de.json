@@ -5,6 +5,8 @@
   "account": "Account",
   "server_url": "Server URL",
   "url_required": "Server URL wird benötigt",
-  "url_helper": "gib die URL deines nextcloud servers ein"
+  "url_helper": "gib die URL deines nextcloud servers ein",
+  "barcode_login": "login mit barcode",
+  "back": "zurück"
 
 }
