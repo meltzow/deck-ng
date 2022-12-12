@@ -4,8 +4,6 @@
 
 export const environment = {
   production: false,
-  deckApiUrl: 'http://localhost:8080/index.php',
-  nextcloudApiUrl: 'http://localhost:8080/index.php'
 };
 
 /*

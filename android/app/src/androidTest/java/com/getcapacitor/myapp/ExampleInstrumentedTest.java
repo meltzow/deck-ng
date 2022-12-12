@@ -66,30 +66,20 @@ public class ExampleInstrumentedTest {
 
     // find main menu button and click it
     String urlInputXPath = "//input[@name='url']";
-    String usernameInput= "//input[@name='username']";
-    String passwordInput= "//input[@name='password']";
     String loginBtn= "//ion-button[@type='submit']";
 
-    Atom<ElementReference> elementPassword = findElement(Locator.XPATH, passwordInput);
-    onWebView().withElement(elementPassword).perform(webKeys("AppPassword"));
-
-    Atom<ElementReference> elementUsername = findElement(Locator.XPATH, usernameInput);
-    onWebView().withElement(elementUsername).perform(webKeys("myUserName"));
-
     Atom<ElementReference> elementURL = findElement(Locator.XPATH, urlInputXPath);
-    onWebView().withElement(elementURL).perform(webKeys("https://my.nextcloud.org"));
+    onWebView().withContextualElement(elementURL).perform(webKeys("https://my.nextcloud.org"));
 
     Screengrab.screenshot("LoginScreen");
 
-    onWebView().withElement(elementPassword).perform(clearElement()).perform(webKeys("admin"));
-    onWebView().withElement(elementUsername).perform(clearElement()).perform(webKeys("admin"));
-    onWebView().withElement(elementURL).perform(clearElement()).perform(webKeys("http://192.168.178.25:8080"));
-    Atom<ElementReference> element3 = findElement(Locator.XPATH, loginBtn);
-    onWebView().withElement(element3).perform(webClick());
+//    onWebView().withElement(elementURL).perform(clearElement()).perform(webKeys("http://192.168.178.25:8080"));
+//    Atom<ElementReference> element3 = findElement(Locator.XPATH, loginBtn);
+//    onWebView().withElement(element3).perform(webClick());
+//
+//    Thread.sleep(3000);
 
-    Thread.sleep(3000);
-
-    Screengrab.screenshot("BoardsScreen");
+//    Screengrab.screenshot("BoardsScreen");
 
   }
 

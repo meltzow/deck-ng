@@ -119,7 +119,7 @@ platform :android do
   end
 
   lane :snapshots do
-      sh "ionic cap build android && ionic cap update android"
+      sh "cd .. && ionic cap sync android"
 #     gradle(
 #           task: 'clean',
 #           project_dir: android_project_dir
@@ -143,9 +143,7 @@ lane :tests_ios do
 end
 
 lane :update_metadata do
-  upload_to_play_store(skip_upload_apk: true,
- skip_upload_aab: true,
- skip_upload_changelogs: true)
+  upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, skip_upload_aab: true, skip_upload_changelogs: true, track: "beta")
 end
 
 lane :compile do

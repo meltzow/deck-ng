@@ -6,8 +6,8 @@
 app_apk_path('android/app/build/outputs/apk/debug/app-debug.apk')
 tests_apk_path('android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk')
 
-#locales(['en-GB', 'fr-FR', 'de-DE'])
-locales(['de-DE'])
+locales(['en-GB', 'de-DE'])
+#locales(['de-DE'])
 use_timestamp_suffix(false)
 
 # clear all previously generated screenshots in your local output directory before creating new ones

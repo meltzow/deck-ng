@@ -42,13 +42,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios build
+
+```sh
+[bundle exec] fastlane ios build
+```
+
+
+
 ### ios beta
 
 ```sh
 [bundle exec] fastlane ios beta
 ```
 
-Push a new beta build to TestFlight
+
 
 ### ios sim
 
@@ -83,6 +91,14 @@ Push a new beta build to TestFlight
 
 ```sh
 [bundle exec] fastlane android beta
+```
+
+
+
+### android build
+
+```sh
+[bundle exec] fastlane android build
 ```
 
 
