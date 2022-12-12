@@ -38,6 +38,7 @@ platform :ios do
     build_app(clean: true, scheme: scheme, workspace: workspace)
 
     if options[:track] == 'beta'
+      identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
       upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing: true, itc_provider: "F3C769M2C7", app_version: version )
     else
       upload_to_app_store(app_version: version, submission_information: {
@@ -57,7 +58,6 @@ platform :ios do
 
   lane :beta do
     build(track: 'beta')
-#     identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
 #     update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
 #     update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
     notification(subtitle: "Finished Building", message: "App uploaded")
