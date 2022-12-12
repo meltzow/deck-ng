@@ -10,6 +10,7 @@ android_project_dir = "./android"
 platform :ios do
   lane :build do |options|
     ensure_git_branch(branch: 'master')
+    setup_ci
 
     if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
       apple_intermediate_certificate_path = "/tmp/AppleWWDRCAG3.cer"
