@@ -40,7 +40,7 @@ platform :ios do
       identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
       upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing: true, itc_provider: "F3C769M2C7", app_version: version )
     else
-      upload_to_app_store(app_version: version, submission_information: {
+      upload_to_app_store(app_version: version, force: true, submission_information: {
                                                                 add_id_info_uses_idfa: false,
                                                                 export_compliance_platform: 'ios',
                                                                 export_compliance_compliance_required: false,
