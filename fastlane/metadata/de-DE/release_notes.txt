@@ -1,3 +1,4 @@
+1.2.0 add support for login flow
 1.1.1 link all boards into menu
       fix some value displaying bugs
 1.1.0 add barcode login
