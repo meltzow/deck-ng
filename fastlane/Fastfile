@@ -12,6 +12,8 @@ platform :ios do
     ensure_git_branch(branch: 'master')
     setup_ci
 
+    app_store_connect_api_key(key_id: ENV['FASTLANE_APPLE_API_KEY_ID'], issuer_id: ENV['FASTLANE_APPLE_API_ISSUER_ID'], key_content: ENV['FASTLANE_APPLE_API_KEY'])
+
     if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
       apple_intermediate_certificate_path = "/tmp/AppleWWDRCAG3.cer"
       `curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer --output #{apple_intermediate_certificate_path}`
@@ -24,10 +26,7 @@ platform :ios do
     bundle_install
     sh "cd .. && ionic cap sync ios"
 
-    increment_version_number(
-           version_number: version,      # specify specific version number (optional, omitting it increments patch version number)
-           xcodeproj: project # (optional, you must specify the path to your main Xcode project if it is not in the project root directory)
-         )
+    increment_version_number(version_number: version, xcodeproj: project)
     previous_build_number_beta = latest_testflight_build_number(app_identifier:ENV["APP_IDENTIFIER"])
     previous_build_number_prod = app_store_build_number(app_identifier: ENV["APP_IDENTIFIER"])
     previous_build_number = [previous_build_number_beta, previous_build_number_prod].max
