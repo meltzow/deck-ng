@@ -71,6 +71,10 @@ platform :ios do
 
     notification(subtitle: "Finished Building", message: "App uploaded")
   end
+
+  lane :snapshots do
+    capture_ios_screenshots(scheme: scheme, workspace: workspace)
+  end
 end
 
 platform :android do
@@ -148,3 +152,4 @@ end
 lane :compile do
   sh "ionic cap build android && ionic cap update android"
 end
+
