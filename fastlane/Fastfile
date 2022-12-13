@@ -73,8 +73,9 @@ platform :ios do
   end
 
   lane :snapshots do
-    capture_ios_screenshots(scheme: scheme, workspace: workspace)
-  end
+    capture_ios_screenshots(scheme: scheme, workspace: workspace, concurrent_simulators: false)
+    frame_screenshots(silver: true, path: "./fastlane/screenshots")
+   end
 end
 
 platform :android do
