@@ -6,7 +6,7 @@ import { IonicModule } from "@ionic/angular";
 import { RouterModule } from "@angular/router";
 import { AuthenticationService } from "@app/services";
 import { IonicStorageModule } from "@ionic/storage-angular";
-import { TranslateLoader, TranslateModule, TranslateService } from "@ngx-translate/core";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { createTranslateLoader } from "@app/app.module";
 

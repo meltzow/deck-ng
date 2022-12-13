@@ -12,7 +12,7 @@ import { ServiceHelper } from "@app/helper/serviceHelper"
   providedIn: 'root'
 })
 export class BoardService {
-  currentBoardsObs = new BehaviorSubject<BoardItem[]>([])
+  currentBoardsSubj = new BehaviorSubject<BoardItem[]>([])
   constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
   }
 
@@ -56,20 +56,6 @@ export class BoardService {
    * Get a list of boards
    *
    */
-  public getBoards(): Observable<Array<BoardItem>> {
-    const promiseObservable = from(this.authService.getAccount())
-    return promiseObservable.pipe(
-      switchMap((account) => {
-        if (!account) {
-          return of([])
-        }
-        return this.httpClient.get<Array<BoardItem>>(`${account.url}/index.php/apps/deck/api/v1/boards`,
-          this.serviceHelper.getHttpOptions(account)
-        );
-      })
-    )
-  }
-
   public async getBoardsProm(): Promise<Array<BoardItem>> {
     const account = await this.authService.getAccount()
     if (!account || !account.isAuthenticated) {
@@ -79,14 +65,14 @@ export class BoardService {
         this.httpClient.get<Array<BoardItem>>(`${account.url}/index.php/apps/deck/api/v1/boards`,
           this.serviceHelper.getHttpOptions(account)
         ).subscribe(value => {
-          this.currentBoardsObs.next(value)
+          this.currentBoardsSubj.next(value)
           resolve(value)
         }, error => reject(error))
     )
   }
 
-  public get boardsObs(): Observable<BoardItem[]> {
-    return this.currentBoardsObs
+  public get currentBoards(): BehaviorSubject<BoardItem[]> {
+    return this.currentBoardsSubj
   }
 
 }

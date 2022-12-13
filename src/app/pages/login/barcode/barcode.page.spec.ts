@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { AuthenticationService } from "@app/services";
 import { BarcodePage } from "@app/pages/login/barcode/barcode.page";
+import { TranslateTestingModule } from "ngx-translate-testing";
 
 describe('BarcodePage', () => {
   let component: BarcodePage;
@@ -14,7 +15,11 @@ describe('BarcodePage', () => {
 
     TestBed.configureTestingModule({
       declarations: [ BarcodePage ],
-      imports: [IonicModule.forRoot()],
+      imports: [IonicModule.forRoot(), TranslateTestingModule
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        .withTranslations('de', require('../../../../assets/i18n/de.json'))
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        .withTranslations('en', require('../../../../assets/i18n/en.json'))],
       providers: [{ provide: AuthenticationService, useValue: authServiceSpy }],
     }).compileComponents();
 
