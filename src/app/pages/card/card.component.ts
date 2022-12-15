@@ -23,7 +23,6 @@ export class CardComponent implements OnInit {
   content: string;
   isLoading = true
   @ViewChild("textareaDescription") textareaDescription;
-
   constructor(private cardService: CardsService,
               private boardService: BoardService,
               private activatedRoute: ActivatedRoute,
