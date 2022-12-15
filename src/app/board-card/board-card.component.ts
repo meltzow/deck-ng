@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BoardItem } from "@app/model/boardItem";
+import { Board } from "@app/model/board";
 import { StackService } from "@app/services";
-import { StackItem } from "@app/model";
+import { Stack } from "@app/model";
 import { BehaviorSubject, firstValueFrom } from "rxjs";
 
 @Component({
@@ -10,8 +10,8 @@ import { BehaviorSubject, firstValueFrom } from "rxjs";
   styleUrls: ['./board-card.component.css']
 })
 export class BoardCardComponent implements OnInit {
-  @Input() board: BoardItem;
-  stacks = new BehaviorSubject<StackItem[]>(null)
+  @Input() board: Board;
+  stacks = new BehaviorSubject<Stack[]>(null)
   stacksLoading = true;
 
   constructor(private stackService: StackService) { }

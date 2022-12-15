@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services";
 import { NotificationService } from "@app/services/notification.service";
-import { BoardItem } from "@app/model";
+import { Board } from "@app/model";
 
 @Component({
   selector: 'app-board-overview',
@@ -13,7 +13,7 @@ import { BoardItem } from "@app/model";
 export class BoardOverviewPage implements OnInit {
   isLoading = new BehaviorSubject<boolean>(true);
 
-  boards = new BehaviorSubject<BoardItem[]>([])
+  boards = new BehaviorSubject<Board[]>([])
 
   constructor(
     private boardService: BoardService,

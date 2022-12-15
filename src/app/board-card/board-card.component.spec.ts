@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BoardCardComponent } from './board-card.component';
 import { HttpClientModule } from "@angular/common/http";
-import { BoardItem } from "@app/model/boardItem";
+import { Board } from "@app/model/board";
 import { StackService } from "@app/services";
 
 describe('DashboardWidgetComponent', () => {
