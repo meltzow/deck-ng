@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardWidgetComponent } from './dashboard-widget.component';
+import { BoardCardComponent } from './board-card.component';
 import { HttpClientModule } from "@angular/common/http";
 import { BoardItem } from "@app/model/boardItem";
 import { StackService } from "@app/services";
 
 describe('DashboardWidgetComponent', () => {
-  let component: DashboardWidgetComponent;
-  let fixture: ComponentFixture<DashboardWidgetComponent>;
+  let component: BoardCardComponent;
+  let fixture: ComponentFixture<BoardCardComponent>;
   let stackServiceSpy
 
   beforeEach(async () => {
@@ -16,14 +16,14 @@ describe('DashboardWidgetComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      declarations: [ DashboardWidgetComponent ],
+      declarations: [ BoardCardComponent ],
       providers: [{ provide: StackService, useValue: stackServiceSpy }]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardWidgetComponent);
+    fixture = TestBed.createComponent(BoardCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

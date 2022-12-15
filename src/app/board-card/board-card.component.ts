@@ -6,10 +6,10 @@ import { BehaviorSubject, firstValueFrom } from "rxjs";
 
 @Component({
   selector: 'app-dashboard-widget',
-  templateUrl: './dashboard-widget.component.html',
-  styleUrls: ['./dashboard-widget.component.css']
+  templateUrl: './board-card.component.html',
+  styleUrls: ['./board-card.component.css']
 })
-export class DashboardWidgetComponent implements OnInit {
+export class BoardCardComponent implements OnInit {
   @Input() board: BoardItem;
   stacks = new BehaviorSubject<StackItem[]>(null)
   stacksLoading = true;
