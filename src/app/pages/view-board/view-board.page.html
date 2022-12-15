@@ -45,20 +45,9 @@
   </ion-toolbar>
 </ion-header>
   <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
-    <ion-fab-button disabled="true" >
+    <ion-fab-button (click)="createCard()" >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-        <ion-fab-list>
-          <ion-fab-button color="light" (click)="presentToastWithOptions('thanks for clicking')">
-            <ion-icon name="flag-outline"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-button color="light">
-            <ion-icon name="list-outline"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-button color="light">
-            <ion-icon name="build-outline"></ion-icon>
-          </ion-fab-button>
-        </ion-fab-list>
   </ion-fab>
 
 <ion-content [fullscreen]="true"  *ngIf="!isLoading">

@@ -4,6 +4,7 @@ import { firstValueFrom } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
+import { Board } from "@app/model";
 
 @Injectable({
   providedIn: 'root'
@@ -151,5 +152,20 @@ export class CardsService {
         this.serviceHelper.getHttpOptions(account)
       ))
     })
+  }
+
+  async createCard(boardId: number, stackId: number,  card: Card): Promise<Card > {
+    const account = await this.authService.getAccount()
+    if (!account || !account.isAuthenticated) {
+      return Promise.resolve(new Card())
+    }
+    return new Promise((resolve, reject) =>
+      this.httpClient.post<Card>(`${account.url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards`,
+        card,
+        this.serviceHelper.getHttpOptions(account),
+      ).subscribe({
+        next: (value: Card) => resolve(value),
+        error: (error)  => reject(error)
+    }))
   }
 }

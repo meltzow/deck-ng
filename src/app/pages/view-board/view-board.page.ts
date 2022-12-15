@@ -7,6 +7,8 @@ import { Card } from "@app/model/card";
 import { IonModal, ToastController } from "@ionic/angular";
 import { BoardService, StackService} from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
+import { CardsService } from "@app/services/cards.service";
+import { NotificationService } from "@app/services/notification.service";
 
 @Component({
   selector: 'app-view-board',
@@ -28,7 +30,8 @@ export class ViewBoardPage implements OnInit {
     private boardService: BoardService,
     private stackService: StackService,
     private activatedRoute: ActivatedRoute,
-    public toastController: ToastController
+    public notificationService: NotificationService,
+    private cardService: CardsService
   ) { }
 
   async ngOnInit() {
@@ -57,45 +60,22 @@ export class ViewBoardPage implements OnInit {
         })
       },
       error => {
-        this.presentToastWithOptions(error)
+        this.notificationService.error(error)
         console.log(error)
       })
   }
 
+  async createCard() {
+    const c = new Card()
+    c.title = "foobar"
+    const resp = await this.cardService.createCard(this.stacks.value[0].boardId, this.stacks.value[0].id,c)
+    console.log(resp)
+  }
   doRefresh(event) {
     this.board.next(null)
     this.stacks.next([])
     this.cards.next([])
     this.getBoard(this.boardId)
-  }
-
-  async presentToastWithOptions(errorMsg: string) {
-    const toast = await this.toastController.create({
-      header: 'Toast header',
-      message: 'Click to Close',
-      icon: 'information-circle',
-      position: 'top',
-      buttons: [
-        // {
-        //   side: 'start',
-        //   icon: 'star',
-        //   text: 'Favorite',
-        //   handler: () => {
-        //     console.log('Favorite clicked');
-        //   }
-        // },
-        {
-          text: errorMsg,
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    await toast.present();
-
-    const { role } = await toast.onDidDismiss();
   }
 
   cancel() {

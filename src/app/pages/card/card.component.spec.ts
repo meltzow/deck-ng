@@ -64,7 +64,7 @@ describe('CardComponent', () => {
     const l1: Label = {id: 1, title: "foo"}
     const l2: Label = {id: 2, title: "foo"}
     const l3: Label = {id: 2, title: "foo"}
-    component.card = {id: 1}
+    component.card = {id: 1, title: "dddd"}
     component.card.labels = [l1]
     expect(component.labelPreselected(l3, l2)).toBeTruthy()
     expect(component.labelPreselected(l2, l1)).toBeFalse()
@@ -76,7 +76,7 @@ describe('CardComponent', () => {
     const l3: Label = {id: 3, title: "foo"}
 
     const event = new CustomEvent("ionChange", {detail: {value: [l1, l2]}})
-    component.card = {id: 1, stackId: 1}
+    component.card = {id: 1, stackId: 1, title: "dddd"}
     component.card.labels = [l3]
     component.handlabelChange(event)
 

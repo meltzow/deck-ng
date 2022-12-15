@@ -4,6 +4,7 @@ import { AuthenticationService } from "@app/services";
 import { BoardService } from "@app/services";
 import { NotificationService } from "@app/services/notification.service";
 import { Board } from "@app/model";
+import { CardsService } from "@app/services/cards.service";
 
 @Component({
   selector: 'app-board-overview',
@@ -18,7 +19,8 @@ export class BoardOverviewPage implements OnInit {
   constructor(
     private boardService: BoardService,
     public notification: NotificationService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private cardService: CardsService
   ) {
   }
 
