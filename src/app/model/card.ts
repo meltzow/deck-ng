@@ -11,12 +11,11 @@
  */
 import { Label } from './label';
 import { Attachement } from "@app/model/attachement";
-import { User } from "@app/model/user";
 import { Assignment } from "@app/model/assignment";
 
 
-export interface Card {
-    title?: string;
+export class Card {
+    title: string;
     description?: string;
     stackId?: number;
     type?: string;

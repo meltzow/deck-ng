@@ -5,12 +5,12 @@
         <h2>{{board.title}}</h2>
         <p><ion-chip [outline]="true">
           <ion-icon name="time-outline"></ion-icon>
-          <ion-label>{{board.lastModified * 1000 | date:'short':'+0200' }}</ion-label>
+          <ion-label>{{board.lastModified * 1000 | date:'short' }}</ion-label>
         </ion-chip>
         </p>
       </ion-label>
       <ion-spinner *ngIf="stacksLoading" name="lines"></ion-spinner>
-      <ion-badge *ngIf="!stacksLoading" slot="end">{{(stacks | async).value ?.length || 0}}</ion-badge>
+      <ion-badge *ngIf="!stacksLoading" slot="end">{{(stacks | async) ?.length || 0}}</ion-badge>
   </ion-item>
 
 <!--  <ion-card-content>-->
