@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { Observable, of } from "rxjs";
-import { BoardItem } from "@app/model/boardItem";
+import { Board } from "@app/model/board";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthenticationService, BoardService } from "@app/services";
 import { IonicStorageModule } from "@ionic/storage-angular";

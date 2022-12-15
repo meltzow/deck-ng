@@ -3,7 +3,7 @@ import { Card } from "@app/model/card";
 import { CardsService } from "@app/services/cards.service";
 import { ActivatedRoute } from "@angular/router";
 import { MarkdownService } from "ngx-markdown";
-import { BoardItem, Label } from "@app/model";
+import { Board, Label } from "@app/model";
 import { BoardService } from "@app/services";
 
 @Component({
@@ -15,7 +15,7 @@ export class CardComponent implements OnInit {
   private cardId: number
   card: Card
   boardId: number
-  board: BoardItem
+  board: Board
   private stackId: number
 
   descEditable = false

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { BehaviorSubject, firstValueFrom, from, Observable, switchMap, of } from 'rxjs';
 
-import { BoardItem, CreateBoardRequest } from '@app/model';
+import { Board, CreateBoardRequest } from '@app/model';
 
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper"
@@ -12,7 +12,7 @@ import { ServiceHelper } from "@app/helper/serviceHelper"
   providedIn: 'root'
 })
 export class BoardService {
-  currentBoardsSubj = new BehaviorSubject<BoardItem[]>([])
+  currentBoardsSubj = new BehaviorSubject<Board[]>([])
   constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
   }
 
@@ -21,9 +21,9 @@ export class BoardService {
    * Create a new board
    * @param createBoardRequest
    */
-  public createBoard(createBoardRequest?: CreateBoardRequest): Promise<BoardItem> {
+  public createBoard(createBoardRequest?: CreateBoardRequest): Promise<Board> {
     return this.authService.getAccount().then((account) => {
-      return firstValueFrom(this.httpClient.post<BoardItem>(`${account.url}/index.php/apps/deck/api/v1/boards`,
+      return firstValueFrom(this.httpClient.post<Board>(`${account.url}/index.php/apps/deck/api/v1/boards`,
         createBoardRequest,
         {
           context: new HttpContext(),
@@ -40,13 +40,13 @@ export class BoardService {
    * Get a board
    * @param boardId Numeric ID of the board to get
    */
-  public getBoard(boardId: number): Promise<BoardItem> {
+  public getBoard(boardId: number): Promise<Board> {
     if (boardId === null || boardId === undefined) {
       throw new Error('Required parameter boardId was null or undefined when calling getBoard.');
     }
 
     return this.authService.getAccount().then((account) => {
-      return firstValueFrom(this.httpClient.get<BoardItem>(`${account.url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
+      return firstValueFrom(this.httpClient.get<Board>(`${account.url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
         this.serviceHelper.getHttpOptions(account)
       ))
     })
@@ -56,13 +56,13 @@ export class BoardService {
    * Get a list of boards
    *
    */
-  public async getBoardsProm(): Promise<Array<BoardItem>> {
+  public async getBoardsProm(): Promise<Array<Board>> {
     const account = await this.authService.getAccount()
     if (!account || !account.isAuthenticated) {
       return Promise.resolve([])
     }
     return new Promise((resolve, reject) =>
-        this.httpClient.get<Array<BoardItem>>(`${account.url}/index.php/apps/deck/api/v1/boards`,
+        this.httpClient.get<Array<Board>>(`${account.url}/index.php/apps/deck/api/v1/boards`,
           this.serviceHelper.getHttpOptions(account)
         ).subscribe(value => {
           this.currentBoardsSubj.next(value)
@@ -71,7 +71,7 @@ export class BoardService {
     )
   }
 
-  public get currentBoards(): BehaviorSubject<BoardItem[]> {
+  public get currentBoards(): BehaviorSubject<Board[]> {
     return this.currentBoardsSubj
   }
 

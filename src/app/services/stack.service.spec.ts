@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { StackService } from './stack.service';
-import { Account, StackItem } from "@app/model";
+import { Account, Stack } from "@app/model";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 
 describe('StackService', () => {
   let service: StackService;
-  let stacks: StackItem[]
+  let stacks: Stack[]
   let httpMock: HttpTestingController
   let authServiceSpy
 

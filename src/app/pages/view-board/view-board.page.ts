@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BoardItem } from "@app/model/boardItem";
+import { Board } from "@app/model/board";
 import { BehaviorSubject, firstValueFrom } from "rxjs";
-import { StackItem } from "@app/model/stackItem";
+import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
 import { IonModal, ToastController } from "@ionic/angular";
 import { BoardService, StackService} from "@app/services";
@@ -14,9 +14,9 @@ import { OverlayEventDetail } from '@ionic/core/components';
   styleUrls: ['./view-board.page.scss'],
 })
 export class ViewBoardPage implements OnInit {
-  public board: BehaviorSubject<BoardItem> = new BehaviorSubject(null);
+  public board: BehaviorSubject<Board> = new BehaviorSubject(null);
   color: any = 'rgb(255,51,0)';
-  stacks: BehaviorSubject<StackItem[]> = new BehaviorSubject<StackItem[]>(null)
+  stacks: BehaviorSubject<Stack[]> = new BehaviorSubject<Stack[]>(null)
   cards: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>(null)
   private searchedCards: Card[];
   private boardId;

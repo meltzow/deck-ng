@@ -7,7 +7,7 @@ import { AuthenticationService, BoardService } from "@app/services";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject, Observable} from "rxjs";
-import { BoardItem } from "@app/model";
+import { Board } from "@app/model";
 import { NotificationService } from "@app/services/notification.service";
 
 @Component({
@@ -17,7 +17,7 @@ import { NotificationService } from "@app/services/notification.service";
 })
 export class AppComponent implements OnInit {
   dark = false;
-  boardsSubj = new BehaviorSubject<BoardItem[]>([])
+  boardsSubj = new BehaviorSubject<Board[]>([])
 
   constructor(
     private menu: MenuController,
