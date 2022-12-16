@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'boards/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/view-board/view-board.module').then( m => m.ViewBoardModule)
+    loadChildren: () => import('./pages/board-details/view-board.module').then( m => m.ViewBoardModule)
   },
   {
     path: 'boards/:boardId/stacks/:stackId/cards/:cardId',

@@ -5,7 +5,7 @@ import { IonicModule } from "@ionic/angular";
 import { CardPageRoutingModule } from "@app/pages/card/card-routing.module";
 import { MarkdownModule } from "ngx-markdown";
 import { FormsModule } from "@angular/forms";
-import { ViewBoardModule } from "@app/pages/view-board/view-board.module";
+import { ViewBoardModule } from "@app/pages/board-details/view-board.module";
 
 
 @NgModule({

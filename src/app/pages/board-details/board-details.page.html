@@ -45,7 +45,7 @@
   </ion-toolbar>
 </ion-header>
   <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
-    <ion-fab-button (click)="createCard()" >
+    <ion-fab-button (click)="promptTitle()" >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -63,12 +63,12 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list *ngFor="let stack of (stacks | async)" >
-    <ng-container *ngFor="let card of stack.cards">
-     <app-task-preview [card]="card" [selectedStack]="selectedStack"  [board]="board | async">
-     </app-task-preview>
+<!--  <ion-list *ngFor="let stack of (stacks | async)" lines="inset">-->
+    <ng-container *ngFor="let card of (this.cards | async) ">
+     <app-card-preview [card]="card" [selectedStack]="selectedStack"  [board]="board | async">
+     </app-card-preview>
     </ng-container>
-  </ion-list>
+<!--  </ion-list>-->
 </ion-content>
 
 <ion-content *ngIf="isLoading">
