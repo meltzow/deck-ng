@@ -12,7 +12,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { FormsModule } from "@angular/forms";
 import { MyRenderer } from "@app/services";
 import { AuthGuard } from "@app/helper/auth-guard";
-import { MarkdownModule } from 'ngx-markdown';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NotificationService } from "@app/services/notification.service";
@@ -22,7 +21,7 @@ import { NotificationService } from "@app/services/notification.service";
   declarations: [AppComponent],
   imports: [BrowserModule,  HttpClientModule, HttpClientXsrfModule.disable(), FormsModule,
     IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule,
-    MarkdownModule.forRoot(), TranslateModule.forRoot({
+    TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (createTranslateLoader),

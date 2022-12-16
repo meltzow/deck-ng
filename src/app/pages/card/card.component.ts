@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Card } from "@app/model/card";
 import { CardsService } from "@app/services/cards.service";
 import { ActivatedRoute } from "@angular/router";
-import { MarkdownService } from "ngx-markdown";
 import { Board, Label } from "@app/model";
 import { BoardService } from "@app/services";
+import { MarkdownService } from "@app/services/markdown.service";
+import { SafeHtml } from "@angular/platform-browser";
+
 
 @Component({
   selector: 'app-card',
@@ -20,14 +22,16 @@ export class CardComponent implements OnInit {
 
   descEditable = false
   plainText: string;
-  content: string;
+  content: SafeHtml;
   isLoading = true
+
   @ViewChild("textareaDescription") textareaDescription;
   constructor(private cardService: CardsService,
               private boardService: BoardService,
               private activatedRoute: ActivatedRoute,
-              private markdownService: MarkdownService) {
+              private markDownService: MarkdownService) {
   }
+
 
   ngOnInit() {
     this.boardId = parseInt(this.activatedRoute.snapshot.paramMap.get('boardId'), 10)
@@ -44,7 +48,7 @@ export class CardComponent implements OnInit {
     ).then(([card, board]) => {
       this.card = card
       this.plainText = card.description
-      this.content = this.markdownService.parse(card.description)
+      this.content = card.description ? this.markDownService.render(card.description):'no description'
       this.board = board
       this.isLoading = false
     })
@@ -90,7 +94,7 @@ export class CardComponent implements OnInit {
 
   onBlurDescription() {
     this.card.description = this.plainText
-    this.content = this.markdownService.parse(this.card.description)
+    this.content = this.markDownService.render(this.card.description)
     this.descEditable = false
     this.updateCard()
   }
