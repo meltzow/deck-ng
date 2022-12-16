@@ -72,7 +72,9 @@ export class CardComponent implements OnInit {
   }
 
   updateCard() {
-    this.cardService.updateCard(this.boardId, this.card.stackId, this.card.id, this.card).then(value => console.log(value), error => console.warn(error))
+    this.isLoading = true
+    this.cardService.updateCard(this.boardId, this.card.stackId, this.card.id, this.card)
+      .then(value => console.log(value), error => console.warn(error)).finally(() => this.isLoading = false)
   }
 
   handlabelChange($event: any) {
@@ -80,6 +82,7 @@ export class CardComponent implements OnInit {
     const after = $event.detail.value.map(value => value.id)
     const removed = before.filter((x) => !after.includes(x));
     const added = after.filter((x) => !before.includes(x));
+    //TODO: enable loading
     removed.forEach((id) => {
         this.cardService.removeLabel2Card(this.boardId, this.card.stackId, this.card.id,id)
       })
@@ -100,7 +103,6 @@ export class CardComponent implements OnInit {
   }
 
   onFocusDescription() {
-    console.log("onFocusDescription")
     this.descEditable = true
     this.textareaDescription.setFocus()
   }
