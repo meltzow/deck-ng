@@ -28,7 +28,7 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
   @ViewChild('inlineEditControl') inlineEditControl: ElementRef; // input DOM element
   @Input() label? = '';  // Label value for input element
   @Input() type = 'text'; // The type of input element
-  @Input() required = false; // Is input requried?
+  @Input() required = false; // Is input required?
   @Input() disabled = false; // Is input disabled?
   @Output() onChanged: EventEmitter<string> = new EventEmitter<string>();
   private _value = ''; // Private variable for input value

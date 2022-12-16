@@ -4,7 +4,7 @@ import { Board } from "@app/model/board";
 import { BehaviorSubject, firstValueFrom } from "rxjs";
 import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
-import { IonModal, ToastController } from "@ionic/angular";
+import { AlertController, IonModal, ToastController } from "@ionic/angular";
 import { BoardService, StackService} from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CardsService } from "@app/services/cards.service";
@@ -12,10 +12,10 @@ import { NotificationService } from "@app/services/notification.service";
 
 @Component({
   selector: 'app-view-board',
-  templateUrl: './view-board.page.html',
-  styleUrls: ['./view-board.page.scss'],
+  templateUrl: './board-details.page.html',
+  styleUrls: ['./board-details.page.scss'],
 })
-export class ViewBoardPage implements OnInit {
+export class BoardDetailsPage implements OnInit {
   public board: BehaviorSubject<Board> = new BehaviorSubject(null);
   color: any = 'rgb(255,51,0)';
   stacks: BehaviorSubject<Stack[]> = new BehaviorSubject<Stack[]>(null)
@@ -31,6 +31,7 @@ export class ViewBoardPage implements OnInit {
     private stackService: StackService,
     private activatedRoute: ActivatedRoute,
     public notificationService: NotificationService,
+    private alertController: AlertController,
     private cardService: CardsService
   ) { }
 
@@ -53,7 +54,7 @@ export class ViewBoardPage implements OnInit {
             })
           })
           this.stacks.next(stacks)
-          this.selectedStack = stacks.length ? stacks[0].id : 0
+          this.selectedStack = stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): 0
           this.cards.next(cards)
           this.searchedCards = cards
           this.isLoading = false
@@ -65,11 +66,43 @@ export class ViewBoardPage implements OnInit {
       })
   }
 
-  async createCard() {
+  async promptTitle() {
+      const alert = await this.alertController.create({
+        header: 'Please enter the title',
+        buttons: [{
+          text: 'Cancel',
+          role: 'cancel'
+        },
+          {
+            text: 'OK',
+            role: 'confirm',
+            handler: (data) => {
+              this.confirmHandler(data);
+            },
+          },],
+        inputs: [
+          {
+            name: 'title',
+            placeholder: 'what needs to be done',
+          },
+        ],
+      });
+
+      await alert.present();
+  }
+
+  confirmHandler(data: { title: string }) {
     const c = new Card()
-    c.title = "foobar"
-    const resp = await this.cardService.createCard(this.stacks.value[0].boardId, this.stacks.value[0].id,c)
-    console.log(resp)
+    c.title = data.title
+    c.stackId = this.selectedStack
+    this.isLoading = true
+    this.cardService.createCard(this.boardId, this.selectedStack, c)
+      .then(value => {
+        this.notificationService.msg('card created')
+        this.getBoard(this.boardId)
+      })
+      .catch(reason => this.notificationService.error(reason))
+      .finally(() => this.isLoading = false )
   }
   doRefresh(event) {
     this.board.next(null)
@@ -97,5 +130,4 @@ export class ViewBoardPage implements OnInit {
   segmentChanged(ev: any) {
     this.selectedStack = ev.detail.value
   }
-
 }

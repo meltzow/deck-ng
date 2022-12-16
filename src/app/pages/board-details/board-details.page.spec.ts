@@ -3,14 +3,14 @@ import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
 import { ViewBoardPageRoutingModule } from './view-board-routing.module';
 
-import { ViewBoardPage } from './view-board.page';
+import { BoardDetailsPage } from './board-details.page';
 import { HttpClientModule } from "@angular/common/http";
 import { BoardService, StackService } from "@app/services";
 import { of } from "rxjs";
 
 describe('ViewBoardPage', () => {
-  let component: ViewBoardPage;
-  let fixture: ComponentFixture<ViewBoardPage>;
+  let component: BoardDetailsPage;
+  let fixture: ComponentFixture<BoardDetailsPage>;
   let boardServiceSpy
   let stackServiceSpy
 
@@ -20,7 +20,7 @@ describe('ViewBoardPage', () => {
     stackServiceSpy = jasmine.createSpyObj('StackService',['getStacks'])
 
     TestBed.configureTestingModule({
-      declarations: [ ViewBoardPage ],
+      declarations: [ BoardDetailsPage ],
       imports: [IonicModule.forRoot(), ViewBoardPageRoutingModule, RouterModule.forRoot([]), HttpClientModule],
       providers: [
         { provide: BoardService, useValue: boardServiceSpy },
@@ -40,7 +40,7 @@ describe('ViewBoardPage', () => {
     boardServiceSpy.getBoard.and.returnValue(Promise.resolve({title: 'foobar', id: 1}))
     stackServiceSpy.getStacks.and.returnValue(of([{title: 'first', id: 2},{title: 'second', id: 1} ]))
 
-    fixture = TestBed.createComponent(ViewBoardPage);
+    fixture = TestBed.createComponent(BoardDetailsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ViewBoardPage } from './view-board.page';
+import { BoardDetailsPage } from './board-details.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ViewBoardPage
+    component: BoardDetailsPage
   }
 ];
 
