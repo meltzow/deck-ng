@@ -14,9 +14,7 @@ export class MarkdownService {
   }
 
   public render(plainText: string): SafeHtml {
-
     const t = this.markdownIt.render(plainText)
-    console.log(t)
     return this.sanitizer.bypassSecurityTrustHtml(t)
   }
 }

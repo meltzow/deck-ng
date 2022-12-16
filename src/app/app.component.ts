@@ -18,7 +18,6 @@ import { NotificationService } from "@app/services/notification.service";
 export class AppComponent implements OnInit {
   dark = false;
   boardsSubj = new BehaviorSubject<Board[]>([])
-
   constructor(
     private menu: MenuController,
     private platform: Platform,
@@ -81,6 +80,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.authService.ngOnInit();
     this.boardService.currentBoardsSubj.subscribe(value => this.boardsSubj.next(value))
+    this.boardService.getBoardsProm()
 
     setTimeout(() => {
       SplashScreen.hide();

@@ -54,7 +54,7 @@ export class BoardDetailsPage implements OnInit {
             })
           })
           this.stacks.next(stacks)
-          this.selectedStack = stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): 0
+          this.selectedStack = stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): -1
           this.cards.next(cards)
           this.searchedCards = cards
           this.isLoading = false
@@ -129,5 +129,9 @@ export class BoardDetailsPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.selectedStack = ev.detail.value
+  }
+
+  stackIsSelected(): boolean {
+    return this.selectedStack > -1
   }
 }

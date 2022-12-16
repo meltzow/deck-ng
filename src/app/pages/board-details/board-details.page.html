@@ -45,7 +45,7 @@
   </ion-toolbar>
 </ion-header>
   <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
-    <ion-fab-button (click)="promptTitle()" >
+    <ion-fab-button (click)="promptTitle()" [disabled]="!stackIsSelected()" >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
