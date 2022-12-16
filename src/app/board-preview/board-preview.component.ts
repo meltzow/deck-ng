@@ -5,11 +5,11 @@ import { Stack } from "@app/model";
 import { BehaviorSubject, firstValueFrom } from "rxjs";
 
 @Component({
-  selector: 'app-dashboard-widget',
-  templateUrl: './board-card.component.html',
-  styleUrls: ['./board-card.component.css']
+  selector: 'app-board-preview',
+  templateUrl: './board-preview.component.html',
+  styleUrls: ['./board-preview.component.css']
 })
-export class BoardCardComponent implements OnInit {
+export class BoardPreviewComponent implements OnInit {
   @Input() board: Board;
   stacks = new BehaviorSubject<Stack[]>(null)
   stacksLoading = true;

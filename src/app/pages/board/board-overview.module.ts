@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
-import { BoardCardComponent } from "@app/board-card/board-card.component";
+import { BoardPreviewComponent } from "@app/board-preview/board-preview.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { BoardOverviewPage } from "@app/pages/board/board-overview.page";
 import { BoardPageRoutingModule } from "@app/pages/board/board-routing.module";
@@ -16,6 +16,6 @@ import { BoardPageRoutingModule } from "@app/pages/board/board-routing.module";
         BoardPageRoutingModule,
         TranslateModule
     ],
-    declarations: [BoardOverviewPage, BoardCardComponent]
+    declarations: [BoardOverviewPage, BoardPreviewComponent]
 })
 export class BoardOverviewPageModule {}
