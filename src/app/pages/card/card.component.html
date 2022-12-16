@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-back-button text="" ></ion-back-button>
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="card">
       <ion-label>{{card.title}}</ion-label>
@@ -16,56 +16,58 @@
   </ion-refresher>
 
   <ion-grid>
-  <ion-row>
-    <ion-col>
-      <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit>
-    </ion-col>
-  </ion-row>
+    <ion-row>
+      <ion-col>
+        <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text"
+                         (onChanged)="changeTitle($event)"></app-inline-edit>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-  <ion-card>
-  <ion-card-content>
+  <ion-card *ngIf="card.duedate || card.attachmentCount">
+    <ion-card-content>
 
+      <ion-chip *ngIf="card.duedate" [outline]="true">
+        <ion-icon name="hourglass-outline"></ion-icon>
+        <ion-label>{{card.duedate | date: 'short'}}</ion-label>
+      </ion-chip>
 
+      <ion-chip *ngFor="let attachment of card.attachments" [outline]="true">
+        <ion-icon name="attach-outline"></ion-icon>
+        <ion-label>{{attachment.extendedData.info.basename}}</ion-label>
+      </ion-chip>
 
-    <ion-chip *ngIf="card.duedate" [outline]="true">
-      <ion-icon name="hourglass-outline"></ion-icon>
-      <ion-label>{{card.duedate | date: 'short'}}</ion-label>
-    </ion-chip>
-
-    <ion-chip *ngFor="let attachment of card.attachments" [outline]="true" >
-      <ion-icon name="attach-outline"></ion-icon>
-      <ion-label>{{attachment.extendedData.info.basename}}</ion-label>
-    </ion-chip>
-
-  </ion-card-content>
-</ion-card>
+    </ion-card-content>
+  </ion-card>
   <ion-grid>
     <ion-row>
-      <ion-col >
+      <ion-col>
         <ion-card>
+          <ion-card-header><ion-card-title><ion-icon name="document-text-outline"></ion-icon>description</ion-card-title></ion-card-header>
           <ion-card-content>
-        <ion-icon name="document-text-outline"></ion-icon>
-        <ion-textarea  #textareaDescription [hidden]="!descEditable" rows="6" [(ngModel)]="plainText" placeholder="add description in markdown here..." (ionBlur)="onBlurDescription()">
-        </ion-textarea>
-            <div *ngIf="!descEditable" [innerHTML]="content" (click)="onFocusDescription()" ></div>
+            <ion-textarea #textareaDescription [hidden]="!descEditable" rows="6" [(ngModel)]="plainText"
+                          placeholder="add description in markdown here..." (ionBlur)="onBlurDescription()">
+            </ion-textarea>
+            <div *ngIf="!descEditable" [innerHTML]="content" (click)="onFocusDescription()"></div>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-      <ion-icon name="pricetags-outline"></ion-icon>
-      <ion-label translate="">Schlagworte</ion-label>
-      <ion-select [compareWith]="labelPreselected"  placeholder="Select labels" [multiple]="true" (ionChange)="handlabelChange($event)"
-                  [ngModel]="card.labels">
-        <ion-select-option  *ngFor="let label of board.labels" [value]="label">{{label.title}}</ion-select-option>
-      </ion-select>
+        <ion-icon name="pricetags-outline"></ion-icon>
+        <ion-label translate="">Schlagworte</ion-label>
+        <ion-select [compareWith]="labelPreselected" placeholder="Select labels" [multiple]="true"
+                    (ionChange)="handlabelChange($event)"
+                    [ngModel]="card.labels">
+          <ion-select-option *ngFor="let label of board.labels" [value]="label">{{label.title}}</ion-select-option>
+        </ion-select>
       </ion-col>
       <ion-col>
         <ion-icon name="people-outline"></ion-icon>
-        <ion-select [compareWith]="labelPreselected"  placeholder="Select assignees" [multiple]="true" disabled="true"
+        <ion-select [compareWith]="labelPreselected" placeholder="Select assignees" [multiple]="true" disabled="true"
                     [ngModel]="card.assignedUsers">
-          <ion-select-option  *ngFor="let assignee of card.assignedUsers" [value]="assignee">{{assignee.participant.displayname}}</ion-select-option>
+          <ion-select-option *ngFor="let assignee of card.assignedUsers"
+                             [value]="assignee">{{assignee.participant.displayname}}</ion-select-option>
         </ion-select>
 
       </ion-col>
@@ -75,7 +77,7 @@
 </ion-content>
 
 <ion-content *ngIf="isLoading">
-  <ion-list >
+  <ion-list>
     <ion-list-header>
       <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
     </ion-list-header>
