@@ -36,7 +36,7 @@ export class BoardDetailsPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-
+    this.boardId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
   private getBoard(id: string) {
@@ -119,8 +119,7 @@ export class BoardDetailsPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    this.boardId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getBoard(this.boardId);
+    await this.getBoard(this.boardId);
   }
 
   onWillDismiss(event: Event) {

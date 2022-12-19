@@ -53,8 +53,10 @@ describe('BoardDetailsPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('must select first stack', () => {
+  it('must select first stack', async () => {
     fixture.detectChanges();
+
+    await component.ionViewWillEnter()
 
     expect(component.selectedStack).toEqual(2);
   });
