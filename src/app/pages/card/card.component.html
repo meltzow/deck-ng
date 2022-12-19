@@ -57,7 +57,7 @@
         <ion-icon name="pricetags-outline"></ion-icon>
         <ion-label translate="">Schlagworte</ion-label>
         <ion-select [compareWith]="labelPreselected" placeholder="Select labels" [multiple]="true"
-                    (ionChange)="handlabelChange($event)"
+                    (ionChange)="handleLabelChange($event)"
                     [ngModel]="card.labels">
           <ion-select-option *ngFor="let label of board.labels" [value]="label">{{label.title}}</ion-select-option>
         </ion-select>

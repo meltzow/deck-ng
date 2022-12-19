@@ -13,7 +13,7 @@ import { SafeHtml } from "@angular/platform-browser";
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
-export class CardComponent {
+export class CardComponent implements OnInit {
   private cardId: number
   card: Card
   boardId: number
@@ -32,11 +32,13 @@ export class CardComponent {
               private markDownService: MarkdownService) {
   }
 
-
-  ionViewWillEnter() {
+  ngOnInit(): void {
     this.boardId = parseInt(this.activatedRoute.snapshot.paramMap.get('boardId'), 10)
     this.stackId = parseInt(this.activatedRoute.snapshot.paramMap.get('stackId'), 10)
     this.cardId = parseInt(this.activatedRoute.snapshot.paramMap.get('cardId'), 10)
+  }
+
+  ionViewWillEnter() {
     this.doRefresh()
   }
 
@@ -77,7 +79,7 @@ export class CardComponent {
       .then(value => console.log(value), error => console.warn(error)).finally(() => this.isLoading = false)
   }
 
-  handlabelChange($event: any) {
+  handleLabelChange($event: any) {
     const before = this.card.labels.map(value => value.id)
     const after = $event.detail.value.map(value => value.id)
     const removed = before.filter((x) => !after.includes(x));

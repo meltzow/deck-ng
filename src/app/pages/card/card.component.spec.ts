@@ -70,15 +70,15 @@ describe('CardComponent', () => {
     expect(component.labelPreselected(l2, l1)).toBeFalse()
   });
 
-  it('handlabelChange remove not used labels and assign new ones', () => {
-    const l1: Label = {id: 1, title: "foo"}
-    const l2: Label = {id: 2, title: "foo"}
-    const l3: Label = {id: 3, title: "foo"}
+  it('handlelabelChange remove not used labels and assign new ones', () => {
+    const newLabel1: Label = {id: 1, title: "foo"}
+    const newLabel2: Label = {id: 2, title: "foo"}
+    const preselectedLabel: Label = {id: 3, title: "foo"}
 
-    const event = new CustomEvent("ionChange", {detail: {value: [l1, l2]}})
+    const event = new CustomEvent("ionChange", {detail: {value: [newLabel1, newLabel2]}})
     component.card = {id: 1, stackId: 1, title: "dddd"}
-    component.card.labels = [l3]
-    component.handlabelChange(event)
+    component.card.labels = [preselectedLabel]
+    component.handleLabelChange(event)
 
     expect(cardServiceSpy.assignLabel2Card).toHaveBeenCalledWith(1,1,1,1)
     expect(cardServiceSpy.assignLabel2Card).toHaveBeenCalledWith(1,1,1,2)
