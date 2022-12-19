@@ -3,6 +3,7 @@ import { AuthenticationService } from "@app/services";
 import { Router } from "@angular/router";
 import { BarcodeScanner, CameraDirection } from '@capacitor-community/barcode-scanner';
 import { Platform, ToastController } from "@ionic/angular";
+import { NotificationService } from "@app/services/notification.service";
 
 @Component({
   selector: 'app-barcode',
@@ -16,7 +17,7 @@ export class BarcodePage implements OnInit, OnDestroy {
     public authenticationService: AuthenticationService,
     public router: Router,
     private platform: Platform,
-    public toastController: ToastController,
+    public notifcationService: NotificationService,
   ) { }
 
   ngOnDestroy(): void {
@@ -76,8 +77,6 @@ export class BarcodePage implements OnInit, OnDestroy {
   }
 
   public parseContent(content: string) {
-    console.log(content); // log the raw scanned content
-
     const ary = content.split('&')
     this.barcode = {}
     this.barcode.user = ary[0].replace('nc://login/user:', '')
@@ -85,7 +84,7 @@ export class BarcodePage implements OnInit, OnDestroy {
     this.barcode.url= ary[2].replace('server:','')
 
     if (!this.barcode.url || !this.barcode.user || !this.barcode.password ) {
-      this.presentToastWithOptions("barcode must contain url, user and password")
+      this.notifcationService.error("barcode must contain url, user and password")
     }
 
   }
@@ -95,32 +94,6 @@ export class BarcodePage implements OnInit, OnDestroy {
     BarcodeScanner.stopScan();
   }
 
-  async presentToastWithOptions(errorMsg: string, header?: string) {
-    const toast = await this.toastController.create({
-      header: header? header : 'Toast header',
-      message: errorMsg,
-      duration: 3000,
-      icon: 'information-circle',
-      position: 'bottom',
-      buttons: [
-        {
-          text: 'More Info',
-          role: 'info',
-          handler: () => {
-            this.handlerMessage = 'More Info clicked';
-          }
-        },
-        {
-          text: 'Dismiss',
-          role: 'cancel',
-          handler: () => {
-            this.handlerMessage = 'Dismiss clicked';
-          }
-        }
-      ]
-    });
-    await toast.present();
-  }
 }
 
 interface barCodeItem {
