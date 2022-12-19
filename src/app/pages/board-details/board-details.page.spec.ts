@@ -1,30 +1,34 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
-import { ViewBoardPageRoutingModule } from './view-board-routing.module';
 
 import { BoardDetailsPage } from './board-details.page';
 import { HttpClientModule } from "@angular/common/http";
-import { BoardService, StackService } from "@app/services";
+import { AuthenticationService, BoardService, StackService } from "@app/services";
 import { of } from "rxjs";
+import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-details-routing.module";
 
-describe('ViewBoardPage', () => {
+describe('BoardDetailsPage', () => {
   let component: BoardDetailsPage;
   let fixture: ComponentFixture<BoardDetailsPage>;
   let boardServiceSpy
   let stackServiceSpy
+  let authServiceSpy
 
   beforeEach(waitForAsync(() => {
 
     boardServiceSpy = jasmine.createSpyObj('BoardService',['getBoard'])
     stackServiceSpy = jasmine.createSpyObj('StackService',['getStacks'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['login','getAccount','isAuthObs'])
+
 
     TestBed.configureTestingModule({
       declarations: [ BoardDetailsPage ],
-      imports: [IonicModule.forRoot(), ViewBoardPageRoutingModule, RouterModule.forRoot([]), HttpClientModule],
+      imports: [IonicModule.forRoot(), BoardDetailsPageRoutingModule, RouterModule.forRoot([]), HttpClientModule],
       providers: [
         { provide: BoardService, useValue: boardServiceSpy },
         { provide: StackService, useValue: stackServiceSpy },
+        { provide: AuthenticationService, useValue: authServiceSpy},
         {
           provide: ActivatedRoute,
           useValue: {

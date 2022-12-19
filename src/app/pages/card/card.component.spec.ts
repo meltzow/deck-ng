@@ -1,32 +1,32 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardComponent } from './card.component';
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { HttpClientTestingModule} from "@angular/common/http/testing";
 import { CardsService } from "@app/services/cards.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
-import { MarkdownModule, MarkdownService } from "ngx-markdown";
 import { Label } from "@app/model";
-import { BoardService } from "@app/services";
+import { AuthenticationService, BoardService } from "@app/services";
 
 describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
   let cardServiceSpy
   let boardServiceSpy
-  let markdownServiceSpy
+  let authServiceSpy
 
   beforeEach(async () => {
     cardServiceSpy = jasmine.createSpyObj('CardService', ['getCard', 'removeLabel2Card', 'assignLabel2Card'])
     boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoard'])
-    markdownServiceSpy = jasmine.createSpyObj('MarkdownService', ['parse'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['login','getAccount','isAuthObs'])
+
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, MarkdownModule],
+      imports: [HttpClientTestingModule],
       providers: [
-        { provide: MarkdownService, useValue: markdownServiceSpy },
         { provide: CardsService, useValue: cardServiceSpy },
         { provide: BoardService, useValue: boardServiceSpy },
+        { provide: AuthenticationService, useValue: authServiceSpy},
         { provide: ServiceHelper},
         {
           provide: ActivatedRoute,

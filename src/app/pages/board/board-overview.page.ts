@@ -31,7 +31,7 @@ export class BoardOverviewPage implements OnInit {
 
   async getBoards() {
     this.isLoading.next(true)
-    const b = await this.boardService.getBoardsProm()
+    const b = await this.boardService.getBoards()
     this.boards.next(b)
     this.isLoading.next(false)
   }

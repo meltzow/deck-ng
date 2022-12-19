@@ -4,7 +4,7 @@ import { CardComponent } from './card.component';
 import { IonicModule } from "@ionic/angular";
 import { CardPageRoutingModule } from "@app/pages/card/card-routing.module";
 import { FormsModule } from "@angular/forms";
-import { ViewBoardModule } from "@app/pages/board-details/view-board.module";
+import { BoardDetailsModule } from "@app/pages/board-details/board-details.module";
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import { ViewBoardModule } from "@app/pages/board-details/view-board.module";
     IonicModule,
     CardPageRoutingModule,
     FormsModule,
-    ViewBoardModule
+    BoardDetailsModule
   ],
 })
 export class CardModule { }

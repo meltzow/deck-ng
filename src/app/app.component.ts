@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.authService.ngOnInit();
     this.boardService.currentBoardsSubj.subscribe(value => this.boardsSubj.next(value))
-    this.boardService.getBoardsProm()
+    this.boardService.getBoards()
 
     setTimeout(() => {
       SplashScreen.hide();
