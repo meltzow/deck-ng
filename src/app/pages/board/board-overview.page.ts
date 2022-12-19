@@ -24,9 +24,12 @@ export class BoardOverviewPage implements OnInit {
   ) {
   }
 
+  async ionViewWillEnter() {
+    await this.getBoards();
+  }
   async ngOnInit() {
     await this.authService.ngOnInit()
-    await this.getBoards();
+
   }
 
   async getBoards() {

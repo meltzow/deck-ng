@@ -13,7 +13,7 @@ import { SafeHtml } from "@angular/platform-browser";
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
   private cardId: number
   card: Card
   boardId: number
@@ -33,7 +33,7 @@ export class CardComponent implements OnInit {
   }
 
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.boardId = parseInt(this.activatedRoute.snapshot.paramMap.get('boardId'), 10)
     this.stackId = parseInt(this.activatedRoute.snapshot.paramMap.get('stackId'), 10)
     this.cardId = parseInt(this.activatedRoute.snapshot.paramMap.get('cardId'), 10)

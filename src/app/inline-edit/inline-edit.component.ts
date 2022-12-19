@@ -23,7 +23,7 @@ const INLINE_EDIT_CONTROL_VALUE_ACCESSOR = {
   styleUrls: ['./inline-edit.component.css']
 })
 
-export class InlineEditComponent implements ControlValueAccessor, OnInit {
+export class InlineEditComponent implements ControlValueAccessor {
 
   @ViewChild('inlineEditControl') inlineEditControl: ElementRef; // input DOM element
   @Input() label? = '';  // Label value for input element
@@ -86,6 +86,4 @@ export class InlineEditComponent implements ControlValueAccessor, OnInit {
     setTimeout(_ => this._renderer.invokeElementMethod(this.inlineEditControl, 'focus'));
   }
 
-  ngOnInit() {
-  }
 }
