@@ -1,7 +1,7 @@
 <ion-item *ngIf="card && selectedStack == card.stackId" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}" >
 <ion-label>
   <h1><app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit></h1>
-  <p>{{card.description}}</p>
+  <p>{{card.description | slice:0:100 }}</p>
 </ion-label>
   <ion-note slot="end">{{card.order}}</ion-note>
 
