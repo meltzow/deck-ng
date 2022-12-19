@@ -1,14 +1,14 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterModule } from '@angular/router';
 
 import { AuthenticationService, BoardService } from "@app/services";
 import { LoginPage } from "@app/pages/login/login.page";
-import { FormsModule, NgForm } from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { TranslateTestingModule } from "ngx-translate-testing";
 import { TranslateService } from "@ngx-translate/core";
 import { Account } from "@app/model";
-import { Observable, of, scheduled } from "rxjs";
+import { of } from "rxjs";
 import { NotificationService } from "@app/services/notification.service";
 
 

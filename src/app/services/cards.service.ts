@@ -4,7 +4,7 @@ import { firstValueFrom } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
-import { Board } from "@app/model";
+import { Account} from "@app/model";
 
 @Injectable({
   providedIn: 'root'
