@@ -7,6 +7,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AuthenticationService, BoardService, StackService } from "@app/services";
 import { of } from "rxjs";
 import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-details-routing.module";
+import { TranslateModule } from "@ngx-translate/core";
 
 describe('BoardDetailsPage', () => {
   let component: BoardDetailsPage;
@@ -24,7 +25,7 @@ describe('BoardDetailsPage', () => {
 
     TestBed.configureTestingModule({
       declarations: [ BoardDetailsPage ],
-      imports: [IonicModule.forRoot(), BoardDetailsPageRoutingModule, RouterModule.forRoot([]), HttpClientModule],
+      imports: [IonicModule.forRoot(), BoardDetailsPageRoutingModule, RouterModule.forRoot([]), HttpClientModule, TranslateModule.forRoot()],
       providers: [
         { provide: BoardService, useValue: boardServiceSpy },
         { provide: StackService, useValue: stackServiceSpy },
