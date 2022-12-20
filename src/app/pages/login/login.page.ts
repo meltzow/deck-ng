@@ -34,6 +34,7 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
+    // await this.authenticationService.saveCredentials("http://localhost:8080", "admin", "admin", true)
     const account = await this.authenticationService.getAccount()
     if (account) {
     if (account.isAuthenticated) {

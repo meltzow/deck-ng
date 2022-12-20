@@ -9,6 +9,7 @@ import { BoardService, StackService} from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CardsService } from "@app/services/cards.service";
 import { NotificationService } from "@app/services/notification.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-view-board',
@@ -32,7 +33,8 @@ export class BoardDetailsPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     public notificationService: NotificationService,
     private alertController: AlertController,
-    private cardService: CardsService
+    private cardService: CardsService,
+    private translateService: TranslateService
   ) { }
 
   async ngOnInit() {
@@ -66,10 +68,14 @@ export class BoardDetailsPage implements OnInit {
   }
 
   async promptTitle() {
+    const header = await this.translateService.get('enter_title').toPromise()
+    const cancel = await this.translateService.get('cancel').toPromise()
+    const titlePlaceholder = await this.translateService.get('title_placeholder').toPromise()
+
       const alert = await this.alertController.create({
-        header: 'Please enter the title',
+        header: header,
         buttons: [{
-          text: 'Cancel',
+          text: cancel,
           role: 'cancel'
         },
           {
@@ -82,7 +88,7 @@ export class BoardDetailsPage implements OnInit {
         inputs: [
           {
             name: 'title',
-            placeholder: 'what needs to be done',
+            placeholder: titlePlaceholder,
           },
         ],
       });

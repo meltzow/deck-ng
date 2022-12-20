@@ -69,11 +69,24 @@
         </ion-list>
 
         <ion-list>
+          <ion-list-header color="primary">
+            <ion-label translate="">other</ion-label>
+          </ion-list-header>
+
           <ion-menu-toggle autoHide="false">
             <ion-item href="https://github.com/meltzow/deck-ng/issues">
               <ion-icon slot="start" name="help"></ion-icon>
-              <ion-label>
-                Support
+              <ion-label translate="">
+                support
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle autoHide="false">
+            <ion-item >
+              <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+              <ion-label >
+                v{{appVersion}}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

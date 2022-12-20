@@ -18,7 +18,8 @@
       "@app/*": ["src/app/*"],
       "@environments/*": ["src/environments/*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

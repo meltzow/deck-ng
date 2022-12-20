@@ -9,6 +9,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject, Observable} from "rxjs";
 import { Board } from "@app/model";
 import { NotificationService } from "@app/services/notification.service";
+import packagejson from '../../package.json'
+
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ import { NotificationService } from "@app/services/notification.service";
 export class AppComponent implements OnInit {
   dark = false;
   boardsSubj = new BehaviorSubject<Board[]>([])
+  appVersion: string
   constructor(
     private menu: MenuController,
     private platform: Platform,
@@ -78,6 +81,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.appVersion = packagejson.version;
     await this.authService.ngOnInit();
     this.boardService.currentBoardsSubj.subscribe(value => this.boardsSubj.next(value))
     this.boardService.getBoards()
@@ -98,3 +102,5 @@ export class AppComponent implements OnInit {
 
 
 }
+
+declare const require: (path: string) => any;

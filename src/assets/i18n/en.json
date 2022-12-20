@@ -5,7 +5,12 @@
   "account": "account",
   "server_url": "server URL",
   "url_required": "server is required",
-  "url_helper": "Enter the url for your nextcloud server",
+  "url_helper": "enter the url for your nextcloud server",
   "barcode_login": "login with barcode",
-  "back": "back"
+  "back": "back",
+  "support": "support",
+  "enter_title": "please enter a title",
+  "cancel": "Cancel",
+  "title_placeholder": "what needs to be done?",
+  "other": "other"
 }
