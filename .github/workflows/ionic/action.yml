@@ -19,3 +19,5 @@ runs:
       shell: bash
     - run: ionic capacitor sync
       shell: bash
+    - run: npm run test-ci
+      shell: bash
