@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Board } from "@app/model/board";
-import { StackService } from "@app/services";
-import { Stack } from "@app/model";
+import { AuthenticationService, StackService, ConfigService, config } from "@app/services";
+import { participant, Stack } from "@app/model";
 import { BehaviorSubject, firstValueFrom } from "rxjs";
 
 @Component({
@@ -14,7 +14,9 @@ export class BoardPreviewComponent implements OnInit {
   stacks = new BehaviorSubject<Stack[]>(null)
   stacksLoading = true;
 
-  constructor(private stackService: StackService) { }
+  constructor(private stackService: StackService,
+              private authService: AuthenticationService,
+              private configService: ConfigService) { }
 
   ngOnInit(): void {
     this.getStacks()
@@ -28,4 +30,16 @@ export class BoardPreviewComponent implements OnInit {
       this.stacksLoading = false
     );
   }
+
+  getParticipants(): participant[] {
+    return this.board.acl.map(value => value.participant)
+  }
+
+  async getUrl(): Promise<string> {
+    const ac = await this.authService.getAccount()
+    return ac.url
+  }
+
+
+
 }

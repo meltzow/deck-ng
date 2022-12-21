@@ -1,0 +1,49 @@
+<ion-card >
+  <ion-card-header *ngIf="board" routerLink="/boards/{{board.id}}" id="board-{{board.id}}">
+    <ion-card-title>{{board.title}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item lines="none">
+        <ion-avatar slot="start" [ngStyle]="{'background-color': '#' + board.color}"></ion-avatar>
+        <ion-label>22222222 </ion-label>
+<!--        <ion-chip [outline]="true">-->
+<!--          <ion-icon name="time-outline"></ion-icon>-->
+<!--          <ion-label>{{board.lastModified * 1000 | date:'short' }}</ion-label>-->
+<!--        </ion-chip>-->
+
+        <ion-spinner *ngIf="stacksLoading" name="lines"></ion-spinner>
+        <ion-badge *ngIf="!stacksLoading" slot="end">{{(stacks | async)?.length || 0}}</ion-badge>
+      </ion-item>
+    </ion-list>
+
+    <p>4 People</p>
+
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item slot="header" color="light">
+          <ion-label>{{getParticipants().length}} participants</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-list >
+            <ion-item *ngFor="let part of getParticipants()">
+              <ion-avatar slot="start" >
+<!--                <ion-img alt="avatar of {{part.uid}}" [src]="(this.getUrl() | async) + '/avatar/' + part.uid + '/512'" ></ion-img>-->
+              </ion-avatar>
+              <ion-label>mario</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-accordion>
+      <ion-accordion value="second">
+        <ion-item slot="header" color="light">
+          <ion-label>Second Accordion</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          labels
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+  </ion-card-content>
+</ion-card>

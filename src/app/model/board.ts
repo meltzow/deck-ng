@@ -13,15 +13,16 @@ import { Label } from './label';
 import { BoardPermissions } from './boardPermissions';
 import { BoardOwner } from './boardOwner';
 import { BoardSettings } from './boardSettings';
+import { acl } from "@app/model/acl";
 
 
-export interface Board {
-    title?: string;
+export class Board {
+    title: string;
     owner?: BoardOwner;
     color?: string;
     archived?: boolean;
     labels?: Array<Label>;
-    acl?: Array<string>;
+    acl?: Array<acl>;
     permissions?: BoardPermissions;
     users?: Array<number>;
     shared?: number;
@@ -29,5 +30,8 @@ export interface Board {
     id?: number;
     lastModified?: number;
     settings?: BoardSettings;
+    ETag?: string;
+
+
 }
 

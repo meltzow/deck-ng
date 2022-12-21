@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: 'boards',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/board/board-overview.module').then( m => m.BoardOverviewPageModule)
+    loadChildren: () => import('./pages/board-overview/board-overview.module').then( m => m.BoardOverviewPageModule)
   },
   {
     path: 'boards/:id',

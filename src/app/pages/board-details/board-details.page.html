@@ -55,12 +55,13 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true">
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true" >
     <ion-segment-button *ngFor="let stack of (stacks | async)" value="{{stack.id}}">
       <ion-label>
         {{stack.title}}
+        <ion-badge style="position: absolute; right: -5px">{{stack.cards?.length? stack.cards?.length : 0 }}</ion-badge>
       </ion-label>
-    </ion-segment-button>
+      </ion-segment-button>
     <ion-segment-button layout="icon-end" disabled="true"><ion-label><ion-icon name="add"></ion-icon></ion-label></ion-segment-button>
   </ion-segment>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
-import { AuthenticationService } from "@app/services";
+import { AuthenticationService, config, ConfigService } from "@app/services";
 import { BoardService } from "@app/services";
 import { NotificationService } from "@app/services/notification.service";
 import { Board } from "@app/model";
@@ -20,7 +20,7 @@ export class BoardOverviewPage implements OnInit {
     private boardService: BoardService,
     public notification: NotificationService,
     private authService: AuthenticationService,
-    private cardService: CardsService
+    private configService: ConfigService
   ) {
   }
 
@@ -44,4 +44,10 @@ export class BoardOverviewPage implements OnInit {
     event.target.complete();
   }
 
+  async saveConfig() {
+    const c = new config()
+    c.age = 10
+    c.bar = false
+    this.configService.writeConfig(c).subscribe(value => console.log(value))
+  }
 }
