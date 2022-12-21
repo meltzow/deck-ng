@@ -26,14 +26,16 @@ final class AppUITests: XCTestCase {
     func testExample() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        let webViewsQuery = app.webViews.webViews.webViews
+        let webViewsQuery = app.webViews
         snapshot("00LoginScreen")
         let urlTextField = webViewsQuery.textFields["url"]
         urlTextField.typeText("https://my.next.cloud")
         snapshot("01LoginScreen")
-        webViewsQuery/*@START_MENU_TOKEN@*/.buttons["Anmeldung"]/*[[".otherElements[\"Ionic App\"]",".otherElements[\"main\"].buttons[\"Anmeldung\"]",".buttons[\"Anmeldung\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
-        //app/*@START_MENU_TOKEN@*/.webViews.webViews.webViews.buttons["Anmelden"]/*[[".otherElements[\"BrowserView?IsPageLoaded=true&WebViewProcessID=2122\"].webViews.webViews.webViews",".otherElements.matching(identifier: \"Nextcloud\")",".otherElements[\"Inhalt\"].buttons[\"Anmelden\"]",".buttons[\"Anmelden\"]",".webViews.webViews.webViews"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.tap()
 
+        urlTextField.typeText("http://192.168.178.25:8080")
+        webViewsQuery.buttons["Anmeldung"].tap()
+
+        snapshot("02BoardOverviewScreen")
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
