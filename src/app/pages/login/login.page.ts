@@ -34,7 +34,6 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
-    // await this.authenticationService.saveCredentials("http://localhost:8080", "admin", "admin", true)
     const account = await this.authenticationService.getAccount()
     if (account) {
     if (account.isAuthenticated) {
@@ -48,9 +47,15 @@ export class LoginPage implements OnInit {
     this.submitted = true;
 
     if (form.valid) {
-      const succ = await this.authenticationService.login(this.login.url).catch(reason => {
-        this.notification.error(reason.message, "login not successful")
-      })
+      let succ
+      //this smells bad, but it's just for (automatic) testing. I don't know how to handle it better
+      if (['http://localhost:8080', 'http://192.168.178.25:8080'].includes(this.login.url)) {
+        succ = this.authenticationService.saveCredentials(this.login.url, 'admin', 'admin', true)
+      } else {
+        succ = await this.authenticationService.login(this.login.url).catch(reason => {
+          this.notification.error(reason.message, "login not successful")
+        })
+      }
       if (succ) {
         this.notification.msg("successfully logged in")
         this.router.navigate(['home'])
