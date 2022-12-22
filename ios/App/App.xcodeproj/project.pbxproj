@@ -15,9 +15,9 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */; };
+		CE5EF3882953C0A100239DA4 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5EF3872953C0A100239DA4 /* SnapshotHelper.swift */; };
 		CEA9D4692948CA8D00B03814 /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9D4682948CA8D00B03814 /* AppUITests.swift */; };
 		CEA9D46B2948CA8D00B03814 /* AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9D46A2948CA8D00B03814 /* AppUITestsLaunchTests.swift */; };
-		CEA9D4722948CCEB00B03814 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9D4712948CCEB00B03814 /* SnapshotHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,10 +42,10 @@
 		50B271D01FEDC1A000F3C39B /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; path = public; sourceTree = "<group>"; };
 		AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF51FD2D460BCFE21FA515B2 /* Pods-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.release.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig"; sourceTree = "<group>"; };
+		CE5EF3872953C0A100239DA4 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		CEA9D4662948CA8D00B03814 /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA9D4682948CA8D00B03814 /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
 		CEA9D46A2948CA8D00B03814 /* AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		CEA9D4712948CCEB00B03814 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,7 +123,7 @@
 		CEA9D4672948CA8D00B03814 /* AppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				CEA9D4712948CCEB00B03814 /* SnapshotHelper.swift */,
+				CE5EF3872953C0A100239DA4 /* SnapshotHelper.swift */,
 				CEA9D4682948CA8D00B03814 /* AppUITests.swift */,
 				CEA9D46A2948CA8D00B03814 /* AppUITestsLaunchTests.swift */,
 			);
@@ -284,7 +284,7 @@
 			files = (
 				CEA9D46B2948CA8D00B03814 /* AppUITestsLaunchTests.swift in Sources */,
 				CEA9D4692948CA8D00B03814 /* AppUITests.swift in Sources */,
-				CEA9D4722948CCEB00B03814 /* SnapshotHelper.swift in Sources */,
+				CE5EF3882953C0A100239DA4 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
