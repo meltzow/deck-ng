@@ -27,8 +27,10 @@ final class AppUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         let webViewsQuery = app.webViews
+
         snapshot("00LoginScreen")
         let urlTextField = webViewsQuery.textFields["url"]
+        XCTAssert(waitFor(urlTextField, toBe: .visible, secondsToWait: 10), "url input didn't appear in 10 seconds")
         urlTextField.typeText("https://my.next.cloud")
         snapshot("01LoginScreen")
 
@@ -41,11 +43,20 @@ final class AppUITests: XCTestCase {
     }
 
     func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
+        if #available(iOS 13.0) {
             // This measures how long it takes to launch your application.
             measure(metrics: [XCTApplicationLaunchMetric()]) {
                 XCUIApplication().launch()
             }
         }
+    }
+
+    enum ElementState { case visible, invisible }
+
+    func waitFor(_ element: XCUIElement, toBe state: ElementState, secondsToWait: Double=10) -> Bool {
+        let predicate = NSPredicate(format: "exists == \(state == .visible)")
+        let elementExpectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
+        let result = XCTWaiter().wait(for: [elementExpectation], timeout: secondsToWait)
+        return result == .completed
     }
 }
