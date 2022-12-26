@@ -1,4 +1,3 @@
-name: "release for ios"
 on:
   workflow_dispatch:
     inputs:
