@@ -26,4 +26,6 @@ jobs:
     - uses: futureware-tech/simulator-action@v2
       with:
         model: ${{ inputs.device }}
+        os_version: 16.1
+        os: iOS
     - run: bundle exec fastlane ios snapshots
