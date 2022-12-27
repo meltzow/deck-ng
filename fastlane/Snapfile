@@ -44,4 +44,4 @@ languages([
 
 # For more information about all available options run
 # fastlane action snapshot
-ios_version(("16.0"))
+ios_version("16.1")
