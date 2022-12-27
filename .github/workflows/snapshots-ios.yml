@@ -25,10 +25,10 @@ jobs:
     - run: cd ios/App && pod install  
     - run: bundle exec fastlane ios snapshots
     - uses: actions/upload-artifact@v3
-        with:
-          name: snapshots
-          path: ./fastlane/screenshots/*
-          model: ${{ inputs.device }}
-          os_version: 16.1
-          os: iOS
+      with:
+        name: snapshots
+        path: ./fastlane/screenshots/*
+        model: ${{ inputs.device }}
+        os_version: 16.1
+        os: iOS
     
