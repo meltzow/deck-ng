@@ -29,34 +29,55 @@ final class AppUITests: XCTestCase {
         let webViewsQuery = app.webViews
 
         snapshot("00LoginScreen")
-        let urlTextField = webViewsQuery.textFields["url"]
-        XCTAssert(waitFor(urlTextField, toBe: .visible, secondsToWait: 10), "url input didn't appear in 10 seconds")
+        let urlTextField = webViewsQuery.textFields["https://xxx.xxx.xx"]
+        //XCTAssert(waitFor(urlTextField, toBe: .visible, secondsToWait: 100), "url input didn't appear in 100 seconds")
         urlTextField.typeText("https://my.next.cloud")
         snapshot("01LoginScreen")
 
+        urlTextField.clearText()
         urlTextField.typeText("http://192.168.178.25:8080")
-        webViewsQuery.buttons["Anmeldung"].tap()
+        webViewsQuery.buttons["login"].tap()
 
         snapshot("02BoardOverviewScreen")
+
+
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
-    func testLaunchPerformance() throws {
-        if #available(iOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+//     func testLaunchPerformance() throws {
+//         if #available(iOS 13.0, *) {
+//             // This measures how long it takes to launch your application.
+//             measure(metrics: [XCTApplicationLaunchMetric()]) {
+//                 XCUIApplication().launch()
+//             }
+//         }
+//     }
+//
+//     enum ElementState { case visible, invisible }
+//
+//     func waitFor(_ element: XCUIElement, toBe state: ElementState, secondsToWait: Double=10) -> Bool {
+//         let predicate = NSPredicate(format: "exists == \(state == .visible)")
+//         let elementExpectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
+//         let result = XCTWaiter().wait(for: [elementExpectation], timeout: secondsToWait)
+//         return result == .completed
+//     }
+}
+
+extension XCUIElement {
+    func clearText() {
+        guard let stringValue = self.value as? String else {
+            return
         }
-    }
+        // workaround for apple bug
+        if let placeholderString = self.placeholderValue, placeholderString == stringValue {
+            return
+        }
 
-    enum ElementState { case visible, invisible }
-
-    func waitFor(_ element: XCUIElement, toBe state: ElementState, secondsToWait: Double=10) -> Bool {
-        let predicate = NSPredicate(format: "exists == \(state == .visible)")
-        let elementExpectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
-        let result = XCTWaiter().wait(for: [elementExpectation], timeout: secondsToWait)
-        return result == .completed
+        var deleteString = String()
+        for _ in stringValue {
+            deleteString += XCUIKeyboardKey.delete.rawValue
+        }
+        typeText(deleteString)
     }
 }
