@@ -38,9 +38,21 @@ final class AppUITests: XCTestCase {
         urlTextField.typeText("http://192.168.178.25:8080")
         webViewsQuery.buttons["login"].tap()
 
+        let kanban = webViewsQuery.staticText["kanban"]
+        let existence = kanban.waitForExistence(timeout: 30)
+        XCTAssertTrue(existence)
+
         snapshot("02BoardOverviewScreen")
 
+        kanban.tab()
 
+        snapshot("03BoardDetailsScreen")
+
+        let todo = webViewsQuery.staticText["todo"]
+        let existence2 = todo.waitForExistence(timeout: 30)
+        XCTAssertTrue(existence2)
+
+        snapshot("04BoardDetailsScreen")
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
