@@ -32,11 +32,16 @@ final class AppUITests: XCTestCase {
         menuButton.waitForExistence(timeout: 30)
         menuButton.tap()
         if (webViewsQuery.buttons["log out Abmeldung"].exists) {
-          webViewsQuery.buttons["log out Abmeldung"].tap()
+            webViewsQuery.buttons["log out Abmeldung"].tap()
+        } else {
+            webViewsQuery.staticTexts["Anmeldung"].tap()
         }
 
-        snapshot("00LoginScreen")
         let urlTextField = webViewsQuery.textFields["https://xxx.xxx.xx"]
+        
+        urlTextField.clearText()
+        snapshot("00LoginScreen")
+
         urlTextField.typeText("https://my.next.cloud")
         snapshot("01LoginScreen")
 
@@ -55,7 +60,7 @@ final class AppUITests: XCTestCase {
 
         snapshot("03BoardDetailsScreen")
 
-        let todo = webViewsQuery.staticTexts["todo"]
+        let todo = webViewsQuery.buttons["todo"]
         let existence2 = todo.waitForExistence(timeout: 30)
         XCTAssertTrue(existence2)
 
