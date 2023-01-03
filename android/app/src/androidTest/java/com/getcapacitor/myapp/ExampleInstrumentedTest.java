@@ -42,15 +42,15 @@ public class ExampleInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
-    @BeforeClass
-    public static void beforeAll() {
-      CleanStatusBar.enableWithDefaults();
-    }
+//    @BeforeClass
+//    public static void beforeAll() {
+//      CleanStatusBar.enableWithDefaults();
+//    }
 
-    @AfterClass
-    public static void afterAll() {
-      CleanStatusBar.disable();
-    }
+//    @AfterClass
+//    public static void afterAll() {
+//      CleanStatusBar.disable();
+//    }
 
 //    @Test
 //    public void useAppContext() throws Exception {
@@ -73,13 +73,20 @@ public class ExampleInstrumentedTest {
 
     Screengrab.screenshot("LoginScreen");
 
-//    onWebView().withElement(elementURL).perform(clearElement()).perform(webKeys("http://192.168.178.25:8080"));
-//    Atom<ElementReference> element3 = findElement(Locator.XPATH, loginBtn);
-//    onWebView().withElement(element3).perform(webClick());
+    onWebView().withElement(elementURL).perform(clearElement()).perform(webKeys("http://192.168.178.25:8080"));
+    Atom<ElementReference> element3 = findElement(Locator.XPATH, loginBtn);
+    onWebView().withElement(element3).perform(webClick());
 //
-//    Thread.sleep(3000);
+    Thread.sleep(4000);
 
-//    Screengrab.screenshot("BoardsScreen");
+    Screengrab.screenshot("BoardsOverviewsScreen");
+
+    String scrumBoardCard = "//ion-item[@id='board-3']";
+    Atom<ElementReference> elementScrumBoardCard = findElement(Locator.XPATH, scrumBoardCard);
+    onWebView().withElement(elementScrumBoardCard).perform(webClick());
+
+    Thread.sleep(1000);
+    Screengrab.screenshot("BoardsDetailsScreen");
 
   }
 
