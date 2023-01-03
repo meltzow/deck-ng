@@ -31,17 +31,18 @@ final class AppUITests: XCTestCase {
         let menuButton = webViewsQuery.buttons["menu"]
         menuButton.waitForExistence(timeout: 30)
         menuButton.tap()
-        if (webViewsQuery.buttons["log out Abmeldung"].exists) {
-            webViewsQuery.buttons["log out Abmeldung"].tap()
+
+        let logout = webViewsQuery.otherElements.matching(identifier: "logout").element
+        if (logout.exists) {
+            logout.tap()
         } else {
-            webViewsQuery.staticTexts["Anmeldung"].tap()
+            let login = webViewsQuery.images.matching(identifier: "log in").element
+            login.tap()
         }
-
+        print(app.debugDescription)
         let urlTextField = webViewsQuery.textFields["https://xxx.xxx.xx"]
-        
         urlTextField.clearText()
-        snapshot("00LoginScreen")
-
+        urlTextField.tap()
         urlTextField.typeText("https://my.next.cloud")
         snapshot("01LoginScreen")
 
@@ -58,13 +59,11 @@ final class AppUITests: XCTestCase {
 
         kanban.tap()
 
-        snapshot("03BoardDetailsScreen")
-
         let todo = webViewsQuery.buttons["todo"]
         let existence2 = todo.waitForExistence(timeout: 30)
         XCTAssertTrue(existence2)
 
-        snapshot("04BoardDetailsScreen")
+        snapshot("03BoardDetailsScreen")
 
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }

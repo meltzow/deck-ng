@@ -17,7 +17,6 @@
 		A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */; };
 		CE5EF3882953C0A100239DA4 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5EF3872953C0A100239DA4 /* SnapshotHelper.swift */; };
 		CEA9D4692948CA8D00B03814 /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9D4682948CA8D00B03814 /* AppUITests.swift */; };
-		CEA9D46B2948CA8D00B03814 /* AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9D46A2948CA8D00B03814 /* AppUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +44,6 @@
 		CE5EF3872953C0A100239DA4 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		CEA9D4662948CA8D00B03814 /* AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA9D4682948CA8D00B03814 /* AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITests.swift; sourceTree = "<group>"; };
-		CEA9D46A2948CA8D00B03814 /* AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,7 +123,6 @@
 			children = (
 				CE5EF3872953C0A100239DA4 /* SnapshotHelper.swift */,
 				CEA9D4682948CA8D00B03814 /* AppUITests.swift */,
-				CEA9D46A2948CA8D00B03814 /* AppUITestsLaunchTests.swift */,
 			);
 			path = AppUITests;
 			sourceTree = "<group>";
@@ -282,7 +279,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEA9D46B2948CA8D00B03814 /* AppUITestsLaunchTests.swift in Sources */,
 				CEA9D4692948CA8D00B03814 /* AppUITests.swift in Sources */,
 				CE5EF3882953C0A100239DA4 /* SnapshotHelper.swift in Sources */,
 			);

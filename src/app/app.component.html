@@ -1,101 +1,100 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
+  <!--  <ion-split-pane contentId="main-content">-->
 
-    <ion-menu contentId="main-content">
-      <ion-content>
-        <ion-list *ngIf="(isAuthenticated() | async)" lines="none">
-          <ion-list-header color="primary" [routerLink]="'/boards'" routerLinkActive="selected" routerDirection="root" >
-            <ion-icon slot="start" name="clipboard-outline"></ion-icon>
-            <ion-label translate="">boards</ion-label>
-          </ion-list-header>
-          <ion-menu-toggle autoHide="false" *ngFor="let b of boardsSubj | async; let i = index">
-            <ion-item [routerLink]="'/boards/' + b.id" routerLinkActive="selected" routerDirection="forward" detail="false">
-              <ion-label>
-                {{b.title}}
-              </ion-label>
-            </ion-item>
+  <ion-menu contentId="main-content">
+    <ion-content>
+      <ion-list *ngIf="(isAuthenticated() | async)" lines="none">
+        <ion-list-header color="primary" [routerLink]="'/boards'" routerLinkActive="selected" routerDirection="root" >
+          <ion-icon slot="start" name="clipboard-outline"></ion-icon>
+          <ion-label translate="">boards</ion-label>
+        </ion-list-header>
+        <ion-menu-toggle autoHide="false" *ngFor="let b of boardsSubj | async; let i = index">
+          <ion-item [routerLink]="'/boards/' + b.id" routerLinkActive="selected" routerDirection="forward" detail="false">
+            <ion-label>
+              {{b.title}}
+            </ion-label>
+          </ion-item>
 
-          </ion-menu-toggle>
-        </ion-list>
+        </ion-menu-toggle>
+      </ion-list>
 
-        <ion-list *ngIf="(isAuthenticated() | async)" lines="none">
-          <ion-list-header color="primary">
-           <ion-label translate="">account</ion-label>
-          </ion-list-header>
+      <ion-list *ngIf="(isAuthenticated() | async)" lines="none">
+        <ion-list-header color="primary">
+          <ion-label translate="">account</ion-label>
+        </ion-list-header>
 
-<!--          <ion-menu-toggle autoHide="false">-->
-<!--            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">-->
-<!--              <ion-icon slot="start" name="help"></ion-icon>-->
-<!--              <ion-label>-->
-<!--                Support-->
-<!--              </ion-label>-->
-<!--            </ion-item>-->
-<!--          </ion-menu-toggle>-->
+        <!--          <ion-menu-toggle autoHide="false">-->
+        <!--            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">-->
+        <!--              <ion-icon slot="start" name="help"></ion-icon>-->
+        <!--              <ion-label>-->
+        <!--                Support-->
+        <!--              </ion-label>-->
+        <!--            </ion-item>-->
+        <!--          </ion-menu-toggle>-->
 
-          <ion-menu-toggle autoHide="false">
-            <ion-item button="" (click)="logout()" detail="false">
-              <ion-icon slot="start" name="log-out"></ion-icon>
-              <ion-label translate="">
-                logout
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+        <ion-menu-toggle autoHide="false">
+          <ion-item (click)="logout()" detail="false" name="logout" aria-label="logout">
+            <ion-icon slot="start" name="log-out"></ion-icon>
+            <ion-label translate="" >
+              logout
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
 
-        </ion-list>
+      </ion-list>
 
-        <ion-list *ngIf="!(isAuthenticated() | async)" lines="none">
-          <ion-list-header color="primary">
-            <ion-label translate="">account</ion-label>
-          </ion-list-header>
+      <ion-list *ngIf="!(isAuthenticated() | async)" lines="none">
+        <ion-list-header color="primary">
+          <ion-label translate="">account</ion-label>
+        </ion-list-header>
 
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/login" routerLinkActive="active" routerDirection="root" detail="false" aria-label="login">
-              <ion-icon slot="start" name="log-in"></ion-icon>
-              <ion-label translate="">
-                login
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+        <ion-menu-toggle autoHide="false">
+          <ion-item routerLink="/login" routerLinkActive="active" routerDirection="root" detail="false" name="login" aria-labelledby="login">
+            <ion-icon slot="start" name="log-in"></ion-icon>
+            <ion-label translate="">
+              login
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
 
 
 
-<!--          <ion-item>-->
-<!--            <ion-icon slot="start" name="moon-outline"></ion-icon>-->
-<!--            <ion-label>-->
-<!--              Dark Mode-->
-<!--            </ion-label>-->
-<!--            <ion-toggle [(ngModel)]="dark"></ion-toggle>-->
-<!--          </ion-item>-->
-        </ion-list>
+        <!--          <ion-item>-->
+        <!--            <ion-icon slot="start" name="moon-outline"></ion-icon>-->
+        <!--            <ion-label>-->
+        <!--              Dark Mode-->
+        <!--            </ion-label>-->
+        <!--            <ion-toggle [(ngModel)]="dark"></ion-toggle>-->
+        <!--          </ion-item>-->
+      </ion-list>
 
-        <ion-list>
-          <ion-list-header color="primary">
-            <ion-label translate="">other</ion-label>
-          </ion-list-header>
+      <ion-list>
+        <ion-list-header color="primary">
+          <ion-label translate="">other</ion-label>
+        </ion-list-header>
 
-          <ion-menu-toggle autoHide="false">
-            <ion-item href="https://github.com/meltzow/deck-ng/issues">
-              <ion-icon slot="start" name="help"></ion-icon>
-              <ion-label translate="">
-                support
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+        <ion-menu-toggle autoHide="false">
+          <ion-item href="https://github.com/meltzow/deck-ng/issues">
+            <ion-icon slot="start" name="help"></ion-icon>
+            <ion-label translate="">
+              support
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
 
-          <ion-menu-toggle autoHide="false">
-            <ion-item >
-              <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-              <ion-label >
-                v{{appVersion}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+        <ion-menu-toggle autoHide="false">
+          <ion-item >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            <ion-label >
+              v{{appVersion}}
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
 
-        </ion-list>
+      </ion-list>
 
-      </ion-content>
-    </ion-menu>
-
+    </ion-content>
+  </ion-menu>
   <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-split-pane>
+  <!--  </ion-split-pane>-->
 </ion-app>
