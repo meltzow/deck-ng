@@ -28,27 +28,34 @@ final class AppUITests: XCTestCase {
         let app = XCUIApplication()
         let webViewsQuery = app.webViews
 
+        let menuButton = webViewsQuery.buttons["menu"]
+        menuButton.waitForExistence(timeout: 30)
+        menuButton.tap()
+        if (webViewsQuery.buttons["log out Abmeldung"].exists) {
+          webViewsQuery.buttons["log out Abmeldung"].tap()
+        }
+
         snapshot("00LoginScreen")
         let urlTextField = webViewsQuery.textFields["https://xxx.xxx.xx"]
-        //XCTAssert(waitFor(urlTextField, toBe: .visible, secondsToWait: 100), "url input didn't appear in 100 seconds")
         urlTextField.typeText("https://my.next.cloud")
         snapshot("01LoginScreen")
 
         urlTextField.clearText()
         urlTextField.typeText("http://192.168.178.25:8080")
-        webViewsQuery.buttons["login"].tap()
+        let loginBtn = webViewsQuery.buttons["login"]
+        loginBtn.tap()
 
-        let kanban = webViewsQuery.staticText["kanban"]
+        let kanban = webViewsQuery.staticTexts["kanban"]
         let existence = kanban.waitForExistence(timeout: 30)
         XCTAssertTrue(existence)
 
         snapshot("02BoardOverviewScreen")
 
-        kanban.tab()
+        kanban.tap()
 
         snapshot("03BoardDetailsScreen")
 
-        let todo = webViewsQuery.staticText["todo"]
+        let todo = webViewsQuery.staticTexts["todo"]
         let existence2 = todo.waitForExistence(timeout: 30)
         XCTAssertTrue(existence2)
 
@@ -64,15 +71,6 @@ final class AppUITests: XCTestCase {
 //                 XCUIApplication().launch()
 //             }
 //         }
-//     }
-//
-//     enum ElementState { case visible, invisible }
-//
-//     func waitFor(_ element: XCUIElement, toBe state: ElementState, secondsToWait: Double=10) -> Bool {
-//         let predicate = NSPredicate(format: "exists == \(state == .visible)")
-//         let elementExpectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
-//         let result = XCTWaiter().wait(for: [elementExpectation], timeout: secondsToWait)
-//         return result == .completed
 //     }
 }
 

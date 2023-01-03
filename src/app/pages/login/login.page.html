@@ -20,7 +20,7 @@
       <ion-item>
         <ion-label position="floating" color="primary" translate="">server_url</ion-label>
         <ion-input [(ngModel)]="login.url" name="url" placeholder="https://xxx.xxx.xx" type="url" #url="ngModel" spellcheck="false" autocapitalize="off"
-                   autocorrect="off" autofocus="on" color="primary" inputmode="url" required="true" autocomplete="url">
+                   autocorrect="off" autofocus="on" color="primary" inputmode="url" required="true" autocomplete="url" aria-label="url">
         </ion-input>
         <ion-note slot="helper" translate="">url_helper</ion-note>
       </ion-item>
@@ -30,7 +30,7 @@
         </p>
       </ion-text>
 
-      <ion-button (click)="onLogin(loginForm)" type="submit" translate="">login</ion-button>
+      <ion-button (click)="onLogin(loginForm)" type="submit" translate="" aria-label="login">login</ion-button>
     </ion-list>
   </form>
 
