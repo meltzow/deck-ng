@@ -74,7 +74,10 @@ platform :ios do
 
   lane :snapshots do
     capture_ios_screenshots(scheme: scheme, workspace: workspace, reinstall_app: true, override_status_bar: true, concurrent_simulators: true, disable_slide_to_type: true)
-    #frame_screenshots(silver: true, path: "./fastlane/screenshots")
+   end
+
+   lane :frameit do
+     frame_screenshots(silver: true, path: "./fastlane/screenshots")
    end
 end
 
@@ -153,4 +156,6 @@ end
 lane :compile do
   sh "ionic cap build android && ionic cap update android"
 end
+
+
 
