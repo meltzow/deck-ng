@@ -37,6 +37,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### frameit
+
+```sh
+[bundle exec] fastlane frameit
+```
+
+
+
 ----
 
 

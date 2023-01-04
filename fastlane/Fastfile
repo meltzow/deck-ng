@@ -24,7 +24,7 @@ platform :ios do
     end
 
     bundle_install
-    sh "cd .. && ionic cap sync ios"
+    sh "cd .. && ionic cap sync ios --prod"
 
     increment_version_number(version_number: version, xcodeproj: project)
     previous_build_number_beta = latest_testflight_build_number(app_identifier:ENV["APP_IDENTIFIER"])
@@ -73,8 +73,11 @@ platform :ios do
   end
 
   lane :snapshots do
-    capture_ios_screenshots(scheme: scheme, workspace: workspace, concurrent_simulators: false)
-    frame_screenshots(silver: true, path: "./fastlane/screenshots")
+    capture_ios_screenshots(scheme: scheme, workspace: workspace, reinstall_app: true, override_status_bar: true, concurrent_simulators: true, disable_slide_to_type: true)
+   end
+
+   lane :frameit do
+     frame_screenshots(silver: true, path: "./fastlane/screenshots")
    end
 end
 
@@ -89,7 +92,7 @@ platform :android do
 
   lane :build do |options|
     ensure_git_branch(branch: 'master')
-    sh "cd .. && ionic cap sync android"
+    sh "cd .. && ionic cap sync android --prod"
 
     if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
       previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
@@ -123,7 +126,7 @@ platform :android do
   end
 
   lane :snapshots do
-      sh "cd .. && ionic cap sync android"
+      sh "cd .. && ionic cap sync android --prod"
 #     gradle(
 #           task: 'clean',
 #           project_dir: android_project_dir
@@ -153,4 +156,6 @@ end
 lane :compile do
   sh "ionic cap build android && ionic cap update android"
 end
+
+
 
