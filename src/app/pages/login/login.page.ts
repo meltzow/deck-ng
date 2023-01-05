@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
 
     if (form.valid) {
       let succ
-      //this smells bad, but it's just for (automatic) testing. I don't know how to handle it better
+      //TODO: this smells bad, but it's just for (automatic) testing. I don't know how to handle it better
       if (['http://localhost:8080', 'http://192.168.178.25:8080'].includes(this.login.url)) {
         succ = this.authenticationService.saveCredentials(this.login.url, 'admin', 'admin', true)
       } else {
