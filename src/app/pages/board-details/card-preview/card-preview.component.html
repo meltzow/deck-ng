@@ -3,4 +3,5 @@
   <h1><app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit></h1>
   <p>{{card.description | slice:0:100 }}</p>
 </ion-label>
+  <ion-icon *ngIf="card.duedate" name="alarm-outline" slot="end"></ion-icon>
 </ion-item>

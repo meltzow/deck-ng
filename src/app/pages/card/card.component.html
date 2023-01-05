@@ -15,64 +15,53 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <app-inline-edit [(ngModel)]="card.title" [required]="true" type="text"
-                         (onChanged)="changeTitle($event)"></app-inline-edit>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-card *ngIf="card.duedate || card.attachmentCount">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title><app-inline-edit [(ngModel)]="card.title" [required]="true" type="text"
+                                       (onChanged)="changeTitle($event)"></app-inline-edit></ion-card-title>
+      <ion-card-subtitle>
+        <ion-textarea #textareaDescription [hidden]="!descEditable" rows="6" [(ngModel)]="plainText"
+                      placeholder="add description in markdown here..." (ionBlur)="onBlurDescription()">
+        </ion-textarea>
+        <div *ngIf="!descEditable" [innerHTML]="content" (click)="onFocusDescription()"></div>
+        </ion-card-subtitle>
+    </ion-card-header>
     <ion-card-content>
+      <ion-list>
+        <ion-item id="open-popover2">
+          <ion-icon name="alarm-outline" slot="start"></ion-icon>
+          <ion-label *ngIf="dueDate">{{dueDate | date: 'short'}}</ion-label>
+          <ion-label *ngIf="!dueDate">add due date</ion-label>
+        </ion-item>
 
-      <ion-chip *ngIf="card.duedate" [outline]="true">
-        <ion-icon name="hourglass-outline"></ion-icon>
-        <ion-label>{{card.duedate | date: 'short'}}</ion-label>
-      </ion-chip>
+        <ion-popover trigger="open-popover2">
+          <ng-template>
+            <ion-datetime #datetime id="datetime" [(ngModel)]="dueDate" (ionChange)="ionChange(this.dueDate)" show-clear-button="true" >
+            </ion-datetime>
+          </ng-template>
+        </ion-popover>
 
-      <ion-chip *ngFor="let attachment of card.attachments" [outline]="true">
-        <ion-icon name="attach-outline"></ion-icon>
-        <ion-label>{{attachment.extendedData.info.basename}}</ion-label>
-      </ion-chip>
+        <ion-item>
+          <ion-icon name="pricetags-outline"></ion-icon>
+          <ion-select [compareWith]="labelPreselected" placeholder="Select labels" [multiple]="true"
+                      (ionChange)="handleLabelChange($event)"
+                      [ngModel]="card.labels">
+            <ion-select-option *ngFor="let label of board.labels" [value]="label">{{label.title}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="people-outline"></ion-icon>
+            <ion-select [compareWith]="labelPreselected" placeholder="Select assignees" [multiple]="true" disabled="true"
+                        [ngModel]="card.assignedUsers">
+              <ion-select-option *ngFor="let assignee of card.assignedUsers"
+                                 [value]="assignee">{{assignee.participant.displayname}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+      </ion-list>
 
     </ion-card-content>
   </ion-card>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-card>
-          <ion-card-header><ion-card-title><ion-icon name="document-text-outline"></ion-icon>description</ion-card-title></ion-card-header>
-          <ion-card-content>
-            <ion-textarea #textareaDescription [hidden]="!descEditable" rows="6" [(ngModel)]="plainText"
-                          placeholder="add description in markdown here..." (ionBlur)="onBlurDescription()">
-            </ion-textarea>
-            <div *ngIf="!descEditable" [innerHTML]="content" (click)="onFocusDescription()"></div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-icon name="pricetags-outline"></ion-icon>
-        <ion-label translate="">Schlagworte</ion-label>
-        <ion-select [compareWith]="labelPreselected" placeholder="Select labels" [multiple]="true"
-                    (ionChange)="handleLabelChange($event)"
-                    [ngModel]="card.labels">
-          <ion-select-option *ngFor="let label of board.labels" [value]="label">{{label.title}}</ion-select-option>
-        </ion-select>
-      </ion-col>
-      <ion-col>
-        <ion-icon name="people-outline"></ion-icon>
-        <ion-select [compareWith]="labelPreselected" placeholder="Select assignees" [multiple]="true" disabled="true"
-                    [ngModel]="card.assignedUsers">
-          <ion-select-option *ngFor="let assignee of card.assignedUsers"
-                             [value]="assignee">{{assignee.participant.displayname}}</ion-select-option>
-        </ion-select>
 
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 
 </ion-content>
 

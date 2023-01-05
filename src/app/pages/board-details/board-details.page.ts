@@ -5,7 +5,7 @@ import { BehaviorSubject, firstValueFrom } from "rxjs";
 import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
 import { AlertController, IonModal, ToastController } from "@ionic/angular";
-import { BoardService, StackService} from "@app/services";
+import { BoardService, OverviewService, StackService } from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CardsService } from "@app/services/cards.service";
 import { NotificationService } from "@app/services/notification.service";

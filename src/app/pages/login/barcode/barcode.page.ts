@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService } from "@app/services";
 import { Router } from "@angular/router";
 import { BarcodeScanner, CameraDirection } from '@capacitor-community/barcode-scanner';
-import { Platform, ToastController } from "@ionic/angular";
+import { Platform } from "@ionic/angular";
 import { NotificationService } from "@app/services/notification.service";
 
 @Component({

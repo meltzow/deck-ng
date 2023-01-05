@@ -6,6 +6,7 @@ import { Board, Label } from "@app/model";
 import { BoardService } from "@app/services";
 import { MarkdownService } from "@app/services/markdown.service";
 import { SafeHtml } from "@angular/platform-browser";
+import { IonDatetime, IonDatetimeButton } from "@ionic/angular";
 
 
 @Component({
@@ -26,6 +27,10 @@ export class CardComponent implements OnInit {
   isLoading = true
 
   @ViewChild("textareaDescription") textareaDescription;
+  @ViewChild("datetime") datetime;
+  @ViewChild("datetimeButton") datetimeButton: IonDatetimeButton;
+  dueDate: string;
+  isPopoverOpen: boolean;
   constructor(private cardService: CardsService,
               private boardService: BoardService,
               private activatedRoute: ActivatedRoute,
@@ -49,8 +54,9 @@ export class CardComponent implements OnInit {
       this.boardService.getBoard(this.boardId)]
     ).then(([card, board]) => {
       this.card = card
+      this.dueDate = card.duedate ? new Date(card.duedate).toISOString() : ""
       this.plainText = card.description
-      this.content = card.description ? this.markDownService.render(card.description):'no description'
+      this.content = card.description ? this.markDownService.render(card.description):'add description'
       this.board = board
       this.isLoading = false
     })
@@ -64,6 +70,7 @@ export class CardComponent implements OnInit {
         this.content = this.markdownText
       } else {
         this.toggleVal = false
+        this.content = 'add description'
       }
     }
   }
@@ -107,5 +114,17 @@ export class CardComponent implements OnInit {
   onFocusDescription() {
     this.descEditable = true
     this.textareaDescription.setFocus()
+  }
+
+
+  ionChange(event: any) {
+    if (!event) {
+      this.dueDate = null
+    }
+    this.datetime.confirm(true)
+  }
+
+  openStart() {
+    this.datetime.open()
   }
 }
