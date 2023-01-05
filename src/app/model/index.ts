@@ -9,3 +9,4 @@ export * from './card';
 export * from './createBoardRequest';
 export * from './label';
 export * from './stack';
+export * from './upcomingResponse'

@@ -48,7 +48,7 @@ export class AuthenticationService implements OnInit {
   }
 
   async login(url: string): Promise<boolean> {
-   const options = {
+    const options = {
       url: url + '/index.php/login/v2',
       headers: {
         'Accept': 'application/json',

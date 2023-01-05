@@ -5,7 +5,7 @@
   "homepage": "https://meltzow.github.io/deck-ng/",
   "scripts": {
     "ng": "ng",
-    "ionic": "ionic serve",
+    "ionic": "ionic serve --proxy-config proxy.conf.json",
     "run-android": "export ANDROID_SDK_ROOT=$HOME/Programme/android-sdk-linux/ && ionic capacitor run android -l --external",
     "start": "ng serve",
     "build": "ng build",

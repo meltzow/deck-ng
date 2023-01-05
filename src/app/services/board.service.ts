@@ -6,6 +6,7 @@ import { Board, CreateBoardRequest } from '@app/model';
 
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper"
+import { HttpService } from "@app/services/http.service";
 
 
 @Injectable({
@@ -16,7 +17,8 @@ export class BoardService {
 
   constructor(protected httpClient: HttpClient,
               private authService: AuthenticationService,
-              private serviceHelper: ServiceHelper) {
+              private serviceHelper: ServiceHelper,
+              private httpService: HttpService) {
   }
 
 
@@ -60,21 +62,7 @@ export class BoardService {
    *
    */
   public async getBoards(): Promise<Board[]> {
-    const account = await this.authService.getAccount()
-    if (!account || !account.isAuthenticated) {
-      return Promise.resolve([])
-    }
-    return new Promise((resolve, reject) =>
-      this.httpClient.get<Board[]>(`${account.url}/index.php/apps/deck/api/v1/boards`,
-        this.serviceHelper.getHttpOptions(account)
-      ).subscribe({
-        next: (value) => {
-          this.currentBoardsSubj.next(value)
-          resolve(value)
-        },
-        error: error => reject(error)
-      })
-    )
+    return this.httpService.get<Board[]>('index.php/apps/deck/api/v1/boards')
   }
 
   public get currentBoards(): BehaviorSubject<Board[]> {
