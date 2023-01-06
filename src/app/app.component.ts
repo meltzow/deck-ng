@@ -101,5 +101,3 @@ export class AppComponent implements OnInit {
 
 
 }
-
-declare const require: (path: string) => any;

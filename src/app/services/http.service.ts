@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext, HttpHeaders, HttpParams, } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 
-import { Account, UpcomingResponse } from '@app/model';
+import { Account } from '@app/model';
 
 import { AuthenticationService } from "@app/services/authentication.service";
-import { ServiceHelper } from "@app/helper/serviceHelper"
 import { Platform } from "@ionic/angular";
 import { CapacitorHttp } from "@capacitor/core";
 import { CustomHttpParameterCodec } from "@app/encoder";
@@ -21,16 +19,15 @@ export class HttpService {
               private platform: Platform) {
   }
 
+  public async getA<T extends Array<any>>(url: string): Promise<T> {
+    return Promise.resolve(<T>[])
+  }
 
-  /**
-   * Get a list of boards
-   *
-   */
   public async get<T>(url: string): Promise<T> {
     const account = await this.authService.getAccount()
-    // if (!account || !account.isAuthenticated) {
-    //   return Promise.resolve(new ())
-    // }
+    if (!account || !account.isAuthenticated) {
+        return Promise.resolve(<T> {})
+    }
 
     if (this.platform.is("mobile")) {
       const options = {
@@ -42,9 +39,8 @@ export class HttpService {
           'OCS-APIRequest': 'true'
         },
       };
-
       return new Promise((resolve, reject) =>
-       CapacitorHttp.get(options)
+        (CapacitorHttp as any).get(options)
          .then(value => {
            resolve(value.data as T)
          }).catch(reason => {
@@ -55,7 +51,7 @@ export class HttpService {
     } else {
       //it must be on desktop
       return new Promise((resolve, reject) =>
-        this.httpClient.get<T>(`/${url}`,
+        this.httpClient.get<T>(`${account.url}/${url}`,
           this.getHttpOptions(account, url.startsWith('ocs'))
         ).subscribe({
           next: (value) => {

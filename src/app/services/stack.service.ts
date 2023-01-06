@@ -1,31 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from "@angular/common/http";
-import { from, Observable, switchMap } from "rxjs";
 import { Stack } from "@app/model";
-import { AuthenticationService } from "@app/services/authentication.service";
-import { ServiceHelper } from "@app/helper/serviceHelper";
+import { HttpService } from "@app/services/http.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StackService {
 
-  constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
+  constructor(protected httpService: HttpService) {
   }
 
-  public getStacks(boardId: number): Observable<Array<Stack>> {
+  public getStacks(boardId: number): Promise<Stack[]> {
 
     if (boardId === null || boardId === undefined) {
       throw new Error('Required parameter boardId was null or undefined when calling getStacks.')
     }
 
-    const promiseObservable = from(this.authService.getAccount())
-    return promiseObservable.pipe(
-        switchMap((account) => {
-          return this.httpClient.get<Array<Stack>>(`${account.url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks`,
-            this.serviceHelper.getHttpOptions(account)
-          );
-        })
-      )
+    return this.httpService.get<Stack[]>(`index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks`)
   }
 }

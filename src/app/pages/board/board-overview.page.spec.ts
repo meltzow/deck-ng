@@ -27,8 +27,7 @@ describe('BoardOverviewPage', () => {
       ],
     }).compileComponents();
 
-    // boardServiceSpy.getBoards.and.returnValue(Promise.resolve([{title: 'foobar'}]))
-    boardServiceSpy.getBoards.and.returnValue(of([{title: 'foobar'}]))
+    boardServiceSpy.getBoards.and.returnValue(Promise.resolve([{title: 'foobar'}]))
 
     fixture = TestBed.createComponent(BoardOverviewPage);
     component = fixture.componentInstance;
@@ -40,6 +39,10 @@ describe('BoardOverviewPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('compute issueCount', ()=> {
+
+  })
 
   // describe('test', ()=> {
   //   it('should display list of boards', () => {

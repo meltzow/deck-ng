@@ -41,30 +41,23 @@ export class BoardDetailsPage implements OnInit {
     this.boardId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
-  private getBoard(id: string) {
+  private async getBoard(id: string) {
     this.isLoading = true
-    this.boardService.getBoard(parseInt(id, 10)).then(
-      board => {
-        this.board.next(board)
+    const board = await this.boardService.getBoard(parseInt(id, 10))
 
-        firstValueFrom(this.stackService.getStacks(parseInt(id, 10))).then(stacks => {
-          const cards = new Array<Card>()
-          stacks.forEach(stackItem => {
-            stackItem.cards?.forEach(card => {
-              cards.push(card)
-            })
-          })
-          this.stacks.next(stacks)
-          this.selectedStack = stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): -1
-          this.cards.next(cards)
-          this.searchedCards = cards
-          this.isLoading = false
-        })
-      },
-      error => {
-        this.notificationService.error(error)
-        console.log(error)
+    this.board.next(board)
+    const stacks = await this.stackService.getStacks(parseInt(id, 10))
+    const cards = new Array<Card>()
+    stacks.forEach(stackItem => {
+      stackItem.cards?.forEach(card => {
+        cards.push(card)
       })
+    })
+    this.stacks.next(stacks)
+    this.selectedStack = stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): -1
+    this.cards.next(cards)
+    this.searchedCards = cards
+    this.isLoading = false
   }
 
   async promptTitle() {

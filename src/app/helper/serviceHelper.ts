@@ -3,6 +3,9 @@ import { HttpContext, HttpHeaders, HttpParams } from "@angular/common/http";
 import { CustomHttpParameterCodec } from "@app/encoder";
 import { Account } from "@app/model";
 
+/**
+ * @deprecated
+ */
 @Injectable({providedIn: 'root'})
 export class ServiceHelper {
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService, OverviewService } from "@app/services";
 import { BoardService } from "@app/services";
-import { NotificationService } from "@app/services/notification.service";
 import { Board, UpcomingResponse } from "@app/model";
 import { CardsService } from "@app/services/cards.service";
 
@@ -19,20 +18,17 @@ export class BoardOverviewPage implements OnInit {
 
   constructor(
     private boardService: BoardService,
-    public notification: NotificationService,
     private authService: AuthenticationService,
     private overviewService: OverviewService
   ) {
   }
 
   async ionViewWillEnter() {
-    this.getUpcoming()
-    await this.getBoards();
-
+    await this.getBoards()
+    await this.getUpcoming()
   }
   async ngOnInit() {
     await this.authService.ngOnInit()
-
   }
 
   async getBoards() {
@@ -46,12 +42,12 @@ export class BoardOverviewPage implements OnInit {
     this.isLoading.next(true)
     const b = await this.overviewService.upcoming()
     this.upcomings.next(b)
-    console.log("upcommings: ", b)
     this.isLoading.next(false)
   }
 
   doRefresh(event) {
     this.getBoards()
+    this.getUpcoming()
     event.target.complete();
   }
 

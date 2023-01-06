@@ -13,7 +13,6 @@ export class BoardPreviewComponent implements OnInit {
   @Input() board: Board;
   stacks = new BehaviorSubject<Stack[]>(null)
   stacksLoading = true;
-
   constructor(private stackService: StackService) { }
 
   ngOnInit(): void {
@@ -22,10 +21,16 @@ export class BoardPreviewComponent implements OnInit {
 
   getStacks() {
     if (!this.board) return
-    return firstValueFrom(this.stackService.getStacks(this.board.id)).then(value => {
-      this.stacks.next(value);
-    }).finally(() =>
-      this.stacksLoading = false
-    );
+      this.stackService.getStacks(this.board.id).then(value => {
+        this.stacks.next(value);
+      }).finally(() =>
+        this.stacksLoading = false
+      );
+  }
+
+  async getCardCount(boardId: number): Promise<number> {
+    let sum = 0
+    await this.stacks.value.filter(stack => stack.boardId == boardId).forEach(stack => sum += stack.cards.length)
+    return sum
   }
 }

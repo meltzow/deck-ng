@@ -9,27 +9,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true">
+<ion-content fullscreen="true" class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-fab horizontal="end" vertical="top" slot="fixed" edge >
-    <ion-fab-button >
+    <ion-fab-button disabled="true">
       <ion-icon name="add" ></ion-icon>
     </ion-fab-button>
-<!--    <ion-fab-list>-->
-<!--      <ion-fab-button color="light">-->
-<!--        <ion-icon name="logo-facebook"></ion-icon>-->
-<!--      </ion-fab-button>-->
-<!--      <ion-fab-button color="light">-->
-<!--        <ion-icon name="logo-twitter"></ion-icon>-->
-<!--      </ion-fab-button>-->
-<!--      <ion-fab-button color="light">-->
-<!--        <ion-icon name="logo-vimeo"></ion-icon>-->
-<!--      </ion-fab-button>-->
-<!--    </ion-fab-list>-->
   </ion-fab>
-
+  <h1>Boards</h1>
   <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let board of boards | async">
@@ -37,11 +26,17 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
+  <h1>Upcomings</h1>
   <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let upcoming of (upcomings | async)?.ocs?.data">
-        <ion-label>{{upcoming.title}}</ion-label>
+        <ion-card *ngIf="upcoming">
+          <ion-item detail="true" routerLink="/boards/{{upcoming.id}}">
+            <ion-label>
+              <h2>{{upcoming.title}}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

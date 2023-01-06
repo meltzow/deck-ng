@@ -43,7 +43,7 @@ describe('BoardDetailsPage', () => {
       ],
     }).compileComponents();
     boardServiceSpy.getBoard.and.returnValue(Promise.resolve({title: 'foobar', id: 1}))
-    stackServiceSpy.getStacks.and.returnValue(of([{title: 'first', id: 2},{title: 'second', id: 1} ]))
+    stackServiceSpy.getStacks.and.returnValue(Promise.resolve([{title: 'first', id: 2},{title: 'second', id: 1} ]))
 
     fixture = TestBed.createComponent(BoardDetailsPage);
     component = fixture.componentInstance;
