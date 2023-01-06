@@ -11,7 +11,6 @@ import { Board } from "@app/model";
 import { NotificationService } from "@app/services/notification.service";
 import packagejson from '../../package.json'
 
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -31,7 +30,7 @@ export class AppComponent implements OnInit {
     private location: Location,
     public alertCtrl: AlertController,
     private boardService: BoardService,
-    @Optional() private routerOutlet?: IonRouterOutlet,
+    @Optional() private routerOutlet?: IonRouterOutlet
   ) {
     translate.addLangs(['de', 'en']);
     translate.setDefaultLang('en');
