@@ -30,13 +30,19 @@ describe('BoardPreviewComponent', () => {
   });
 
   it('should create', () => {
-    component.board =  {id: 1}
+    component.board =  {id: 1, title: "foo"}
     expect(component).toBeTruthy();
   });
 
   it ('compute the sum of all cards in a board', async () => {
-    component.stacks.next([{title: 'todo', boardId: 1, cards: [new Card(),new Card()]}, {title: 'inprogress', boardId: 1, cards: [new Card()]}])
-    const sum = await component.getCardCount(1)
+    component.stacks.next([
+      {title: 'todo', boardId: 1, cards: [new Card(),new Card()]},
+      {title: 'inprogress', boardId: 1, cards: [new Card()]},
+      {title: 'no Cards', boardId: 1},
+      {title: 'wrong boardId', boardId: 2, cards : [new Card()]},
+    ])
+    component.board = new Board(1)
+    const sum = await component.getCardCount()
     expect(sum).toEqual(3)
 
   })

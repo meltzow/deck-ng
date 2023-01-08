@@ -5,6 +5,6 @@
         <h2>{{board.title}}</h2>
       </ion-label>
       <ion-spinner *ngIf="stacksLoading" name="lines"></ion-spinner>
-      <ion-badge *ngIf="!stacksLoading" slot="end">{{getCardCount(board.id)}}</ion-badge>
+      <ion-badge *ngIf="!stacksLoading" slot="end">{{cardCount.value}}</ion-badge>
   </ion-item>
 </ion-card>

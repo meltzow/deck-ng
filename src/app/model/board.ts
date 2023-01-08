@@ -15,8 +15,11 @@ import { BoardOwner } from './boardOwner';
 import { BoardSettings } from './boardSettings';
 
 
-export interface Board {
-    title?: string;
+export class Board {
+
+    constructor(public id?: number) {
+    }
+    title: string;
     owner?: BoardOwner;
     color?: string;
     archived?: boolean;
@@ -26,7 +29,6 @@ export interface Board {
     users?: Array<number>;
     shared?: number;
     deletedAt?: number;
-    id?: number;
     lastModified?: number;
     settings?: BoardSettings;
 }

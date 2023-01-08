@@ -7,6 +7,7 @@ import { AuthenticationService } from "@app/services/authentication.service";
 import { Platform } from "@ionic/angular";
 import { CapacitorHttp } from "@capacitor/core";
 import { CustomHttpParameterCodec } from "@app/encoder";
+import { firstValueFrom } from "rxjs";
 
 
 @Injectable({
@@ -50,16 +51,23 @@ export class HttpService {
       )
     } else {
       //it must be on desktop
-      return new Promise((resolve, reject) =>
-        this.httpClient.get<T>(`${account.url}/${url}`,
-          this.getHttpOptions(account, url.startsWith('ocs'))
-        ).subscribe({
-          next: (value) => {
-            resolve(value)
-          },
-          error: error => reject(error)
-        })
-      )
+      // return new Promise((resolve, reject) => {
+          return firstValueFrom(this.httpClient.get<T>(`/${url}`,
+            this.getHttpOptions(account, url.startsWith('ocs'))
+          ))
+        // .subscribe({
+          //   next: (value) => {
+          //     sub.unsubscribe()
+          //     resolve(value)
+          //   },
+          //   error: error => {
+          //     sub.unsubscribe()
+          //     reject(error)
+          //   },
+          //   complete: () => sub.unsubscribe()
+          // })
+        // }
+      // )
     }
 
   }

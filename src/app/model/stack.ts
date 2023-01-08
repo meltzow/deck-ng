@@ -12,7 +12,7 @@
 import { Card } from './card';
 
 
-export interface Stack {
+export class Stack {
     title: string;
     boardId?: number;
     deletedAt?: string;

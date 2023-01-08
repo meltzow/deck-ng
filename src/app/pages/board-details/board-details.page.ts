@@ -44,9 +44,8 @@ export class BoardDetailsPage implements OnInit {
   private async getBoard(id: string) {
     this.isLoading = true
     const board = await this.boardService.getBoard(parseInt(id, 10))
-
     this.board.next(board)
-    const stacks = await this.stackService.getStacks(parseInt(id, 10))
+    const stacks = await this.stackService.getStacks(parseInt(id, 10)).finally(() => this.isLoading = false)
     const cards = new Array<Card>()
     stacks.forEach(stackItem => {
       stackItem.cards?.forEach(card => {
@@ -57,13 +56,12 @@ export class BoardDetailsPage implements OnInit {
     this.selectedStack = stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): -1
     this.cards.next(cards)
     this.searchedCards = cards
-    this.isLoading = false
   }
 
   async promptTitle() {
-    const header = await this.translateService.get('enter_title').toPromise()
-    const cancel = await this.translateService.get('cancel').toPromise()
-    const titlePlaceholder = await this.translateService.get('title_placeholder').toPromise()
+    const header = await firstValueFrom(this.translateService.get('enter_title'))
+    const cancel = await firstValueFrom(this.translateService.get('cancel'))
+    const titlePlaceholder = await firstValueFrom(this.translateService.get('title_placeholder'))
 
       const alert = await this.alertController.create({
         header: header,
