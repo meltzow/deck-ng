@@ -5,13 +5,17 @@ import { HttpClient } from "@angular/common/http";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
 import { Account} from "@app/model";
+import { HttpService } from "@app/services/http.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CardsService {
 
-  constructor(protected httpClient: HttpClient, private authService: AuthenticationService, private serviceHelper: ServiceHelper) {
+  constructor(protected httpClient: HttpClient,
+              private authService: AuthenticationService,
+              private serviceHelper: ServiceHelper,
+              private httpService: HttpService) {
   }
 
   public getCard(boardId: number, stackId: number, cardId: number): Promise<Card> {
@@ -25,11 +29,7 @@ export class CardsService {
       throw new Error('Required parameter cardId was null or undefined when calling updateCard.');
     }
 
-    return this.authService.getAccount().then((account) => {
-      return firstValueFrom(this.httpClient.get<Card>(`${account.url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks/${encodeURIComponent(String(stackId))}/cards/${encodeURIComponent(String(cardId))}`,
-        this.serviceHelper.getHttpOptions(account)
-      ))
-    })
+    return this.httpService.get(`index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks/${encodeURIComponent(String(stackId))}/cards/${encodeURIComponent(String(cardId))}`)
   }
 
   /**
@@ -54,12 +54,7 @@ export class CardsService {
       throw new Error('Required parameter card was null or undefined when calling updateCard.');
     }
 
-    return this.authService.getAccount().then((account) => {
-      return firstValueFrom(this.httpClient.put<Card>(`${account.url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`,
-        card,
-        this.serviceHelper.getHttpOptions(account)
-      ))
-    })
+    return this.httpService.put(`index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`, card)
   }
 
   public assignLabel2Card(boardId: number, stackId: number, cardId: number, labelId: number): Promise<Card> {

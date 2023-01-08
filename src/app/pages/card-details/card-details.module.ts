@@ -4,7 +4,6 @@ import { CardDetailsPage } from './card-details.page';
 import { IonicModule } from "@ionic/angular";
 import { CardDetailPageRoutingModule } from "@app/pages/card-details/card-details-page-routing.module";
 import { FormsModule } from "@angular/forms";
-import { AppModule } from "@app/app.module";
 import { SharedModule } from "@app/shared.module";
 
 
@@ -17,7 +16,6 @@ import { SharedModule } from "@app/shared.module";
     IonicModule,
     CardDetailPageRoutingModule,
     FormsModule,
-    AppModule,
     SharedModule,
   ],
 })

@@ -24,10 +24,44 @@ export class HttpService {
     return Promise.resolve(<T>[])
   }
 
+  public async put<T>(url: string, body: any): Promise<T> {
+    const account = await this.authService.getAccount()
+    if (!account || !account.isAuthenticated) {
+      return Promise.resolve(<T>{})
+    }
+    if (this.platform.is("mobile")) {
+      const options = {
+        url: `${account.url}/${url}`,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${account.authdata}`,
+          'OCS-APIRequest': 'true'
+        },
+        data: body
+      };
+      return new Promise((resolve, reject) =>
+        CapacitorHttp.put(options)
+          .then(value => {
+            resolve(value.data as T)
+          }).catch(reason => {
+          console.error(reason)
+          reject(reason)
+        })
+      )
+    } else {
+      return firstValueFrom(this.httpClient.put<T>(`/${url}`,
+        body,
+        this.getHttpOptions(account, url.startsWith('ocs'))
+      ))
+    }
+
+  }
+
   public async get<T>(url: string): Promise<T> {
     const account = await this.authService.getAccount()
     if (!account || !account.isAuthenticated) {
-        return Promise.resolve(<T> {})
+      return Promise.resolve(<T>{})
     }
 
     if (this.platform.is("mobile")) {
@@ -41,38 +75,23 @@ export class HttpService {
         },
       };
       return new Promise((resolve, reject) =>
-        (CapacitorHttp as any).get(options)
-         .then(value => {
-           resolve(value.data as T)
-         }).catch(reason => {
-           console.error(reason)
-           reject(reason)
-         })
+        CapacitorHttp.get(options)
+          .then(value => {
+            resolve(value.data as T)
+          }).catch(reason => {
+          console.error(reason)
+          reject(reason)
+        })
       )
     } else {
-      //it must be on desktop
-      // return new Promise((resolve, reject) => {
-          return firstValueFrom(this.httpClient.get<T>(`/${url}`,
-            this.getHttpOptions(account, url.startsWith('ocs'))
-          ))
-        // .subscribe({
-          //   next: (value) => {
-          //     sub.unsubscribe()
-          //     resolve(value)
-          //   },
-          //   error: error => {
-          //     sub.unsubscribe()
-          //     reject(error)
-          //   },
-          //   complete: () => sub.unsubscribe()
-          // })
-        // }
-      // )
+      return firstValueFrom(this.httpClient.get<T>(`/${url}`,
+        this.getHttpOptions(account, url.startsWith('ocs'))
+      ))
     }
 
   }
 
-  private getHttpOptions(account: Account, isOCSRequest = false ): {
+  private getHttpOptions(account: Account, isOCSRequest = false): {
     headers?: HttpHeaders | {
       [header: string]: string | string[];
     };
