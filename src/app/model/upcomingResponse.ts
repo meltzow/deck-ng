@@ -1,4 +1,5 @@
 import { Card } from "@app/model/card";
+import { Upcoming } from "@app/model/upcoming";
 
 export class UpcomingResponse {
   ocs : {
@@ -7,6 +8,6 @@ export class UpcomingResponse {
       "statuscode": number,
       "message": string
     },
-    data: Card[]
+    data: Upcoming[]
   }
 }

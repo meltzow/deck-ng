@@ -3,7 +3,6 @@ import { BehaviorSubject } from "rxjs";
 import { AuthenticationService, OverviewService } from "@app/services";
 import { BoardService } from "@app/services";
 import { Board, UpcomingResponse } from "@app/model";
-import { CardsService } from "@app/services/cards.service";
 
 @Component({
   selector: 'app-board-overview',

@@ -2,7 +2,6 @@ export * from './account';
 export * from './stack'
 export * from './attachement'
 export * from './board'
-export * from './boardOwner';
 export * from './boardPermissions';
 export * from './boardSettings';
 export * from './card';
@@ -10,3 +9,4 @@ export * from './createBoardRequest';
 export * from './label';
 export * from './stack';
 export * from './upcomingResponse'
+export * from './upcoming'
