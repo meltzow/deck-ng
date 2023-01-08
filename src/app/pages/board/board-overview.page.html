@@ -30,12 +30,13 @@
   <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let upcoming of (upcomings | async)?.ocs?.data">
-        <ion-card *ngIf="upcoming">
-          <ion-item detail="true" routerLink="/boards/{{upcoming.boardId}}/stacks/{{upcoming.stackId}}/cards/{{upcoming.id}}">
-            <ion-label>
-              <h2>{{upcoming.title}}</h2>
-            </ion-label>
-          </ion-item>
+        <ion-card *ngIf="upcoming" routerLink="/boards/{{upcoming.boardId}}/stacks/{{upcoming.stackId}}/cards/{{upcoming.id}}">
+          <ion-card-header >
+          <ion-card-title>
+            {{upcoming.title}}
+          </ion-card-title>
+            <ion-card-subtitle>{{upcoming.board.title}}</ion-card-subtitle>
+          </ion-card-header>
         </ion-card>
       </ion-col>
     </ion-row>
