@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CardComponent } from './card.component';
+import { CardDetailsPage } from './card-details.page';
 import { HttpClientTestingModule} from "@angular/common/http/testing";
 import { CardsService } from "@app/services/cards.service";
 import { ServiceHelper } from "@app/helper/serviceHelper";
@@ -9,8 +9,8 @@ import { Label } from "@app/model";
 import { AuthenticationService, BoardService } from "@app/services";
 
 describe('CardComponent', () => {
-  let component: CardComponent;
-  let fixture: ComponentFixture<CardComponent>;
+  let component: CardDetailsPage;
+  let fixture: ComponentFixture<CardDetailsPage>;
   let cardServiceSpy
   let boardServiceSpy
   let authServiceSpy
@@ -41,7 +41,7 @@ describe('CardComponent', () => {
           }
         }
       ],
-      declarations: [ CardComponent ]
+      declarations: [ CardDetailsPage ]
     })
     .compileComponents();
   });
@@ -51,7 +51,7 @@ describe('CardComponent', () => {
 
     cardServiceSpy.getCard.and.returnValue(Promise.resolve(card))
 
-    fixture = TestBed.createComponent(CardComponent);
+    fixture = TestBed.createComponent(CardDetailsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

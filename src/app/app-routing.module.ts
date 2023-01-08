@@ -16,16 +16,8 @@ const routes: Routes = [
   {
     path: 'boards/:boardId/stacks/:stackId/cards/:cardId',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/card/card.module').then( m => m.CardModule)
+    loadChildren: () => import('./pages/card-details/card-details.module').then(m => m.CardDetailsModule)
   },
-  // {
-  //   path: 'account',
-  //   loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
-  // },
-  // {
-  //   path: 'support',
-  //   loadChildren: () => import('./pages/support/support.module').then(m => m.SupportModule)
-  // },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)

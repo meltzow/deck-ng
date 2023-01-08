@@ -10,11 +10,11 @@ import { IonDatetime, IonDatetimeButton } from "@ionic/angular";
 
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  selector: 'app-card-details',
+  templateUrl: './card-details.page.html',
+  styleUrls: ['./card-details.page.css']
 })
-export class CardComponent implements OnInit {
+export class CardDetailsPage implements OnInit {
   private cardId: number
   card: Card
   boardId: number
@@ -47,19 +47,15 @@ export class CardComponent implements OnInit {
     this.doRefresh()
   }
 
-  doRefresh() {
+  async doRefresh() {
     this.isLoading = true
-    Promise.all([
-      this.cardService.getCard(this.boardId, this.stackId, this.cardId),
-      this.boardService.getBoard(this.boardId)]
-    ).then(([card, board]) => {
-      this.card = card
-      this.dueDate = card.duedate ? new Date(card.duedate).toISOString() : ""
-      this.plainText = card.description
-      this.content = card.description ? this.markDownService.render(card.description):'add description'
-      this.board = board
-      this.isLoading = false
-    })
+    const card = await this.cardService.getCard(this.boardId, this.stackId, this.cardId)
+    this.card = card
+    this.dueDate = card.duedate ? new Date(card.duedate).toISOString() : ""
+    this.plainText = card.description
+    this.content = card.description ? this.markDownService.render(card.description):'add description'
+    this.board = card.relatedBoard
+    this.isLoading = false
   }
 
   convert(this) {
