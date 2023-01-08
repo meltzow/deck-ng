@@ -17,12 +17,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NotificationService } from "@app/services/notification.service";
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { SharedModule } from "@app/shared.module";
 registerLocaleData(localeDe);
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule,  HttpClientModule, HttpClientXsrfModule.disable(), FormsModule,
-    IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule,
+  imports: [BrowserModule, HttpClientModule, HttpClientXsrfModule.disable(), FormsModule,
+    IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule, SharedModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -32,9 +33,9 @@ registerLocaleData(localeDe);
     })
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: LOCALE_ID, useValue: navigator.language },
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: LOCALE_ID, useValue: navigator.language},
     MyRenderer,
     AuthGuard,
     NotificationService

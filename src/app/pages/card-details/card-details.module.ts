@@ -4,7 +4,8 @@ import { CardDetailsPage } from './card-details.page';
 import { IonicModule } from "@ionic/angular";
 import { CardDetailPageRoutingModule } from "@app/pages/card-details/card-details-page-routing.module";
 import { FormsModule } from "@angular/forms";
-import { BoardDetailsModule } from "@app/pages/board-details/board-details.module";
+import { AppModule } from "@app/app.module";
+import { SharedModule } from "@app/shared.module";
 
 
 @NgModule({
@@ -16,6 +17,8 @@ import { BoardDetailsModule } from "@app/pages/board-details/board-details.modul
     IonicModule,
     CardDetailPageRoutingModule,
     FormsModule,
+    AppModule,
+    SharedModule,
   ],
 })
 export class CardDetailsModule { }

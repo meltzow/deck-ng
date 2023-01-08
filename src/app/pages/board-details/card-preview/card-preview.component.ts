@@ -10,15 +10,11 @@ import { CardsService } from "@app/services/cards.service";
   styleUrls: ['./card-preview.component.css']
 })
 export class CardPreviewComponent {
-
   @Input() card: Card;
   @Input() board: Board
   @Input() selectedStack: number
-
   constructor(private cardService: CardsService) {
   }
-
-
   changeTitle($event: string) {
     this.card.title = $event
     this.cardService.updateCard(this.board.id, this.card.stackId, this.card.id, this.card).then(value => console.log(value),error => console.warn(error))

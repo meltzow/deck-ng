@@ -5,20 +5,20 @@ import { BoardDetailsPage } from './board-details.page';
 
 import { IonicModule } from '@ionic/angular';
 
-import { InlineEditComponent } from "@app/inline-edit/inline-edit.component";
 import { CardPreviewComponent } from './card-preview/card-preview.component';
 import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-details-routing.module";
+import { AppModule } from "@app/app.module";
+import { SharedModule } from "@app/shared.module";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        BoardDetailsPageRoutingModule
-    ],
-    exports: [
-        InlineEditComponent
-    ],
-    declarations: [BoardDetailsPage, InlineEditComponent, CardPreviewComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    BoardDetailsPageRoutingModule,
+    SharedModule,
+
+  ],
+    declarations: [BoardDetailsPage, CardPreviewComponent]
 })
 export class BoardDetailsModule {}
