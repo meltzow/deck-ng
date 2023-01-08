@@ -117,7 +117,7 @@ export class CardDetailsPage implements OnInit {
     if (!event) {
       this.dueDate = null
     }
-    this.datetime.confirm(true)
+    // this.datetime.confirm(true)
   }
 
   openStart() {

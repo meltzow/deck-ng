@@ -13,12 +13,13 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-fab horizontal="end" vertical="top" slot="fixed" edge >
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
     <ion-fab-button disabled="true">
-      <ion-icon name="add" ></ion-icon>
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <h1>Boards</h1>
+  <ion-list>
+<ion-list-header>Boards</ion-list-header>
   <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let board of boards | async">
@@ -26,21 +27,36 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <h1>Upcomings</h1>
+    <ion-list-header>upcoming</ion-list-header>
   <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let upcoming of (upcomings | async)?.ocs?.data">
-        <ion-card *ngIf="upcoming" routerLink="/boards/{{upcoming.boardId}}/stacks/{{upcoming.stackId}}/cards/{{upcoming.id}}">
-          <ion-card-header >
-          <ion-card-title>
-            {{upcoming.title}}
-          </ion-card-title>
+      <ion-col size="6" size-md="4" *ngFor="let upcoming of (upcomings | async)?.ocs?.data">
+        <ion-card *ngIf="upcoming"
+                  routerLink="/boards/{{upcoming.boardId}}/stacks/{{upcoming.stackId}}/cards/{{upcoming.id}}">
+          <ion-card-header>
+            <ion-card-title>
+              {{upcoming.title}}
+            </ion-card-title>
             <ion-card-subtitle>{{upcoming.board.title}}</ion-card-subtitle>
+
           </ion-card-header>
+          <ion-card-content>
+            <ion-list lines="none">
+              <ion-item *ngIf="upcoming.duedate">
+                <ion-icon slot="start" name="alarm-outline"></ion-icon>
+                <ion-label>{{upcoming.duedate | date: 'short'}}</ion-label>
+              </ion-item>
+              <ion-item *ngIf="upcoming.assignedUsers.length > 0">
+                <ion-icon slot="start" name="people-outline"></ion-icon>
+                <ion-label>{{assigneeName(upcoming)}}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+  </ion-list>
   <ion-list *ngIf="(isLoading | async)">
     <ion-list-header>
       <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>

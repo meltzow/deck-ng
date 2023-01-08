@@ -27,16 +27,28 @@
         </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <ion-list>
+<!--      <ion-grid >-->
+<!--        <ion-row>-->
+<!--          <ion-col size="4">-->
+<!--            <ion-item id="open-popover2">-->
+<!--              <ion-icon name="alarm-outline" slot="start"></ion-icon>-->
+<!--              <ion-label *ngIf="dueDate">{{dueDate | date: 'short'}}</ion-label>-->
+<!--              <ion-label *ngIf="!dueDate">add due date</ion-label>-->
+<!--            </ion-item>-->
+<!--          </ion-col>-->
+<!--        </ion-row>-->
+<!--      </ion-grid>-->
+          <ion-list>
         <ion-item id="open-popover2">
           <ion-icon name="alarm-outline" slot="start"></ion-icon>
           <ion-label *ngIf="dueDate">{{dueDate | date: 'short'}}</ion-label>
           <ion-label *ngIf="!dueDate">add due date</ion-label>
         </ion-item>
 
+
         <ion-popover trigger="open-popover2">
           <ng-template>
-            <ion-datetime #datetime id="datetime" [(ngModel)]="dueDate" (ionChange)="ionChange(this.dueDate)" show-clear-button="true" >
+            <ion-datetime #datetime id="datetime" [(ngModel)]="dueDate" (ionChange)="ionChange(this.dueDate)" show-clear-button="true" showDefaultButtons="true">
             </ion-datetime>
           </ng-template>
         </ion-popover>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
-import { UpcomingResponse } from '@app/model';
+import { Upcoming, UpcomingResponse } from '@app/model';
 
 import { AuthenticationService } from "@app/services/authentication.service";
 import { ServiceHelper } from "@app/helper/serviceHelper"
@@ -29,6 +29,10 @@ export class OverviewService {
 
   public get currentUpcomings(): BehaviorSubject<UpcomingResponse> {
     return this.currentUpcomingsSubj
+  }
+
+  public getAssigneesNames(upcoming: Upcoming): string[] {
+    return upcoming.assignedUsers?.map(value => value.participant.displayname)
   }
 
 }

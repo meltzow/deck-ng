@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService, OverviewService } from "@app/services";
 import { BoardService } from "@app/services";
-import { Board, UpcomingResponse } from "@app/model";
+import { Board, Upcoming, UpcomingResponse } from "@app/model";
 
 @Component({
   selector: 'app-board-overview',
@@ -50,4 +50,7 @@ export class BoardOverviewPage implements OnInit {
     event.target.complete();
   }
 
+  assigneeName(upcoming: Upcoming) {
+    return this.overviewService.getAssigneesNames(upcoming)
+  }
 }
