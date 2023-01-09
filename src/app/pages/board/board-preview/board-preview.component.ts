@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Board } from "@app/model/board";
 import { StackService } from "@app/services";
 import { Stack } from "@app/model";
-import { BehaviorSubject, firstValueFrom } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   selector: 'app-board-preview',
@@ -22,9 +22,6 @@ export class BoardPreviewComponent implements OnInit {
     this.getStacks()
   }
 
-  ionViewDidLeave() {
-
-  }
 
   async getStacks() {
     if (!this.board) return

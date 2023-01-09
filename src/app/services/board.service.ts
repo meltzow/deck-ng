@@ -62,7 +62,9 @@ export class BoardService {
    *
    */
   public async getBoards(): Promise<Board[]> {
-    return this.httpService.get<Board[]>('index.php/apps/deck/api/v1/boards')
+    const boards = await this.httpService.get<Board[]>('index.php/apps/deck/api/v1/boards')
+    this.currentBoardsSubj.next(boards)
+    return boards
   }
 
   public get currentBoards(): BehaviorSubject<Board[]> {

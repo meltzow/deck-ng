@@ -12,6 +12,19 @@
   "enter_title": "gib einen Titel ein",
   "cancel": "Abbrechen",
   "title_placeholder": "Was ist zu tun?",
-  "other": "Sonstiges"
-
+  "other": "Sonstiges",
+  "clear": "löschen",
+  "done": "ok",
+  "time": "Uhrzeit",
+  "add due date": "Fälligkeitsdatum hinzufügen",
+  "upcoming": "Anstehend",
+  "successfully logged in": "erfolgreich eingeloggt",
+  "login not successful": "login nicht erfolgreich",
+  "card successfully updated": "Karte erfolgreich aktualisiert",
+  "successfully logged out": "erfolgreich ausgeloggt",
+  "card successfully created": "Karte erfolgreich angelegt",
+  "server url not found": "Server Adresse nicht gefunden",
+  "check username and password" : "bitte überprüfe Benutzername und Passwort",
+  "Request not successful": "Anfrage nicht erfolgreich",
+  "barcode must contain url, user and password": "Barcode muss URL, Benutzer und Passwort beinhalten"
 }

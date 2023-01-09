@@ -7,6 +7,7 @@ import { BoardService } from "@app/services";
 import { MarkdownService } from "@app/services/markdown.service";
 import { SafeHtml } from "@angular/platform-browser";
 import { IonDatetimeButton } from "@ionic/angular";
+import { NotificationService } from "@app/services/notification.service";
 
 
 @Component({
@@ -34,7 +35,8 @@ export class CardDetailsPage implements OnInit {
   constructor(private cardService: CardsService,
               private boardService: BoardService,
               private activatedRoute: ActivatedRoute,
-              private markDownService: MarkdownService) {
+              private markDownService: MarkdownService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -79,6 +81,7 @@ export class CardDetailsPage implements OnInit {
   async updateCard() {
     this.isLoading = true
     this.card = await this.cardService.updateCard(this.boardId, this.card.stackId, this.card.id, this.card).finally(() => this.isLoading = false)
+    this.notificationService.msg("card successfully updated")
   }
 
   handleLabelChange($event: any) {

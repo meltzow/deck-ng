@@ -94,7 +94,7 @@ export class BoardDetailsPage implements OnInit {
     this.isLoading = true
     this.cardService.createCard(this.boardId, this.selectedStack, c)
       .then(value => {
-        this.notificationService.msg('card created')
+        this.notificationService.msg('card successfully created')
         this.getBoard(this.boardId)
       })
       .catch(reason => this.notificationService.error(reason))
