@@ -19,7 +19,7 @@
     </ion-fab-button>
   </ion-fab>
   <ion-list>
-<ion-list-header>Boards</ion-list-header>
+<ion-list-header translate="">boards</ion-list-header>
   <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
       <ion-col size="12" size-md="6" *ngFor="let board of boards | async">
@@ -27,7 +27,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-    <ion-list-header>upcoming</ion-list-header>
+    <ion-list-header translate="">upcoming</ion-list-header>
   <ion-grid fixed *ngIf="!(isLoading | async)">
     <ion-row>
       <ion-col size="6" size-md="4" *ngFor="let upcoming of (upcomings | async)?.ocs?.data">

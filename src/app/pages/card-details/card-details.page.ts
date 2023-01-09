@@ -6,7 +6,7 @@ import { Board, Label } from "@app/model";
 import { BoardService } from "@app/services";
 import { MarkdownService } from "@app/services/markdown.service";
 import { SafeHtml } from "@angular/platform-browser";
-import { IonDatetime, IonDatetimeButton } from "@ionic/angular";
+import { IonDatetimeButton } from "@ionic/angular";
 
 
 @Component({
@@ -76,10 +76,9 @@ export class CardDetailsPage implements OnInit {
     this.updateCard()
   }
 
-  updateCard() {
+  async updateCard() {
     this.isLoading = true
-    this.cardService.updateCard(this.boardId, this.card.stackId, this.card.id, this.card)
-      .then(value => console.log(value), error => console.warn(error)).finally(() => this.isLoading = false)
+    this.card = await this.cardService.updateCard(this.boardId, this.card.stackId, this.card.id, this.card).finally(() => this.isLoading = false)
   }
 
   handleLabelChange($event: any) {
@@ -112,12 +111,18 @@ export class CardDetailsPage implements OnInit {
     this.textareaDescription.setFocus()
   }
 
+  getFirstDayOfWeek(): number {
+    return (new Intl.Locale(navigator.language) as any).weekInfo.firstDay
+  }
 
   ionChange(event: any) {
     if (!event) {
       this.dueDate = null
     }
-    // this.datetime.confirm(true)
+    if (this.dueDate != this.card.duedate) {
+      this.card.duedate = this.dueDate
+      this.updateCard()
+    }
   }
 
   openStart() {
