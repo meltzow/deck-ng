@@ -29,8 +29,6 @@ export class CardDetailsPage implements OnInit {
 
   @ViewChild("textareaDescription") textareaDescription;
   @ViewChild("datetime") datetime;
-  @ViewChild("datetimeButton") datetimeButton: IonDatetimeButton;
-  dueDate: string;
   isPopoverOpen: boolean;
   constructor(private cardService: CardsService,
               private boardService: BoardService,
@@ -53,7 +51,6 @@ export class CardDetailsPage implements OnInit {
     this.isLoading = true
     const card = await this.cardService.getCard(this.boardId, this.stackId, this.cardId)
     this.card = card
-    this.dueDate = card.duedate ? new Date(card.duedate).toISOString() : ""
     this.plainText = card.description
     this.content = card.description ? this.markDownService.render(card.description):'add description'
     this.board = card.relatedBoard
@@ -118,17 +115,19 @@ export class CardDetailsPage implements OnInit {
     return (new Intl.Locale(navigator.language) as any).weekInfo.firstDay
   }
 
-  ionChange(event: any) {
-    if (!event) {
-      this.dueDate = null
-    }
-    if (this.dueDate != this.card.duedate) {
-      this.card.duedate = this.dueDate
-      this.updateCard()
-    }
+  dueDateResetBtnClick() {
+    this.card.duedate = null
+    this.datetime.cancel(true)
+    this.updateCard()
   }
 
-  openStart() {
-    this.datetime.open()
+  dueDateCancelBtnClick() {
+    this.datetime.cancel(true)
+  }
+
+
+  dueDateDoneBtnClick() {
+    this.datetime.confirm(true)
+    this.updateCard()
   }
 }

@@ -41,19 +41,19 @@
           <ion-list>
         <ion-item id="duedate-popover">
           <ion-icon name="alarm-outline" slot="start"></ion-icon>
-          <ion-label *ngIf="dueDate">{{dueDate | date: 'short'}}</ion-label>
-          <ion-label *ngIf="!dueDate" translate="">add due date</ion-label>
+          <ion-label *ngIf="card.duedate">{{card.duedate | date: 'short'}}</ion-label>
+          <ion-label *ngIf="!card.duedate" translate="">add due date</ion-label>
         </ion-item>
 
         <ion-popover trigger="duedate-popover" [keepContentsMounted]="true" size="auto">
           <ng-template>
-            <ion-datetime #datetime id="datetime" [(ngModel)]="dueDate" (ionChange)="ionChange(this.dueDate)" show-clear-button="true"
+            <ion-datetime #datetime id="datetime" [(ngModel)]="card.duedate" show-clear-button="true"
                           showDefaultButtons="true" [firstDayOfWeek]="getFirstDayOfWeek()" max="2025-12-31T23:59:59">
               <span slot="time-label" translate="">time</span>
               <ion-buttons slot="buttons">
-                <ion-button color="danger" (click)="datetime.reset()" translate="">clear</ion-button>
-                <ion-button color="primary" (click)="datetime.cancel(true)" translate="">cancel</ion-button>
-                <ion-button color="primary" (click)="datetime.confirm(true)" translate="">done</ion-button>
+                <ion-button color="danger" (click)="dueDateResetBtnClick()" translate="">clear</ion-button>
+                <ion-button color="primary" (click)="dueDateCancelBtnClick()" translate="">cancel</ion-button>
+                <ion-button color="primary" (click)="dueDateDoneBtnClick()" translate="">done</ion-button>
               </ion-buttons>
             </ion-datetime>
           </ng-template>
