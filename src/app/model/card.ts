@@ -28,7 +28,7 @@ export class Card {
     commentsCount?: number;
     id?: number;
     overdue?: number;
-    ETag: string
+    ETag?: string
     notified?: boolean
     relatedBoard?: Board
     relatedStack?: Stack

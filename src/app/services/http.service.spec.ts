@@ -44,7 +44,7 @@ describe('HttpService', () => {
 
     //workaround: see https://github.com/angular/angular/issues/25965
     setTimeout(() => {
-      const req = httpMock.expectOne('https://foo.bar' + '/foo.html');
+      const req = httpMock.expectOne('/foo.html');
       expect(req.request.method).toEqual("GET")
       expect(req.request.headers.get('Authorization')).toEqual('Basic foobar')
       //this header is not allowed by server see response header Access-Control-Allow-Headers

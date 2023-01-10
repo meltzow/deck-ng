@@ -5,7 +5,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AuthenticationService } from "@app/services";
 import { CardsService } from "@app/services/cards.service";
 
-describe('TaskPreviewComponent', () => {
+describe('CardPreviewComponent', () => {
   let component: CardPreviewComponent;
   let fixture: ComponentFixture<CardPreviewComponent>;
   let cardServiceSpy

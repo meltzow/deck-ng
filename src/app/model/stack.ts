@@ -19,6 +19,6 @@ export class Stack {
     cards?: Array<Card>;
     order?: number;
     id?: number;
-    lastModified: number
+    lastModified?: number
 }
 

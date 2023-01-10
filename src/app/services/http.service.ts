@@ -8,6 +8,7 @@ import { Platform } from "@ionic/angular";
 import { CapacitorHttp } from "@capacitor/core";
 import { CustomHttpParameterCodec } from "@app/encoder";
 import { firstValueFrom } from "rxjs";
+import { CapacitorHttpPlugin } from "@capacitor/core/types/core-plugins";
 
 
 @Injectable({
@@ -41,7 +42,7 @@ export class HttpService {
         data: body
       };
       return new Promise((resolve, reject) =>
-        CapacitorHttp.put(options)
+        (CapacitorHttp as CapacitorHttpPlugin).put(options)
           .then(value => {
             resolve(value.data as T)
           }).catch(reason => {
@@ -75,7 +76,7 @@ export class HttpService {
         },
       };
       return new Promise((resolve, reject) =>
-        CapacitorHttp.get(options)
+        (CapacitorHttp as CapacitorHttpPlugin).get(options)
           .then(value => {
             resolve(value.data as T)
           }).catch(reason => {

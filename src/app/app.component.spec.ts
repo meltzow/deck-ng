@@ -20,12 +20,12 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [IonicModule.forRoot(), RouterModule.forRoot([]), IonicStorageModule.forRoot(),HttpClientModule, TranslateModule.forRoot({ // <--- add this
-        loader: { // <--- add this
-          provide: TranslateLoader, // <--- add this
-          useFactory: (createTranslateLoader),  // <--- add this
-          deps: [HttpClient] // <--- add this
-        } // <--- add this
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([]), IonicStorageModule.forRoot(),HttpClientModule, TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [HttpClient]
+        }
       })],
       providers: [{ provide: AuthenticationService, useValue: boardServiceSpy }],
     }).compileComponents();
@@ -36,6 +36,5 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
-  // TODO: add more tests!
 
 });

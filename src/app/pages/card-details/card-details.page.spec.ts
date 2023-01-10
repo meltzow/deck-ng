@@ -7,8 +7,9 @@ import { ServiceHelper } from "@app/helper/serviceHelper";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 import { Label } from "@app/model";
 import { AuthenticationService, BoardService } from "@app/services";
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from "@ngx-translate/core";
 
-describe('CardComponent', () => {
+describe('CardDetailPage', () => {
   let component: CardDetailsPage;
   let fixture: ComponentFixture<CardDetailsPage>;
   let cardServiceSpy
@@ -22,7 +23,12 @@ describe('CardComponent', () => {
 
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useClass: TranslateFakeLoader
+        }
+      })],
       providers: [
         { provide: CardsService, useValue: cardServiceSpy },
         { provide: BoardService, useValue: boardServiceSpy },
