@@ -83,7 +83,7 @@ describe('Login', () => {
 
   it ('with auth not possible there must be a notification with error', async () => {
     authServiceSpy.isAuthObs.and.returnValue(of(false))
-    authServiceSpy.login.and.returnValue(Promise.resolve(false))
+    authServiceSpy.login.and.returnValue(Promise.reject(new Error("url not exists")))
 
     component = await fixture.componentInstance;
     await fixture.detectChanges();

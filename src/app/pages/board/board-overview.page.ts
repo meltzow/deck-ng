@@ -13,7 +13,7 @@ export class BoardOverviewPage implements OnInit {
   isLoading = new BehaviorSubject<boolean>(true);
 
   boards:BehaviorSubject<Board[]> = new BehaviorSubject<Board[]>(null)
-  upcomings: BehaviorSubject<Upcoming[]>
+  upcomings: BehaviorSubject<Upcoming[]> = new BehaviorSubject<Upcoming[]>(null)
 
   constructor(
     private boardService: BoardService,

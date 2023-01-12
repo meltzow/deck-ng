@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
 import { BehaviorSubject, firstValueFrom, interval, Observable, switchMap, take } from "rxjs";
-import { CapacitorHttp, HttpResponse } from "@capacitor/core";
+import { CapacitorHttp } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
 import { Platform } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";

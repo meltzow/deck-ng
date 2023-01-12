@@ -29,8 +29,7 @@ export class LoginPage implements OnInit {
     public authenticationService: AuthenticationService,
     public boardService: BoardService,
     public router: Router,
-    public notification: NotificationService,
-    private overviewService: OverviewService
+    public notification: NotificationService
   ) {
   }
 
