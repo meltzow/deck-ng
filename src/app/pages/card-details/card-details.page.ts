@@ -53,7 +53,7 @@ export class CardDetailsPage implements OnInit {
     this.card = card
     this.plainText = card.description
     this.content = card.description ? this.markDownService.render(card.description):'add description'
-    this.board = card.relatedBoard
+    this.board = await this.boardService.getBoard(this.boardId)
     this.isLoading = false
   }
 
@@ -62,7 +62,7 @@ export class CardDetailsPage implements OnInit {
       if (this.plainText && this.plainText != '') {
         const plainText = this.plainText
         this.markdownText = this.markdownService.parse(plainText.toString())
-        this.content = this.markdownText
+        this.content = this.markdownText?this.markdownText:'add description'
       } else {
         this.toggleVal = false
         this.content = 'add description'
@@ -71,8 +71,10 @@ export class CardDetailsPage implements OnInit {
   }
 
   changeTitle($event: string) {
-    this.card.title = $event
-    this.updateCard()
+    if ($event != this.card.title) {
+      this.card.title = $event
+      this.updateCard()
+    }
   }
 
   async updateCard() {

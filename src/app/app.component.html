@@ -49,7 +49,7 @@
         </ion-list-header>
 
         <ion-menu-toggle autoHide="false">
-          <ion-item routerLink="/login" routerLinkActive="active" routerDirection="root" detail="false" name="login" aria-labelledby="login">
+          <ion-item routerLink="/auth" routerLinkActive="active" routerDirection="root" detail="false" name="login" aria-labelledby="login">
             <ion-icon slot="start" name="log-in"></ion-icon>
             <ion-label translate="">
               login
@@ -68,14 +68,14 @@
         <!--          </ion-item>-->
       </ion-list>
 
-      <ion-list>
+      <ion-list lines="none">
         <ion-list-header color="primary">
           <ion-label translate="">other</ion-label>
         </ion-list-header>
 
         <ion-menu-toggle autoHide="false">
           <ion-item href="https://github.com/meltzow/deck-ng/issues">
-            <ion-icon slot="start" name="help"></ion-icon>
+            <ion-icon slot="start" name="logo-github"></ion-icon>
             <ion-label translate="">
               support
             </ion-label>
@@ -87,6 +87,18 @@
             <ion-icon slot="start" name="information-circle-outline"></ion-icon>
             <ion-label >
               v{{appVersion}}
+            </ion-label>
+          </ion-item>
+          <ion-item *ngIf="nextcloudVersion" href="https://nextcloud.com/changelog/">
+            <ion-icon slot="start" name="cloud-circle-outline"></ion-icon>
+            <ion-label >
+              {{nextcloudVersion | async }}
+            </ion-label>
+          </ion-item>
+          <ion-item *ngIf="deckVersion" href="https://apps.nextcloud.com/apps/deck">
+            <ion-icon slot="start" name="albums-outline"></ion-icon>
+            <ion-label >
+              {{deckVersion | async }}
             </ion-label>
           </ion-item>
         </ion-menu-toggle>

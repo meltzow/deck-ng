@@ -29,7 +29,7 @@ export class BarcodePage implements OnInit, OnDestroy {
   ngOnInit() {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.stopScan()
-      this.router.navigate(['login']);
+      this.router.navigate(['auth']);
     });
     if (!this.platform.is('desktop')) {
       this.onBarcode()
@@ -72,7 +72,7 @@ export class BarcodePage implements OnInit, OnDestroy {
       }
     } else {
         this.stopScan()
-      this.router.navigate(['login']);
+      this.router.navigate(['auth']);
     }
   }
 

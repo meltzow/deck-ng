@@ -13,7 +13,7 @@ import { HttpService } from "@app/services/http.service";
   providedIn: 'root'
 })
 export class BoardService {
-  currentBoardsSubj = new BehaviorSubject<Board[]>([])
+  currentBoardsSubj:BehaviorSubject<Board[]> = new BehaviorSubject<Board[]>([])
 
   constructor(protected httpClient: HttpClient,
               private authService: AuthenticationService,

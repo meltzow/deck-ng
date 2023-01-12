@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '@app/services/authentication.service';
-import { BoardService } from "@app/services";
+import { BoardService, OverviewService } from "@app/services";
 import { BehaviorSubject } from "rxjs";
 import { NotificationService } from "@app/services/notification.service";
 
@@ -29,7 +29,8 @@ export class LoginPage implements OnInit {
     public authenticationService: AuthenticationService,
     public boardService: BoardService,
     public router: Router,
-    public notification: NotificationService
+    public notification: NotificationService,
+    private overviewService: OverviewService
   ) {
   }
 
@@ -47,20 +48,19 @@ export class LoginPage implements OnInit {
     this.submitted = true;
 
     if (form.valid) {
+      this.isLoading.next(true)
       const succ = await this.authenticationService.login(this.login.url).catch(reason => {
           this.notification.error(reason.message, "login not successful")
-        })
+        }).finally(() => this.isLoading.next(false))
       if (succ) {
         this.notification.msg("successfully logged in")
         this.router.navigate(['home'])
-      } else {
-        this.notification.error("login not successful")
       }
     }
   }
 
   onBarcode() {
-    this.router.navigate(['login/barcode'])
+    this.router.navigate(['auth/barcode'])
   }
 
   showHidePassword() {

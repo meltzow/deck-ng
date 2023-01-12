@@ -19,7 +19,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/card-details/card-details.module').then(m => m.CardDetailsModule)
   },
   {
-    path: 'login',
+    path: 'auth',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
   {

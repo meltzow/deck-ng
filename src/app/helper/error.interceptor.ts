@@ -31,8 +31,8 @@ export class ErrorInterceptor implements HttpInterceptor {
         default:
           error = err.error.message || err.statusText;
           this.notification.error(error, "Request not successful")
+          return throwError(error);
       }
-      return throwError(error);
     })
     );
   }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService, OverviewService } from "@app/services";
 import { BoardService } from "@app/services";
-import { Board, Upcoming, UpcomingResponse } from "@app/model";
+import { Board, Upcoming } from "@app/model";
 
 @Component({
   selector: 'app-board-overview',
@@ -12,8 +12,8 @@ import { Board, Upcoming, UpcomingResponse } from "@app/model";
 export class BoardOverviewPage implements OnInit {
   isLoading = new BehaviorSubject<boolean>(true);
 
-  boards = new BehaviorSubject<Board[]>([])
-  upcomings = new BehaviorSubject<UpcomingResponse>(new UpcomingResponse());
+  boards:BehaviorSubject<Board[]> = new BehaviorSubject<Board[]>(null)
+  upcomings: BehaviorSubject<Upcoming[]>
 
   constructor(
     private boardService: BoardService,
@@ -25,9 +25,12 @@ export class BoardOverviewPage implements OnInit {
   async ionViewWillEnter() {
     await this.getBoards()
     await this.getUpcoming()
+    await this.overviewService.getCapabilities()
   }
   async ngOnInit() {
     await this.authService.ngOnInit()
+    this.boards.subscribe(this.boardService.currentBoardsSubj)
+    this.upcomings.subscribe(this.overviewService.currentUpcomingsSubj)
   }
 
   async getBoards() {
@@ -39,8 +42,7 @@ export class BoardOverviewPage implements OnInit {
 
   async getUpcoming() {
     this.isLoading.next(true)
-    const b = await this.overviewService.upcoming()
-    this.upcomings.next(b)
+    await this.overviewService.upcoming()
     this.isLoading.next(false)
   }
 
@@ -53,4 +55,5 @@ export class BoardOverviewPage implements OnInit {
   assigneeName(upcoming: Upcoming) {
     return this.overviewService.getAssigneesNames(upcoming)
   }
+
 }

@@ -7,31 +7,28 @@ import { Stack } from "@app/model/stack";
 
 
 export class Card {
-    title: string;
-    description?: string;
-    descriptionPrev?: string
-    stackId?: number;
-    type?: string;
-    lastModified?: number;
-    lastEditor?: string
-    createdAt?: number;
-    labels?: Array<Label>;
-    assignedUsers?: Array<Assignment>;
-    attachments?: Array<Attachement>;
-    attachmentCount?: number;
-    owner?: User;
-    order?: number;
-    archived?: boolean;
-    duedate?: string;
-    deletedAt?: number;
-    commentsUnread?: number;
-    commentsCount?: number;
-    id?: number;
-    overdue?: number;
-    ETag?: string
-    notified?: boolean
-    relatedBoard?: Board
-    relatedStack?: Stack
+
+  ETag?: string
+  archived?: boolean
+  assignedUsers?: Array<Assignment>
+  attachmentCount?: number
+  attachments?: Array<Attachement>
+  commentsCount?: number;
+  commentsUnread?: number;
+  createdAt?: number
+  deletedAt?: number
+  description?: string
+  duedate?: string
+  id?: number
+  labels?: Array<Label>
+  lastEditor?: string
+  lastModified?: number
+  order?: number
+  overdue?: number
+  owner?: User
+  stackId?: number
+  title: string
+  type?: string
 
 }
 

@@ -19,43 +19,41 @@
     </ion-fab-button>
   </ion-fab>
   <ion-list>
-<ion-list-header translate="">boards</ion-list-header>
-  <ion-grid fixed *ngIf="!(isLoading | async)">
-    <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let board of boards | async">
-        <app-board-preview [board]="board"></app-board-preview>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-    <ion-list-header translate="">upcoming</ion-list-header>
-  <ion-grid fixed *ngIf="!(isLoading | async)">
-    <ion-row>
-      <ion-col size="12" size-md="6" *ngFor="let upcoming of (upcomings | async)?.ocs?.data">
-        <ion-card *ngIf="upcoming"
-                  routerLink="/boards/{{upcoming.boardId}}/stacks/{{upcoming.stackId}}/cards/{{upcoming.id}}">
-          <ion-card-header>
-            <ion-card-title>
-              {{upcoming.title}}
-            </ion-card-title>
-            <ion-card-subtitle>{{upcoming.board.title}}</ion-card-subtitle>
-
-          </ion-card-header>
-          <ion-card-content>
-            <ion-list lines="none">
-              <ion-item *ngIf="upcoming.duedate">
-                <ion-icon slot="start" name="alarm-outline"></ion-icon>
-                <ion-label>{{upcoming.duedate | date: 'short'}}</ion-label>
-              </ion-item>
-              <ion-item *ngIf="upcoming.assignedUsers.length > 0">
-                <ion-icon slot="start" name="people-outline"></ion-icon>
-                <ion-label>{{assigneeName(upcoming)}}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-list-header translate="">boards</ion-list-header>
+    <ion-grid *ngIf="!(isLoading | async)">
+      <ion-row>
+        <ion-col size="12" size-md="6" *ngFor="let board of (boards | async)">
+          <app-board-preview [board]="board"></app-board-preview>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list-header translate="" *ngIf="(upcomings | async)">upcoming</ion-list-header>
+    <ion-grid *ngIf="!(isLoading | async) && (upcomings | async)">
+      <ion-row>
+        <ion-col size="12" size-md="6" *ngFor="let upcoming of (upcomings | async)">
+          <ion-card routerLink="/boards/{{upcoming.boardId}}/stacks/{{upcoming.stackId}}/cards/{{upcoming.id}}">
+            <ion-card-header>
+              <ion-card-title>
+                {{upcoming?.title}}
+              </ion-card-title>
+              <ion-card-subtitle *ngIf="upcoming.board">{{upcoming.board.title}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-list lines="none">
+                <ion-item *ngIf="upcoming.duedate">
+                  <ion-icon slot="start" name="alarm-outline"></ion-icon>
+                  <ion-label>{{upcoming.duedate | date: 'short'}}</ion-label>
+                </ion-item>
+                <ion-item *ngIf="upcoming.assignedUsers?.length > 0">
+                  <ion-icon slot="start" name="people-outline"></ion-icon>
+                  <ion-label>{{assigneeName(upcoming)}}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-list>
   <ion-list *ngIf="(isLoading | async)">
     <ion-list-header>

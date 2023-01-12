@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
 import { BehaviorSubject, firstValueFrom, interval, Observable, switchMap, take } from "rxjs";
-import { CapacitorHttp } from "@capacitor/core";
+import { CapacitorHttp, HttpResponse } from "@capacitor/core";
 import { Browser } from "@capacitor/browser";
 import { Platform } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
@@ -100,7 +100,12 @@ export class AuthenticationService implements OnInit {
         }
       })
     } else {
-      const resp1 = await firstValueFrom(this.httpClient.post<Login1>(url + '/index.php/login/v2',null))
+      //on desktop
+      let domainUrl = ""
+      if (url != "http://localhost:8080") {
+        domainUrl = url
+      }
+      const resp1 = await firstValueFrom(this.httpClient.post<Login1>('/index.php/login/v2',null))
         .catch(reason => {
           console.error(reason)
         })
@@ -108,25 +113,27 @@ export class AuthenticationService implements OnInit {
       return new Promise((resolve, reject) => {
         if (resp1) {
           const loginData = (resp1)
-          window.open(loginData.login, "_blank");
-          // Browser.open({url: loginData.login}).catch(reason => console.error(reason))
-
-          const obs = interval(2000)
+          window.open(loginData.login.replace('http://localhost:8100', url), "_blank");
+          const pollUrl = loginData.poll.endpoint.replace('http://localhost:8100','')
+          const observablePoll = interval(2000)
             .pipe(
               take(60),
-              switchMap(() => this.httpClient.post(loginData.poll.endpoint.replace('http://localhost:8080',''), {token: loginData.poll.token},{ observe: 'response' }))
+              switchMap(() => this.httpClient.post(pollUrl, {token: loginData.poll.token},{ observe: 'response' }))
             )
 
-          const timeInterval = obs.subscribe(async (resp2) => {
-            if (resp2.status == 200) {
+          const o = {
+            next : async (resp2) => {
+              if (resp2.status == 200) {
               const r2 = (resp2.body as Login2)
               timeInterval.unsubscribe()
               const succ: boolean = await this.saveCredentials(url, r2.loginName, r2.appPassword, true)
               resolve(succ)
-            }
-          }, error => {
-            reject(error)
-          }, () => resolve(false))
+            }},
+            error: (error) => reject(error),
+            complete: () => resolve(false)
+          }
+
+          const timeInterval = observablePoll.subscribe(o)
           Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
         } else {
           reject('Error while connecting ' + url)
@@ -156,7 +163,7 @@ export class AuthenticationService implements OnInit {
       }
       this._isAuthSubj.next(false)
 
-      this.router.navigate(['login'])
+      this.router.navigate(['auth'])
     })
   }
 

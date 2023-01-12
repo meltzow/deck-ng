@@ -3,7 +3,7 @@ import { AlertController, IonRouterOutlet, MenuController, Platform } from '@ion
 
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthenticationService, BoardService } from "@app/services";
+import { AuthenticationService, BoardService, OverviewService } from "@app/services";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
 import { BehaviorSubject, Observable} from "rxjs";
@@ -18,8 +18,12 @@ import packagejson from '../../package.json'
 })
 export class AppComponent implements OnInit {
   dark = false;
-  boardsSubj = new BehaviorSubject<Board[]>([])
+  boardsSubj: BehaviorSubject<Board[]>
   appVersion: string
+
+  nextcloudVersion: BehaviorSubject<string>
+  deckVersion: BehaviorSubject<string>
+
   constructor(
     private menu: MenuController,
     private platform: Platform,
@@ -30,6 +34,7 @@ export class AppComponent implements OnInit {
     private location: Location,
     public alertCtrl: AlertController,
     private boardService: BoardService,
+    private overviewService: OverviewService,
     @Optional() private routerOutlet?: IonRouterOutlet
   ) {
     translate.addLangs(['de', 'en']);
@@ -82,7 +87,9 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.appVersion = packagejson.version;
     await this.authService.ngOnInit();
-    this.boardService.currentBoardsSubj.subscribe(value => this.boardsSubj.next(value))
+    this.boardsSubj = this.boardService.currentBoardsSubj
+    this.nextcloudVersion = this.overviewService.nextCloudVersion
+    this.deckVersion = this.overviewService.deckVersion
     this.boardService.getBoards()
 
     setTimeout(() => {

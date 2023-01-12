@@ -1,6 +1,7 @@
 export interface User {
-    primaryKey: string;
-    uid: string;
-    displayname: string;
+    primaryKey: string
+    uid: string
+    displayname: string
+    type: number
 }
 

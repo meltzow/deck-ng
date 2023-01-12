@@ -8,6 +8,7 @@ import { NotificationService } from "@app/services/notification.service";
 import { CapacitorHttp } from "@capacitor/core";
 import { Account } from "@app/model";
 import { Browser } from "@capacitor/browser";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
@@ -23,7 +24,7 @@ describe('AuthenticationService', () => {
     noticationSpy = jasmine.createSpyObj('NotificationService',['msg'])
 
     TestBed.configureTestingModule({
-      imports:[IonicStorageModule.forRoot()],
+      imports:[IonicStorageModule.forRoot(), HttpClientTestingModule],
       providers: [
         { provide: Router, useValue: routerSpy },
         { provide: NotificationService, useValue: noticationSpy },
@@ -121,7 +122,7 @@ describe('AuthenticationService', () => {
     await service.ngOnInit()
     await service.logout()
 
-    // expect(routerSpy.navigate).toHaveBeenCalledWith(['login']);
+    // expect(routerSpy.navigate).toHaveBeenCalledWith(['auth']);
 
     await service.isAuthenticated()
       .then(value => expect(value).toBeFalse())
@@ -133,7 +134,7 @@ describe('AuthenticationService', () => {
     await service.logout()
     await service.saveCredentials("url", "username", "password")
 
-    // expect(routerSpy.navigate).toHaveBeenCalledWith(['login']);
+    // expect(routerSpy.navigate).toHaveBeenCalledWith(['auth']);
 
     await service.isAuthenticated()
       .then(value => expect(value).toBeFalse())
