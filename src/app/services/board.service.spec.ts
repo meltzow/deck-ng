@@ -16,7 +16,6 @@ describe('BoardService', () => {
   beforeEach(() => {
     httpServiceSpy = jasmine.createSpyObj('HttpService', ['get'])
     const authServiceSpy = jasmine.createSpyObj("AuthenticationService", ['getAccount'])
-    // httpSpy = jasmine.createSpyObj(HttpClient, ['get'])
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],

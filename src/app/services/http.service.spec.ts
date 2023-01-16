@@ -8,8 +8,8 @@ import { HttpClient } from "@angular/common/http";
 import { HttpService } from "@app/services/http.service";
 
 describe('HttpService', () => {
-  let service: HttpService;
-  let httpMock
+  let service: HttpService
+  let httpMock: HttpTestingController
   let authServiceSpy
 
   beforeEach(() => {
