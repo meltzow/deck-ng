@@ -1,1 +1,6 @@
+please enter the following url in the app:
+https://nextcloud.meltzow.net
 
+After clicking the login button, a browser window on the server will be opened.
+There you must log in (see credentials) and after that you must accept the access for the app.
+You have 2 minutes to follow to process successfully.

@@ -32,3 +32,5 @@ jobs:
           FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
           FASTLANE_APPLE_API_ISSUER_ID: ${{ secrets.FASTLANE_APPLE_API_ISSUER_ID }}
           FASTLANE_APPLE_API_KEY: ${{ secrets.FASTLANE_APPLE_API_KEY }}
+          DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
+          DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
