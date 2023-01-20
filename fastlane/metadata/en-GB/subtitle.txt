@@ -1,1 +1,1 @@
-nextcloud deck mobile client
+issue management on nextclouds deck at your mobile device

@@ -1,1 +1,2 @@
-nextcloud deck mobile client
+Aufgabenvewaltung in nextclouds deck auf deinem Smartphone oder Tablet
+

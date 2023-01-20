@@ -1,1 +1,3 @@
-nexcloud deck mobile client - the next generation
+Manage you issues on nextcloud deck at your iOS device.
+This app is still in the early stages of its life and currently only represents the MVP (minimum viable product). Please do not expect a complete range of functions.
+But help to make the app what you want and need with your feedback and wishes. Don't hesitate to offer constructive criticism. Since the app is available as open source, you are welcome to support the further development.
