@@ -64,12 +64,13 @@
     <ion-segment-button layout="icon-end" disabled="true"><ion-label><ion-icon name="add"></ion-icon></ion-label></ion-segment-button>
   </ion-segment>
 
-<!--  <ion-list *ngFor="let stack of (stacks | async)" lines="inset">-->
-    <ng-container *ngFor="let card of (this.cards | async) ">
-     <app-card-preview [card]="card" [selectedStack]="selectedStack"  [board]="board | async">
-     </app-card-preview>
-    </ng-container>
-<!--  </ion-list>-->
+  <swiper
+    [config]="config" #swiper (swiper)="onSwiper($event)" (slideChange)="onSlideChange($event)">
+      <ng-template swiperSlide *ngFor="let stack of (this.stacks | async) ">
+         <app-card-preview *ngFor="let card of stack.cards" [card]="card" [selectedStack]="selectedStack"  [board]="board | async">
+         </app-card-preview>
+      </ng-template>
+  </swiper>
 </ion-content>
 
 <ion-content *ngIf="isLoading">

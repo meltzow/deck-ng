@@ -1,7 +1,10 @@
-<ion-item *ngIf="card && selectedStack == card.stackId" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}" >
-<ion-label>
-  <h1><app-inline-edit [(ngModel)]="card.title" [required]="true" type="text" (onChanged)="changeTitle($event)"></app-inline-edit></h1>
-  <p>{{card.description | slice:0:100 }}</p>
-</ion-label>
-  <ion-icon *ngIf="card.duedate" name="alarm-outline" slot="end"></ion-icon>
-</ion-item>
+<ion-row class="ion-justify-content-start" *ngIf="card " cdkDrag>
+  <ion-col size="12">
+    <ion-label>
+      <h1>{{card.title}}
+      </h1>
+      <p>{{card.description | slice:0:100 }}</p>
+    </ion-label>
+    <ion-icon *ngIf="card.duedate" name="alarm-outline" slot="end"></ion-icon>
+  </ion-col>
+</ion-row>

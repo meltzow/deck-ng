@@ -4,12 +4,16 @@ import { Board } from "@app/model/board";
 import { BehaviorSubject, firstValueFrom } from "rxjs";
 import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
-import { AlertController, IonModal, ToastController } from "@ionic/angular";
-import { BoardService, OverviewService, StackService } from "@app/services";
+import { AlertController, IonicSlides, IonModal, IonSegment } from "@ionic/angular";
+import { BoardService, StackService } from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CardsService } from "@app/services/cards.service";
 import { NotificationService } from "@app/services/notification.service";
 import { TranslateService } from "@ngx-translate/core";
+import SwiperCore, {  Pagination, SwiperOptions, Swiper } from 'swiper';
+
+
+SwiperCore.use([Pagination, IonicSlides]);
 
 @Component({
   selector: 'app-view-board',
@@ -23,9 +27,15 @@ export class BoardDetailsPage implements OnInit {
   cards: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>(null)
   private searchedCards: Card[];
   private boardId;
-  @ViewChild(IonModal) modal: IonModal;
+  @ViewChild(IonModal) modal: IonModal
+  @ViewChild('swiper') slideWithNav: Swiper;
+  @ViewChild(IonSegment) segment: IonSegment
   isLoading = true;
   selectedStack: number
+  config: SwiperOptions = {
+    slidesPerView: 1,
+    pagination: true
+  };
 
   constructor(
     private boardService: BoardService,
@@ -129,9 +139,42 @@ export class BoardDetailsPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.selectedStack = ev.detail.value
+    this.slideTo(this.selectedStack)
   }
 
   stackIsSelected(): boolean {
     return this.selectedStack > -1
+  }
+
+  private slideTo(index) {
+    this.slideWithNav.slideTo(index);
+  }
+
+  private clickSegment(index) {
+    this.segment.value = index;
+  }
+
+  onSwiper(event) {
+    console.log(event);
+  }
+
+  async onSlideChange(ev: any) {
+    const index = this.slideWithNav.activeIndex;
+    this.clickSegment(index)
+  }
+
+  public slideDidChange() {
+    console.log('Slide did change');
+
+    if (!this.slideWithNav) return;
+
+    console.table({
+      isBeginning: this.slideWithNav.isBeginning,
+      isEnd: this.slideWithNav.isEnd
+    });
+  }
+
+  public slideWillChange() {
+    console.log('Slide will change');
   }
 }

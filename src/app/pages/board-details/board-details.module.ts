@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { CardPreviewComponent } from './card-preview/card-preview.component';
 import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-details-routing.module";
 import { SharedModule } from "@app/shared.module";
+import { SwiperModule } from "swiper/angular";
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { SharedModule } from "@app/shared.module";
     IonicModule,
     BoardDetailsPageRoutingModule,
     SharedModule,
+    SwiperModule,
   ],
     declarations: [BoardDetailsPage, CardPreviewComponent]
 })
