@@ -18,6 +18,7 @@ import { NotificationService } from "@app/services/notification.service";
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { SharedModule } from "@app/shared.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 registerLocaleData(localeDe);
 
 @NgModule({
@@ -30,7 +31,8 @@ registerLocaleData(localeDe);
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},

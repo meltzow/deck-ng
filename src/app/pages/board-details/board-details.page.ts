@@ -1,16 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board } from "@app/model/board";
-import { BehaviorSubject, firstValueFrom } from "rxjs";
+import { BehaviorSubject, firstValueFrom, Subscription, timeout } from "rxjs";
 import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
-import { AlertController, IonicSlides, IonModal, IonSegment } from "@ionic/angular";
+import { AlertController, IonContent, IonicSlides, IonModal, IonSegment } from "@ionic/angular";
 import { BoardService, StackService } from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CardsService } from "@app/services/cards.service";
 import { NotificationService } from "@app/services/notification.service";
 import { TranslateService } from "@ngx-translate/core";
 import SwiperCore, {  Pagination, SwiperOptions, Swiper } from 'swiper';
+import { CdkDragDrop, CdkDragMove, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/overlay";
+import { BabelAstHost } from "@angular/compiler-cli/linker/babel/src/ast/babel_ast_host";
 
 
 SwiperCore.use([Pagination, IonicSlides]);
@@ -27,15 +30,18 @@ export class BoardDetailsPage implements OnInit {
   cards: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>(null)
   private searchedCards: Card[];
   private boardId;
+  @ViewChild(IonContent) foobar;
   @ViewChild(IonModal) modal: IonModal
   @ViewChild('swiper') slideWithNav: Swiper;
   @ViewChild(IonSegment) segment: IonSegment
   isLoading = true;
   selectedStack: number
   config: SwiperOptions = {
-    slidesPerView: 1,
-    pagination: true
+    // slidesPerView: 1,
+    pagination: true,
+    noSwiping: true
   };
+  private alreadySwitched: boolean;
 
   constructor(
     private boardService: BoardService,
@@ -63,7 +69,7 @@ export class BoardDetailsPage implements OnInit {
       })
     })
     this.stacks.next(stacks)
-    this.selectedStack = stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): -1
+    this.selectedStack = (stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): -1)
     this.cards.next(cards)
     this.searchedCards = cards
   }
@@ -139,29 +145,29 @@ export class BoardDetailsPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.selectedStack = ev.detail.value
-    this.slideTo(this.selectedStack)
+    // this.slideTo(this.selectedStack)
   }
 
   stackIsSelected(): boolean {
     return this.selectedStack > -1
   }
 
-  private slideTo(index) {
-    this.slideWithNav.slideTo(index);
-  }
+  // private slideTo(index) {
+  //   this.slideWithNav.slideTo(index);
+  // }
 
-  private clickSegment(index) {
-    this.segment.value = index;
+  private switchSegment(stackId) {
+    this.segment.value = stackId
   }
 
   onSwiper(event) {
     console.log(event);
   }
 
-  async onSlideChange(ev: any) {
-    const index = this.slideWithNav.activeIndex;
-    this.clickSegment(index)
-  }
+  // async onSlideChange(ev: any) {
+  //   const index = this.slideWithNav.activeIndex;
+  //   this.clickSegment(index)
+  // }
 
   public slideDidChange() {
     console.log('Slide did change');
@@ -176,5 +182,41 @@ export class BoardDetailsPage implements OnInit {
 
   public slideWillChange() {
     console.log('Slide will change');
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
+
+  switchToSegmentAtRight(card: Card) {
+    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack)
+    const nextStack = this.stacks.value[idx + 1]
+    if (nextStack) {
+      card.stackId = nextStack.id
+      this.switchSegment(nextStack.id)
+    }
+  }
+
+  drag($event: CdkDragMove<Card>) {
+    const viewBoundaryRight = window.innerWidth
+    const pointerRight = $event.pointerPosition.x
+    const offset = 100
+    if (!this.alreadySwitched && pointerRight > (viewBoundaryRight - offset)) {
+      this.alreadySwitched = true
+      console.log(this.alreadySwitched)
+      this.switchToSegmentAtRight($event.source.data)
+    } else if (pointerRight < (viewBoundaryRight - offset)) {
+      this.alreadySwitched = false
+      console.log(this.alreadySwitched)
+    }
   }
 }

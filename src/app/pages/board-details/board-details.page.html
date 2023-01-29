@@ -43,6 +43,15 @@
       </ng-template>
     </ion-modal>
   </ion-toolbar>
+<!--  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true">-->
+<!--    <ion-segment-button *ngFor="let stack of (stacks | async)" value="{{stack.id}}">-->
+<!--      <ion-label>-->
+<!--        {{stack.title}}-->
+<!--      </ion-label>-->
+<!--    </ion-segment-button>-->
+<!--    <ion-segment-button layout="icon-end" disabled="true"><ion-label><ion-icon name="add"></ion-icon></ion-label></ion-segment-button>-->
+<!--  </ion-segment>-->
+
 </ion-header>
   <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
     <ion-fab-button (click)="promptTitle()" [disabled]="!stackIsSelected()" >
@@ -55,22 +64,34 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true">
-    <ion-segment-button *ngFor="let stack of (stacks | async)" value="{{stack.id}}">
-      <ion-label>
+  <div padding >
+    <ion-segment scrollable="true " [(ngModel)]="selectedStack" >
+      <ion-segment-button *ngFor="let stack of stacks | async" [value]="stack.id" (change)="segmentChanged($event)">
         {{stack.title}}
-      </ion-label>
-    </ion-segment-button>
-    <ion-segment-button layout="icon-end" disabled="true"><ion-label><ion-icon name="add"></ion-icon></ion-label></ion-segment-button>
-  </ion-segment>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div [ngSwitch]="selectedStack" cdkDropListGroup #foobar>
+    <div *ngFor="let card of (cards | async)">
+      <ion-list cdkDropList="true" *ngSwitchCase=card.stackId >
+        <ion-item cdkDrag [cdkDragData]="card" (cdkDragMoved)="drag($event)">
+          <h2>{{card.title}}</h2>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 
-  <swiper
-    [config]="config" #swiper (swiper)="onSwiper($event)" (slideChange)="onSlideChange($event)">
-      <ng-template swiperSlide *ngFor="let stack of (this.stacks | async) ">
-         <app-card-preview *ngFor="let card of stack.cards" [card]="card" [selectedStack]="selectedStack"  [board]="board | async">
-         </app-card-preview>
-      </ng-template>
-  </swiper>
+<!--  <swiper-->
+<!--    [config]="config" #swiper (swiper)="onSwiper($event)" (slideChange)="onSlideChange($event)">-->
+<!--      <ng-template swiperSlide  ">-->
+<!--  <div cdkDropListGroup >-->
+<!--        <div cdkDropList="true" class="example-list" (cdkDropListDropped)="drop($event)" [cdkDropListData]="stack.cards" *ngFor="let stack of (this.stacks | async)" size="100%">-->
+<!--         <app-card-preview *ngFor="let card of stack.cards" [card]="card" [selectedStack]="selectedStack"  [board]="board | async">-->
+<!--         </app-card-preview>-->
+<!--        </div>-->
+<!--  </div>-->
+<!--      </ng-template>-->
+<!--  </swiper>-->
 </ion-content>
 
 <ion-content *ngIf="isLoading">

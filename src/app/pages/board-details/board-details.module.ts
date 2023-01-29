@@ -7,6 +7,7 @@ import { CardPreviewComponent } from './card-preview/card-preview.component';
 import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-details-routing.module";
 import { SharedModule } from "@app/shared.module";
 import { SwiperModule } from "swiper/angular";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SwiperModule } from "swiper/angular";
     BoardDetailsPageRoutingModule,
     SharedModule,
     SwiperModule,
+    DragDropModule
   ],
     declarations: [BoardDetailsPage, CardPreviewComponent]
 })
