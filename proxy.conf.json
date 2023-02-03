@@ -1,24 +1,17 @@
 {
   "/ocs/*": {
-    "target": "http://localhost:8080",
+    "target": "https://servhostname.local:8443/",
     "secure": false,
     "logLevel": "debug"
   },
   "/index.php/*": {
-    "target": "http://localhost:8080",
+    "target": "https://servhostname.local:8443/",
     "secure": false,
     "logLevel": "debug"
   },
   "/login/*": {
-    "target": "http://localhost:8080",
+    "target": "https://servhostname.local:8443/",
     "secure": false,
     "logLevel": "debug"
-  },
-  "/meltzow/*": {
-    "target": "https://nextlcloud.meltzow.net",
-    "logLevel": "debug",
-    "pathRewrite": {
-      "^/meltzow/": ""
-    }
   }
 }

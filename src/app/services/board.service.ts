@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpContext } from '@angular/common/http';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, } from 'rxjs';
 
 import { Board, CreateBoardRequest } from '@app/model';
 
-import { AuthenticationService } from "@app/services/authentication.service";
-import { ServiceHelper } from "@app/helper/serviceHelper"
 import { HttpService } from "@app/services/http.service";
 
 
@@ -15,10 +12,7 @@ import { HttpService } from "@app/services/http.service";
 export class BoardService {
   currentBoardsSubj:BehaviorSubject<Board[]> = new BehaviorSubject<Board[]>([])
 
-  constructor(protected httpClient: HttpClient,
-              private authService: AuthenticationService,
-              private serviceHelper: ServiceHelper,
-              private httpService: HttpService) {
+  constructor(private httpService: HttpService) {
   }
 
 
@@ -27,17 +21,7 @@ export class BoardService {
    * @param createBoardRequest
    */
   public createBoard(createBoardRequest?: CreateBoardRequest): Promise<Board> {
-    return this.authService.getAccount().then((account) => {
-      return firstValueFrom(this.httpClient.post<Board>(`${account.url}/index.php/apps/deck/api/v1/boards`,
-        createBoardRequest,
-        {
-          context: new HttpContext(),
-          responseType: "json",
-          withCredentials: false,
-          headers: this.serviceHelper.addDefaultHeaders(account)
-        }
-      ))
-    })
+      return this.httpService.post<Board>(`/index.php/apps/deck/api/v1/boards`, createBoardRequest)
   }
 
 
@@ -50,11 +34,7 @@ export class BoardService {
       throw new Error('Required parameter boardId was null or undefined when calling getBoard.');
     }
 
-    return this.authService.getAccount().then((account) => {
-      return firstValueFrom(this.httpClient.get<Board>(`${account.url}/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`,
-        this.serviceHelper.getHttpOptions(account)
-      ))
-    })
+      return this.httpService.get<Board>(`/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}`)
   }
 
   /**
