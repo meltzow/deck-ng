@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpContext, HttpHeaders, HttpParams, } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders, HttpParams, HttpResponse, } from '@angular/common/http';
 
 import { AuthenticationService } from "@app/services/authentication.service";
 import { Platform } from "@ionic/angular";
@@ -9,9 +9,7 @@ import { CapacitorHttpPlugin } from "@capacitor/core/types/core-plugins";
 
 
 interface options {
-  params?: any;
-  withCredentials?: boolean;
-  observe?: 'body' | 'response'
+  withCredentials?: boolean
 }
 
 @Injectable({
@@ -23,11 +21,6 @@ export class HttpService {
               private authService: AuthenticationService,
               private platform: Platform) {
   }
-
-  public async getA<T extends Array<any>>(url: string): Promise<T> {
-    return Promise.resolve(<T>[])
-  }
-
 
   private async getHeaders(withCredentials: boolean): Promise<Cap.HttpHeaders> {
     const headers: Cap.HttpHeaders = {
@@ -45,13 +38,10 @@ export class HttpService {
     return headers;
   }
 
-  public async post<T>(url: string, body?: any, options: options = {
-    withCredentials: true,
-    observe: 'body'
-  }): Promise<T> {
+  public async postResponse<T>(url: string, body?: any, options: options = { withCredentials: true}): Promise<HttpResponse<T>> {
     if (this.platform.is("mobile")) {
       const postoptions = {
-        url: `${url}`,
+        url: url,
         headers: await this.getHeaders(options.withCredentials),
         data: body
       }
@@ -62,6 +52,8 @@ export class HttpService {
         })
     } else {
       const ops = await this.getHttpOptions(options.withCredentials, url.startsWith('ocs'))
+      ops.observe = 'response'
+      ops.responseType = 'json'
       return firstValueFrom(this.httpClient.post<T>(url,
         body,
         ops
@@ -69,10 +61,36 @@ export class HttpService {
     }
   }
 
-  public async put<T>(url: string, body: any, options1?: options): Promise<T> {
+
+  public async post<T>(url: string, body?: any, options: options = {
+    withCredentials: true,
+  }): Promise<T> {
+    if (this.platform.is("mobile")) {
+      const postoptions = {
+        url: url,
+        headers: await this.getHeaders(options.withCredentials),
+        data: body
+      }
+
+      const resp1 = await Cap.CapacitorHttp.post(postoptions)
+        .catch(reason => {
+          console.error(reason)
+        }).
+      return resp1
+    } else {
+      const ops = await this.getHttpOptions(options.withCredentials, url.startsWith('ocs'))
+      ops.observe = options.observe
+      return firstValueFrom(this.httpClient.post<T>(url,
+        body,
+        ops
+      ))
+    }
+  }
+
+  public async put<T>(url: string, body: any, options1: options = {withCredentials: true}): Promise<T> {
     if (this.platform.is("mobile")) {
       const options = {
-        url: `${url}`,
+        url: url,
         headers: await this.getHeaders(options1.withCredentials),
         data: body
       };
@@ -94,21 +112,11 @@ export class HttpService {
 
   }
 
-  public async get<T>(url: string, options?: { params?: any, withCredentials?: true }): Promise<T> {
-    const account = await this.authService.getAccount()
-    if (!account || !account.isAuthenticated) {
-      return Promise.resolve(<T>{})
-    }
-
+  public async get<T>(url: string, options1: options = {withCredentials: true}): Promise<T> {
     if (this.platform.is("mobile")) {
       const options = {
-        url: `${account.url}/${url}`,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${account.authdata}`,
-          'OCS-APIRequest': 'true'
-        },
+        url: url,
+        headers: await this.getHeaders(options1.withCredentials),
       };
       return new Promise((resolve, reject) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).get(options)
@@ -121,7 +129,7 @@ export class HttpService {
       )
     } else {
       return firstValueFrom(this.httpClient.get<T>(`/${url}`,
-        await this.getHttpOptions(options.withCredentials, url.startsWith('ocs'))
+        await this.getHttpOptions(options1.withCredentials, url.startsWith('ocs'))
       ))
     }
 
@@ -131,7 +139,7 @@ export class HttpService {
     headers?: HttpHeaders | {
       [header: string]: string | string[];
     };
-    observe?: 'body';
+    observe?: 'body' | 'response';
     params?: HttpParams | {
       [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
     };
