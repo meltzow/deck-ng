@@ -34,7 +34,7 @@ export class LoginService {
   }
 
 
-  async login(server: string ): Promise<boolean> {
+  async login(server: string ): Promise<unknown> {
 
     let url
     if (this.platform.is("desktop")) {
@@ -60,13 +60,15 @@ export class LoginService {
           Browser.open({url: resp1.login})
         } else {
           //remove used proxy url
-          window.open(resp1.login.replace('http://localhost:8100', server), "_blank");
+          const mywindow =  window.open(resp1.login.replace('http://localhost:8100', server), "_blank")
+          mywindow.onunload = () => console.log('window closed')
+          options1.url = options1.url.replace('http://localhost:8100', '')
         }
 
         const obs = interval(2000)
           .pipe(
             take(60),
-            switchMap(() => this.httpService.post<HttpResponse<Login2>>(options1.url, null, {params: options1.params, observe: 'response' }))
+            switchMap(() => this.httpService.post<HttpResponse<Login2>>(options1.url, options1.params, {observe: 'response', withCredentials: false }))
           )
 
         const timeInterval = obs.subscribe(async (resp2) => {
@@ -79,7 +81,9 @@ export class LoginService {
         }, error => {
           reject(error)
         }, () => resolve(false))
-        Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
+        if (this.platform.is('mobile')) {
+          Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
+        }
       } else {
         reject('Error while connecting ' + server)
       }
