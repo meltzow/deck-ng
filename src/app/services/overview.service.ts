@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
 import { Capabilities, Upcoming, Ocs, Board } from '@app/model';
 
-import { AuthenticationService } from "@app/services/authentication.service";
-import { ServiceHelper } from "@app/helper/serviceHelper"
 import { HttpService } from "@app/services/http.service";
 
 

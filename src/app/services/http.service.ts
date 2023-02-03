@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpContext, HttpHeaders, HttpParams, } from '@angular/common/http';
 
-import { Account } from '@app/model';
-
 import { AuthenticationService } from "@app/services/authentication.service";
 import { Platform } from "@ionic/angular";
-import { CapacitorHttp } from "@capacitor/core";
-import { CustomHttpParameterCodec } from "@app/encoder";
+import * as Cap from "@capacitor/core";
 import { firstValueFrom } from "rxjs";
 import { CapacitorHttpPlugin } from "@capacitor/core/types/core-plugins";
 
+
+interface options {
+  params?: any;
+  withCredentials?: boolean;
+  observe?: 'body' | 'response'
+}
 
 @Injectable({
   providedIn: 'root'
@@ -25,24 +28,56 @@ export class HttpService {
     return Promise.resolve(<T>[])
   }
 
-  public async put<T>(url: string, body: any): Promise<T> {
-    const account = await this.authService.getAccount()
-    if (!account || !account.isAuthenticated) {
-      return Promise.resolve(<T>{})
+
+  private async getHeaders(withCredentials: boolean): Promise<Cap.HttpHeaders> {
+    const headers: Cap.HttpHeaders = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'OCS-APIRequest': 'true'
     }
+    if (withCredentials) {
+      const account = await this.authService.getAccount()
+      if (!account || !account.isAuthenticated) {
+        return Promise.resolve(null)
+      }
+      headers['Authorization'] = `Basic ${account.authdata}`
+    }
+    return headers;
+  }
+
+  public async post<T>(url: string, body?: any, options: options = {
+    withCredentials: true,
+    observe: 'body'
+  }): Promise<T> {
+    if (this.platform.is("mobile")) {
+      const postoptions = {
+        url: `${url}`,
+        headers: await this.getHeaders(options.withCredentials),
+        data: body
+      }
+
+      const resp1 = await Cap.CapacitorHttp.post(postoptions)
+        .catch(reason => {
+          console.error(reason)
+        })
+    } else {
+      const ops = await this.getHttpOptions(options.withCredentials, url.startsWith('ocs'))
+      return firstValueFrom(this.httpClient.post<T>(url,
+        body,
+        ops
+      ))
+    }
+  }
+
+  public async put<T>(url: string, body: any, options1?: options): Promise<T> {
     if (this.platform.is("mobile")) {
       const options = {
-        url: `${account.url}/${url}`,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${account.authdata}`,
-          'OCS-APIRequest': 'true'
-        },
+        url: `${url}`,
+        headers: await this.getHeaders(options1.withCredentials),
         data: body
       };
       return new Promise((resolve, reject) =>
-        (CapacitorHttp as CapacitorHttpPlugin).put(options)
+        (Cap.CapacitorHttp as CapacitorHttpPlugin).put(options)
           .then(value => {
             resolve(value.data as T)
           }).catch(reason => {
@@ -53,13 +88,13 @@ export class HttpService {
     } else {
       return firstValueFrom(this.httpClient.put<T>(`/${url}`,
         body,
-        this.getHttpOptions(account, url.startsWith('ocs'))
+        await this.getHttpOptions(options1.withCredentials, url.startsWith('ocs'))
       ))
     }
 
   }
 
-  public async get<T>(url: string): Promise<T> {
+  public async get<T>(url: string, options?: { params?: any, withCredentials?: true }): Promise<T> {
     const account = await this.authService.getAccount()
     if (!account || !account.isAuthenticated) {
       return Promise.resolve(<T>{})
@@ -76,7 +111,7 @@ export class HttpService {
         },
       };
       return new Promise((resolve, reject) =>
-        (CapacitorHttp as CapacitorHttpPlugin).get(options)
+        (Cap.CapacitorHttp as CapacitorHttpPlugin).get(options)
           .then(value => {
             resolve(value.data as T)
           }).catch(reason => {
@@ -86,43 +121,46 @@ export class HttpService {
       )
     } else {
       return firstValueFrom(this.httpClient.get<T>(`/${url}`,
-        this.getHttpOptions(account, url.startsWith('ocs'))
+        await this.getHttpOptions(options.withCredentials, url.startsWith('ocs'))
       ))
     }
 
   }
 
-  private getHttpOptions(account: Account, isOCSRequest = false): {
+  private async getHttpOptions(withCredentials: boolean, isOCSRequest = false): Promise<{
     headers?: HttpHeaders | {
       [header: string]: string | string[];
     };
-    context?: HttpContext;
     observe?: 'body';
     params?: HttpParams | {
       [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
     };
-    reportProgress?: boolean;
     responseType?: 'json';
     withCredentials?: boolean;
-  } {
+  }> {
     return {
-      context: new HttpContext(),
-      params: new HttpParams({encoder: new CustomHttpParameterCodec()}),
       responseType: 'json',
       withCredentials: false,
-      headers: this.addDefaultHeaders(account, isOCSRequest)
+      headers: await this.addDefaultHeaders(withCredentials, isOCSRequest)
     }
   }
 
-  private addDefaultHeaders(account: Account, isOCSRequest = false): HttpHeaders {
+  private async addDefaultHeaders(withCredentials: boolean, isOCSRequest = false): Promise<HttpHeaders> {
     let localVarHeaders = new HttpHeaders();
 
-    const authData = account.authdata
-    if (!authData || !account.isAuthenticated) {
-      throw new Error("user is not logged in")
+    if (withCredentials) {
+      const account = await this.authService.getAccount()
+      if (!account || !account.isAuthenticated) {
+        return Promise.resolve(null)
+      }
+      //TODO handle this with Promise
+      const authData = account.authdata
+      if (!authData || !account.isAuthenticated) {
+        throw new Error("user is not logged in")
+      }
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
     }
 
-    localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
     localVarHeaders = localVarHeaders.set('Accept', 'application/json');
     localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
     if (isOCSRequest) {

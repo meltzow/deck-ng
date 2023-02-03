@@ -29,30 +29,31 @@
           url_required
         </p>
       </ion-text>
-
       <ion-button (click)="onLogin(loginForm)" type="submit" translate="" aria-label="login">login</ion-button>
     </ion-list>
-    <ion-list *ngIf="(isLoading | async)">
-      <ion-list-header>
-        <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
-      </ion-list-header>
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-        </ion-thumbnail>
-        <ion-label>
-          <h3>
-            <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-          </h3>
-          <p>
-            <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
-          </p>
-          <p>
-            <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
-          </p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
   </form>
+
+  <ion-list *ngIf="(isLoading | async)">
+    <ion-list-header>
+      <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
+    </ion-list-header>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-button (click)="cancel()" translate="" color="danger" aria-label="cancel">cancel</ion-button>
+  </ion-list>
 
 </ion-content>
