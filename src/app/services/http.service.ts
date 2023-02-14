@@ -6,6 +6,7 @@ import { Platform } from "@ionic/angular";
 import * as Cap from "@capacitor/core";
 import { firstValueFrom } from "rxjs";
 import { CapacitorHttpPlugin } from "@capacitor/core/types/core-plugins";
+import { askQuestion } from "@angular/cli/src/utilities/prompt";
 
 
 interface options {
@@ -38,7 +39,7 @@ export class HttpService {
     return headers;
   }
 
-  public async postResponse<T>(url: string, body?: any, options: options = { withCredentials: true}): Promise<HttpResponse<T>> {
+  public async postResponse<T>(url: string, body?: any, options: options = {withCredentials: true}): Promise<HttpResponse<T>> {
     if (this.platform.is("mobile")) {
       const postoptions = {
         url: url,
@@ -51,16 +52,13 @@ export class HttpService {
           console.error(reason)
         })
     } else {
-      const ops = await this.getHttpOptions(options.withCredentials, url.startsWith('ocs'))
-      ops.observe = 'response'
-      ops.responseType = 'json'
+      const headers = await this.addDefaultHeaders(options.withCredentials, url.startsWith('ocs'))
       return firstValueFrom(this.httpClient.post<T>(url,
         body,
-        ops
+        {observe: "response", headers: headers}
       ))
     }
   }
-
 
   public async post<T>(url: string, body?: any, options: options = {
     withCredentials: true,
@@ -73,16 +71,15 @@ export class HttpService {
       }
 
       const resp1 = await Cap.CapacitorHttp.post(postoptions)
-        .catch(reason => {
-          console.error(reason)
-        }).
-      return resp1
+      // .catch(reason => {
+      //   console.error(reason)
+      // })
+      return resp1.data
     } else {
-      const ops = await this.getHttpOptions(options.withCredentials, url.startsWith('ocs'))
-      ops.observe = options.observe
+      const headers = await this.addDefaultHeaders(options.withCredentials, url.startsWith('ocs'))
       return firstValueFrom(this.httpClient.post<T>(url,
         body,
-        ops
+        {headers: headers}
       ))
     }
   }
@@ -104,15 +101,23 @@ export class HttpService {
         })
       )
     } else {
+      const headers = await this.addDefaultHeaders(options1.withCredentials, url.startsWith('ocs'))
       return firstValueFrom(this.httpClient.put<T>(`/${url}`,
         body,
-        await this.getHttpOptions(options1.withCredentials, url.startsWith('ocs'))
+        {headers: headers}
       ))
     }
 
   }
 
   public async get<T>(url: string, options1: options = {withCredentials: true}): Promise<T> {
+    if (options1.withCredentials ) {
+      const isAuth = await this.authService.isAuthenticated()
+      if (!isAuth) {
+        return Promise.resolve({} as T)
+      }
+    }
+
     if (this.platform.is("mobile")) {
       const options = {
         url: url,
@@ -128,9 +133,12 @@ export class HttpService {
         })
       )
     } else {
-      return firstValueFrom(this.httpClient.get<T>(`/${url}`,
-        await this.getHttpOptions(options1.withCredentials, url.startsWith('ocs'))
-      ))
+      const headers = await this.addDefaultHeaders(options1.withCredentials, url.startsWith('ocs'))
+      return firstValueFrom(this.httpClient.get<T>(`/${url}`, {
+        observe: 'body',
+        responseType: 'json',
+        headers: headers
+      }))
     }
 
   }

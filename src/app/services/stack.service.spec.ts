@@ -3,8 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { StackService } from './stack.service';
 import { Account, Stack } from "@app/model";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { AuthenticationService } from "@app/services/authentication.service";
-import { ServiceHelper } from "@app/helper/serviceHelper";
 import { HttpService } from "@app/services/http.service";
 
 describe('StackService', () => {

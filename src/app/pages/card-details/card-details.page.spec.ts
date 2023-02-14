@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardDetailsPage } from './card-details.page';
 import { HttpClientTestingModule} from "@angular/common/http/testing";
 import { CardsService } from "@app/services/cards.service";
-import { ServiceHelper } from "@app/helper/serviceHelper";
 import { ActivatedRoute, convertToParamMap } from "@angular/router";
 import { Label } from "@app/model";
 import { AuthenticationService, BoardService } from "@app/services";
@@ -33,7 +32,6 @@ describe('CardDetailPage', () => {
         { provide: CardsService, useValue: cardServiceSpy },
         { provide: BoardService, useValue: boardServiceSpy },
         { provide: AuthenticationService, useValue: authServiceSpy},
-        { provide: ServiceHelper},
         {
           provide: ActivatedRoute,
           useValue: {

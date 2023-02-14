@@ -52,10 +52,12 @@ services:
     build: ./proxy
     restart: always
     ports:
-      - 8080:80
-      - 8443:443
+      - 8080:8080
+      - 8443:8443
     environment:
-      - HTTPS_METHOD=nohttps
+      - HTTPS_METHOD=noredirect
+      - HTTP_PORT=8080
+      - HTTPS_PORT=8443
 #    labels:
 #      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     volumes:

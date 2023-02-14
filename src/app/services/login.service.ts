@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { filter, interval, switchMap, take, timeout } from "rxjs";
 import { Browser } from "@capacitor/browser";
 import { HttpService } from "@app/services/http.service";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { Platform } from "@ionic/angular";
 import { HttpResponse } from "@angular/common/http";
 
-export interface Login1 {
+export interface LoginPollInfo {
   poll: {
     token: string,
     endpoint: string
@@ -15,7 +13,7 @@ export interface Login1 {
   login: string
 }
 
-export interface Login2 {
+export interface LoginCredentials {
   server: string,
   loginName: string,
   appPassword: string
@@ -24,8 +22,11 @@ export interface Login2 {
 @Injectable({providedIn: 'root'})
 export class LoginService {
 
+  initialTimeoutInMs = 1000
+  incrementInMs = 2000
+  maxTimeoutInMS = 120000
+
   constructor(
-    private router: Router,
     private httpService: HttpService,
     private authService: AuthenticationService,
     private platform: Platform
@@ -33,8 +34,7 @@ export class LoginService {
 
   }
 
-
-  async login(server: string ): Promise<unknown> {
+  async login(server: string): Promise<boolean> {
 
     let url
     if (this.platform.is("desktop")) {
@@ -44,7 +44,7 @@ export class LoginService {
       url = server + '/index.php/login/v2'
     }
 
-    const resp1 = await this.httpService.post<Login1>(url, null, {withCredentials: false})
+    const resp1 = await this.httpService.post<LoginPollInfo>(url, null, {withCredentials: false})
 
     return new Promise((resolve, reject) => {
       if (resp1) {
@@ -60,95 +60,66 @@ export class LoginService {
           Browser.open({url: resp1.login})
         } else {
           //remove used proxy url
-          const mywindow =  window.open(resp1.login.replace('http://localhost:8100', server), "_blank")
+          const mywindow = window.open(resp1.login.replace('http://localhost:8100', server), "_blank")
           mywindow.onunload = () => console.log('window closed')
           options1.url = options1.url.replace('http://localhost:8100', '')
         }
 
-        const obs = interval(2000)
-          .pipe(
-            take(60),
-            switchMap(() => this.httpService.post<HttpResponse<Login2>>(options1.url, options1.params, {observe: 'response', withCredentials: false }))
-          )
-
-        const timeInterval = obs.subscribe(async (resp2) => {
-          if (resp2.status == 200) {
-            const r2 = (resp2.body as Login2)
-            timeInterval.unsubscribe()
-            const succ: boolean = await this.authService.saveCredentials(server, r2.loginName, r2.appPassword, true)
+        const pollCall = () => this.httpService.post<LoginCredentials>(options1.url, options1.params, {withCredentials: false})
+        this.runFunctionWithRetriesAndMaxTimeout(pollCall).then(async (resp2: LoginCredentials) => {
+            // timeInterval.unsubscribe()
+            const succ: boolean = await this.authService.saveCredentials(server, resp2.loginName, resp2.appPassword, true)
+            if (succ)
             resolve(succ)
-          }
-        }, error => {
-          reject(error)
-        }, () => resolve(false))
+        })
+
         if (this.platform.is('mobile')) {
-          Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
+          // Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
         }
       } else {
-        reject('Error while connecting ' + server)
+        reject('Error while connecting to ' + server)
       }
     })
   }
 
-  public async accessPolling1(pollUrl: string, token: string, period: number, count: number): Promise<Login2> {
-    const observablePoll = interval(period)
-      .pipe(
-        switchMap(() => {
-          return this.httpService.post<HttpResponse<Login2>>(pollUrl, {token: token}, {observe: 'response'})
-        }),
-        // Filter only the successful http responses
-        filter((data: any) => {
-          console.log('Data:' + JSON.stringify(data));
-          return data.status === 'success';
-        }),
-        // Emit only the first value emitted by the source
-        take(1),
-        timeout(30000)
-      )
-
-    return new Promise<Login2>((resolve, reject) => {
-      const o = {
-        next: async (resp2) => {
-          if (resp2.status == 200) {
-            const r2 = (resp2.body as Login2)
-            timeInterval.unsubscribe()
-            resolve(r2)
-          }
-        },
-        error: (error) => {
-          // reject(error)
-        },
-        complete: () => {
-          reject(new Error('completed'))
-        }
-      }
-      const timeInterval = observablePoll.subscribe(o)
-    })
-
+  private timeout(ms) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject("timeout");
+      }, ms);
+    });
   }
 
-  public async accessPolling(pollUrl: string, token: string, period: number, count: number): Promise<Login2> {
-    const observablePoll = interval(period)
-      .pipe(
-        take(count),
-        switchMap(() => this.httpService.post(pollUrl, {token: token}, {observe: 'response'}))
-      )
+  // Helper delay function to wait a specific amount of time.
+  private async delay(timeInMs: number): Promise<unknown> {
+    console.log("delay called with " + timeInMs)
+    return new Promise((resolve, reject) => setTimeout(resolve, timeInMs))
+  }
 
-    return new Promise<Login2>((resolve, reject) => {
-      const o = {
-        next: async (resp2) => {
-          if (resp2.status == 200) {
-            const r2 = (resp2.body as Login2)
-            timeInterval.unsubscribe()
-            resolve(r2)
-          }
-        },
-        error: (error) => console.log(error),
-        complete: () => resolve(null)
-      }
-      const timeInterval = observablePoll.subscribe(o)
+  // A function to just keep retrying forever.
+  private async runFunctionWithRetries(func: () => Promise<LoginCredentials>, initialTimeoutInMs: number, incrementInMs: number): Promise<unknown> {
+    console.log("runFunctionWithRetries called with " + initialTimeoutInMs)
+    return func().catch((reason) => {
+      console.log("received 404 ... waiting for auth")
+      this.delay(initialTimeoutInMs).then(() => {
+        this.runFunctionWithRetries(func, incrementInMs, incrementInMs)
+      })
     })
+  }
 
+  // Helper to retry a function, with incrementing and a max timeout.
+  private async runFunctionWithRetriesAndMaxTimeout(func: () => Promise<LoginCredentials>): Promise<unknown> {
+
+    const overallTimeout = this.timeout(this.maxTimeoutInMS).catch(() => {
+      return Promise.reject('Authentication hit the maximum timeout')
+    });
+
+    // Keep trying to execute 'func' forever.
+    const operation = this.runFunctionWithRetries(func, this.initialTimeoutInMs, this.incrementInMs);
+
+    // Wait for either the retries to succeed, or the timeout to be hit.
+    return Promise.race([operation, overallTimeout]);
   }
 
 }
+

@@ -15,6 +15,6 @@ export class StackService {
     if (boardId === null || boardId === undefined) {
       throw new Error('Required parameter boardId was null or undefined when calling getStacks.')
     }
-    return this.httpService.get<Stack[]>(`index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks`)
+    return this.httpService.get<Stack[]>(`/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks`)
   }
 }
