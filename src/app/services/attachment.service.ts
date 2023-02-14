@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, firstValueFrom } from "rxjs";
-import { Attachement } from "@app/model";
-import { ServiceHelper } from "@app/helper/serviceHelper";
+import { Account, Attachement } from "@app/model";
 import { AuthenticationService } from "@app/services/authentication.service";
-import { HttpClient } from "@angular/common/http";
+import { HttpService } from "@app/services/http.service";
 
 
 @Injectable({
@@ -12,12 +11,10 @@ import { HttpClient } from "@angular/common/http";
 export class AttachmentService {
 
   constructor(
-    private serviceHelper: ServiceHelper,
-    private authService: AuthenticationService,
-    private httpClient: HttpClient) {
+    private httpService: HttpService) {
   }
 
-  public getAttachments(boardId: number, stackId: number, cardId: number): Promise<Array<Attachement>> {
+  public getAttachments(boardId: number, stackId: number, cardId: number): Promise<Attachement[]> {
 
     if (boardId === null || boardId === undefined) {
       throw new Error('Required parameter boardId was null or undefined when calling updateCard.');
@@ -28,11 +25,6 @@ export class AttachmentService {
     if (cardId === null || cardId === undefined) {
       throw new Error('Required parameter cardId was null or undefined when calling updateCard.');
     }
-    return this.authService.getAccount().then((account) => {
-        return firstValueFrom(this.httpClient.get<Array<Attachement>>(`${account.url}/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`,
-          this.serviceHelper.getHttpOptions(account)
-        ))
-      }
-    )
+    return this.httpService.get<Attachement[]>(`/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`)
   }
 }

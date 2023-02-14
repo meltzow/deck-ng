@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '@app/services/authentication.service';
-import { BoardService, OverviewService } from "@app/services";
 import { BehaviorSubject } from "rxjs";
 import { NotificationService } from "@app/services/notification.service";
 import { LoginService } from "@app/services/login.service";
@@ -29,7 +28,6 @@ export class LoginPage implements OnInit {
   constructor(
     public authenticationService: AuthenticationService,
     private loginService: LoginService,
-    public boardService: BoardService,
     public router: Router,
     public notification: NotificationService
   ) {

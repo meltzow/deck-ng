@@ -24,7 +24,7 @@ export class CardsService {
       throw new Error('Required parameter cardId was null or undefined when calling updateCard.');
     }
 
-    return this.httpService.get(`index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks/${encodeURIComponent(String(stackId))}/cards/${encodeURIComponent(String(cardId))}`)
+    return this.httpService.get(`/index.php/apps/deck/api/v1/boards/${encodeURIComponent(String(boardId))}/stacks/${encodeURIComponent(String(stackId))}/cards/${encodeURIComponent(String(cardId))}`)
   }
 
   /**

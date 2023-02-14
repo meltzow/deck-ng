@@ -10,21 +10,23 @@ import { TranslateService } from "@ngx-translate/core";
 import { Account } from "@app/model";
 import { of } from "rxjs";
 import { NotificationService } from "@app/services/notification.service";
+import { LoginService } from "@app/services/login.service";
 
 
-describe('Login', () => {
+describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
   let transService: TranslateService
   let authServiceSpy
   let routerSpy
   let notifySpy
+  let loginServiceSpy
 
   beforeEach(waitForAsync(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['login','getAccount','isAuthObs'])
-    const boardServiceSpy = jasmine.createSpyObj('BoardService', ['getBoards'])
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['getAccount'])
     routerSpy = {navigate: jasmine.createSpy('navigate')};
     notifySpy = jasmine.createSpyObj('NotificationService', ['msg', 'error'])
+    loginServiceSpy = jasmine.createSpyObj('LoginService',['login'])
 
     TestBed.configureTestingModule({
       declarations: [LoginPage],
@@ -37,9 +39,9 @@ describe('Login', () => {
       ],
       providers: [
         {provide: AuthenticationService, useValue: authServiceSpy},
-        {provide: BoardService, useValue: boardServiceSpy},
         {provide: Router, useValue: routerSpy},
         {provide: NotificationService, useValue: notifySpy},
+        {provide: LoginService, useValue: loginServiceSpy},
       ],
     }).compileComponents();
 
@@ -63,12 +65,11 @@ describe('Login', () => {
     const form = component.form
     await component.onLogin(form)
 
-    expect(authServiceSpy.isAuthObs).toHaveBeenCalledTimes(0)
+    expect(loginServiceSpy.login).toHaveBeenCalledTimes(0)
   })
 
   it ('with valid url there is a login try', async () => {
-    authServiceSpy.isAuthObs.and.returnValue(of(true))
-    authServiceSpy.login.and.returnValue(Promise.resolve(true))
+    loginServiceSpy.login.and.returnValue(Promise.resolve(true))
 
     component = await fixture.componentInstance;
     await fixture.detectChanges();
@@ -77,13 +78,12 @@ describe('Login', () => {
     form.controls['url'].setValue("http://foo.bar")
     await component.onLogin(form)
 
-    expect(authServiceSpy.login).toHaveBeenCalledTimes(1)
+    expect(loginServiceSpy.login).toHaveBeenCalledTimes(1)
 
   })
 
-  it ('with auth not possible there must be a notification with error', async () => {
-    authServiceSpy.isAuthObs.and.returnValue(of(false))
-    authServiceSpy.login.and.returnValue(Promise.reject(new Error("url not exists")))
+  it ('if auth not possible there must be a notification with error', async () => {
+    loginServiceSpy.login.and.returnValue(Promise.reject(new Error("url not exists")))
 
     component = await fixture.componentInstance;
     await fixture.detectChanges();
@@ -92,7 +92,7 @@ describe('Login', () => {
     form.controls['url'].setValue("http://foo.bar")
     await component.onLogin(form)
 
-    expect(authServiceSpy.login).toHaveBeenCalledTimes(1)
+    expect(loginServiceSpy.login).toHaveBeenCalledTimes(1)
     expect(notifySpy.error).toHaveBeenCalledTimes(1)
 
   })
