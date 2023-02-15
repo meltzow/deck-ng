@@ -143,24 +143,6 @@ export class HttpService {
 
   }
 
-  private async getHttpOptions(withCredentials: boolean, isOCSRequest = false): Promise<{
-    headers?: HttpHeaders | {
-      [header: string]: string | string[];
-    };
-    observe?: 'body' | 'response';
-    params?: HttpParams | {
-      [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
-    };
-    responseType?: 'json';
-    withCredentials?: boolean;
-  }> {
-    return {
-      responseType: 'json',
-      withCredentials: false,
-      headers: await this.addDefaultHeaders(withCredentials, isOCSRequest)
-    }
-  }
-
   private async addDefaultHeaders(withCredentials: boolean, isOCSRequest = false): Promise<HttpHeaders> {
     let localVarHeaders = new HttpHeaders();
 

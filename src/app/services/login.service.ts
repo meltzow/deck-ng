@@ -25,6 +25,7 @@ export class LoginService {
   initialTimeoutInMs = 1000
   incrementInMs = 2000
   maxTimeoutInMS = 120000
+  cancelRetryLoop = false
 
   constructor(
     private httpService: HttpService,
@@ -34,14 +35,14 @@ export class LoginService {
 
   }
 
-  async login(server: string): Promise<boolean> {
-
+  async login(server: URL): Promise<boolean> {
+    this.cancelRetryLoop = false
     let url
-    if (this.platform.is("desktop")) {
+    if (server.hostname == "localhost" &&  this.platform.is("desktop")) {
       //using proxy
       url = '/index.php/login/v2'
     } else {
-      url = server + '/index.php/login/v2'
+      url = server.toString() + '/index.php/login/v2'
     }
 
     const resp1 = await this.httpService.post<LoginPollInfo>(url, null, {withCredentials: false})
@@ -60,7 +61,7 @@ export class LoginService {
           Browser.open({url: resp1.login})
         } else {
           //remove used proxy url
-          const mywindow = window.open(resp1.login.replace('http://localhost:8100', server), "_blank")
+          const mywindow = window.open(resp1.login.replace('http://localhost:8100', server.toString()), "_blank")
           mywindow.onunload = () => console.log('window closed')
           options1.url = options1.url.replace('http://localhost:8100', '')
         }
@@ -68,10 +69,11 @@ export class LoginService {
         const pollCall = () => this.httpService.post<LoginCredentials>(options1.url, options1.params, {withCredentials: false})
         this.runFunctionWithRetriesAndMaxTimeout(pollCall).then(async (resp2: LoginCredentials) => {
             // timeInterval.unsubscribe()
-            const succ: boolean = await this.authService.saveCredentials(server, resp2.loginName, resp2.appPassword, true)
+            this.cancelRetryLoop = true
+            const succ: boolean = await this.authService.saveCredentials(server.toString(), resp2.loginName, resp2.appPassword, true)
             if (succ)
             resolve(succ)
-        })
+        }).catch(reason => reject(reason))
 
         if (this.platform.is('mobile')) {
           // Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
@@ -82,27 +84,32 @@ export class LoginService {
     })
   }
 
-  private timeout(ms) {
+  // Helper delay function to wait a specific amount of time.
+  private sleep(timeInMs, value?, state: 'resolve' | 'reject' = 'resolve'): Promise<unknown> {
+    console.log("delay called with " + timeInMs)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        reject("timeout");
-      }, ms);
+        if (state === "resolve") {
+          return resolve(value);
+        } else {
+          this.cancelRetryLoop = true
+          return reject(new Error(value));
+        }
+      }, timeInMs);
     });
-  }
-
-  // Helper delay function to wait a specific amount of time.
-  private async delay(timeInMs: number): Promise<unknown> {
-    console.log("delay called with " + timeInMs)
-    return new Promise((resolve, reject) => setTimeout(resolve, timeInMs))
   }
 
   // A function to just keep retrying forever.
   private async runFunctionWithRetries(func: () => Promise<LoginCredentials>, initialTimeoutInMs: number, incrementInMs: number): Promise<unknown> {
     console.log("runFunctionWithRetries called with " + initialTimeoutInMs)
-    return func().catch((reason) => {
-      console.log("received 404 ... waiting for auth")
-      this.delay(initialTimeoutInMs).then(() => {
-        this.runFunctionWithRetries(func, incrementInMs, incrementInMs)
+    return new Promise((resolve, reject) => {
+      func().then(value => resolve(value)).catch((reason) => {
+        console.log("received 404 ... waiting for auth")
+        this.sleep(initialTimeoutInMs).then(() => {
+          if (!this.cancelRetryLoop) {
+            return this.runFunctionWithRetries(func, incrementInMs, incrementInMs)
+          }
+        })
       })
     })
   }
@@ -110,9 +117,7 @@ export class LoginService {
   // Helper to retry a function, with incrementing and a max timeout.
   private async runFunctionWithRetriesAndMaxTimeout(func: () => Promise<LoginCredentials>): Promise<unknown> {
 
-    const overallTimeout = this.timeout(this.maxTimeoutInMS).catch(() => {
-      return Promise.reject('Authentication hit the maximum timeout')
-    });
+    const overallTimeout = this.sleep(this.maxTimeoutInMS, 'Authentication hit the maximum timeout', 'reject')
 
     // Keep trying to execute 'func' forever.
     const operation = this.runFunctionWithRetries(func, this.initialTimeoutInMs, this.incrementInMs);
@@ -121,5 +126,8 @@ export class LoginService {
     return Promise.race([operation, overallTimeout]);
   }
 
+  cancelLogin() {
+      this.cancelRetryLoop = true
+  }
 }
 

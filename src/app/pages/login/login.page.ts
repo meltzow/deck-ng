@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
 
     if (form.valid) {
       this.isLoading.next(true)
-      const succ = await this.loginService.login(this.login.url).catch(reason => {
+      const succ = await this.loginService.login(new URL(this.login.url)).catch(reason => {
           this.notification.error(reason.message, "login not successful")
         }).finally(() => this.isLoading.next(false))
       if (succ) {
@@ -68,5 +68,6 @@ export class LoginPage implements OnInit {
 
   cancel() {
     this.isLoading.next(false)
+    this.loginService.cancelLogin()
   }
 }

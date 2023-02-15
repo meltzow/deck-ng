@@ -17,7 +17,7 @@ describe('LoginService', () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     // jasmine.DEFAULT_TIMEOUT_INTERVAL = 500000;
     authSpy = jasmine.createSpyObj('AuthenticationService', ['saveCredentials'])
-    httpSpy = jasmine.createSpyObj('HttpService', ['post', 'postResponse'])
+    httpSpy = jasmine.createSpyObj('HttpService', ['post'])
     spyOn(window, 'open').and.callFake(function () {
       return window
     });
