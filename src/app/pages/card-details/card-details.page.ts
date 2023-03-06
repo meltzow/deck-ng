@@ -70,9 +70,9 @@ export class CardDetailsPage implements OnInit {
     }
   }
 
-  changeTitle($event: string) {
-    if ($event != this.card.title) {
-      this.card.title = $event
+  changeTitle(newTitel: string) {
+    if (newTitel != this.card.title) {
+      this.card.title = newTitel
       this.updateCard()
     }
   }
