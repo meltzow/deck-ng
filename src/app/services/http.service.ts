@@ -102,7 +102,7 @@ export class HttpService {
       )
     } else {
       const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      return firstValueFrom(this.httpClient.put<T>(`/${url}`,
+      return firstValueFrom(this.httpClient.put<T>(url,
         body,
         {headers: headers}
       ))
@@ -137,7 +137,7 @@ export class HttpService {
       )
     } else {
       const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      return firstValueFrom(this.httpClient.get<T>(`${url}`, {
+      return firstValueFrom(this.httpClient.get<T>(url, {
         observe: 'body',
         responseType: 'json',
         headers: headers
