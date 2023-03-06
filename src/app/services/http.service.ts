@@ -6,7 +6,7 @@ import { Platform } from "@ionic/angular";
 import * as Cap from "@capacitor/core";
 import { firstValueFrom } from "rxjs";
 import { CapacitorHttpPlugin } from "@capacitor/core/types/core-plugins";
-import { askQuestion } from "@angular/cli/src/utilities/prompt";
+import { Account } from "@app/model";
 
 
 interface options {
@@ -23,15 +23,14 @@ export class HttpService {
               private platform: Platform) {
   }
 
-  private async getHeaders(withCredentials: boolean): Promise<Cap.HttpHeaders> {
+  private async getHeaders(account? : Account): Promise<Cap.HttpHeaders> {
     const headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'OCS-APIRequest': 'true'
     }
-    if (withCredentials) {
-      const account = await this.authService.getAccount()
-      if (!account || !account.isAuthenticated) {
+    if (account) {
+      if (!account.isAuthenticated) {
         return Promise.resolve(null)
       }
       headers['Authorization'] = `Basic ${account.authdata}`
@@ -40,10 +39,16 @@ export class HttpService {
   }
 
   public async postResponse<T>(url: string, body?: any, options: options = {withCredentials: true}): Promise<HttpResponse<T>> {
+    let account
+    if (options.withCredentials) {
+      account = await this.authService.getAccount()
+      url = account.url + url
+    }
+
     if (this.platform.is("mobile")) {
       const postoptions = {
         url: url,
-        headers: await this.getHeaders(options.withCredentials),
+        headers: await this.getHeaders(account),
         data: body
       }
 
@@ -60,21 +65,29 @@ export class HttpService {
     }
   }
 
-  public async post<T>(url: string, body?: any, options: options = {
-    withCredentials: true,
-  }): Promise<T> {
+  public async post<T>(url: string, body?: any, options: options = { withCredentials: true }): Promise<T> {
+    let account
+    if (options.withCredentials) {
+      account = await this.authService.getAccount()
+      url = account.url + url
+    }
+
     if (this.platform.is("mobile")) {
       const postoptions = {
         url: url,
-        headers: await this.getHeaders(options.withCredentials),
+        headers: await this.getHeaders(account),
         data: body
       }
 
       const resp1 = await Cap.CapacitorHttp.post(postoptions)
-      // .catch(reason => {
-      //   console.error(reason)
-      // })
-      return resp1.data
+      return new Promise((resolve, reject) => {
+        console.log("httpService: receive status: " + resp1.status)
+        if (resp1.status <= 299 && resp1.status >= 200) {
+          resolve(resp1.data)
+        } else {
+          reject(resp1.status)
+        }
+      })
     } else {
       const headers = await this.addDefaultHeaders(options.withCredentials, url.startsWith('ocs'))
       return firstValueFrom(this.httpClient.post<T>(url,
@@ -85,10 +98,16 @@ export class HttpService {
   }
 
   public async put<T>(url: string, body: any, options1: options = {withCredentials: true}): Promise<T> {
+    let account
+    if (options1.withCredentials) {
+      account = await this.authService.getAccount()
+      url = account.url + url
+    }
+
     if (this.platform.is("mobile")) {
       const options = {
         url: url,
-        headers: await this.getHeaders(options1.withCredentials),
+        headers: await this.getHeaders(account),
         data: body
       };
       return new Promise((resolve, reject) =>
@@ -111,17 +130,16 @@ export class HttpService {
   }
 
   public async get<T>(url: string, options1: options = {withCredentials: true}): Promise<T> {
-    if (options1.withCredentials ) {
-      const isAuth = await this.authService.isAuthenticated()
-      if (!isAuth) {
-        return Promise.resolve({} as T)
-      }
+    let account
+    if (options1.withCredentials) {
+      account = await this.authService.getAccount()
+      url = account.url + url
     }
 
     if (this.platform.is("mobile")) {
       const options = {
         url: url,
-        headers: await this.getHeaders(options1.withCredentials),
+        headers: await this.getHeaders(account),
       };
       return new Promise((resolve, reject) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).get(options)

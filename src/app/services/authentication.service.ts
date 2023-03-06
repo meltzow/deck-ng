@@ -34,6 +34,10 @@ export class AuthenticationService implements OnInit {
   }
 
   public async saveCredentials(url: string, username: string, password: string, isAuth = false): Promise<boolean> {
+    if (!username || !password) {
+      return Promise.reject("no username or password must be set")
+    }
+
     const account1 = new Account()
     account1.username = username
     account1.password = password
