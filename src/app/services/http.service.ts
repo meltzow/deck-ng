@@ -38,38 +38,15 @@ export class HttpService {
     return headers;
   }
 
-  public async postResponse<T>(url: string, body?: any, options: options = {withCredentials: true}): Promise<HttpResponse<T>> {
+  public async post<T>(url: string, body?: any, options1: options = { withCredentials: true }): Promise<T> {
     let account
-    if (options.withCredentials) {
+    if (options1.withCredentials) {
       account = await this.authService.getAccount()
-      url = account.url + url
-    }
-
-    if (this.platform.is("mobile")) {
-      const postoptions = {
-        url: url,
-        headers: await this.getHeaders(account),
-        data: body
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.platform.is("mobile")) {
+        url = account.url + url
       }
-
-      const resp1 = await Cap.CapacitorHttp.post(postoptions)
-        .catch(reason => {
-          console.error(reason)
-        })
-    } else {
-      const headers = await this.addDefaultHeaders(options.withCredentials, url.startsWith('ocs'))
-      return firstValueFrom(this.httpClient.post<T>(url,
-        body,
-        {observe: "response", headers: headers}
-      ))
-    }
-  }
-
-  public async post<T>(url: string, body?: any, options: options = { withCredentials: true }): Promise<T> {
-    let account
-    if (options.withCredentials) {
-      account = await this.authService.getAccount()
-      url = account.url + url
     }
 
     if (this.platform.is("mobile")) {
@@ -89,7 +66,7 @@ export class HttpService {
         }
       })
     } else {
-      const headers = await this.addDefaultHeaders(options.withCredentials, url.startsWith('ocs'))
+      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
       return firstValueFrom(this.httpClient.post<T>(url,
         body,
         {headers: headers}
@@ -101,7 +78,11 @@ export class HttpService {
     let account
     if (options1.withCredentials) {
       account = await this.authService.getAccount()
-      url = account.url + url
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.platform.is("mobile")) {
+        url = account.url + url
+      }
     }
 
     if (this.platform.is("mobile")) {
@@ -120,7 +101,7 @@ export class HttpService {
         })
       )
     } else {
-      const headers = await this.addDefaultHeaders(options1.withCredentials, url.startsWith('ocs'))
+      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
       return firstValueFrom(this.httpClient.put<T>(`/${url}`,
         body,
         {headers: headers}
@@ -133,7 +114,11 @@ export class HttpService {
     let account
     if (options1.withCredentials) {
       account = await this.authService.getAccount()
-      url = account.url + url
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.platform.is("mobile")) {
+        url = account.url + url
+      }
     }
 
     if (this.platform.is("mobile")) {
@@ -151,8 +136,8 @@ export class HttpService {
         })
       )
     } else {
-      const headers = await this.addDefaultHeaders(options1.withCredentials, url.startsWith('ocs'))
-      return firstValueFrom(this.httpClient.get<T>(`/${url}`, {
+      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
+      return firstValueFrom(this.httpClient.get<T>(`${url}`, {
         observe: 'body',
         responseType: 'json',
         headers: headers
@@ -161,20 +146,11 @@ export class HttpService {
 
   }
 
-  private async addDefaultHeaders(withCredentials: boolean, isOCSRequest = false): Promise<HttpHeaders> {
+  private async addDefaultHeaders(account?: Account, isOCSRequest = false): Promise<HttpHeaders> {
     let localVarHeaders = new HttpHeaders();
 
-    if (withCredentials) {
-      const account = await this.authService.getAccount()
-      if (!account || !account.isAuthenticated) {
-        return Promise.resolve(null)
-      }
-      //TODO handle this with Promise
-      const authData = account.authdata
-      if (!authData || !account.isAuthenticated) {
-        throw new Error("user is not logged in")
-      }
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + authData);
+    if (account) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + account.authdata);
     }
 
     localVarHeaders = localVarHeaders.set('Accept', 'application/json');

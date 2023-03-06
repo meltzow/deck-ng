@@ -49,7 +49,7 @@ export class CardsService {
       throw new Error('Required parameter card was null or undefined when calling updateCard.');
     }
 
-    return this.httpService.put(`index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`, card)
+    return this.httpService.put(`/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`, card)
   }
 
   public assignLabel2Card(boardId: number, stackId: number, cardId: number, labelId: number): Promise<Card> {

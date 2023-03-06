@@ -42,7 +42,7 @@ export class AuthenticationService implements OnInit {
     account1.username = username
     account1.password = password
     account1.authdata = window.btoa(account1.username + ':' + account1.password);
-    account1.url = url
+    account1.url = url.endsWith('/') ? url.slice(0, -1) : url
     account1.isAuthenticated = isAuth
     await this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
       this._isAuthSubj.next(isAuth)
