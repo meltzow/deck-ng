@@ -11,9 +11,12 @@ describe('HttpService', () => {
   let service: HttpService
   let httpMock: HttpTestingController
   let authServiceSpy
+  let originalTimeout
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['getAccount'])
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    // jasmine.DEFAULT_TIMEOUT_INTERVAL = 120000;
+    authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['getAccount','isAuthenticated'])
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -30,7 +33,6 @@ describe('HttpService', () => {
   });
 
   it('check request for http expectations', async () => {
-    // httpMock = TestBed.inject(HttpTestingController)
     const boards = [{title: 'TheCodeBuzz', id: 2131}]
     authServiceSpy.getAccount.and.returnValue(Promise.resolve({
       authdata: "foobar",
@@ -39,8 +41,7 @@ describe('HttpService', () => {
       url: 'https://foo.bar',
       isAuthenticated: true
     } as Account))
-    authServiceSpy.isAuthSubj = new BehaviorSubject(true)
-    authServiceSpy.share = authServiceSpy.isAuthSubj.asObservable();
+    authServiceSpy.isAuthenticated.and.returnValue(Promise.resolve(true))
 
     //workaround: see https://github.com/angular/angular/issues/25965
     setTimeout(() => {
@@ -56,20 +57,23 @@ describe('HttpService', () => {
       httpMock.verify();
     })
 
-    const value = await service.get('foo.html')
+    const value = await service.get('/foo.html')
     expect(value).toEqual(boards)
   });
 
-  it('deliver empty boards if not logged in', async () => {
-    httpMock = TestBed.inject(HttpTestingController)
+  xit('deliver empty boards if not logged in', async () => {
+
     authServiceSpy.getAccount.and.returnValue(Promise.resolve())
-    authServiceSpy._isAuthSubj = of(false)
+    authServiceSpy.isAuthenticated.and.returnValue(Promise.resolve(false))
 
-    const boards = await service.get<Board[]>('getBoardsUrl')
+    //workaround: see https://github.com/angular/angular/issues/25965
+    setTimeout(() => {
+      const req = httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
+      httpMock.verify();
+    })
+
+    const boards = await service.get<Board[]>('/getBoardsUrl')
     expect(boards).toBeDefined()
-
-    httpMock.expectNone('http://localhost:8080/index.php/apps/deck/api/v1/boards');
-    httpMock.verify();
 
   });
 

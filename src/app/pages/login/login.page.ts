@@ -3,9 +3,9 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '@app/services/authentication.service';
-import { BoardService, OverviewService } from "@app/services";
 import { BehaviorSubject } from "rxjs";
 import { NotificationService } from "@app/services/notification.service";
+import { LoginService } from "@app/services/login.service";
 
 export interface UserOptions {
   url: string
@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     public authenticationService: AuthenticationService,
-    public boardService: BoardService,
+    private loginService: LoginService,
     public router: Router,
     public notification: NotificationService
   ) {
@@ -48,8 +48,12 @@ export class LoginPage implements OnInit {
 
     if (form.valid) {
       this.isLoading.next(true)
-      const succ = await this.authenticationService.login(this.login.url).catch(reason => {
-          this.notification.error(reason.message, "login not successful")
+      const succ = await this.loginService.login(new URL(this.login.url)).catch(reason => {
+          if (reason.message == "SSLHandshakeException") {
+             this.notification.msg("ssl shaking error")
+          } else {
+            this.notification.error(reason.message, "login not successful")
+          }
         }).finally(() => this.isLoading.next(false))
       if (succ) {
         this.notification.msg("successfully logged in")
@@ -66,4 +70,8 @@ export class LoginPage implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
+  cancel() {
+    this.isLoading.next(false)
+    this.loginService.cancelLogin()
+  }
 }

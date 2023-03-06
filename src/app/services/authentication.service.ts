@@ -2,25 +2,9 @@ import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { Account } from '@app/model';
-import { BehaviorSubject, firstValueFrom, interval, Observable, switchMap, take } from "rxjs";
-import { CapacitorHttp } from "@capacitor/core";
-import { Browser } from "@capacitor/browser";
-import { Platform } from "@ionic/angular";
-import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
 
-export interface Login1 {
-  poll: {
-    token: string,
-    endpoint: string
-  }
-  login: string
-}
 
-export interface Login2  {
-  server: string,
-  loginName: string,
-  appPassword: string
-}
 @Injectable({providedIn: 'root'})
 export class AuthenticationService implements OnInit {
   public static KEY_USER = 'user'
@@ -29,9 +13,7 @@ export class AuthenticationService implements OnInit {
 
   constructor(
     private router: Router,
-    public storage: Storage,
-    private platform: Platform,
-    private httpClient: HttpClient
+    public storage: Storage
   ) {
 
   }
@@ -51,103 +33,16 @@ export class AuthenticationService implements OnInit {
     await this.storage.create()
   }
 
-  async login(url: string): Promise<boolean> {
-    const options = {
-      url: url + '/index.php/login/v2',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    };
-    if (this.platform.is("mobile")) {
-      const resp1 = await CapacitorHttp.post(options)
-        .catch(reason => {
-          console.error(reason)
-        })
-
-      return new Promise((resolve, reject) => {
-        if (resp1) {
-          const loginData = (resp1.data as Login1)
-          const options1 = {
-            url: loginData.poll.endpoint,
-            params: {token: loginData.poll.token},
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-          };
-          Browser.open({url: loginData.login})
-
-          const obs = interval(2000)
-            .pipe(
-              take(60),
-              switchMap(() => CapacitorHttp.post(options1))
-            )
-
-          const timeInterval = obs.subscribe(async (resp2) => {
-            if (resp2.status == 200) {
-              const r2 = (resp2.data as Login2)
-              timeInterval.unsubscribe()
-              const succ: boolean = await this.saveCredentials(url, r2.loginName, r2.appPassword, true)
-              resolve(succ)
-            }
-          }, error => {
-            reject(error)
-          }, () => resolve(false))
-          Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
-        } else {
-          reject('Error while connecting ' + url)
-        }
-      })
-    } else {
-      //on desktop
-      let domainUrl = ""
-      if (url != "http://localhost:8080") {
-        domainUrl = url
-      }
-      const resp1 = await firstValueFrom(this.httpClient.post<Login1>('/index.php/login/v2',null))
-        .catch(reason => {
-          console.error(reason)
-        })
-
-      return new Promise((resolve, reject) => {
-        if (resp1) {
-          const loginData = (resp1)
-          window.open(loginData.login.replace('http://localhost:8100', url), "_blank");
-          const pollUrl = loginData.poll.endpoint.replace('http://localhost:8100','')
-          const observablePoll = interval(2000)
-            .pipe(
-              take(60),
-              switchMap(() => this.httpClient.post(pollUrl, {token: loginData.poll.token},{ observe: 'response' }))
-            )
-
-          const o = {
-            next : async (resp2) => {
-              if (resp2.status == 200) {
-              const r2 = (resp2.body as Login2)
-              timeInterval.unsubscribe()
-              const succ: boolean = await this.saveCredentials(url, r2.loginName, r2.appPassword, true)
-              resolve(succ)
-            }},
-            error: (error) => reject(error),
-            complete: () => resolve(false)
-          }
-
-          const timeInterval = observablePoll.subscribe(o)
-          Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
-        } else {
-          reject('Error while connecting ' + url)
-        }
-      })
-    }
-  }
-
   public async saveCredentials(url: string, username: string, password: string, isAuth = false): Promise<boolean> {
+    if (!username || !password) {
+      return Promise.reject("no username or password must be set")
+    }
+
     const account1 = new Account()
     account1.username = username
     account1.password = password
     account1.authdata = window.btoa(account1.username + ':' + account1.password);
-    account1.url = url
+    account1.url = url.endsWith('/') ? url.slice(0, -1) : url
     account1.isAuthenticated = isAuth
     await this.storage.set(AuthenticationService.KEY_USER, account1).then(() => {
       this._isAuthSubj.next(isAuth)
@@ -183,4 +78,5 @@ export class AuthenticationService implements OnInit {
   isAuthSubj(): BehaviorSubject<boolean> {
     return this._isAuthSubj
   }
+
 }

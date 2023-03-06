@@ -1,8 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AttachmentService } from './attachment.service';
-import { AuthenticationService } from "@app/services/authentication.service";
-import { ServiceHelper } from "@app/helper/serviceHelper";
 
 describe('AttachmentService', () => {
   let service: AttachmentService;
@@ -13,7 +11,6 @@ describe('AttachmentService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: AttachmentService, useValue: attachmentServiceSpy },
-        { provide: ServiceHelper}
       ]
     });
     service = TestBed.inject(AttachmentService);

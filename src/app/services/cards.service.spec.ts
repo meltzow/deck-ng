@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CardsService } from './cards.service';
-import { ServiceHelper } from "@app/helper/serviceHelper";
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { Account, Card } from "@app/model"
@@ -20,7 +19,6 @@ describe('CardsService', () => {
       imports:[HttpClientTestingModule],
       providers: [
         { provide: AuthenticationService, useValue: authServiceSpy },
-        { provide: ServiceHelper}
       ]
     });
     service = TestBed.inject(CardsService);
@@ -51,7 +49,7 @@ describe('CardsService', () => {
     const boardId = 11
 
     setTimeout(() => {
-      const req = httpMock.expectOne('http://localhost:8080/index.php/apps/deck/api/v1/boards/11/stacks/10/cards');
+      const req = httpMock.expectOne('/index.php/apps/deck/api/v1/boards/11/stacks/10/cards');
 
       expect(req.request.method).toEqual("POST")
       expect(req.request.headers.get('Authorization')).toEqual('Basic foobar')

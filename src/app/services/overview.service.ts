@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
 import { Capabilities, Upcoming, Ocs, Board } from '@app/model';
 
-import { AuthenticationService } from "@app/services/authentication.service";
-import { ServiceHelper } from "@app/helper/serviceHelper"
 import { HttpService } from "@app/services/http.service";
 
 
@@ -21,7 +18,7 @@ export class OverviewService {
   }
 
   public async upcoming(): Promise<Upcoming[]> {
-    const ups = await this.httpService.get<Ocs>('ocs/v2.php/apps/deck/api/v1.0/overview/upcoming')
+    const ups = await this.httpService.get<Ocs>('/ocs/v2.php/apps/deck/api/v1.0/overview/upcoming')
     this.currentUpcomingsSubj.next(ups.ocs.data)
     return ups.ocs.data
   }
@@ -31,7 +28,7 @@ export class OverviewService {
   }
 
   public async getCapabilities(): Promise<Capabilities> {
-    const prom = await this.httpService.get<Capabilities>('ocs/v1.php/cloud/capabilities')
+    const prom = await this.httpService.get<Capabilities>('/ocs/v1.php/cloud/capabilities')
     this.nextCloudVersion.next(prom.ocs.data.version.string)
     this.deckVersion.next(prom.ocs.data.capabilities.deck.version)
     return prom
