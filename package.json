@@ -52,6 +52,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-task-checkbox": "^1.0.6",
     "md5-typescript": "^1.0.5",
+    "q": "^1.5.1",
     "rxjs": "^7.8.0",
     "sw-toolbox": "3.6.0",
     "swiper": "8.4.5",

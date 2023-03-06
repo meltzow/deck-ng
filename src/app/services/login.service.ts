@@ -4,6 +4,7 @@ import { HttpService } from "@app/services/http.service";
 import { AuthenticationService } from "@app/services/authentication.service";
 import { Platform } from "@ionic/angular";
 import { HttpResponse } from "@angular/common/http";
+import Q from "q";
 
 export interface LoginPollInfo {
   poll: {
@@ -22,9 +23,9 @@ export interface LoginCredentials {
 @Injectable({providedIn: 'root'})
 export class LoginService {
 
-  initialTimeoutInMs = 1000
-  incrementInMs = 2000
-  maxTimeoutInMS = 120000
+  initialTimeoutInMs = 2000
+  incrementInMs = 4000
+  maxTimeoutInMS = 30000
   cancelRetryLoop = false
 
   constructor(
@@ -67,16 +68,24 @@ export class LoginService {
         }
 
         const pollCall = () => this.httpService.post<LoginCredentials>(options1.url, options1.params, {withCredentials: false})
+        // this.RepeatUntilSuccess(pollCall()myOperation, 500).then(function(value) {
+        //   console.log("Wow, success: " + value);
+        // })
+
         this.runFunctionWithRetriesAndMaxTimeout(pollCall).then(async (resp2: LoginCredentials) => {
             // timeInterval.unsubscribe()
+            console.log("loginService: login true: " + resp2.loginName)
             this.cancelRetryLoop = true
             const succ: boolean = await this.authService.saveCredentials(server.toString(), resp2.loginName, resp2.appPassword, true)
             if (succ)
             resolve(succ)
-        }).catch(reason => reject(reason))
+        }).catch(reason => {
+          console.log("loginService: login false: " + reason)
+          reject(reason)
+        })
 
         if (this.platform.is('mobile')) {
-          // Browser.addListener('browserFinished', () => timeInterval.unsubscribe())
+          // Browser.addListener('browserFinished', () => )
         }
       } else {
         reject('Error while connecting to ' + server)
@@ -84,46 +93,37 @@ export class LoginService {
     })
   }
 
-  // Helper delay function to wait a specific amount of time.
-  private sleep(timeInMs, value?, state: 'resolve' | 'reject' = 'resolve'): Promise<unknown> {
-    console.log("delay called with " + timeInMs)
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (state === "resolve") {
-          return resolve(value);
-        } else {
-          this.cancelRetryLoop = true
-          return reject(new Error(value));
-        }
-      }, timeInMs);
-    });
-  }
-
-  // A function to just keep retrying forever.
-  private async runFunctionWithRetries(func: () => Promise<LoginCredentials>, initialTimeoutInMs: number, incrementInMs: number): Promise<unknown> {
-    console.log("runFunctionWithRetries called with " + initialTimeoutInMs)
-    return new Promise((resolve, reject) => {
-      func().then(value => resolve(value)).catch((reason) => {
-        console.log("received 404 ... waiting for auth")
-        this.sleep(initialTimeoutInMs).then(() => {
-          if (!this.cancelRetryLoop) {
-            return this.runFunctionWithRetries(func, incrementInMs, incrementInMs)
-          }
-        })
-      })
-    })
-  }
-
   // Helper to retry a function, with incrementing and a max timeout.
   private async runFunctionWithRetriesAndMaxTimeout(func: () => Promise<LoginCredentials>): Promise<unknown> {
 
-    const overallTimeout = this.sleep(this.maxTimeoutInMS, 'Authentication hit the maximum timeout', 'reject')
+    const overallTimeout = new Promise((resolve, reject) => {
+      setTimeout( () => {
+        this.cancelRetryLoop = true
+        reject(new Error('Authentication hit the maximum timeout'))
+      }, this.maxTimeoutInMS)
+    })
 
     // Keep trying to execute 'func' forever.
-    const operation = this.runFunctionWithRetries(func, this.initialTimeoutInMs, this.incrementInMs);
+    const operation = this.RepeatUntilSuccess(func, 2000)
 
     // Wait for either the retries to succeed, or the timeout to be hit.
-    return Promise.race([operation, overallTimeout]);
+    return  Promise.race([operation, overallTimeout])
+  }
+
+  RepeatUntilSuccess(operation, timeout): Q.Promise<any> {
+    const deferred = Q.defer();
+    operation().then((value) => {
+      deferred.resolve(value);
+    }, (reason) => {
+      Q.delay(timeout).done(() => {
+        if (!this.cancelRetryLoop) {
+          this.RepeatUntilSuccess(operation, timeout).done((value) => {
+            deferred.resolve(value);
+          })
+        }
+      })
+    })
+    return deferred.promise;
   }
 
   cancelLogin() {
