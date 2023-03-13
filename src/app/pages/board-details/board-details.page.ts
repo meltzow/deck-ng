@@ -12,9 +12,6 @@ import { NotificationService } from "@app/services/notification.service";
 import { TranslateService } from "@ngx-translate/core";
 import SwiperCore, {  Pagination, SwiperOptions, Swiper } from 'swiper';
 import { CdkDragDrop, CdkDragMove, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
-import { CdkScrollable, ScrollDispatcher } from "@angular/cdk/overlay";
-import { BabelAstHost } from "@angular/compiler-cli/linker/babel/src/ast/babel_ast_host";
-
 
 SwiperCore.use([Pagination, IonicSlides]);
 
@@ -196,25 +193,38 @@ export class BoardDetailsPage implements OnInit {
       );
     }
   }
+  switchToSegmentAtLeft(card: Card) {
+    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack)
+    const nextLeftStack = this.stacks.value[idx - 1]
+    if (nextLeftStack) {
+      card.stackId = nextLeftStack.id
+      this.switchSegment(nextLeftStack.id)
+    }
+  }
 
   switchToSegmentAtRight(card: Card) {
     const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack)
-    const nextStack = this.stacks.value[idx + 1]
-    if (nextStack) {
-      card.stackId = nextStack.id
-      this.switchSegment(nextStack.id)
+    const nextRightStack = this.stacks.value[idx + 1]
+    if (nextRightStack) {
+      card.stackId = nextRightStack.id
+      this.switchSegment(nextRightStack.id)
     }
   }
 
   drag($event: CdkDragMove<Card>) {
     const viewBoundaryRight = window.innerWidth
-    const pointerRight = $event.pointerPosition.x
+    const pointerHorizontal = $event.pointerPosition.x
     const offset = 100
-    if (!this.alreadySwitched && pointerRight > (viewBoundaryRight - offset)) {
+    if (!this.alreadySwitched && pointerHorizontal < (0 + offset)) {
+      this.alreadySwitched = true
+      this.switchToSegmentAtLeft($event.source.data)
+      this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
+    } else if (!this.alreadySwitched && pointerHorizontal > (viewBoundaryRight - offset)) {
       this.alreadySwitched = true
       console.log(this.alreadySwitched)
       this.switchToSegmentAtRight($event.source.data)
-    } else if (pointerRight < (viewBoundaryRight - offset)) {
+      this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
+    } else if (pointerHorizontal < (viewBoundaryRight - offset) && pointerHorizontal > (0 + offset)) {
       this.alreadySwitched = false
       console.log(this.alreadySwitched)
     }
