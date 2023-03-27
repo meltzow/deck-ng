@@ -11,7 +11,7 @@ import { CardsService } from "@app/services/cards.service";
 import { NotificationService } from "@app/services/notification.service";
 import { TranslateService } from "@ngx-translate/core";
 import SwiperCore, {  Pagination, SwiperOptions, Swiper } from 'swiper';
-import { CdkDragDrop, CdkDragMove, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, CdkDragMove, CdkDragRelease, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 
 SwiperCore.use([Pagination, IonicSlides]);
 
@@ -24,7 +24,6 @@ export class BoardDetailsPage implements OnInit {
   public board: BehaviorSubject<Board> = new BehaviorSubject(null);
   color: any = 'rgb(255,51,0)';
   stacks: BehaviorSubject<Stack[]> = new BehaviorSubject<Stack[]>(null)
-  cards: BehaviorSubject<Card[]> = new BehaviorSubject<Card[]>(null)
   private searchedCards: Card[];
   private boardId;
   @ViewChild(IonContent) foobar;
@@ -32,7 +31,7 @@ export class BoardDetailsPage implements OnInit {
   @ViewChild('swiper') slideWithNav: Swiper;
   @ViewChild(IonSegment) segment: IonSegment
   isLoading = true;
-  selectedStack: number
+  selectedStack: Stack
   config: SwiperOptions = {
     // slidesPerView: 1,
     pagination: true,
@@ -59,16 +58,8 @@ export class BoardDetailsPage implements OnInit {
     const board = await this.boardService.getBoard(parseInt(id, 10))
     this.board.next(board)
     const stacks = await this.stackService.getStacks(parseInt(id, 10)).finally(() => this.isLoading = false)
-    const cards = new Array<Card>()
-    stacks.forEach(stackItem => {
-      stackItem.cards?.forEach(card => {
-        cards.push(card)
-      })
-    })
     this.stacks.next(stacks)
-    this.selectedStack = (stacks.length ? (this.selectedStack? this.selectedStack : stacks[0].id ): -1)
-    this.cards.next(cards)
-    this.searchedCards = cards
+    this.selectedStack = (stacks.length ? (this.selectedStack? this.selectedStack : stacks[0] ): null )
   }
 
   async promptTitle() {
@@ -103,9 +94,9 @@ export class BoardDetailsPage implements OnInit {
   confirmHandler(data: { title: string }) {
     const c = new Card()
     c.title = data.title
-    c.stackId = this.selectedStack
+    c.stackId = this.selectedStack.id
     this.isLoading = true
-    this.cardService.createCard(this.boardId, this.selectedStack, c)
+    this.cardService.createCard(this.boardId, this.selectedStack.id, c)
       .then(value => {
         this.notificationService.msg('card successfully created')
         this.getBoard(this.boardId)
@@ -116,7 +107,6 @@ export class BoardDetailsPage implements OnInit {
   doRefresh(event) {
     this.board.next(null)
     this.stacks.next([])
-    this.cards.next([])
     this.getBoard(this.boardId)
   }
 
@@ -146,15 +136,15 @@ export class BoardDetailsPage implements OnInit {
   }
 
   stackIsSelected(): boolean {
-    return this.selectedStack > -1
+    return this.selectedStack?.id > -1
   }
 
   // private slideTo(index) {
   //   this.slideWithNav.slideTo(index);
   // }
 
-  private switchSegment(stackId) {
-    this.segment.value = stackId
+  private switchSegment(stack: Stack) {
+    this.segment.value = stack as any
   }
 
   onSwiper(event) {
@@ -181,9 +171,18 @@ export class BoardDetailsPage implements OnInit {
     console.log('Slide will change');
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Card[]>) {
+    console.log("DROP result: same container: " + (event.previousContainer === event.container))
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      //TODO: find out card above my new position. If there is none, we must set card.order = 0
+      // const currentStackCards = event.container.data;
+      // const cardAbove = currentStackCards[event.currentIndex - 1]
+      // if (cardAbove) {
+      //
+      // } else {
+      //   event.container.d
+      // }
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -191,23 +190,32 @@ export class BoardDetailsPage implements OnInit {
         event.previousIndex,
         event.currentIndex,
       );
+      const cardAbove = event.container.data[event.currentIndex - 1]
+      let newIndex = 0
+      if (cardAbove) {
+        newIndex = cardAbove.order + 1
+      }
+      const droppedCard = event.item.data
+      droppedCard.order = newIndex
+      this.cardService.updateCard(this.boardId, droppedCard.stackId, droppedCard.id, droppedCard)
     }
+    //
   }
   switchToSegmentAtLeft(card: Card) {
-    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack)
+    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
     const nextLeftStack = this.stacks.value[idx - 1]
     if (nextLeftStack) {
       card.stackId = nextLeftStack.id
-      this.switchSegment(nextLeftStack.id)
+      this.switchSegment(nextLeftStack)
     }
   }
 
   switchToSegmentAtRight(card: Card) {
-    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack)
+    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
     const nextRightStack = this.stacks.value[idx + 1]
     if (nextRightStack) {
       card.stackId = nextRightStack.id
-      this.switchSegment(nextRightStack.id)
+      this.switchSegment(nextRightStack)
     }
   }
 
@@ -218,15 +226,23 @@ export class BoardDetailsPage implements OnInit {
     if (!this.alreadySwitched && pointerHorizontal < (0 + offset)) {
       this.alreadySwitched = true
       this.switchToSegmentAtLeft($event.source.data)
-      this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
+      // this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
     } else if (!this.alreadySwitched && pointerHorizontal > (viewBoundaryRight - offset)) {
       this.alreadySwitched = true
-      console.log(this.alreadySwitched)
       this.switchToSegmentAtRight($event.source.data)
-      this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
+      // this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
     } else if (pointerHorizontal < (viewBoundaryRight - offset) && pointerHorizontal > (0 + offset)) {
       this.alreadySwitched = false
-      console.log(this.alreadySwitched)
     }
+  }
+
+  getCardsArrayByCard(card: Card): Card[] {
+    if (card) {
+      return this.stacks.value.find((value) => value.id == card.stackId).cards
+    }
+  }
+
+  getCardsArray(): BehaviorSubject<Card[]> {
+    return new BehaviorSubject<Card[]>(this.stacks.value.flatMap((value) => value.cards))
   }
 }

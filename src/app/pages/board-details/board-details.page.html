@@ -60,26 +60,28 @@
   </ion-fab>
 
 <ion-content [fullscreen]="true"  *ngIf="!isLoading">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+<!--  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">-->
+<!--    <ion-refresher-content></ion-refresher-content>-->
+<!--  </ion-refresher>-->
 
   <div padding >
     <ion-segment scrollable="true " [(ngModel)]="selectedStack" >
-      <ion-segment-button *ngFor="let stack of stacks | async" [value]="stack.id" (change)="segmentChanged($event)">
+      <ion-segment-button *ngFor="let stack of stacks | async" [value]="stack" (change)="segmentChanged($event)">
         {{stack.title}}
       </ion-segment-button>
     </ion-segment>
   </div>
-  <div [ngSwitch]="selectedStack" cdkDropListGroup #foobar>
-    <div *ngFor="let card of (cards | async)">
-      <ion-list cdkDropList="true" *ngSwitchCase=card.stackId >
-        <ion-item cdkDrag [cdkDragData]="card" (cdkDragMoved)="drag($event)">
+  <div cdkDropListGroup #foobar>
+      <ion-list cdkDropList="true" [cdkDropListData]="selectedStack.cards">
+        <ion-item *ngFor="let card of selectedStack.cards" cdkDrag [cdkDragData]="card" (cdkDragMoved)="drag($event)" (cdkDragDropped)="drop($event)" >
           <h2>{{card.title}}</h2>
+          <ion-label slot="end">{{card.order}}
+          </ion-label>
         </ion-item>
       </ion-list>
-    </div>
   </div>
+
+<!--  <cdk-drag-drop-connected-sorting-example></cdk-drag-drop-connected-sorting-example>-->
 
 <!--  <swiper-->
 <!--    [config]="config" #swiper (swiper)="onSwiper($event)" (slideChange)="onSlideChange($event)">-->
