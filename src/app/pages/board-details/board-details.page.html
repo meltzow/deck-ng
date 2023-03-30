@@ -43,14 +43,6 @@
       </ng-template>
     </ion-modal>
   </ion-toolbar>
-  <!--  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true">-->
-  <!--    <ion-segment-button *ngFor="let stack of (stacks | async)" value="{{stack.id}}">-->
-  <!--      <ion-label>-->
-  <!--        {{stack.title}}-->
-  <!--      </ion-label>-->
-  <!--    </ion-segment-button>-->
-  <!--    <ion-segment-button layout="icon-end" disabled="true"><ion-label><ion-icon name="add"></ion-icon></ion-label></ion-segment-button>-->
-  <!--  </ion-segment>-->
 
 </ion-header>
 <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
@@ -60,11 +52,11 @@
 </ion-fab>
 
 <ion-content [fullscreen]="true" *ngIf="!isLoading">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh()">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-segment scrollable="true" [(ngModel)]="selectedStack" (ionChange)="segmentChanged($event)">
+  <ion-segment *ngIf="stacks | async" scrollable="true" [(ngModel)]="selectedStack" (ionChange)="segmentChanged($event)">
     <ion-segment-button *ngFor="let stack of stacks | async" [value]="stack">
       {{stack.title}}
     </ion-segment-button>
@@ -74,8 +66,8 @@
     <ion-reorder-group [disabled]="!reorderAllowed" (ionItemReorder)="handleReorder($any($event))">
     <ion-item-sliding *ngFor="let card of selectedStack.cards">
 
-      <ion-item-options side="start" (ionSwipe)="swiptToRight($event)">
-        <ion-item-option color="primary" expandable="true">move to right</ion-item-option>
+      <ion-item-options *ngIf="hasRightNeighbour(selectedStack)" side="start" (ionSwipe)="moveToRight(card)">
+        <ion-item-option color="primary" expandable="true" (click)="moveToRight(card)">move to right</ion-item-option>
       </ion-item-options>
 
       <ion-item >
@@ -84,8 +76,8 @@
         <ion-reorder slot="end"></ion-reorder>
       </ion-item>
 
-      <ion-item-options side="end">
-        <ion-item-option color="primary" expandable="true">move to left</ion-item-option>
+      <ion-item-options *ngIf="hasLeftNeighbour(selectedStack)" side="end" (ionSwipe)="moveToLeft(card)">
+        <ion-item-option color="primary" expandable="true" (click)="moveToLeft(card)">move to left</ion-item-option>
       </ion-item-options>
 
     </ion-item-sliding>
