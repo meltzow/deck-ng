@@ -8,6 +8,7 @@ import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-de
 import { SharedModule } from "@app/shared.module";
 import { SwiperModule } from "swiper/angular";
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import { CdkOption } from "@angular/cdk/listbox";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     BoardDetailsPageRoutingModule,
     SharedModule,
     SwiperModule,
-    DragDropModule
+    DragDropModule,
+    CdkOption
   ],
     declarations: [BoardDetailsPage, CardPreviewComponent]
 })

@@ -4,7 +4,7 @@ import { Board } from "@app/model/board";
 import { BehaviorSubject, firstValueFrom, Subscription, timeout } from "rxjs";
 import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
-import { AlertController, IonContent, IonicSlides, IonModal, IonSegment } from "@ionic/angular";
+import { AlertController, IonContent, IonicSlides, IonModal, IonSegment, IonSlides } from "@ionic/angular";
 import { BoardService, StackService } from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CardsService } from "@app/services/cards.service";
@@ -21,6 +21,10 @@ SwiperCore.use([Pagination, IonicSlides]);
   styleUrls: ['./board-details.page.scss'],
 })
 export class BoardDetailsPage implements OnInit {
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
   public board: BehaviorSubject<Board> = new BehaviorSubject(null);
   color: any = 'rgb(255,51,0)';
   stacks: BehaviorSubject<Stack[]> = new BehaviorSubject<Stack[]>(null)
@@ -28,7 +32,7 @@ export class BoardDetailsPage implements OnInit {
   private boardId;
   @ViewChild(IonContent) foobar;
   @ViewChild(IonModal) modal: IonModal
-  @ViewChild('swiper') slideWithNav: Swiper;
+  @ViewChild('swiper') slideWithNav: IonSlides;
   @ViewChild(IonSegment) segment: IonSegment
   isLoading = true;
   selectedStack: Stack
@@ -132,20 +136,21 @@ export class BoardDetailsPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.selectedStack = ev.detail.value
-    // this.slideTo(this.selectedStack)
+    this.slideTo(this.selectedStack)
   }
 
   stackIsSelected(): boolean {
     return this.selectedStack?.id > -1
   }
 
-  // private slideTo(index) {
-  //   this.slideWithNav.slideTo(index);
-  // }
+  private slideTo(stack: Stack) {
 
-  private switchSegment(stack: Stack) {
-    this.segment.value = stack as any
+    this.slideWithNav.slideTo(stack.id);
   }
+
+  // private switchSegment(stack: Stack) {
+  //   this.segment.value = stack as any
+  // }
 
   onSwiper(event) {
     console.log(event);
@@ -172,6 +177,7 @@ export class BoardDetailsPage implements OnInit {
   }
 
   drop(event: CdkDragDrop<Card[]>) {
+    // this.slideWithNav.lockSwipes(false)
     console.log("DROP result: same container: " + (event.previousContainer === event.container))
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -202,24 +208,32 @@ export class BoardDetailsPage implements OnInit {
     //
   }
   switchToSegmentAtLeft(card: Card) {
-    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
-    const nextLeftStack = this.stacks.value[idx - 1]
-    if (nextLeftStack) {
-      card.stackId = nextLeftStack.id
-      this.switchSegment(nextLeftStack)
-    }
+    this.slideWithNav.lockSwipes(false)
+    this.slideWithNav.slidePrev()
+    // const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
+    // const nextLeftStack = this.stacks.value[idx - 1]
+    // if (nextLeftStack) {
+    //   card.stackId = nextLeftStack.id
+    //   this.switchSegment(nextLeftStack)
+    //
+    // }
   }
 
   switchToSegmentAtRight(card: Card) {
-    const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
-    const nextRightStack = this.stacks.value[idx + 1]
-    if (nextRightStack) {
-      card.stackId = nextRightStack.id
-      this.switchSegment(nextRightStack)
-    }
+    this.slideWithNav.lockSwipes(false)
+    this.slideWithNav.slideNext()
+
+    // const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
+    // const nextRightStack = this.stacks.value[idx + 1]
+    // if (nextRightStack) {
+    //   card.stackId = nextRightStack.id
+    //   this.switchSegment(nextRightStack)
+    //
+    // }
   }
 
   drag($event: CdkDragMove<Card>) {
+    this.slideWithNav.lockSwipes(true)
     const viewBoundaryRight = window.innerWidth
     const pointerHorizontal = $event.pointerPosition.x
     const offset = 100
