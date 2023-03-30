@@ -1,10 +1,10 @@
-<ion-item class="ion-justify-content-start" *ngIf="card" cdkDrag>
+<ion-item class="ion-justify-content-start" *ngIf="card" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}">
 <!--  <ion-col size="12">-->
     <ion-label>
-      <h1>{{card.title}}
-      </h1>
+      <h1>{{card.title}}</h1>
       <p>{{card.description | slice:0:100 }}</p>
     </ion-label>
     <ion-icon *ngIf="card.duedate" name="alarm-outline" slot="end"></ion-icon>
+    <ion-reorder slot="end"></ion-reorder>
 <!--  </ion-col>-->
 </ion-item>

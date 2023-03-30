@@ -94,6 +94,7 @@ export class BoardDetailsPage implements OnInit {
     const c = new Card()
     c.title = data.title
     c.stackId = this.selectedStack.value.id
+    c.order = this.selectedStack.value.cards ? this.selectedStack.value.cards[this.selectedStack.value.cards.length -1].order + 1 : 0
     this.isLoading = true
     this.cardService.createCard(this.boardId, this.selectedStack.value.id, c)
       .then(value => {
@@ -140,7 +141,6 @@ export class BoardDetailsPage implements OnInit {
     return this.selectedStack.value?.id > -1
   }
 
-
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     this.arraymove(this.selectedStack.value.cards, ev.detail.from, ev.detail.to)
     const cardAbove = this.selectedStack.value.cards[ev.detail.to -1]
@@ -178,7 +178,7 @@ export class BoardDetailsPage implements OnInit {
     return !!this.findNeighbour(this.selectedStack.value.id, 'left');
   }
 
-  private findNeighbour(stackId: number, directions: 'left' | 'right'): Stack | null {
+  findNeighbour(stackId: number, directions: 'left' | 'right'): Stack | null {
     const idx = this.stacks.value.findIndex(value => value.id == stackId)
     const newIdx = directions == "left" ? idx - 1 : idx + 1
     return this.stacks.value[newIdx];
