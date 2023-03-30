@@ -56,17 +56,17 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-segment *ngIf="stacks | async" scrollable="true" [(ngModel)]="selectedStack" (ionChange)="segmentChanged($event)">
-    <ion-segment-button *ngFor="let stack of stacks | async" [value]="stack">
+  <ion-segment *ngIf="stacks | async" scrollable="true" [value]="selectedIdx" (ionChange)="segmentChanged($event)">
+    <ion-segment-button *ngFor="let stack of stacks | async; index as i" [value]="i">
       {{stack.title}}
     </ion-segment-button>
   </ion-segment>
 
   <ion-list>
     <ion-reorder-group [disabled]="!reorderAllowed" (ionItemReorder)="handleReorder($any($event))">
-    <ion-item-sliding *ngFor="let card of selectedStack.cards">
+    <ion-item-sliding *ngFor="let card of (selectedStack | async).cards">
 
-      <ion-item-options *ngIf="hasRightNeighbour(selectedStack)" side="start" (ionSwipe)="moveToRight(card)">
+      <ion-item-options *ngIf="hasRightNeighbour()" side="start" (ionSwipe)="moveToRight(card)">
         <ion-item-option color="primary" expandable="true" (click)="moveToRight(card)">move to right</ion-item-option>
       </ion-item-options>
 
@@ -76,7 +76,7 @@
         <ion-reorder slot="end"></ion-reorder>
       </ion-item>
 
-      <ion-item-options *ngIf="hasLeftNeighbour(selectedStack)" side="end" (ionSwipe)="moveToLeft(card)">
+      <ion-item-options *ngIf="hasLeftNeighbour()" side="end" (ionSwipe)="moveToLeft(card)">
         <ion-item-option color="primary" expandable="true" (click)="moveToLeft(card)">move to left</ion-item-option>
       </ion-item-options>
 

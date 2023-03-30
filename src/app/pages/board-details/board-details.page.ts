@@ -31,7 +31,8 @@ export class BoardDetailsPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal
   @ViewChild(IonSegment) segment: IonSegment
   isLoading = true;
-  selectedStack: Stack
+  selectedIdx: number
+  selectedStack: BehaviorSubject<Stack> = new BehaviorSubject<Stack>(null)
   public reorderAllowed = true;
 
   constructor(
@@ -54,8 +55,10 @@ export class BoardDetailsPage implements OnInit {
     this.board.next(board)
     const stacks = await this.stackService.getStacks(parseInt(id, 10)).finally(() => this.isLoading = false)
     stacks.forEach(value => value.cards?.sort((a, b) => a.order - b.order))
-    this.selectedStack = (stacks.length ? (this.selectedStack? this.selectedStack : stacks[0] ): null )
     this.stacks.next(stacks)
+    this.selectedIdx =  this.selectedIdx? this.selectedIdx : 0
+    this.selectedStack.next(stacks.length ? stacks[this.selectedIdx] : null )
+
   }
 
   async promptTitle() {
@@ -90,9 +93,9 @@ export class BoardDetailsPage implements OnInit {
   confirmHandler(data: { title: string }) {
     const c = new Card()
     c.title = data.title
-    c.stackId = this.selectedStack.id
+    c.stackId = this.selectedStack.value.id
     this.isLoading = true
-    this.cardService.createCard(this.boardId, this.selectedStack.id, c)
+    this.cardService.createCard(this.boardId, this.selectedStack.value.id, c)
       .then(value => {
         this.notificationService.msg('card successfully created')
         this.getBoard(this.boardId)
@@ -128,22 +131,24 @@ export class BoardDetailsPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    this.selectedStack = ev.detail.value
+    const stack = this.stacks.value[ev.detail.value]
+    this.selectedIdx = ev.detail.value
+    this.selectedStack.next(stack)
   }
 
   stackIsSelected(): boolean {
-    return this.selectedStack?.id > -1
+    return this.selectedStack.value?.id > -1
   }
 
 
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
-    this.arraymove(this.selectedStack.cards, ev.detail.from, ev.detail.to)
-    const cardAbove = this.selectedStack.cards[ev.detail.to -1]
+    this.arraymove(this.selectedStack.value.cards, ev.detail.from, ev.detail.to)
+    const cardAbove = this.selectedStack.value.cards[ev.detail.to -1]
     let newIndex = 0
     if (cardAbove) {
       newIndex = cardAbove.order + 1
     }
-    const droppedCard = this.selectedStack.cards[ev.detail.to]
+    const droppedCard = this.selectedStack.value.cards[ev.detail.to]
     droppedCard.order = newIndex
     this.updateCard(droppedCard)
 
@@ -169,8 +174,8 @@ export class BoardDetailsPage implements OnInit {
     }
   }
 
-  hasLeftNeighbour(stack: Stack): boolean {
-    return !!this.findNeighbour(stack.id, 'left');
+  hasLeftNeighbour(): boolean {
+    return !!this.findNeighbour(this.selectedStack.value.id, 'left');
   }
 
   private findNeighbour(stackId: number, directions: 'left' | 'right'): Stack | null {
@@ -179,8 +184,8 @@ export class BoardDetailsPage implements OnInit {
     return this.stacks.value[newIdx];
   }
 
-  hasRightNeighbour(stack: Stack): boolean {
-    return !!this.findNeighbour(stack.id, 'right');
+  hasRightNeighbour(): boolean {
+    return !!this.findNeighbour(this.selectedStack.value.id, 'right');
   }
 
   private updateCard(card: Card) {
@@ -188,7 +193,6 @@ export class BoardDetailsPage implements OnInit {
     this.cardService.updateCard(this.boardId, card.stackId, card.id, card)
       .then(value => {
         this.notificationService.msg('card successfully updated')
-        this.getBoard(this.boardId)
       })
       .catch(reason => this.notificationService.error(reason))
       .finally(() => this.doRefresh())
