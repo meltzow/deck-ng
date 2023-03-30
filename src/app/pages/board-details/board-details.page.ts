@@ -4,16 +4,24 @@ import { Board } from "@app/model/board";
 import { BehaviorSubject, firstValueFrom, Subscription, timeout } from "rxjs";
 import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
-import { AlertController, IonContent, IonicSlides, IonModal, IonSegment, IonSlides } from "@ionic/angular";
+import {
+  AlertController,
+  IonContent,
+  IonicSlides,
+  IonModal,
+  IonSegment,
+  IonSlides,
+  ItemReorderEventDetail
+} from "@ionic/angular";
 import { BoardService, StackService } from "@app/services";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { CardsService } from "@app/services/cards.service";
 import { NotificationService } from "@app/services/notification.service";
 import { TranslateService } from "@ngx-translate/core";
-import SwiperCore, {  Pagination, SwiperOptions, Swiper } from 'swiper';
+// import SwiperCore, {  Pagination, SwiperOptions, Swiper } from 'swiper';
 import { CdkDragDrop, CdkDragMove, CdkDragRelease, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
 
-SwiperCore.use([Pagination, IonicSlides]);
+// SwiperCore.use([Pagination, IonicSlides]);
 
 @Component({
   selector: 'app-view-board',
@@ -26,7 +34,6 @@ export class BoardDetailsPage implements OnInit {
     speed: 400
   };
   public board: BehaviorSubject<Board> = new BehaviorSubject(null);
-  color: any = 'rgb(255,51,0)';
   stacks: BehaviorSubject<Stack[]> = new BehaviorSubject<Stack[]>(null)
   private searchedCards: Card[];
   private boardId;
@@ -36,12 +43,8 @@ export class BoardDetailsPage implements OnInit {
   @ViewChild(IonSegment) segment: IonSegment
   isLoading = true;
   selectedStack: Stack
-  config: SwiperOptions = {
-    // slidesPerView: 1,
-    pagination: true,
-    noSwiping: true
-  };
   private alreadySwitched: boolean;
+  public reorderAllowed = true;
 
   constructor(
     private boardService: BoardService,
@@ -136,119 +139,119 @@ export class BoardDetailsPage implements OnInit {
 
   segmentChanged(ev: any) {
     this.selectedStack = ev.detail.value
-    this.slideTo(this.selectedStack)
+    // this.slideTo(this.selectedStack)
   }
 
   stackIsSelected(): boolean {
     return this.selectedStack?.id > -1
   }
 
-  private slideTo(stack: Stack) {
-
-    this.slideWithNav.slideTo(stack.id);
-  }
+  // private slideTo(stack: Stack) {
+  //
+  //   this.slideWithNav.slideTo(stack.id);
+  // }
 
   // private switchSegment(stack: Stack) {
   //   this.segment.value = stack as any
   // }
 
-  onSwiper(event) {
-    console.log(event);
-  }
+  // onSwiper(event) {
+  //   console.log(event);
+  // }
 
   // async onSlideChange(ev: any) {
   //   const index = this.slideWithNav.activeIndex;
   //   this.clickSegment(index)
   // }
 
-  public slideDidChange() {
-    console.log('Slide did change');
+  // public slideDidChange() {
+  //   console.log('Slide did change');
+  //
+  //   if (!this.slideWithNav) return;
+  //
+  //   console.table({
+  //     isBeginning: this.slideWithNav.isBeginning,
+  //     isEnd: this.slideWithNav.isEnd
+  //   });
+  // }
 
-    if (!this.slideWithNav) return;
+  // public slideWillChange() {
+  //   console.log('Slide will change');
+  // }
 
-    console.table({
-      isBeginning: this.slideWithNav.isBeginning,
-      isEnd: this.slideWithNav.isEnd
-    });
-  }
+  // drop(event: CdkDragDrop<Card[]>) {
+  //   // this.slideWithNav.lockSwipes(false)
+  //   console.log("DROP result: same container: " + (event.previousContainer === event.container))
+  //   if (event.previousContainer === event.container) {
+  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //     //TODO: find out card above my new position. If there is none, we must set card.order = 0
+  //     // const currentStackCards = event.container.data;
+  //     // const cardAbove = currentStackCards[event.currentIndex - 1]
+  //     // if (cardAbove) {
+  //     //
+  //     // } else {
+  //     //   event.container.d
+  //     // }
+  //   } else {
+  //     transferArrayItem(
+  //       event.previousContainer.data,
+  //       event.container.data,
+  //       event.previousIndex,
+  //       event.currentIndex,
+  //     );
+  //     const cardAbove = event.container.data[event.currentIndex - 1]
+  //     let newIndex = 0
+  //     if (cardAbove) {
+  //       newIndex = cardAbove.order + 1
+  //     }
+  //     const droppedCard = event.item.data
+  //     droppedCard.order = newIndex
+  //     this.cardService.updateCard(this.boardId, droppedCard.stackId, droppedCard.id, droppedCard)
+  //   }
+  //   //
+  // }
+  // switchToSegmentAtLeft(card: Card) {
+  //   this.slideWithNav.lockSwipes(false)
+  //   this.slideWithNav.slidePrev()
+  //   // const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
+  //   // const nextLeftStack = this.stacks.value[idx - 1]
+  //   // if (nextLeftStack) {
+  //   //   card.stackId = nextLeftStack.id
+  //   //   this.switchSegment(nextLeftStack)
+  //   //
+  //   // }
+  // }
+  //
+  // switchToSegmentAtRight(card: Card) {
+  //   this.slideWithNav.lockSwipes(false)
+  //   this.slideWithNav.slideNext()
+  //
+  //   // const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
+  //   // const nextRightStack = this.stacks.value[idx + 1]
+  //   // if (nextRightStack) {
+  //   //   card.stackId = nextRightStack.id
+  //   //   this.switchSegment(nextRightStack)
+  //   //
+  //   // }
+  // }
 
-  public slideWillChange() {
-    console.log('Slide will change');
-  }
-
-  drop(event: CdkDragDrop<Card[]>) {
-    // this.slideWithNav.lockSwipes(false)
-    console.log("DROP result: same container: " + (event.previousContainer === event.container))
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      //TODO: find out card above my new position. If there is none, we must set card.order = 0
-      // const currentStackCards = event.container.data;
-      // const cardAbove = currentStackCards[event.currentIndex - 1]
-      // if (cardAbove) {
-      //
-      // } else {
-      //   event.container.d
-      // }
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-      const cardAbove = event.container.data[event.currentIndex - 1]
-      let newIndex = 0
-      if (cardAbove) {
-        newIndex = cardAbove.order + 1
-      }
-      const droppedCard = event.item.data
-      droppedCard.order = newIndex
-      this.cardService.updateCard(this.boardId, droppedCard.stackId, droppedCard.id, droppedCard)
-    }
-    //
-  }
-  switchToSegmentAtLeft(card: Card) {
-    this.slideWithNav.lockSwipes(false)
-    this.slideWithNav.slidePrev()
-    // const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
-    // const nextLeftStack = this.stacks.value[idx - 1]
-    // if (nextLeftStack) {
-    //   card.stackId = nextLeftStack.id
-    //   this.switchSegment(nextLeftStack)
-    //
-    // }
-  }
-
-  switchToSegmentAtRight(card: Card) {
-    this.slideWithNav.lockSwipes(false)
-    this.slideWithNav.slideNext()
-
-    // const idx = this.stacks.value.findIndex((value, index, array) => value.id == this.selectedStack.id)
-    // const nextRightStack = this.stacks.value[idx + 1]
-    // if (nextRightStack) {
-    //   card.stackId = nextRightStack.id
-    //   this.switchSegment(nextRightStack)
-    //
-    // }
-  }
-
-  drag($event: CdkDragMove<Card>) {
-    this.slideWithNav.lockSwipes(true)
-    const viewBoundaryRight = window.innerWidth
-    const pointerHorizontal = $event.pointerPosition.x
-    const offset = 100
-    if (!this.alreadySwitched && pointerHorizontal < (0 + offset)) {
-      this.alreadySwitched = true
-      this.switchToSegmentAtLeft($event.source.data)
-      // this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
-    } else if (!this.alreadySwitched && pointerHorizontal > (viewBoundaryRight - offset)) {
-      this.alreadySwitched = true
-      this.switchToSegmentAtRight($event.source.data)
-      // this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
-    } else if (pointerHorizontal < (viewBoundaryRight - offset) && pointerHorizontal > (0 + offset)) {
-      this.alreadySwitched = false
-    }
-  }
+  // drag($event: CdkDragMove<Card>) {
+  //   this.slideWithNav.lockSwipes(true)
+  //   const viewBoundaryRight = window.innerWidth
+  //   const pointerHorizontal = $event.pointerPosition.x
+  //   const offset = 100
+  //   if (!this.alreadySwitched && pointerHorizontal < (0 + offset)) {
+  //     this.alreadySwitched = true
+  //     this.switchToSegmentAtLeft($event.source.data)
+  //     // this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
+  //   } else if (!this.alreadySwitched && pointerHorizontal > (viewBoundaryRight - offset)) {
+  //     this.alreadySwitched = true
+  //     this.switchToSegmentAtRight($event.source.data)
+  //     // this.cardService.updateCard(this.boardId, $event.source.data.stackId, $event.source.data.id, $event.source.data)
+  //   } else if (pointerHorizontal < (viewBoundaryRight - offset) && pointerHorizontal > (0 + offset)) {
+  //     this.alreadySwitched = false
+  //   }
+  // }
 
   getCardsArrayByCard(card: Card): Card[] {
     if (card) {
@@ -258,5 +261,20 @@ export class BoardDetailsPage implements OnInit {
 
   getCardsArray(): BehaviorSubject<Card[]> {
     return new BehaviorSubject<Card[]>(this.stacks.value.flatMap((value) => value.cards))
+  }
+
+  handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
+    // The `from` and `to` properties contain the index of the item
+    // when the drag started and ended, respectively
+    console.log('Dragged from index', ev.detail.from, 'to', ev.detail.to);
+
+    // Finish the reorder and position the item in the DOM based on
+    // where the gesture ended. This method can also be called directly
+    // by the reorder group
+    ev.detail.complete();
+  }
+
+  swiptToRight(ev): void {
+    console.log(ev)
   }
 }

@@ -6,9 +6,6 @@ import { IonicModule } from '@ionic/angular';
 import { CardPreviewComponent } from './card-preview/card-preview.component';
 import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-details-routing.module";
 import { SharedModule } from "@app/shared.module";
-import { SwiperModule } from "swiper/angular";
-import { DragDropModule } from "@angular/cdk/drag-drop";
-import { CdkOption } from "@angular/cdk/listbox";
 
 @NgModule({
   imports: [
@@ -17,9 +14,6 @@ import { CdkOption } from "@angular/cdk/listbox";
     IonicModule,
     BoardDetailsPageRoutingModule,
     SharedModule,
-    SwiperModule,
-    DragDropModule,
-    CdkOption
   ],
     declarations: [BoardDetailsPage, CardPreviewComponent]
 })

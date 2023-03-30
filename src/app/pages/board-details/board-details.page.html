@@ -2,11 +2,11 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-back-button defaultHref="/" text="" ></ion-back-button>
+      <ion-back-button defaultHref="/" text=""></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="board | async">
       <ion-label>{{ (board | async).title }}</ion-label>
-      </ion-title>
+    </ion-title>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar disabled="true"></ion-searchbar>
@@ -30,12 +30,12 @@
         </ion-header>
         <ion-content class="ion-padding">
           <ion-item>
-            <ion-chip *ngFor="let stack of (stacks | async)" >
+            <ion-chip *ngFor="let stack of (stacks | async)">
               {{stack.title}}
             </ion-chip>
           </ion-item>
           <ion-item *ngIf="(board | async).labels">
-            <ion-chip *ngFor="let stack of (board | async).labels" >
+            <ion-chip *ngFor="let stack of (board | async).labels">
               {{stack.title}}
             </ion-chip>
           </ion-item>
@@ -43,63 +43,59 @@
       </ng-template>
     </ion-modal>
   </ion-toolbar>
-<!--  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true">-->
-<!--    <ion-segment-button *ngFor="let stack of (stacks | async)" value="{{stack.id}}">-->
-<!--      <ion-label>-->
-<!--        {{stack.title}}-->
-<!--      </ion-label>-->
-<!--    </ion-segment-button>-->
-<!--    <ion-segment-button layout="icon-end" disabled="true"><ion-label><ion-icon name="add"></ion-icon></ion-label></ion-segment-button>-->
-<!--  </ion-segment>-->
+  <!--  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selectedStack" scrollable="true">-->
+  <!--    <ion-segment-button *ngFor="let stack of (stacks | async)" value="{{stack.id}}">-->
+  <!--      <ion-label>-->
+  <!--        {{stack.title}}-->
+  <!--      </ion-label>-->
+  <!--    </ion-segment-button>-->
+  <!--    <ion-segment-button layout="icon-end" disabled="true"><ion-label><ion-icon name="add"></ion-icon></ion-label></ion-segment-button>-->
+  <!--  </ion-segment>-->
 
 </ion-header>
-  <ion-fab horizontal="end" vertical="center" slot="fixed" edge>
-    <ion-fab-button (click)="promptTitle()" [disabled]="!stackIsSelected()" >
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+<ion-fab horizontal="end" vertical="center" slot="fixed" edge>
+  <ion-fab-button (click)="promptTitle()" [disabled]="!stackIsSelected()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
-<ion-content [fullscreen]="true"  *ngIf="!isLoading">
-<!--  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">-->
-<!--    <ion-refresher-content></ion-refresher-content>-->
-<!--  </ion-refresher>-->
+<ion-content [fullscreen]="true" *ngIf="!isLoading">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-<!--  <div padding >-->
-<!--    <ion-segment scrollable="true" [(ngModel)]="selectedStack" (ionChange)="segmentChanged($event)" >-->
-<!--      <ion-segment-button *ngFor="let stack of stacks | async" [value]="stack" >-->
-<!--        {{stack.title}}-->
-<!--      </ion-segment-button>-->
-<!--    </ion-segment>-->
-<!--  </div>-->
+  <ion-segment scrollable="true" [(ngModel)]="selectedStack" (ionChange)="segmentChanged($event)">
+    <ion-segment-button *ngFor="let stack of stacks | async" [value]="stack">
+      {{stack.title}}
+    </ion-segment-button>
+  </ion-segment>
 
-  <ion-slides #swiper>
-  <ion-slide cdkDropListGroup scrollable="true" *ngFor="let stack of stacks | async"  style="width:100%">
-      <ion-list cdkDropList="true" [cdkDropListData]="stack.cards" style="width:100%">
-        <ion-item *ngFor="let card of stack.cards" cdkDrag [cdkDragData]="card" (cdkDragMoved)="drag($event)" (cdkDragDropped)="drop($event)" >
-          <h2>{{card.title}}</h2>
-          <ion-label slot="end">{{card.order}}
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-slide >
-  </ion-slides>
+  <ion-list>
+    <ion-reorder-group [disabled]="!reorderAllowed" (ionItemReorder)="handleReorder($any($event))">
+    <ion-item-sliding *ngFor="let card of selectedStack.cards">
 
+      <ion-item-options side="start" (ionSwipe)="swiptToRight($event)">
+        <ion-item-option color="primary" expandable="true">move to right</ion-item-option>
+      </ion-item-options>
 
-<!--  <swiper-->
-<!--    [config]="config" #swiper (swiper)="onSwiper($event)" (slideChange)="onSlideChange($event)">-->
-<!--      <ng-template swiperSlide  ">-->
-<!--  <div cdkDropListGroup >-->
-<!--        <div cdkDropList="true" class="example-list" (cdkDropListDropped)="drop($event)" [cdkDropListData]="stack.cards" *ngFor="let stack of (this.stacks | async)" size="100%">-->
-<!--         <app-card-preview *ngFor="let card of stack.cards" [card]="card" [selectedStack]="selectedStack"  [board]="board | async">-->
-<!--         </app-card-preview>-->
-<!--        </div>-->
-<!--  </div>-->
-<!--      </ng-template>-->
-<!--  </swiper>-->
+      <ion-item >
+        <h2>{{card.title}}</h2>
+        <ion-label slot="end">{{card.order}}</ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="primary" expandable="true">move to left</ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+    </ion-reorder-group>
+
+  </ion-list>
 </ion-content>
 
 <ion-content *ngIf="isLoading">
-  <ion-list >
+  <ion-list>
     <ion-list-header>
       <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
     </ion-list-header>
