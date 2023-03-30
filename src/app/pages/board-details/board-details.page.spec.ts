@@ -5,7 +5,7 @@ import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router
 import { BoardDetailsPage } from './board-details.page';
 import { HttpClientModule } from "@angular/common/http";
 import { AuthenticationService, BoardService, StackService } from "@app/services";
-import { of } from "rxjs";
+import {BehaviorSubject, of} from "rxjs";
 import { BoardDetailsPageRoutingModule } from "@app/pages/board-details/board-details-routing.module";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -59,7 +59,7 @@ describe('BoardDetailsPage', () => {
 
     await component.ionViewWillEnter()
 
-    expect(component.selectedStack).toEqual(2);
+    expect(component.selectedIdx).toEqual(0);
   });
 
 });
