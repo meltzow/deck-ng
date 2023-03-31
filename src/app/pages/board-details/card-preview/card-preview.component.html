@@ -2,7 +2,6 @@
 <!--  <ion-col size="12">-->
     <ion-label>
       <h1>{{card.title}}</h1>
-      <p>{{card.description | slice:0:100 }}</p>
     </ion-label>
     <ion-icon *ngIf="card.duedate" name="alarm-outline" slot="end"></ion-icon>
     <ion-reorder slot="end"></ion-reorder>
