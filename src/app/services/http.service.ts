@@ -143,7 +143,41 @@ export class HttpService {
         headers: headers
       }))
     }
+  }
 
+  public async delete<T>(url: string, options1: options = {withCredentials: true}): Promise<T> {
+    let account
+    if (options1.withCredentials) {
+      account = await this.authService.getAccount()
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.platform.is("mobile")) {
+        url = account.url + url
+      }
+    }
+
+    if (this.platform.is("mobile")) {
+      const options = {
+        url: url,
+        headers: await this.getHeaders(account),
+      };
+      return new Promise((resolve, reject) =>
+        (Cap.CapacitorHttp as CapacitorHttpPlugin).delete(options)
+          .then(value => {
+            resolve(value.data as T)
+          }).catch(reason => {
+          console.error(reason)
+          reject(reason)
+        })
+      )
+    } else {
+      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
+      return firstValueFrom(this.httpClient.delete<T>(url, {
+        observe: 'body',
+        responseType: 'json',
+        headers: headers
+      }))
+    }
   }
 
   private async addDefaultHeaders(account?: Account, isOCSRequest = false): Promise<HttpHeaders> {

@@ -52,6 +52,19 @@ export class CardsService {
     return this.httpService.put(`/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`, card)
   }
 
+  public deleteCard(boardId: number, stackId: number, cardId: number): Promise<Card>  {
+    if (boardId === null || boardId === undefined) {
+      throw new Error('Required parameter boardId was null or undefined when calling delete Card.');
+    }
+    if (stackId === null || stackId === undefined) {
+      throw new Error('Required parameter stackId was null or undefined when calling delete Card.');
+    }
+    if (cardId === null || cardId === undefined) {
+      throw new Error('Required parameter cardId was null or undefined when calling delete Card.');
+    }
+    return this.httpService.delete<Card>(`/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}`)
+  }
+
   public assignLabel2Card(boardId: number, stackId: number, cardId: number, labelId: number): Promise<Card> {
 
     if (boardId === null || boardId === undefined) {

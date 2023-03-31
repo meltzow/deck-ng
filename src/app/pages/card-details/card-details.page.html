@@ -10,6 +10,12 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-fab horizontal="end" vertical="top" slot="fixed">
+  <ion-fab-button (click)="confirmDelete()"  >
+    <ion-icon name="trash"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
 <ion-content fullscreen="true" *ngIf="!isLoading">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh()">
     <ion-refresher-content></ion-refresher-content>

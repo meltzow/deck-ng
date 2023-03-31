@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">deck-ng</string>
-    <string name="title_activity_main">deck-ng</string>
+    <string name="app_name">deck ng</string>
+    <string name="title_activity_main">deck ng</string>
     <string name="package_name">net.meltzow.deckng</string>
     <string name="custom_url_scheme">net.meltzow.deckng</string>
 </resources>

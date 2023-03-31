@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Card } from "@app/model/card";
-import { CardsService } from "@app/services/cards.service";
-import { ActivatedRoute } from "@angular/router";
-import { Board, Label } from "@app/model";
-import { BoardService } from "@app/services";
-import { MarkdownService } from "@app/services/markdown.service";
-import { SafeHtml } from "@angular/platform-browser";
-import { IonDatetimeButton } from "@ionic/angular";
-import { NotificationService } from "@app/services/notification.service";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Card} from "@app/model/card";
+import {CardsService} from "@app/services/cards.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Board, Label} from "@app/model";
+import {BoardService} from "@app/services";
+import {MarkdownService} from "@app/services/markdown.service";
+import {SafeHtml} from "@angular/platform-browser";
+import {AlertController, IonDatetimeButton} from "@ionic/angular";
+import {NotificationService} from "@app/services/notification.service";
 
 
 @Component({
@@ -30,11 +30,14 @@ export class CardDetailsPage implements OnInit {
   @ViewChild("textareaDescription") textareaDescription;
   @ViewChild("datetime") datetime;
   isPopoverOpen: boolean;
+
   constructor(private cardService: CardsService,
               private boardService: BoardService,
               private activatedRoute: ActivatedRoute,
               private markDownService: MarkdownService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private alertController: AlertController,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -52,7 +55,7 @@ export class CardDetailsPage implements OnInit {
     const card = await this.cardService.getCard(this.boardId, this.stackId, this.cardId)
     this.card = card
     this.plainText = card.description
-    this.content = card.description ? this.markDownService.render(card.description):'add description'
+    this.content = card.description ? this.markDownService.render(card.description) : 'add description'
     this.board = await this.boardService.getBoard(this.boardId)
     this.isLoading = false
   }
@@ -62,7 +65,7 @@ export class CardDetailsPage implements OnInit {
       if (this.plainText && this.plainText != '') {
         const plainText = this.plainText
         this.markdownText = this.markdownService.parse(plainText.toString())
-        this.content = this.markdownText?this.markdownText:'add description'
+        this.content = this.markdownText ? this.markdownText : 'add description'
       } else {
         this.toggleVal = false
         this.content = 'add description'
@@ -90,8 +93,8 @@ export class CardDetailsPage implements OnInit {
     const added = after.filter((x) => !before.includes(x));
     //TODO: enable loading
     removed.forEach((id) => {
-        this.cardService.removeLabel2Card(this.boardId, this.card.stackId, this.card.id,id)
-      })
+      this.cardService.removeLabel2Card(this.boardId, this.card.stackId, this.card.id, id)
+    })
     added.forEach((id) => {
       this.cardService.assignLabel2Card(this.boardId, this.card.stackId, this.card.id, id)
     })
@@ -132,4 +135,35 @@ export class CardDetailsPage implements OnInit {
     this.datetime.confirm(true)
     this.updateCard()
   }
+
+  async confirmDelete() {
+    const alert = await this.alertController.create({
+      header: 'Confirmation Delete',
+      message: 'Are you sure you want to delete this issue ?',
+      backdropDismiss: false,
+      cssClass: 'confirm-exit-alert',
+      buttons: [{
+        text: 'cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('deletion not confirmed');
+        }
+      }, {
+        text: 'delete',
+        handler: () => {
+          this.isLoading = true
+          this.cardService.deleteCard(this.boardId, this.stackId, this.cardId)
+            .then(value => {
+              this.notificationService.msg('card successfully deleted')
+              this.router.navigate(['/boards', this.boardId]);
+            })
+            .catch(reason => this.notificationService.error(reason))
+            .finally(() => this.isLoading = false )
+        }
+      }]
+    });
+
+    await alert.present();
+  }
+
 }
