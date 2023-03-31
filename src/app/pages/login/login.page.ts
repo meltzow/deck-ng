@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
       this.isLoading.next(true)
       const succ = await this.loginService.login(new URL(this.login.url)).catch(reason => {
           if (reason.message == "SSLHandshakeException") {
-             this.notification.msg("ssl shaking error")
+             this.notification.msg("ssl handshaking error")
           } else {
             this.notification.error(reason.message, "login not successful")
           }

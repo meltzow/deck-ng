@@ -26,5 +26,6 @@
   "server url not found": "Server Adresse nicht gefunden",
   "check username and password" : "bitte überprüfe Benutzername und Passwort",
   "Request not successful": "Anfrage nicht erfolgreich",
-  "barcode must contain url, user and password": "Barcode muss URL, Benutzer und Passwort beinhalten"
+  "barcode must contain url, user and password": "Barcode muss URL, Benutzer und Passwort beinhalten",
+  "move to": "verschiebe nach"
 }
