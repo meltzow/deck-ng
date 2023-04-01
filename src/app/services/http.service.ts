@@ -23,12 +23,19 @@ export class HttpService {
               private platform: Platform) {
   }
 
-  private async getHeaders(account? : Account): Promise<Cap.HttpHeaders> {
-    const headers: Cap.HttpHeaders = {
+  private async getHeaders(account? : Account, isOCSRequest = false): Promise<Cap.HttpHeaders> {
+    let headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'OCS-APIRequest': 'true'
     }
+    if (isOCSRequest) {
+      headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'OCS-APIRequest': 'true'
+      }
+    }
+
     if (account) {
       if (!account.isAuthenticated) {
         return Promise.resolve(null)
@@ -52,7 +59,7 @@ export class HttpService {
     if (this.platform.is("mobile")) {
       const postoptions = {
         url: url,
-        headers: await this.getHeaders(account),
+        headers: await this.getHeaders(account,url.startsWith('/ocs')),
         data: body
       }
 
@@ -88,7 +95,7 @@ export class HttpService {
     if (this.platform.is("mobile")) {
       const options = {
         url: url,
-        headers: await this.getHeaders(account),
+        headers: await this.getHeaders(account,url.startsWith('/ocs')),
         data: body
       };
       return new Promise((resolve, reject) =>
@@ -124,7 +131,7 @@ export class HttpService {
     if (this.platform.is("mobile")) {
       const options = {
         url: url,
-        headers: await this.getHeaders(account),
+        headers: await this.getHeaders(account,url.startsWith('/ocs')),
       };
       return new Promise((resolve, reject) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).get(options)
@@ -159,7 +166,7 @@ export class HttpService {
     if (this.platform.is("mobile")) {
       const options = {
         url: url,
-        headers: await this.getHeaders(account),
+        headers: await this.getHeaders(account,url.startsWith('/ocs')),
       };
       return new Promise((resolve, reject) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).delete(options)

@@ -64,7 +64,7 @@
   </ion-segment>
 
   <ion-list>
-    <ion-reorder-group [disabled]="!reorderAllowed" (ionItemReorder)="handleReorder($any($event))">
+    <ion-reorder-group (ionItemReorder)="handleReorder($any($event))">
     <ion-item-sliding *ngFor="let card of (selectedStack | async)?.cards">
 
       <ion-item-options *ngIf="hasRightNeighbour()" side="start" (ionSwipe)="moveToRight(card)">

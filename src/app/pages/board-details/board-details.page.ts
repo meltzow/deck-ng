@@ -6,9 +6,7 @@ import { Stack } from "@app/model/stack";
 import { Card } from "@app/model/card";
 import {
   AlertController,
-  IonContent,
   IonModal,
-  IonSegment,
   ItemReorderEventDetail
 } from "@ionic/angular";
 import { BoardService, StackService } from "@app/services";
@@ -27,13 +25,10 @@ export class BoardDetailsPage implements OnInit {
   stacks: BehaviorSubject<Stack[]> = new BehaviorSubject<Stack[]>(null)
   private searchedCards: Card[];
   private boardId;
-  @ViewChild(IonContent) foobar;
   @ViewChild(IonModal) modal: IonModal
-  @ViewChild(IonSegment) segment: IonSegment
-  isLoading = true;
+  isLoading = false;
   selectedIdx: number
   selectedStack: BehaviorSubject<Stack> = new BehaviorSubject<Stack>(null)
-  public reorderAllowed = true;
 
   constructor(
     private boardService: BoardService,
