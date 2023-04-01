@@ -15,7 +15,7 @@
   </div>
 
   <ion-button  class="barcode-btn" (click)="onBarcode()" size="large" ><ion-icon name="barcode-outline"></ion-icon></ion-button>
-  <form #loginForm="ngForm" novalidate>
+  <form #loginForm="ngForm" >
     <ion-list *ngIf="!(isLoading | async)">
       <ion-item>
         <ion-label position="stacked" color="primary" translate="">server_url</ion-label>
@@ -29,7 +29,7 @@
           url_required
         </p>
       </ion-text>
-      <ion-button (click)="onLogin(loginForm)" type="submit" translate="" aria-label="login">login</ion-button>
+      <ion-button (click)="onLogin(loginForm)" type="submit" [disabled]="!loginForm.valid" translate="" aria-label="login">login</ion-button>
     </ion-list>
   </form>
 

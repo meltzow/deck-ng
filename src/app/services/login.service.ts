@@ -43,7 +43,7 @@ export class LoginService {
       //using proxy
       url = '/index.php/login/v2'
     } else {
-      url = server.toString() + '/index.php/login/v2'
+      url = server.toString() + 'index.php/login/v2'
     }
 
     const resp1 = await this.httpService.post<LoginPollInfo>(url, null, {withCredentials: false})

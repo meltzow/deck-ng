@@ -1,6 +1,6 @@
 {
 	"appId": "net.meltzow.deckng",
-	"appName": "deck-ng",
+	"appName": "deck NG",
 	"webDir": "www",
 	"bundledWebRuntime": false,
 	"plugins": {
