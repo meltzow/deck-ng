@@ -1,3 +1,9 @@
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+require 'spaceship'
+Spaceship::ConnectAPI::App.const_set('ESSENTIAL_INCLUDES', 'appStoreVersions')
+// THE OTHER CONTENT
+
 ios_path = "./ios/App/"
 project = ios_path + "App.xcodeproj"
 workspace = ios_path + "App.xcworkspace"
