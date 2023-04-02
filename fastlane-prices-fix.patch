@@ -1,0 +1,11 @@
+--- vendor/bundle/ruby/3.2.0/gems/fastlane-2.211.0/spaceship/lib/spaceship/connect_api/models/app-original.rb	2023-03-10 18:42:18.000000000 -0500
++++ vendor/bundle/ruby/3.2.0/gems/fastlane-2.211.0/spaceship/lib/spaceship/connect_api/models/app.rb	2023-03-10 18:42:39.000000000 -0500
+@@ -59,7 +59,7 @@
+
+       ESSENTIAL_INCLUDES = [
+         "appStoreVersions",
+-        "prices"
++#        "prices"
+       ].join(",")
+
+       def self.type
