@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.0' # Not needed with a .ruby-version file
+        ruby-version: '3.1' # Not needed with a .ruby-version file
         bundler-cache: true
     - run: |
         brew install fastlane
