@@ -52,12 +52,12 @@ export class HttpService {
       account = await this.authService.getAccount()
       if (!url.startsWith("/"))
         throw Error("when using credentials the url must be start with '/'")
-      if (this.platform.is("mobile")) {
+      if (this.isNativePlatform()) {
         url = account.url + url
       }
     }
 
-    if (this.platform.is("mobile")) {
+    if (this.isNativePlatform()) {
       const postoptions = {
         url: url,
         headers: await this.getHeaders(account,url.startsWith('/ocs')),
@@ -82,18 +82,21 @@ export class HttpService {
     }
   }
 
+  private isNativePlatform() {
+    return this.platform.platforms().find(value => value == "android" || value == "ios")}
+
   public async put<T>(url: string, body: any, options1: options = {withCredentials: true}): Promise<T> {
     let account
     if (options1.withCredentials) {
       account = await this.authService.getAccount()
       if (!url.startsWith("/"))
         throw Error("when using credentials the url must be start with '/'")
-      if (this.platform.is("mobile")) {
+      if (this.isNativePlatform()) {
         url = account.url + url
       }
     }
 
-    if (this.platform.is("mobile")) {
+    if (this.isNativePlatform()) {
       const options = {
         url: url,
         headers: await this.getHeaders(account,url.startsWith('/ocs')),
@@ -124,12 +127,12 @@ export class HttpService {
       account = await this.authService.getAccount()
       if (!url.startsWith("/"))
         throw Error("when using credentials the url must be start with '/'")
-      if (this.platform.is("mobile")) {
+      if (this.isNativePlatform()) {
         url = account.url + url
       }
     }
 
-    if (this.platform.is("mobile")) {
+    if (this.isNativePlatform()) {
       const options = {
         url: url,
         headers: await this.getHeaders(account,url.startsWith('/ocs')),
@@ -159,12 +162,12 @@ export class HttpService {
       account = await this.authService.getAccount()
       if (!url.startsWith("/"))
         throw Error("when using credentials the url must be start with '/'")
-      if (this.platform.is("mobile")) {
+      if (this.isNativePlatform()) {
         url = account.url + url
       }
     }
 
-    if (this.platform.is("mobile")) {
+    if (this.isNativePlatform()) {
       const options = {
         url: url,
         headers: await this.getHeaders(account,url.startsWith('/ocs')),
