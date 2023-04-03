@@ -27,6 +27,7 @@ export class HttpService {
     let headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'OCS-APIRequest': 'true'
     }
     if (isOCSRequest) {
       headers = {

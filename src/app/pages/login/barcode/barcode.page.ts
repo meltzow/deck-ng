@@ -67,7 +67,7 @@ export class BarcodePage implements OnInit, OnDestroy {
       // if the result has content
       if (result.hasContent) {
         this.parseContent(result.content)
-        this.authenticationService.saveCredentials(this.barcode.url, this.barcode.user, this.barcode.password, true)
+        await this.authenticationService.saveCredentials(this.barcode.url, this.barcode.user, this.barcode.password, true)
         this.stopScan()
       }
     } else {
@@ -76,7 +76,7 @@ export class BarcodePage implements OnInit, OnDestroy {
     }
   }
 
-  public parseContent(content: string) {
+  private parseContent(content: string) {
     const ary = content.split('&')
     this.barcode = {}
     this.barcode.user = ary[0].replace('nc://login/user:', '')
