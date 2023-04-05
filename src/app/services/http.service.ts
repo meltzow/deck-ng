@@ -61,8 +61,9 @@ export class HttpService {
 
     if (this.isNativePlatform()) {
       const headers = await this.getHeaders(account,url.startsWith('/ocs'))
-      headers['Content-Type'] = 'application/json'
-
+      if (body) {
+        headers['Content-Type'] = 'application/json'
+      }
       const postoptions = {
         url: url,
         headers: headers,
@@ -104,7 +105,9 @@ export class HttpService {
 
     if (this.isNativePlatform()) {
       const headers = await this.getHeaders(account,url.startsWith('/ocs'))
-      headers['Content-Type'] = 'application/json'
+      if (body) {
+        headers['Content-Type'] = 'application/json'
+      }
       const options = {
         url: url,
         headers: headers,
