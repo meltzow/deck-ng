@@ -60,9 +60,12 @@ export class HttpService {
     }
 
     if (this.isNativePlatform()) {
+      const headers = await this.getHeaders(account,url.startsWith('/ocs'))
+      headers['Content-Type'] = 'application/json'
+
       const postoptions = {
         url: url,
-        headers: await this.getHeaders(account,url.startsWith('/ocs')),
+        headers: headers,
         data: body
       }
 
@@ -100,9 +103,11 @@ export class HttpService {
     }
 
     if (this.isNativePlatform()) {
+      const headers = await this.getHeaders(account,url.startsWith('/ocs'))
+      headers['Content-Type'] = 'application/json'
       const options = {
         url: url,
-        headers: await this.getHeaders(account,url.startsWith('/ocs')),
+        headers: headers,
         data: body
       };
       return new Promise((resolve, reject) =>
