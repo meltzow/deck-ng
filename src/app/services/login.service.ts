@@ -25,7 +25,7 @@ export class LoginService {
 
   initialTimeoutInMs = 2000
   incrementInMs = 4000
-  maxTimeoutInMS = 30000
+  maxTimeoutInMS = 120000
   cancelRetryLoop = false
 
   constructor(
