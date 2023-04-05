@@ -26,13 +26,15 @@ export class HttpService {
   private async getHeaders(account? : Account, isOCSRequest = false): Promise<Cap.HttpHeaders> {
     let headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      //TODO: check this header out: without it there no CORS
+      // 'Content-Type': 'application/json',
       'OCS-APIRequest': 'true'
     }
     if (isOCSRequest) {
       headers = {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        //TODO: check this header out: without it there no CORS
+        // 'Content-Type': 'application/json',
         'OCS-APIRequest': 'true'
       }
     }
@@ -74,7 +76,8 @@ export class HttpService {
         }
       })
     } else {
-      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
+      let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
+      headers = headers.set('Content-Type', 'application/json');
       return firstValueFrom(this.httpClient.post<T>(url,
         body,
         {headers: headers}
@@ -112,7 +115,8 @@ export class HttpService {
         })
       )
     } else {
-      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
+      let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
+      headers = headers.set('Content-Type', 'application/json');
       return firstValueFrom(this.httpClient.put<T>(url,
         body,
         {headers: headers}
@@ -199,7 +203,8 @@ export class HttpService {
     }
 
     localVarHeaders = localVarHeaders.set('Accept', 'application/json');
-    localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
+    //TODO: check this header out: without it there no CORS
+    // localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
     if (isOCSRequest) {
       localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
     }
