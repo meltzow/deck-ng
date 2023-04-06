@@ -1,1 +1,1 @@
-issue management for nextcloud
+issuemanagement for nextcloud
