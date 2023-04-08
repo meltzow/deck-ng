@@ -8,42 +8,41 @@
       <ion-label>{{ (board | async).title }}</ion-label>
     </ion-title>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar disabled="true"></ion-searchbar>
-    <ion-buttons slot="primary">
-      <ion-button id="open-modal" expand="block" disabled="true">
-        <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-      <ng-template>
-        <ion-header>
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-button (click)="cancel()">Cancel</ion-button>
-            </ion-buttons>
-            <ion-title>Filter</ion-title>
-            <ion-buttons slot="end">
-              <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-          <ion-item>
-            <ion-chip *ngFor="let stack of (stacks | async)">
-              {{stack.title}}
-            </ion-chip>
-          </ion-item>
-          <ion-item *ngIf="(board | async).labels">
-            <ion-chip *ngFor="let stack of (board | async).labels">
-              {{stack.title}}
-            </ion-chip>
-          </ion-item>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
-  </ion-toolbar>
-
+<!--  <ion-toolbar>-->
+<!--    <ion-searchbar disabled="true"></ion-searchbar>-->
+<!--    <ion-buttons slot="primary">-->
+<!--      <ion-button id="open-modal" expand="block" disabled="true">-->
+<!--        <ion-icon slot="icon-only" name="filter-outline"></ion-icon>-->
+<!--      </ion-button>-->
+<!--    </ion-buttons>-->
+  <!--  </ion-toolbar>-->
+<!--    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">-->
+<!--      <ng-template>-->
+<!--        <ion-header>-->
+<!--          <ion-toolbar>-->
+<!--            <ion-buttons slot="start">-->
+<!--              <ion-button (click)="cancel()">Cancel</ion-button>-->
+<!--            </ion-buttons>-->
+<!--            <ion-title>Filter</ion-title>-->
+<!--            <ion-buttons slot="end">-->
+<!--              <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>-->
+<!--            </ion-buttons>-->
+<!--          </ion-toolbar>-->
+<!--        </ion-header>-->
+<!--        <ion-content class="ion-padding">-->
+<!--          <ion-item>-->
+<!--            <ion-chip *ngFor="let stack of (stacks | async)">-->
+<!--              {{stack.title}}-->
+<!--            </ion-chip>-->
+<!--          </ion-item>-->
+<!--          <ion-item *ngIf="(board | async).labels">-->
+<!--            <ion-chip *ngFor="let stack of (board | async).labels">-->
+<!--              {{stack.title}}-->
+<!--            </ion-chip>-->
+<!--          </ion-item>-->
+<!--        </ion-content>-->
+<!--      </ng-template>-->
+<!--    </ion-modal>-->
 </ion-header>
 
 <ion-fab horizontal="end" vertical="top" slot="fixed">
@@ -59,7 +58,7 @@
 
   <ion-segment *ngIf="stacks | async" scrollable="true" [value]="selectedIdx" (ionChange)="segmentChanged($event)">
     <ion-segment-button *ngFor="let stack of stacks | async; index as i" [value]="i">
-      {{stack.title}}
+      {{stack.title}} ({{stack.cards?stack.cards.length:0}})
     </ion-segment-button>
   </ion-segment>
 
