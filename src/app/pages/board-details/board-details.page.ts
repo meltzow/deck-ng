@@ -100,7 +100,12 @@ export class BoardDetailsPage implements OnInit {
       .finally(() => this.isLoading = false )
   }
 
-  doRefresh() {
+  doRefresh(event) {
+    this.refreshBoard();
+    event.target.complete();
+  }
+
+  private refreshBoard() {
     this.board.next(null)
     this.stacks.next([])
     this.getBoard(this.boardId)
@@ -190,7 +195,7 @@ export class BoardDetailsPage implements OnInit {
         this.notificationService.msg('card successfully updated')
       })
       .catch(reason => this.notificationService.error(reason))
-      .finally(() => this.doRefresh())
+      .finally(() => this.refreshBoard())
   }
 
   private arraymove(arr, fromIndex, toIndex) {

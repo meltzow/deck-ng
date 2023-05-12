@@ -50,7 +50,7 @@ export class CardDetailsPage implements OnInit {
     this.doRefresh()
   }
 
-  async doRefresh() {
+  async doRefresh(event?) {
     this.isLoading = true
     const card = await this.cardService.getCard(this.boardId, this.stackId, this.cardId)
     this.card = card
@@ -58,6 +58,7 @@ export class CardDetailsPage implements OnInit {
     this.content = card.description ? this.markDownService.render(card.description) : 'add description'
     this.board = await this.boardService.getBoard(this.boardId)
     this.isLoading = false
+    event?.target.complete();
   }
 
   convert(this) {
