@@ -77,10 +77,10 @@
         </ion-item>
         <ion-item>
           <ion-icon name="people-outline"></ion-icon>
-          <ion-select [compareWith]="labelPreselected" placeholder="Select assignees" [multiple]="true" disabled="true"
-                      [ngModel]="card.assignedUsers">
-            <ion-select-option *ngFor="let assignee of card.assignedUsers"
-                               [value]="assignee">{{assignee.participant.displayname}}</ion-select-option>
+          <ion-select [compareWith]="userPreselected" placeholder="Select assignees" [multiple]="true"
+                      (ionChange)="handleAssigneeChange($event)" [ngModel]="card.assignedUsers" >
+            <ion-select-option *ngFor="let user of board.users"
+                               [value]="user.uid">{{user.displayname}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>

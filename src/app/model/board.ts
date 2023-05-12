@@ -15,7 +15,7 @@ export class Board {
     labels?: Array<Label>;
     acl?: Array<string>;
     permissions?: BoardPermissions;
-    users?: Array<number>;
+    users?: Array<User>;
     shared?: number;
     deletedAt?: number;
     lastModified?: number;

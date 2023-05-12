@@ -101,6 +101,29 @@ export class CardDetailsPage implements OnInit {
     })
   }
 
+  async handleAssigneeChange($event: any) {
+    const before = this.card.assignedUsers.map(value => value.participant.uid)
+    const after = $event.detail.value
+    const removed = before.filter((x) => !after.includes(x));
+    const added = after.filter((x) => !before.includes(x));
+    this.isLoading = true
+    for (const id of removed) {
+      await this.cardService.unassignUser2Card(this.boardId, this.card.stackId, this.card.id, id)
+    }
+    for (const id of added) {
+      await this.cardService.assignUser2Card(this.boardId, this.card.stackId, this.card.id, id)
+    }
+    await this.doRefresh()
+  }
+
+  userPreselected(assignment: Assignment | string, uid: string): boolean {
+    if ((assignment as Assignment).participant !== undefined) {
+      return (assignment as Assignment).participant.uid == uid
+    } else {
+      return assignment == uid
+    }
+  }
+
   labelPreselected(label1: Label, label2: Label): boolean {
     return label1 && label2 ? label1.id === label2.id : label1 === label2;
   }
