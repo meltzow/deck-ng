@@ -9,10 +9,10 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content fullscreen="true" *ngIf="!isLoading" class="ion-padding">
-
+<ion-content fullscreen="true" class="ion-padding">
+  <ion-loading [isOpen]="isLoading" message="Sorry, i'm working..."></ion-loading>
   <ion-fab horizontal="end" vertical="top" slot="fixed">
-    <ion-fab-button (click)="confirmDelete()"  >
+    <ion-fab-button (click)="confirmDelete()" >
       <ion-icon name="trash"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -21,7 +21,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-card>
+  <ion-card *ngIf="card && board">
     <ion-card-header>
             <ion-card-title>
               <app-inline-edit [ngModel]="card.title" [required]="true" type="text"
@@ -87,30 +87,4 @@
 
     </ion-card-content>
   </ion-card>
-
-
-</ion-content>
-
-<ion-content *ngIf="isLoading">
-  <ion-list>
-    <ion-list-header>
-      <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
-    </ion-list-header>
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-      </ion-thumbnail>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
 </ion-content>

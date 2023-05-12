@@ -9,6 +9,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen="true" class="ion-padding">
+  <ion-loading [isOpen]="isLoading" message="Sorry, i'm working..."></ion-loading>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -49,26 +50,5 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-list>
-  <ion-list *ngIf="(isLoading | async)">
-    <ion-list-header>
-      <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
-    </ion-list-header>
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-      </ion-thumbnail>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
   </ion-list>
 </ion-content>
