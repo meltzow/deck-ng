@@ -11,6 +11,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true"  class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-loading [isOpen]="isLoading" message="Sorry, i'm working..."></ion-loading>
   <ion-fab horizontal="end" vertical="top" slot="fixed">
     <ion-fab-button (click)="promptTitle()" [disabled]="!stackIsSelected()">
