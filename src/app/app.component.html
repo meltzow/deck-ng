@@ -74,6 +74,15 @@
         </ion-list-header>
 
         <ion-menu-toggle autoHide="false">
+          <ion-item [href]="getFeedbackUrl()">
+            <ion-icon slot="start" name="logo-github"></ion-icon>
+            <ion-label translate="">
+              feedback
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle autoHide="false">
           <ion-item href="https://github.com/meltzow/deck-ng/issues">
             <ion-icon slot="start" name="logo-github"></ion-icon>
             <ion-label translate="">
