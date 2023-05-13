@@ -8,6 +8,8 @@ import {MarkdownService} from "@app/services/markdown.service";
 import {SafeHtml} from "@angular/platform-browser";
 import {AlertController, IonDatetimeButton} from "@ionic/angular";
 import {NotificationService} from "@app/services/notification.service";
+import {Camera, CameraResultType} from "@capacitor/camera";
+import {Assignment} from "@app/model/assignment";
 
 
 @Component({
@@ -27,6 +29,7 @@ export class CardDetailsPage implements OnInit {
   content: SafeHtml;
   isLoading = true
 
+  @ViewChild("image") imageElement
   @ViewChild("textareaDescription") textareaDescription;
   @ViewChild("datetime") datetime;
   isPopoverOpen: boolean;
@@ -190,4 +193,19 @@ export class CardDetailsPage implements OnInit {
     await alert.present();
   }
 
+  async takePicture($event: MouseEvent) {
+    const image = await Camera.pickImages({
+      quality: 90,
+      limit: 1
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    const imageUrl = image.photos[0].webPath;
+
+    // Can be set to the src of an image now
+    this.imageElement.src = imageUrl;
+  }
 }

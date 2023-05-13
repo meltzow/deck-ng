@@ -83,6 +83,13 @@
                                [value]="user.uid">{{user.displayname}}</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-item (click)="takePicture($event)">
+          <ion-icon name="attach-outline"></ion-icon>
+          <ion-label>
+            add attachment
+          </ion-label>
+        </ion-item>
+        <ion-img #image></ion-img>
       </ion-list>
 
     </ion-card-content>
