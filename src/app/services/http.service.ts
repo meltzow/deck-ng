@@ -90,7 +90,8 @@ export class HttpService {
   }
 
   private isNativePlatform() {
-    return this.platform.platforms().find(value => value == "android" || value == "ios")}
+    return this.platform.is("capacitor")
+}
 
   public async put<T>(url: string, body: any, options1: options = {withCredentials: true}): Promise<T> {
     let account
