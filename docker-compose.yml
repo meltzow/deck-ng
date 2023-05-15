@@ -11,10 +11,10 @@ services:
     volumes:
       - db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_PASSWORD=
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
+      - MARIADB_ROOT_PASSWORD=nextcloud
+      - MARIADB_PASSWORD=
+      - MARIADB_DATABASE=nextcloud
+      - MARIADB_USER=nextcloud
 
   app:
     image: nextcloud:24
