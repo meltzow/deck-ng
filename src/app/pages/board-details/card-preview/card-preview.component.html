@@ -1,7 +1,11 @@
-  <ion-item class="ion-justify-content-start" *ngIf="card && board" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}">
-    <ion-label>
-        <h1>{{card.title}}</h1>
-      </ion-label>
+ <ion-item>
+  <ion-card class="ion-justify-content-start" *ngIf="card && board" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}">
+    <ion-card-header>
+      <ion-card-title>
+        {{card.title}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
       <ion-chip *ngFor="let label of card.labels">
         {{label.title}}
       </ion-chip>
@@ -10,6 +14,11 @@
     <ion-thumbnail slot="end" *ngFor="let assignee of card.assignedUsers">
       <img *ngIf="(account | async)" [alt]="assignee.participant.displayname" [src]="(account | async)?.url + '/avatar/' + assignee.participant.uid + '/64'"/>
     </ion-thumbnail>
+      <ion-list>
+        <ion-item>
       <ion-reorder slot="end"></ion-reorder>
-  </ion-item>
-
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+ </ion-item>

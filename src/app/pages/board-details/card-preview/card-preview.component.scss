@@ -5,3 +5,11 @@ ion-item {
   --border-radius: 20px;
 
 }
+
+ion-card {
+  margin: 0;
+  --border-width: 0;
+  --border-radius: 20px;
+  border-bottom-width: 0;
+  width: 100%;
+}
