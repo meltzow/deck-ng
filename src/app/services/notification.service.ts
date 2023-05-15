@@ -33,5 +33,8 @@ export class NotificationService {
     this.presentToast(transMsg, 'danger', header)
   }
 
+  async systemError(msg: string, header?: string) {
+    this.presentToast(msg, 'danger', header)
+  }
 
 }
