@@ -84,10 +84,15 @@ export class HttpService {
     } else {
       let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
       headers = headers.set('Content-Type', 'application/json');
-      return firstValueFrom(this.httpClient.post<T>(url,
-        body,
-        {headers: headers}
-      ))
+      return new Promise(resolve => {
+        this.httpClient.post<T>(url,
+          body,
+          {headers: headers}
+        ).subscribe(value => resolve(value), error => {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+        )
+      })
     }
   }
 
@@ -116,22 +121,26 @@ export class HttpService {
         headers: headers,
         data: body
       };
-      return new Promise((resolve, reject) =>
+      return new Promise((resolve) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).put(options)
           .then(value => {
             resolve(value.data as T)
           }).catch(reason => {
-          console.error(reason)
-          reject(reason)
+          this.notifyService.systemError(reason)
         })
       )
     } else {
       let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
       headers = headers.set('Content-Type', 'application/json');
-      return firstValueFrom(this.httpClient.put<T>(url,
-        body,
-        {headers: headers}
-      ))
+      return new Promise(resolve => {
+        this.httpClient.put<T>(url,
+          body,
+          {headers: headers}
+        ).subscribe(value => resolve(value), error => {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+        )
+      })
     }
 
   }
@@ -169,7 +178,7 @@ export class HttpService {
           responseType: 'json',
           headers: headers
         }).subscribe(value => resolve(value), error => {
-            this.notifyService.systemError(error.message, error.status + ":" + error.statusText )
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
           }
         ))
     }
@@ -202,11 +211,16 @@ export class HttpService {
       )
     } else {
       const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      return firstValueFrom(this.httpClient.delete<T>(url, {
-        observe: 'body',
-        responseType: 'json',
-        headers: headers
-      }))
+      return new Promise(resolve => {
+        this.httpClient.delete<T>(url, {
+          observe: 'body',
+          responseType: 'json',
+          headers: headers
+        }).subscribe(value => resolve(value), error => {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+        )
+      })
     }
   }
 
