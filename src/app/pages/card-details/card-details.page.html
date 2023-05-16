@@ -7,15 +7,15 @@
     <ion-title *ngIf="card">
       <ion-label>{{card.title}}</ion-label>
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="confirmDelete()" >
+        <ion-icon name="trash" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen="true" class="ion-padding">
   <ion-loading [isOpen]="isLoading" message="Sorry, i'm working..."></ion-loading>
-  <ion-fab horizontal="end" vertical="top" slot="fixed">
-    <ion-fab-button (click)="confirmDelete()" >
-      <ion-icon name="trash"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>

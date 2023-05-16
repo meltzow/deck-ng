@@ -7,6 +7,11 @@
     <ion-title *ngIf="board | async">
       <ion-label>{{ (board | async).title }}</ion-label>
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="promptTitle()">
+        <ion-icon name="add-circle-outline" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,13 +21,6 @@
   </ion-refresher>
 
   <ion-loading [isOpen]="isLoading" message="Sorry, i'm working..."></ion-loading>
-  <ion-fab horizontal="end" vertical="top" slot="fixed">
-    <ion-fab-button (click)="promptTitle()" [disabled]="!stackIsSelected()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-
 
   <ion-segment *ngIf="stacks | async" scrollable="true" [value]="selectedIdx" (ionChange)="segmentChanged($event)">
     <ion-segment-button *ngFor="let stack of stacks | async; index as i" [value]="i">

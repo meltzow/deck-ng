@@ -120,7 +120,7 @@ export class CardDetailsPage implements OnInit {
   }
 
   userPreselected(assignment: Assignment | string, uid: string): boolean {
-    if ((assignment as Assignment).participant !== undefined) {
+    if (assignment && (assignment as Assignment).participant !== undefined) {
       return (assignment as Assignment).participant.uid == uid
     } else {
       return assignment == uid
