@@ -6,9 +6,9 @@ import {Board, Label} from "@app/model";
 import {BoardService} from "@app/services";
 import {MarkdownService} from "@app/services/markdown.service";
 import {SafeHtml} from "@angular/platform-browser";
-import {AlertController, IonDatetimeButton} from "@ionic/angular";
+import {AlertController} from "@ionic/angular";
 import {NotificationService} from "@app/services/notification.service";
-import {Camera, CameraResultType} from "@capacitor/camera";
+import {Camera} from "@capacitor/camera";
 import {Assignment} from "@app/model/assignment";
 
 
@@ -133,7 +133,7 @@ export class CardDetailsPage implements OnInit {
 
   onBlurDescription() {
     this.card.description = this.plainText
-    this.content = this.markDownService.render(this.card.description)
+    this.content = this.card.description ? this.markDownService.render(this.card.description) : 'add description'
     this.descEditable = false
     this.updateCard()
   }
