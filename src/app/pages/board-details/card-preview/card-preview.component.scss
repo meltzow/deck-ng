@@ -1,9 +1,8 @@
-ion-item {
+.outer-ion-item {
   --border-width: 1px;
   margin: 5px;
-
   --border-radius: 20px;
-
+  --inner-border-width: 0;
 }
 
 ion-card {
@@ -12,4 +11,23 @@ ion-card {
   --border-radius: 20px;
   border-bottom-width: 0;
   width: 100%;
+}
+
+ion-card-header, ion-card-content, ion-col {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 10px;
+}
+
+ion-chip {
+  border-width: 0;
+}
+
+.inner-ion-item {
+  --inner-border-width: 0;
+}
+
+ion-img {
+  width:64px!important;
+  height:64px!important;
 }

@@ -1,24 +1,46 @@
- <ion-item>
-  <ion-card class="ion-justify-content-start" *ngIf="card && board" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}">
+<ion-item class="outer-ion-item">
+  <ion-reorder slot="end">
+    <ion-icon name="move-outline"></ion-icon>
+  </ion-reorder>
+  <ion-card class="ion-justify-content-start" *ngIf="card && board" detail="true"
+            routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}">
     <ion-card-header>
       <ion-card-title>
         {{card.title}}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-chip *ngFor="let label of card.labels">
-        {{label.title}}
-      </ion-chip>
-      <ion-icon *ngIf="card.duedate" name="alarm-outline" slot="end"></ion-icon>
-      <ion-icon *ngIf="card.attachmentCount" name="attach-outline" size="large" color="primary"></ion-icon>
-    <ion-thumbnail slot="end" *ngFor="let assignee of card.assignedUsers">
-      <img *ngIf="(account | async)" [alt]="assignee.participant.displayname" [src]="(account | async)?.url + '/avatar/' + assignee.participant.uid + '/64'"/>
-    </ion-thumbnail>
-      <ion-list>
-        <ion-item>
-      <ion-reorder slot="end"></ion-reorder>
-        </ion-item>
-      </ion-list>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngIf="card.duedate" size="12" size-md="8" size-lg="2">
+            <ion-item class="inner-ion-item" lines="none">
+            <ion-icon name="alarm-outline" slot="start"></ion-icon>
+            <ion-label>{{card.duedate | date: 'short'}}</ion-label>
+          </ion-item>
+          </ion-col>
+          <ion-col *ngIf="card.labels.length" size="12" size-md="8" size-lg="2">
+            <ion-item  lines="none">
+            <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+            <ion-label>
+              <span *ngFor="let label of card.labels;let last = last;">{{label.title}}{{!last?", ":""}}</span>
+            </ion-label>
+          </ion-item>
+          </ion-col>
+          <ion-col *ngIf="card.assignedUsers.length" size="12" size-md="8" size-lg="2">
+          <ion-item  lines="none">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+              <ion-img [alt]="assignee.participant.displayname" *ngFor="let assignee of card.assignedUsers"
+                   [src]="(account | async)?.url + '/avatar/' + assignee.participant.uid + '/64'" />
+          </ion-item>
+          </ion-col>
+          <ion-col *ngIf="card.attachmentCount" size="12" size-md="8" size-lg="4">
+            <ion-item  lines="none">
+              <ion-icon name="attach-outline" size="large" slot="start"></ion-icon>
+              <ion-label>{{card.attachmentCount}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
- </ion-item>
+</ion-item>
