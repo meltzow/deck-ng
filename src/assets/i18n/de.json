@@ -9,6 +9,8 @@
   "barcode_login": "login mit barcode",
   "back": "zurück",
   "support": "Unterstützung",
+  "create stack": "neue Liste anlegen",
+  "create card": "neue Aufgabe anlegen",
   "enter_title": "gib einen Titel ein",
   "cancel": "Abbrechen",
   "title_placeholder": "Was ist zu tun?",

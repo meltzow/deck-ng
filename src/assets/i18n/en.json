@@ -9,7 +9,8 @@
   "barcode_login": "login with barcode",
   "back": "back",
   "support": "support",
-  "enter_title": "please enter a title",
+  "create stack": "create a new stack",
+  "create card": "create a new card",
   "cancel": "Cancel",
   "title_placeholder": "what needs to be done?",
   "other": "other"

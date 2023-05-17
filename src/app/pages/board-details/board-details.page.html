@@ -8,7 +8,7 @@
       <ion-label>{{ (board | async).title }}</ion-label>
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="promptTitle()">
+      <ion-button (click)="createCard()" *ngIf="selectedStack.value">
         <ion-icon name="add-circle-outline" ></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-loading [isOpen]="isLoading" message="Sorry, i'm working..."></ion-loading>
+  <ion-loading [isOpen]="isLoading" message="Sorry, I'm working..."></ion-loading>
 
   <ion-segment *ngIf="stacks | async" scrollable="true" [value]="selectedIdx" (ionChange)="segmentChanged($event)">
     <ion-segment-button *ngFor="let stack of stacks | async; index as i" [value]="i">
