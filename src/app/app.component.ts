@@ -1,14 +1,14 @@
-import { Component, OnInit, Optional } from '@angular/core';
-import { AlertController, IonRouterOutlet, MenuController, Platform } from '@ionic/angular';
+import {Component, OnInit, Optional} from '@angular/core';
+import {AlertController, IonRouterOutlet, MenuController, Platform} from '@ionic/angular';
 
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { AuthenticationService, BoardService, OverviewService } from "@app/services";
-import { SplashScreen } from "@capacitor/splash-screen";
-import { TranslateService } from "@ngx-translate/core";
-import { BehaviorSubject, Observable} from "rxjs";
-import { Board } from "@app/model";
-import { NotificationService } from "@app/services/notification.service";
+import {Location} from '@angular/common';
+import {Router} from '@angular/router';
+import {AuthenticationService, BoardService, OverviewService} from "@app/services";
+import {SplashScreen} from "@capacitor/splash-screen";
+import {TranslateService} from "@ngx-translate/core";
+import {BehaviorSubject, Observable} from "rxjs";
+import {Board} from "@app/model";
+import {NotificationService} from "@app/services/notification.service";
 import packagejson from '../../package.json'
 
 @Component({
@@ -91,10 +91,7 @@ export class AppComponent implements OnInit {
     this.nextcloudVersion = this.overviewService.nextCloudVersion
     this.deckVersion = this.overviewService.deckVersion
     this.boardService.getBoards()
-
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1000);
+    this.overviewService.getCapabilities()
   }
 
   isAuthenticated(): Observable<boolean> {
@@ -106,5 +103,9 @@ export class AppComponent implements OnInit {
     this.navigation.msg("successfully logged out")
   }
 
-
+  getFeedbackUrl(): string {
+    const os = this.platform.platforms()
+    const version = packagejson.version
+    return `https://docs.google.com/forms/d/e/1FAIpQLScvOAcfn5_bfwrrx_kYD3r-oswdolQMZpLkaUo56vuTdYOSwQ/viewform?usp=pp_url&entry.1434511831=${os}|${version}|${this.deckVersion?.value}|${this.nextcloudVersion?.value}`
+  }
 }

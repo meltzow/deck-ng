@@ -7,45 +7,34 @@
     <ion-title *ngIf="card">
       <ion-label>{{card.title}}</ion-label>
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="confirmDelete()" >
+        <ion-icon name="trash" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content fullscreen="true" class="ion-padding">
+  <ion-loading [isOpen]="isLoading" message="Sorry, I'm working..."></ion-loading>
 
-<ion-fab horizontal="end" vertical="top" slot="fixed">
-  <ion-fab-button (click)="confirmDelete()"  >
-    <ion-icon name="trash"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
-<ion-content fullscreen="true" *ngIf="!isLoading">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh()">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-card>
+  <ion-card *ngIf="card && board">
     <ion-card-header>
             <ion-card-title>
               <app-inline-edit [ngModel]="card.title" [required]="true" type="text"
                                (onChanged)="changeTitle($event)"></app-inline-edit>
             </ion-card-title>
-            <ion-card-subtitle>
-              <ion-textarea #textareaDescription [hidden]="!descEditable" rows="6" [(ngModel)]="plainText"
-                            placeholder="add description in markdown here..." (ionBlur)="onBlurDescription()">
-              </ion-textarea>
-              <div *ngIf="!descEditable" [innerHTML]="content" (click)="onFocusDescription()"></div>
-            </ion-card-subtitle>
     </ion-card-header>
-    <ion-card-content>
-      <!--      <ion-grid >-->
-      <!--        <ion-row>-->
-      <!--          <ion-col size="4">-->
-      <!--            <ion-item id="open-popover2">-->
-      <!--              <ion-icon name="alarm-outline" slot="start"></ion-icon>-->
-      <!--              <ion-label *ngIf="dueDate">{{dueDate | date: 'short'}}</ion-label>-->
-      <!--              <ion-label *ngIf="!dueDate">add due date</ion-label>-->
-      <!--            </ion-item>-->
-      <!--          </ion-col>-->
-      <!--        </ion-row>-->
-      <!--      </ion-grid>-->
+    <ion-card-content >
+      <div [hidden]="!descEditable">
+      <ion-textarea  #textareaDescription [autoGrow]="true" [(ngModel)]="plainText"  enterkeyhint="enter" fill="outline"
+                    placeholder="enter description in markdown here..." helperText="enter description in markdown here..." (ionBlur)="onBlurDescription()">
+      </ion-textarea>
+      </div>
+      <div *ngIf="!descEditable" [innerHTML]="content" (click)="onFocusDescription()"></div>
       <ion-list>
         <ion-item id="duedate-popover">
           <ion-icon name="alarm-outline" slot="start"></ion-icon>
@@ -77,40 +66,21 @@
         </ion-item>
         <ion-item>
           <ion-icon name="people-outline"></ion-icon>
-          <ion-select [compareWith]="labelPreselected" placeholder="Select assignees" [multiple]="true" disabled="true"
-                      [ngModel]="card.assignedUsers">
-            <ion-select-option *ngFor="let assignee of card.assignedUsers"
-                               [value]="assignee">{{assignee.participant.displayname}}</ion-select-option>
+          <ion-select [compareWith]="userPreselected" placeholder="Select assignees" [multiple]="true"
+                      (ionChange)="handleAssigneeChange($event)" [ngModel]="card.assignedUsers" >
+            <ion-select-option *ngFor="let user of board.users"
+                               [value]="user.uid">{{user.displayname}}</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-item disabled="true" (click)="takePicture($event)">
+          <ion-icon name="attach-outline"></ion-icon>
+          <ion-label>
+            add attachment
+          </ion-label>
+        </ion-item>
+        <ion-img #image></ion-img>
       </ion-list>
 
     </ion-card-content>
   </ion-card>
-
-
-</ion-content>
-
-<ion-content *ngIf="isLoading">
-  <ion-list>
-    <ion-list-header>
-      <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
-    </ion-list-header>
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-      </ion-thumbnail>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
 </ion-content>

@@ -7,75 +7,40 @@
     <ion-title *ngIf="board | async">
       <ion-label>{{ (board | async).title }}</ion-label>
     </ion-title>
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-searchbar disabled="true"></ion-searchbar>
     <ion-buttons slot="primary">
-      <ion-button id="open-modal" expand="block" disabled="true">
-        <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
+      <ion-button (click)="createCard()" *ngIf="selectedStack.value">
+        <ion-icon name="add-circle-outline" ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-      <ng-template>
-        <ion-header>
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-button (click)="cancel()">Cancel</ion-button>
-            </ion-buttons>
-            <ion-title>Filter</ion-title>
-            <ion-buttons slot="end">
-              <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-          <ion-item>
-            <ion-chip *ngFor="let stack of (stacks | async)">
-              {{stack.title}}
-            </ion-chip>
-          </ion-item>
-          <ion-item *ngIf="(board | async).labels">
-            <ion-chip *ngFor="let stack of (board | async).labels">
-              {{stack.title}}
-            </ion-chip>
-          </ion-item>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
   </ion-toolbar>
-
 </ion-header>
 
-<ion-fab horizontal="end" vertical="top" slot="fixed">
-  <ion-fab-button (click)="promptTitle()" [disabled]="!stackIsSelected()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
-<ion-content [fullscreen]="true" *ngIf="!isLoading">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh()">
+<ion-content [fullscreen]="true"  class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-loading [isOpen]="isLoading" message="Sorry, I'm working..."></ion-loading>
+
   <ion-segment *ngIf="stacks | async" scrollable="true" [value]="selectedIdx" (ionChange)="segmentChanged($event)">
     <ion-segment-button *ngFor="let stack of stacks | async; index as i" [value]="i">
-      {{stack.title}}
+      {{stack.title}} ({{stack.cards?stack.cards.length:0}})
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list>
+  <ion-list *ngIf="!isLoading && selectedStack">
     <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($any($event))">
     <ion-item-sliding *ngFor="let card of (selectedStack | async)?.cards">
 
-      <ion-item-options *ngIf="hasRightNeighbour()" side="start" (ionSwipe)="moveToRight(card)">
-        <ion-item-option color="primary" expandable="true" (click)="moveToRight(card)" >{{'move to'| translate}} {{findNeighbour(selectedStack.value.id, 'right').title}}</ion-item-option>
+      <ion-item-options side="start" (ionSwipe)="moveToRight(card)">
+        <ion-item-option *ngIf="hasRightNeighbour()" color="primary" expandable="true" (click)="moveToRight(card)" >{{'move to'| translate}} {{findNeighbour(selectedStack.value.id, 'right').title}}</ion-item-option>
       </ion-item-options>
 
       <app-card-preview [board]="board.value" [card]="card" [selectedStack]="selectedStack.value.id" >
       </app-card-preview>
 
-      <ion-item-options *ngIf="hasLeftNeighbour()" side="end" (ionSwipe)="moveToLeft(card)">
-        <ion-item-option color="primary" expandable="true" (click)="moveToLeft(card)">{{'move to'| translate}} {{findNeighbour(selectedStack.value.id, 'left').title}}</ion-item-option>
+      <ion-item-options side="end" (ionSwipe)="moveToLeft(card)">
+        <ion-item-option *ngIf="hasLeftNeighbour()" color="primary" expandable="true" (click)="moveToLeft(card)">{{'move to'| translate}} {{findNeighbour(selectedStack.value.id, 'left').title}}</ion-item-option>
       </ion-item-options>
 
     </ion-item-sliding>
@@ -84,26 +49,3 @@
   </ion-list>
 </ion-content>
 
-<ion-content *ngIf="isLoading">
-  <ion-list>
-    <ion-list-header>
-      <ion-skeleton-text [animated]="true" style="width: 80px"></ion-skeleton-text>
-    </ion-list-header>
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-      </ion-thumbnail>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text [animated]="true" style="width: 30%;"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-</ion-content>

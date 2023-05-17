@@ -6,8 +6,10 @@ import {Board, Label} from "@app/model";
 import {BoardService} from "@app/services";
 import {MarkdownService} from "@app/services/markdown.service";
 import {SafeHtml} from "@angular/platform-browser";
-import {AlertController, IonDatetimeButton} from "@ionic/angular";
+import {AlertController} from "@ionic/angular";
 import {NotificationService} from "@app/services/notification.service";
+import {Camera} from "@capacitor/camera";
+import {Assignment} from "@app/model/assignment";
 
 
 @Component({
@@ -27,6 +29,7 @@ export class CardDetailsPage implements OnInit {
   content: SafeHtml;
   isLoading = true
 
+  @ViewChild("image") imageElement
   @ViewChild("textareaDescription") textareaDescription;
   @ViewChild("datetime") datetime;
   isPopoverOpen: boolean;
@@ -50,7 +53,7 @@ export class CardDetailsPage implements OnInit {
     this.doRefresh()
   }
 
-  async doRefresh() {
+  async doRefresh(event?) {
     this.isLoading = true
     const card = await this.cardService.getCard(this.boardId, this.stackId, this.cardId)
     this.card = card
@@ -58,6 +61,7 @@ export class CardDetailsPage implements OnInit {
     this.content = card.description ? this.markDownService.render(card.description) : 'add description'
     this.board = await this.boardService.getBoard(this.boardId)
     this.isLoading = false
+    event?.target.complete();
   }
 
   convert(this) {
@@ -100,13 +104,36 @@ export class CardDetailsPage implements OnInit {
     })
   }
 
+  async handleAssigneeChange($event: any) {
+    const before = this.card.assignedUsers.map(value => value.participant.uid)
+    const after = $event.detail.value
+    const removed = before.filter((x) => !after.includes(x));
+    const added = after.filter((x) => !before.includes(x));
+    this.isLoading = true
+    for (const id of removed) {
+      await this.cardService.unassignUser2Card(this.boardId, this.card.stackId, this.card.id, id)
+    }
+    for (const id of added) {
+      await this.cardService.assignUser2Card(this.boardId, this.card.stackId, this.card.id, id)
+    }
+    await this.doRefresh()
+  }
+
+  userPreselected(assignment: Assignment | string, uid: string): boolean {
+    if (assignment && (assignment as Assignment).participant !== undefined) {
+      return (assignment as Assignment).participant.uid == uid
+    } else {
+      return assignment == uid
+    }
+  }
+
   labelPreselected(label1: Label, label2: Label): boolean {
     return label1 && label2 ? label1.id === label2.id : label1 === label2;
   }
 
   onBlurDescription() {
     this.card.description = this.plainText
-    this.content = this.markDownService.render(this.card.description)
+    this.content = this.card.description ? this.markDownService.render(this.card.description) : 'add description'
     this.descEditable = false
     this.updateCard()
   }
@@ -166,4 +193,19 @@ export class CardDetailsPage implements OnInit {
     await alert.present();
   }
 
+  async takePicture($event: MouseEvent) {
+    const image = await Camera.pickImages({
+      quality: 90,
+      limit: 1
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    const imageUrl = image.photos[0].webPath;
+
+    // Can be set to the src of an image now
+    this.imageElement.src = imageUrl;
+  }
 }

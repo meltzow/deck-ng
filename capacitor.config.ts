@@ -5,6 +5,7 @@ const config: CapacitorConfig = {
   appName: 'deck NG',
   webDir: 'www',
   bundledWebRuntime: false,
+  overrideUserAgent: "deck NG",
   plugins: {
     SplashScreen: {
       launchAutoHide: false,

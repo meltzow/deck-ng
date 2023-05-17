@@ -1,9 +1,46 @@
-<ion-item class="ion-justify-content-start" *ngIf="card" detail="true" routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}">
-<!--  <ion-col size="12">-->
-    <ion-label>
-      <h1>{{card.title}}</h1>
-    </ion-label>
-    <ion-icon *ngIf="card.duedate" name="alarm-outline" slot="end"></ion-icon>
-    <ion-reorder slot="end"></ion-reorder>
-<!--  </ion-col>-->
+<ion-item class="outer-ion-item">
+  <ion-reorder slot="end">
+    <ion-icon name="move-outline"></ion-icon>
+  </ion-reorder>
+  <ion-card class="ion-justify-content-start" *ngIf="card && board" detail="true"
+            routerLink="/boards/{{board.id}}/stacks/{{card.stackId}}/cards/{{card.id}}">
+    <ion-card-header>
+      <ion-card-title>
+        {{card.title}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngIf="card.duedate" size="12" size-md="8" size-lg="2">
+            <ion-item class="inner-ion-item" lines="none">
+            <ion-icon name="alarm-outline" slot="start"></ion-icon>
+            <ion-label>{{card.duedate | date: 'short'}}</ion-label>
+          </ion-item>
+          </ion-col>
+          <ion-col *ngIf="card.labels.length" size="12" size-md="8" size-lg="2">
+            <ion-item  lines="none">
+            <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+            <ion-label>
+              <span *ngFor="let label of card.labels;let last = last;">{{label.title}}{{!last?", ":""}}</span>
+            </ion-label>
+          </ion-item>
+          </ion-col>
+          <ion-col *ngIf="card.assignedUsers.length" size="12" size-md="8" size-lg="2">
+          <ion-item  lines="none">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+              <ion-img [alt]="assignee.participant.displayname" *ngFor="let assignee of card.assignedUsers"
+                   [src]="(account | async)?.url + '/avatar/' + assignee.participant.uid + '/64'" />
+          </ion-item>
+          </ion-col>
+          <ion-col *ngIf="card.attachmentCount" size="12" size-md="8" size-lg="4">
+            <ion-item  lines="none">
+              <ion-icon name="attach-outline" size="large" slot="start"></ion-icon>
+              <ion-label>{{card.attachmentCount}}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-item>

@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpContext, HttpHeaders, HttpParams, HttpResponse, } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpContext, HttpHeaders, HttpParams, HttpResponse,} from '@angular/common/http';
 
-import { AuthenticationService } from "@app/services/authentication.service";
-import { Platform } from "@ionic/angular";
+import {AuthenticationService} from "@app/services/authentication.service";
+import {Platform} from "@ionic/angular";
 import * as Cap from "@capacitor/core";
-import { firstValueFrom } from "rxjs";
-import { CapacitorHttpPlugin } from "@capacitor/core/types/core-plugins";
-import { Account } from "@app/model";
+import {firstValueFrom} from "rxjs";
+import {CapacitorHttpPlugin} from "@capacitor/core/types/core-plugins";
+import {Account} from "@app/model";
+import {NotificationService} from "@app/services/notification.service";
 
 
 interface options {
@@ -20,10 +21,11 @@ export class HttpService {
 
   constructor(protected httpClient: HttpClient,
               private authService: AuthenticationService,
-              private platform: Platform) {
+              private platform: Platform,
+              private notifyService: NotificationService) {
   }
 
-  private async getHeaders(account? : Account, isOCSRequest = false): Promise<Cap.HttpHeaders> {
+  private async getHeaders(account?: Account, isOCSRequest = false): Promise<Cap.HttpHeaders> {
     let headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
       //TODO: check this header out: without it there no CORS
@@ -48,7 +50,7 @@ export class HttpService {
     return headers;
   }
 
-  public async post<T>(url: string, body?: any, options1: options = { withCredentials: true }): Promise<T> {
+  public async post<T>(url: string, body?: any, options1: options = {withCredentials: true}): Promise<T> {
     let account
     if (options1.withCredentials) {
       account = await this.authService.getAccount()
@@ -60,7 +62,7 @@ export class HttpService {
     }
 
     if (this.isNativePlatform()) {
-      const headers = await this.getHeaders(account,url.startsWith('/ocs'))
+      const headers = await this.getHeaders(account, url.startsWith('/ocs'))
       if (body) {
         headers['Content-Type'] = 'application/json'
       }
@@ -82,15 +84,21 @@ export class HttpService {
     } else {
       let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
       headers = headers.set('Content-Type', 'application/json');
-      return firstValueFrom(this.httpClient.post<T>(url,
-        body,
-        {headers: headers}
-      ))
+      return new Promise(resolve => {
+        this.httpClient.post<T>(url,
+          body,
+          {headers: headers}
+        ).subscribe(value => resolve(value), error => {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+        )
+      })
     }
   }
 
-  private isNativePlatform(): boolean {
-    return !this.platform.platforms().find(value => value == "desktop")}
+  private isNativePlatform() {
+    return this.platform.is("capacitor")
+  }
 
   public async put<T>(url: string, body: any, options1: options = {withCredentials: true}): Promise<T> {
     let account
@@ -104,7 +112,7 @@ export class HttpService {
     }
 
     if (this.isNativePlatform()) {
-      const headers = await this.getHeaders(account,url.startsWith('/ocs'))
+      const headers = await this.getHeaders(account, url.startsWith('/ocs'))
       if (body) {
         headers['Content-Type'] = 'application/json'
       }
@@ -113,22 +121,26 @@ export class HttpService {
         headers: headers,
         data: body
       };
-      return new Promise((resolve, reject) =>
+      return new Promise((resolve) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).put(options)
           .then(value => {
             resolve(value.data as T)
           }).catch(reason => {
-          console.error(reason)
-          reject(reason)
+          this.notifyService.systemError(reason)
         })
       )
     } else {
       let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
       headers = headers.set('Content-Type', 'application/json');
-      return firstValueFrom(this.httpClient.put<T>(url,
-        body,
-        {headers: headers}
-      ))
+      return new Promise(resolve => {
+        this.httpClient.put<T>(url,
+          body,
+          {headers: headers}
+        ).subscribe(value => resolve(value), error => {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+        )
+      })
     }
 
   }
@@ -147,7 +159,7 @@ export class HttpService {
     if (this.isNativePlatform()) {
       const options = {
         url: url,
-        headers: await this.getHeaders(account,url.startsWith('/ocs')),
+        headers: await this.getHeaders(account, url.startsWith('/ocs')),
       };
       return new Promise((resolve, reject) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).get(options)
@@ -160,11 +172,15 @@ export class HttpService {
       )
     } else {
       const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      return firstValueFrom(this.httpClient.get<T>(url, {
-        observe: 'body',
-        responseType: 'json',
-        headers: headers
-      }))
+      return new Promise((resolve, reject) =>
+        this.httpClient.get<T>(url, {
+          observe: 'body',
+          responseType: 'json',
+          headers: headers
+        }).subscribe(value => resolve(value), error => {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+        ))
     }
   }
 
@@ -182,7 +198,7 @@ export class HttpService {
     if (this.isNativePlatform()) {
       const options = {
         url: url,
-        headers: await this.getHeaders(account,url.startsWith('/ocs')),
+        headers: await this.getHeaders(account, url.startsWith('/ocs')),
       };
       return new Promise((resolve, reject) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).delete(options)
@@ -195,11 +211,16 @@ export class HttpService {
       )
     } else {
       const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      return firstValueFrom(this.httpClient.delete<T>(url, {
-        observe: 'body',
-        responseType: 'json',
-        headers: headers
-      }))
+      return new Promise(resolve => {
+        this.httpClient.delete<T>(url, {
+          observe: 'body',
+          responseType: 'json',
+          headers: headers
+        }).subscribe(value => resolve(value), error => {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+        )
+      })
     }
   }
 

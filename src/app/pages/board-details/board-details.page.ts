@@ -56,11 +56,20 @@ export class BoardDetailsPage implements OnInit {
 
   }
 
-  async promptTitle() {
-    const header = await firstValueFrom(this.translateService.get('enter_title'))
-    const cancel = await firstValueFrom(this.translateService.get('cancel'))
-    const titlePlaceholder = await firstValueFrom(this.translateService.get('title_placeholder'))
+  async createStack() {
 
+  }
+
+  async createCard() {
+    const header = await firstValueFrom(this.translateService.get('create card'))
+    const description = await firstValueFrom(this.translateService.get('title_placeholder'))
+    await this.showModal(header, description, (data) => {
+      this.confirmHandler(data)
+    } )
+  }
+
+  async showModal(header: string, description: string, handler: (value: any) => (any | Promise<any>) ) {
+    const cancel = await firstValueFrom(this.translateService.get('cancel'))
       const alert = await this.alertController.create({
         header: header,
         buttons: [{
@@ -70,14 +79,12 @@ export class BoardDetailsPage implements OnInit {
           {
             text: 'OK',
             role: 'confirm',
-            handler: (data) => {
-              this.confirmHandler(data);
-            },
+            handler: handler,
           },],
         inputs: [
           {
             name: 'title',
-            placeholder: titlePlaceholder,
+            placeholder: description,
           },
         ],
       });
@@ -100,7 +107,12 @@ export class BoardDetailsPage implements OnInit {
       .finally(() => this.isLoading = false )
   }
 
-  doRefresh() {
+  doRefresh(event) {
+    this.refreshBoard();
+    event.target.complete();
+  }
+
+  private refreshBoard() {
     this.board.next(null)
     this.stacks.next([])
     this.getBoard(this.boardId)
@@ -190,7 +202,7 @@ export class BoardDetailsPage implements OnInit {
         this.notificationService.msg('card successfully updated')
       })
       .catch(reason => this.notificationService.error(reason))
-      .finally(() => this.doRefresh())
+      .finally(() => this.refreshBoard())
   }
 
   private arraymove(arr, fromIndex, toIndex) {
