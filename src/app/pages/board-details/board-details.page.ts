@@ -139,9 +139,12 @@ export class BoardDetailsPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    const stack = this.stacks.value[ev.detail.value]
-    this.selectedIdx = ev.detail.value
-    this.selectedStack.next(stack)
+    const segmentIdx = ev.detail.value
+    const stack = this.stacks.value[segmentIdx]
+    if (stack) {
+      this.selectedIdx = ev.detail.value
+      this.selectedStack.next(stack)
+    }
   }
 
   stackIsSelected(): boolean {
