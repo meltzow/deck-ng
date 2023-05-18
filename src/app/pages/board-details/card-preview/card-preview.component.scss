@@ -13,14 +13,16 @@ ion-card {
   width: 100%;
 }
 
-ion-grid {
+ion-grid, ion-col {
   padding: 0;
 }
 
-ion-card-header, ion-card-content, ion-col {
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 10px;
+ion-card-header {
+  padding: 10px 0;
+}
+
+ion-card-content {
+    padding: 0 0;
 }
 
 ion-chip {
@@ -32,6 +34,6 @@ ion-chip {
 }
 
 ion-img {
-  width:64px!important;
-  height:64px!important;
+  width:42px!important;
+  height:42px!important;
 }
