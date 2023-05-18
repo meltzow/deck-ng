@@ -27,7 +27,7 @@
           </ion-item>
           </ion-col>
           <ion-col *ngIf="card.assignedUsers.length" size="12" size-md="8" size-lg="2">
-          <ion-item  lines="none">
+          <ion-item  lines="none" *ngIf="account">
             <ion-icon name="people-outline" slot="start"></ion-icon>
               <ion-img [alt]="assignee.participant.displayname" *ngFor="let assignee of card.assignedUsers"
                    [src]="(account | async)?.url + '/avatar/' + assignee.participant.uid + '/42'" />
