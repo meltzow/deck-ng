@@ -96,7 +96,7 @@ export class HttpService {
     }
   }
 
-  private isNativePlatform() {
+  public isNativePlatform() {
     return this.platform.is("capacitor")
   }
 

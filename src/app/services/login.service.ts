@@ -30,8 +30,7 @@ export class LoginService {
 
   constructor(
     private httpService: HttpService,
-    private authService: AuthenticationService,
-    private platform: Platform
+    private authService: AuthenticationService
   ) {
 
   }
@@ -39,7 +38,7 @@ export class LoginService {
   async login(server: URL): Promise<boolean> {
     this.cancelRetryLoop = false
     let url
-    if (server.hostname == "localhost" &&  this.platform.is("desktop")) {
+    if (server.hostname == "localhost" && !this.httpService.isNativePlatform()) {
       //using proxy
       url = '/index.php/login/v2'
     } else {
@@ -58,7 +57,7 @@ export class LoginService {
             'Content-Type': 'application/json'
           },
         };
-        if (this.platform.is('mobile')) {
+        if (this.httpService.isNativePlatform()) {
           Browser.open({url: resp1.login})
         } else {
           //remove used proxy url
@@ -84,7 +83,7 @@ export class LoginService {
           reject(reason)
         })
 
-        if (this.platform.is('mobile')) {
+        if (this.httpService.isNativePlatform()) {
           // Browser.addListener('browserFinished', () => )
         }
       } else {
