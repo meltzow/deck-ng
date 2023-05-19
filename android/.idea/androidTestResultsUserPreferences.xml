@@ -53,8 +53,11 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Fairphone&#10; FP4" value="120" />
                   <entry key="Pixel_5_API_25" value="120" />
+                  <entry key="Pixel_6_API_30" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="d1e3fa0" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>

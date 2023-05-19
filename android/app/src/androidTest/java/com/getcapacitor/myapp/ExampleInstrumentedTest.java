@@ -64,6 +64,12 @@ public class ExampleInstrumentedTest {
   public void testTakeScreenshot() throws InterruptedException {
     Screengrab.setDefaultScreenshotStrategy(new FalconScreenshotStrategy(activityRule.getActivity()));
 
+    Atom<ElementReference> elementMenu = findElement(Locator.ID, "menu-button");
+    onWebView().withElement(elementMenu).perform(webClick());
+
+    Screengrab.screenshot("MenuScreen");
+
+
     // find main menu button and click it
     String urlInputXPath = "//input[@name='url']";
     String loginBtn= "//ion-button[@type='submit']";
@@ -76,12 +82,12 @@ public class ExampleInstrumentedTest {
     onWebView().withElement(elementURL).perform(clearElement()).perform(webKeys("http://192.168.178.25:8080"));
     Atom<ElementReference> element3 = findElement(Locator.XPATH, loginBtn);
     onWebView().withElement(element3).perform(webClick());
-//
-    Thread.sleep(4000);
+
+    Thread.sleep(10000);
 
     Screengrab.screenshot("BoardsOverviewsScreen");
 
-    String scrumBoardCard = "//ion-item[@id='board-3']";
+    String scrumBoardCard = "//ion-item[@id='board-1']";
     Atom<ElementReference> elementScrumBoardCard = findElement(Locator.XPATH, scrumBoardCard);
     onWebView().withElement(elementScrumBoardCard).perform(webClick());
 
