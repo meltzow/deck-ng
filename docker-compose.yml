@@ -17,7 +17,7 @@ services:
       - MARIADB_USER=nextcloud
 
   app:
-    image: nextcloud:24
+    image: nextcloud:25
     ports:
       - 8080:80
     links:
