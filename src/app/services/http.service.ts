@@ -1,18 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpContext, HttpHeaders, HttpParams, HttpResponse,} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {AuthenticationService} from "@app/services/authentication.service";
 import {Platform} from "@ionic/angular";
 import * as Cap from "@capacitor/core";
-import {firstValueFrom} from "rxjs";
 import {CapacitorHttpPlugin} from "@capacitor/core/types/core-plugins";
 import {Account} from "@app/model";
 import {NotificationService} from "@app/services/notification.service";
 
-
-interface options {
-  withCredentials?: boolean
-}
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +20,225 @@ export class HttpService {
               private notifyService: NotificationService) {
   }
 
-  private async getHeaders(account?: Account, isOCSRequest = false): Promise<Cap.HttpHeaders> {
+
+  public async post<T>(url: string, body?: any, withCredentials =  true, displayError = true): Promise<T> {
+    let account
+    if (withCredentials) {
+      account = await this.authService.getAccount()
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.isNativePlatform()) {
+        url = account.url + url
+      }
+    }
+
+    if (this.isNativePlatform()) {
+      const headers = await this.getHeadersNative(account, url)
+      const postoptions = {
+        url: url,
+        headers: headers,
+        data: body
+      }
+
+      return new Promise((resolve, reject) => {
+      Cap.CapacitorHttp.post(postoptions)
+        .then(value => {
+          resolve(value.data as T)
+        }).catch(reason => {
+          if (displayError) {
+            this.notifyService.systemError(reason)
+          }
+          reject(reason)
+        })
+      })
+    } else {
+      const headers = await this.getHeaders(account, url, body)
+      return new Promise((resolve, reject) => {
+        this.httpClient.post<T>(url,
+          body,
+          {headers: headers}
+        ).subscribe(value => resolve(value), error => {
+            if (displayError) {
+              this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+            }
+            reject(error)
+          }
+        )
+      })
+    }
+  }
+
+  public isNativePlatform() {
+    return this.platform.is("capacitor")
+  }
+
+  public async put<T>(url: string, body: any, withCredentials = true, displayError = true): Promise<T> {
+    let account
+    if (withCredentials) {
+      account = await this.authService.getAccount()
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.isNativePlatform()) {
+        url = account.url + url
+      }
+    }
+
+    if (this.isNativePlatform()) {
+      const headers = await this.getHeadersNative(account, url)
+      if (body) {
+        headers['Content-Type'] = 'application/json'
+      }
+      const options = {
+        url: url,
+        headers: headers,
+        data: body
+      };
+      return new Promise((resolve, reject) =>
+        (Cap.CapacitorHttp as CapacitorHttpPlugin).put(options)
+          .then(value => {
+            resolve(value.data as T)
+          }).catch(reason => {
+            if (displayError) {
+              this.notifyService.systemError(reason)
+            }
+            reject(reason)
+        })
+      )
+    } else {
+      let headers = await this.getHeaders(account, url)
+      headers = headers.set('Content-Type', 'application/json');
+      return new Promise((resolve, reject) => {
+        this.httpClient.put<T>(url,
+          body,
+          {headers: headers}
+        ).subscribe(value => resolve(value), error => {
+            if (displayError) {
+              this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+            }
+            reject(error)
+          }
+        )
+      })
+    }
+
+  }
+
+  public async get<T>(url: string, withCredentials = true, displayError = true): Promise<T> {
+    let account
+    if (withCredentials) {
+      account = await this.authService.getAccount()
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.isNativePlatform()) {
+        url = account.url + url
+      }
+    }
+
+    if (this.isNativePlatform()) {
+      const options = {
+        url: url,
+        headers: await this.getHeadersNative(account, url),
+      };
+      return new Promise((resolve, reject) =>
+        (Cap.CapacitorHttp as CapacitorHttpPlugin).get(options)
+          .then(value => {
+            resolve(value.data as T)
+          }).catch(reason => {
+          if (displayError) {
+            this.notifyService.systemError(reason)
+          }
+          reject(reason)
+        })
+      )
+    } else {
+      const headers = await this.getHeaders(account, url)
+      return new Promise((resolve, reject) =>
+        this.httpClient.get<T>(url, {
+          observe: 'body',
+          responseType: 'json',
+          headers: headers
+        }).subscribe(value => resolve(value), error => {
+            if (displayError) {
+              this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+            }
+            reject(error)
+          }
+        ))
+    }
+  }
+
+  public async delete<T>(url: string, withCredentials = true, displayError = true): Promise<T> {
+    let account
+    if (withCredentials) {
+      account = await this.authService.getAccount()
+      if (!url.startsWith("/"))
+        throw Error("when using credentials the url must be start with '/'")
+      if (this.isNativePlatform()) {
+        url = account.url + url
+      }
+    }
+
+    if (this.isNativePlatform()) {
+      const options = {
+        url: url,
+        headers: await this.getHeadersNative(account, url),
+      };
+      return new Promise((resolve, reject) =>
+        (Cap.CapacitorHttp as CapacitorHttpPlugin).delete(options)
+          .then(value => {
+            resolve(value.data as T)
+          }).catch(reason => {
+          if (displayError) {
+            this.notifyService.systemError(reason)
+          }
+          reject(reason)
+        })
+      )
+    } else {
+      const headers = await this.getHeaders(account, url)
+      return new Promise((resolve, reject) => {
+        this.httpClient.delete<T>(url, {
+          observe: 'body',
+          responseType: 'json',
+          headers: headers
+        }).subscribe(value => resolve(value), error => {
+          if (displayError) {
+            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+          }
+          reject(error)
+          }
+        )
+      })
+    }
+  }
+
+  private async getHeaders(account: Account, url: string, body?: any): Promise<HttpHeaders> {
+    let localVarHeaders = new HttpHeaders();
+
+    if (account) {
+      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + account.authdata);
+    }
+
+    localVarHeaders = localVarHeaders.set('Accept', 'application/json');
+    //TODO: check this header out: without it there no CORS
+    // localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
+    if (url.startsWith('/ocs') || url.startsWith('/index.php/login/v2')) {
+      localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
+    }
+    if (body) {
+      localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
+    }
+    return localVarHeaders
+  }
+
+  private async getHeadersNative(account: Account, url: string, body?: any): Promise<Cap.HttpHeaders> {
     let headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
       //TODO: check this header out: without it there no CORS
       // 'Content-Type': 'application/json',
       'OCS-APIRequest': 'true'
     }
-    if (isOCSRequest) {
+    if (url.startsWith('/ocs')) {
       headers = {
         'Accept': 'application/json',
         //TODO: check this header out: without it there no CORS
@@ -47,197 +253,10 @@ export class HttpService {
       }
       headers['Authorization'] = `Basic ${account.authdata}`
     }
+    if (body) {
+      headers['Content-Type'] = 'application/json'
+    }
     return headers;
-  }
-
-  public async post<T>(url: string, body?: any, options1: options = {withCredentials: true}): Promise<T> {
-    let account
-    if (options1.withCredentials) {
-      account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
-      }
-    }
-
-    if (this.isNativePlatform()) {
-      const headers = await this.getHeaders(account, url.startsWith('/ocs'))
-      if (body) {
-        headers['Content-Type'] = 'application/json'
-      }
-      const postoptions = {
-        url: url,
-        headers: headers,
-        data: body
-      }
-
-      const resp1 = await Cap.CapacitorHttp.post(postoptions)
-      return new Promise((resolve, reject) => {
-        console.log("httpService: receive status: " + resp1.status)
-        if (resp1.status <= 299 && resp1.status >= 200) {
-          resolve(resp1.data)
-        } else {
-          reject(resp1.status)
-        }
-      })
-    } else {
-      let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      headers = headers.set('Content-Type', 'application/json');
-      return new Promise(resolve => {
-        this.httpClient.post<T>(url,
-          body,
-          {headers: headers}
-        ).subscribe(value => resolve(value), error => {
-            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
-          }
-        )
-      })
-    }
-  }
-
-  public isNativePlatform() {
-    return this.platform.is("capacitor")
-  }
-
-  public async put<T>(url: string, body: any, options1: options = {withCredentials: true}): Promise<T> {
-    let account
-    if (options1.withCredentials) {
-      account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
-      }
-    }
-
-    if (this.isNativePlatform()) {
-      const headers = await this.getHeaders(account, url.startsWith('/ocs'))
-      if (body) {
-        headers['Content-Type'] = 'application/json'
-      }
-      const options = {
-        url: url,
-        headers: headers,
-        data: body
-      };
-      return new Promise((resolve) =>
-        (Cap.CapacitorHttp as CapacitorHttpPlugin).put(options)
-          .then(value => {
-            resolve(value.data as T)
-          }).catch(reason => {
-          this.notifyService.systemError(reason)
-        })
-      )
-    } else {
-      let headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      headers = headers.set('Content-Type', 'application/json');
-      return new Promise(resolve => {
-        this.httpClient.put<T>(url,
-          body,
-          {headers: headers}
-        ).subscribe(value => resolve(value), error => {
-            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
-          }
-        )
-      })
-    }
-
-  }
-
-  public async get<T>(url: string, options1: options = {withCredentials: true}): Promise<T> {
-    let account
-    if (options1.withCredentials) {
-      account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
-      }
-    }
-
-    if (this.isNativePlatform()) {
-      const options = {
-        url: url,
-        headers: await this.getHeaders(account, url.startsWith('/ocs')),
-      };
-      return new Promise((resolve, reject) =>
-        (Cap.CapacitorHttp as CapacitorHttpPlugin).get(options)
-          .then(value => {
-            resolve(value.data as T)
-          }).catch(reason => {
-          console.error(reason)
-          reject(reason)
-        })
-      )
-    } else {
-      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      return new Promise((resolve, reject) =>
-        this.httpClient.get<T>(url, {
-          observe: 'body',
-          responseType: 'json',
-          headers: headers
-        }).subscribe(value => resolve(value), error => {
-            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
-          }
-        ))
-    }
-  }
-
-  public async delete<T>(url: string, options1: options = {withCredentials: true}): Promise<T> {
-    let account
-    if (options1.withCredentials) {
-      account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
-      }
-    }
-
-    if (this.isNativePlatform()) {
-      const options = {
-        url: url,
-        headers: await this.getHeaders(account, url.startsWith('/ocs')),
-      };
-      return new Promise((resolve, reject) =>
-        (Cap.CapacitorHttp as CapacitorHttpPlugin).delete(options)
-          .then(value => {
-            resolve(value.data as T)
-          }).catch(reason => {
-          console.error(reason)
-          reject(reason)
-        })
-      )
-    } else {
-      const headers = await this.addDefaultHeaders(account, url.startsWith('/ocs'))
-      return new Promise(resolve => {
-        this.httpClient.delete<T>(url, {
-          observe: 'body',
-          responseType: 'json',
-          headers: headers
-        }).subscribe(value => resolve(value), error => {
-            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
-          }
-        )
-      })
-    }
-  }
-
-  private async addDefaultHeaders(account?: Account, isOCSRequest = false): Promise<HttpHeaders> {
-    let localVarHeaders = new HttpHeaders();
-
-    if (account) {
-      localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + account.authdata);
-    }
-
-    localVarHeaders = localVarHeaders.set('Accept', 'application/json');
-    //TODO: check this header out: without it there no CORS
-    // localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
-    if (isOCSRequest) {
-      localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
-    }
-    return localVarHeaders
   }
 
 }

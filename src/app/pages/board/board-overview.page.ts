@@ -10,7 +10,7 @@ import { Board, Upcoming } from "@app/model";
   styleUrls: ['board-overview.page.scss'],
 })
 export class BoardOverviewPage implements OnInit {
-  isLoading = new BehaviorSubject<boolean>(true);
+  isLoading = false
 
   boards:BehaviorSubject<Board[]> = new BehaviorSubject<Board[]>(null)
   upcomings: BehaviorSubject<Upcoming[]> = new BehaviorSubject<Upcoming[]>(null)
@@ -23,8 +23,7 @@ export class BoardOverviewPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    await this.getBoards()
-    await this.getUpcoming()
+    await this.getData()
     await this.overviewService.getCapabilities()
   }
   async ngOnInit() {
@@ -33,22 +32,18 @@ export class BoardOverviewPage implements OnInit {
     this.upcomings.subscribe(this.overviewService.currentUpcomingsSubj)
   }
 
-  async getBoards() {
-    this.isLoading.next(true)
-    const b = await this.boardService.getBoards()
-    this.boards.next(b)
-    this.isLoading.next(false)
+  async getData() {
+    this.isLoading = true
+    this.boardService.getBoards().then(async value => {
+      this.boards.next(value)
+      await this.overviewService.upcoming()
+    }).finally(() => this.isLoading = false)
   }
 
-  async getUpcoming() {
-    this.isLoading.next(true)
-    await this.overviewService.upcoming()
-    this.isLoading.next(false)
-  }
+
 
   doRefresh(event) {
-    this.getBoards()
-    this.getUpcoming()
+    this.getData()
     event.target.complete();
   }
 

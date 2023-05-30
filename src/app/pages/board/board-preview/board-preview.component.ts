@@ -7,7 +7,7 @@ import { BehaviorSubject } from "rxjs";
 @Component({
   selector: 'app-board-preview',
   templateUrl: './board-preview.component.html',
-  styleUrls: ['./board-preview.component.css']
+  styleUrls: ['./board-preview.component.scss']
 })
 export class BoardPreviewComponent implements OnInit {
   @Input() board: Board;

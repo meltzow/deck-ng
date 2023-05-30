@@ -30,7 +30,8 @@ export class LoginService {
 
   constructor(
     private httpService: HttpService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private platform: Platform
   ) {
 
   }
@@ -38,35 +39,31 @@ export class LoginService {
   async login(server: URL): Promise<boolean> {
     this.cancelRetryLoop = false
     let url
-    if (server.hostname == "localhost" && !this.httpService.isNativePlatform()) {
+    if (server.hostname == "localhost" &&  this.platform.is("desktop")) {
       //using proxy
       url = '/index.php/login/v2'
     } else {
       url = server.toString() + 'index.php/login/v2'
     }
 
-    const resp1 = await this.httpService.post<LoginPollInfo>(url, null, {withCredentials: false})
+    const resp1 = await this.httpService.post<LoginPollInfo>(url, null, false, false)
 
     return new Promise((resolve, reject) => {
       if (resp1) {
         const options1 = {
           url: resp1.poll.endpoint,
-          params: {token: resp1.poll.token},
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
+          params: {token: resp1.poll.token}
         };
-        if (this.httpService.isNativePlatform()) {
+        if (this.platform.is('mobile')) {
           Browser.open({url: resp1.login})
         } else {
           //remove used proxy url
           const mywindow = window.open(resp1.login.replace('http://localhost:8100', server.toString()), "_blank")
-          mywindow.onunload = () => console.log('window closed')
+          if (mywindow) mywindow.onunload = () => console.log('window closed')
           options1.url = options1.url.replace('http://localhost:8100', '')
         }
 
-        const pollCall = () => this.httpService.post<LoginCredentials>(options1.url, options1.params, {withCredentials: false})
+        const pollCall = () => this.httpService.post<LoginCredentials>(options1.url, options1.params, false, false)
         // this.RepeatUntilSuccess(pollCall()myOperation, 500).then(function(value) {
         //   console.log("Wow, success: " + value);
         // })

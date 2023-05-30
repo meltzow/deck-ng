@@ -9,14 +9,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen="true" class="ion-padding">
-  <ion-loading [isOpen]="isLoading" message="Sorry, I'm working..."></ion-loading>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-loading [isOpen]="isLoading" message="Sorry, I'm working..."></ion-loading>
+
   <ion-list>
     <ion-list-header translate="">boards</ion-list-header>
-    <ion-grid *ngIf="!(isLoading | async)">
+    <ion-grid *ngIf="(boards | async)">
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let board of (boards | async)">
           <app-board-preview [board]="board"></app-board-preview>
@@ -24,7 +25,7 @@
       </ion-row>
     </ion-grid>
     <ion-list-header translate="" *ngIf="(upcomings | async)">upcoming</ion-list-header>
-    <ion-grid *ngIf="!(isLoading | async) && (upcomings | async)">
+    <ion-grid *ngIf="(upcomings | async)">
       <ion-row>
         <ion-col size="12" size-md="6" *ngFor="let upcoming of (upcomings | async)">
           <ion-card routerLink="/boards/{{upcoming.boardId}}/stacks/{{upcoming.stackId}}/cards/{{upcoming.id}}">

@@ -14,8 +14,12 @@ export class ErrorInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const re = new RegExp('login/v2');
+    if (request.url.search(re) > -1 ) {
+      return next.handle(request)
+    }
     let error
-    return next.handle(request).pipe(catchError( (err: HttpErrorResponse) => {
+    return next.handle(request).pipe(catchError( (err) => {
       switch (err.status) {
         case 401:
           this.authenticationService.logout();
@@ -33,6 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.notification.error(error, "Request not successful")
           return throwError(error);
       }
+      return of(err)
     })
     );
   }

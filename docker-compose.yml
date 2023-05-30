@@ -12,7 +12,7 @@ services:
       - db:/var/lib/mysql
     environment:
       - MARIADB_ROOT_PASSWORD=nextcloud
-      - MARIADB_PASSWORD=
+      - MARIADB_PASSWORD=nextcloud
       - MARIADB_DATABASE=nextcloud
       - MARIADB_USER=nextcloud
 
@@ -25,7 +25,9 @@ services:
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - MYSQL_PASSWORD=
+      - MYSQL_PASSWORD=nextcloud
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db
+      - TRUSTED_PROXIES=127.0.0.1 localhost
+      - NEXTCLOUD_TRUSTED_DOMAINS=127.0.0.1 localhost:8100

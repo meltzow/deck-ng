@@ -36,7 +36,7 @@ registerLocaleData(localeDe);
   ],
   providers: [
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: LOCALE_ID, useValue: navigator.language},
     MyRenderer,
     AuthGuard,
