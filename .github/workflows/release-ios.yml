@@ -21,9 +21,6 @@ jobs:
           bundler-cache: true
       - run: |
           brew install fastlane
-      - name: Patch Fastlane
-        run: |
-          patch vendor/bundle/ruby/3.1.0/gems/fastlane-2.212.1/spaceship/lib/spaceship/connect_api/models/app.rb fastlane-prices-fix.patch
       - run: cd ios/App && pod install
       - run: bundle exec fastlane ios build track:${{ inputs.track }}
         env:
