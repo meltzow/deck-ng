@@ -33,7 +33,7 @@ export class HttpService {
     }
 
     if (this.isNativePlatform()) {
-      const headers = await this.getHeadersNative(account, url)
+      const headers = await this.getHeadersNative(account, url, body)
       const postoptions = {
         url: url,
         headers: headers,
@@ -42,8 +42,16 @@ export class HttpService {
 
       return new Promise((resolve, reject) => {
       Cap.CapacitorHttp.post(postoptions)
-        .then(value => {
-          resolve(value.data as T)
+        .then(resp => {
+          console.log("httpService: receive status: " + resp.status)
+          if (resp.status <= 299 && resp.status >= 200) {
+            resolve(resp.data as T)
+          } else {
+            if (displayError) {
+              this.notifyService.systemError((resp as any).message)
+            }
+            reject(resp.status)
+          }
         }).catch(reason => {
           if (displayError) {
             this.notifyService.systemError(reason)
@@ -84,10 +92,7 @@ export class HttpService {
     }
 
     if (this.isNativePlatform()) {
-      const headers = await this.getHeadersNative(account, url)
-      if (body) {
-        headers['Content-Type'] = 'application/json'
-      }
+      const headers = await this.getHeadersNative(account, url, body)
       const options = {
         url: url,
         headers: headers,
@@ -232,19 +237,11 @@ export class HttpService {
   }
 
   private async getHeadersNative(account: Account, url: string, body?: any): Promise<Cap.HttpHeaders> {
-    let headers: Cap.HttpHeaders = {
+    const headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
-      //TODO: check this header out: without it there no CORS
-      // 'Content-Type': 'application/json',
-      'OCS-APIRequest': 'true'
     }
-    if (url.startsWith('/ocs')) {
-      headers = {
-        'Accept': 'application/json',
-        //TODO: check this header out: without it there no CORS
-        // 'Content-Type': 'application/json',
-        'OCS-APIRequest': 'true'
-      }
+    if (url.startsWith(account.url + '/ocs') || url.startsWith(account.url + '/index.php/login/v2')) {
+      headers['OCS-APIRequest'] = "true"
     }
 
     if (account) {
@@ -256,6 +253,7 @@ export class HttpService {
     if (body) {
       headers['Content-Type'] = 'application/json'
     }
+
     return headers;
   }
 
