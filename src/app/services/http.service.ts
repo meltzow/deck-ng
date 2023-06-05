@@ -21,38 +21,40 @@ export class HttpService {
   }
 
 
-  public async post<T>(url: string, body?: any, withCredentials =  true, displayError = true): Promise<T> {
-    let account
+  public async post<T>(relativeURL: string, body?: any, withCredentials = true, displayError = true): Promise<T> {
+
+    let account, url: URL
     if (withCredentials) {
       account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
+      if (!relativeURL.startsWith("/")) {
+        throw new Error('Required parameter relativeURL must start with an "/"');
       }
+      url = new URL(relativeURL, account.url)
+    } else {
+      url = new URL(relativeURL)
     }
+
 
     if (this.isNativePlatform()) {
       const headers = await this.getHeadersNative(account, url, body)
-      const postoptions = {
-        url: url,
+      const postoptions: Cap.HttpOptions = {
+        url: url.toString(),
         headers: headers,
         data: body
       }
 
       return new Promise((resolve, reject) => {
-      Cap.CapacitorHttp.post(postoptions)
-        .then(resp => {
-          console.log("httpService: receive status: " + resp.status)
-          if (resp.status <= 299 && resp.status >= 200) {
-            resolve(resp.data as T)
-          } else {
-            if (displayError) {
-              this.notifyService.systemError((resp as any).message)
+        Cap.CapacitorHttp.post(postoptions)
+          .then(resp => {
+            if (resp.status <= 299 && resp.status >= 200) {
+              resolve(resp.data as T)
+            } else {
+              if (displayError) {
+                this.notifyService.systemError((resp as any).message)
+              }
+              reject(resp.status)
             }
-            reject(resp.status)
-          }
-        }).catch(reason => {
+          }).catch(reason => {
           if (displayError) {
             this.notifyService.systemError(reason)
           }
@@ -62,7 +64,7 @@ export class HttpService {
     } else {
       const headers = await this.getHeaders(account, url, body)
       return new Promise((resolve, reject) => {
-        this.httpClient.post<T>(url,
+        this.httpClient.post<T>(url.toString(),
           body,
           {headers: headers}
         ).subscribe(value => resolve(value), error => {
@@ -80,40 +82,49 @@ export class HttpService {
     return this.platform.is("capacitor")
   }
 
-  public async put<T>(url: string, body: any, withCredentials = true, displayError = true): Promise<T> {
-    let account
+  public async put<T>(relativeURL: string, body: any, withCredentials = true, displayError = true): Promise<T> {
+    let account, url: URL
     if (withCredentials) {
       account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
+      if (!relativeURL.startsWith("/")) {
+        throw new Error('Required parameter relativeURL must start with an "/"');
       }
+        url = new URL(relativeURL, account.url)
+    } else {
+      url = new URL(relativeURL)
     }
 
     if (this.isNativePlatform()) {
       const headers = await this.getHeadersNative(account, url, body)
-      const options = {
-        url: url,
+      const options: Cap.HttpOptions = {
+        url: url.toString(),
         headers: headers,
         data: body
       };
       return new Promise((resolve, reject) =>
         (Cap.CapacitorHttp as CapacitorHttpPlugin).put(options)
-          .then(value => {
-            resolve(value.data as T)
-          }).catch(reason => {
-            if (displayError) {
-              this.notifyService.systemError(reason)
+          .then(resp => {
+            if (resp.status <= 299 && resp.status >= 200) {
+              resolve(resp.data as T)
+            } else {
+              if (displayError) {
+                this.notifyService.systemError((resp as any).message)
+              }
+              reject(resp.status)
             }
-            reject(reason)
+
+          }).catch(reason => {
+          if (displayError) {
+            this.notifyService.systemError(reason)
+          }
+          reject(reason)
         })
       )
     } else {
       let headers = await this.getHeaders(account, url)
       headers = headers.set('Content-Type', 'application/json');
       return new Promise((resolve, reject) => {
-        this.httpClient.put<T>(url,
+        this.httpClient.put<T>(url.toString(),
           body,
           {headers: headers}
         ).subscribe(value => resolve(value), error => {
@@ -128,20 +139,21 @@ export class HttpService {
 
   }
 
-  public async get<T>(url: string, withCredentials = true, displayError = true): Promise<T> {
-    let account
+  public async get<T>(relativeURL: string, withCredentials = true, displayError = true): Promise<T> {
+    let account, url: URL
     if (withCredentials) {
       account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
-      }
+      if (!relativeURL.startsWith("/"))
+        throw new Error('Required parameter relativeURL must start with an "/"');
+        url = new URL(relativeURL, account.url)
+    } else {
+      url = new URL(relativeURL)
     }
 
+
     if (this.isNativePlatform()) {
-      const options = {
-        url: url,
+      const options: Cap.HttpOptions = {
+        url: url.toString(),
         headers: await this.getHeadersNative(account, url),
       };
       return new Promise((resolve, reject) =>
@@ -158,7 +170,7 @@ export class HttpService {
     } else {
       const headers = await this.getHeaders(account, url)
       return new Promise((resolve, reject) =>
-        this.httpClient.get<T>(url, {
+        this.httpClient.get<T>(url.toString(), {
           observe: 'body',
           responseType: 'json',
           headers: headers
@@ -172,20 +184,20 @@ export class HttpService {
     }
   }
 
-  public async delete<T>(url: string, withCredentials = true, displayError = true): Promise<T> {
-    let account
+  public async delete<T>(relativeURL: string, withCredentials = true, displayError = true): Promise<T> {
+    let account, url: URL
     if (withCredentials) {
       account = await this.authService.getAccount()
-      if (!url.startsWith("/"))
-        throw Error("when using credentials the url must be start with '/'")
-      if (this.isNativePlatform()) {
-        url = account.url + url
-      }
+      if (!relativeURL.startsWith("/"))
+        throw new Error('Required parameter relativeURL must start with an "/"');
+        url = new URL(relativeURL, account.url)
+    } else {
+      url = new URL(relativeURL)
     }
 
     if (this.isNativePlatform()) {
-      const options = {
-        url: url,
+      const options: Cap.HttpOptions = {
+        url: url.toString(),
         headers: await this.getHeadersNative(account, url),
       };
       return new Promise((resolve, reject) =>
@@ -202,33 +214,31 @@ export class HttpService {
     } else {
       const headers = await this.getHeaders(account, url)
       return new Promise((resolve, reject) => {
-        this.httpClient.delete<T>(url, {
+        this.httpClient.delete<T>(url.toString(), {
           observe: 'body',
           responseType: 'json',
           headers: headers
         }).subscribe(value => resolve(value), error => {
-          if (displayError) {
-            this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
-          }
-          reject(error)
+            if (displayError) {
+              this.notifyService.systemError(error.message, error.status + ":" + error.statusText)
+            }
+            reject(error)
           }
         )
       })
     }
   }
 
-  private async getHeaders(account: Account, url: string, body?: any): Promise<HttpHeaders> {
+  private async getHeaders(account: Account, url: URL, body?: any): Promise<HttpHeaders> {
     let localVarHeaders = new HttpHeaders();
+    localVarHeaders = localVarHeaders.set('Accept', 'application/json');
 
     if (account) {
       localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + account.authdata);
     }
 
-    localVarHeaders = localVarHeaders.set('Accept', 'application/json');
-    //TODO: check this header out: without it there no CORS
-    // localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
-    if (url.startsWith('/ocs') || url.startsWith('/index.php/login/v2')) {
-      localVarHeaders = localVarHeaders.set('OCS-APIRequest', 'true');
+    if (url.pathname.startsWith('/ocs') || url.pathname.startsWith('/index.php/login/v2') || url.pathname.startsWith('/login/v2')) {
+      localVarHeaders = localVarHeaders.set('OCS-APIREQUEST', 'true');
     }
     if (body) {
       localVarHeaders = localVarHeaders.set('Content-Type', 'application/json');
@@ -236,12 +246,12 @@ export class HttpService {
     return localVarHeaders
   }
 
-  private async getHeadersNative(account: Account, url: string, body?: any): Promise<Cap.HttpHeaders> {
+  private async getHeadersNative(account: Account, url: URL, body?: any): Promise<Cap.HttpHeaders> {
     const headers: Cap.HttpHeaders = {
       'Accept': 'application/json',
     }
-    if (url.startsWith(account.url + '/ocs') || url.startsWith(account.url + '/index.php/login/v2')) {
-      headers['OCS-APIRequest'] = "true"
+    if (url.pathname.startsWith('/ocs') || url.pathname.startsWith('/index.php/login/v2')) {
+      headers['OCS-APIREQUEST'] = "true"
     }
 
     if (account) {

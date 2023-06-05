@@ -37,16 +37,16 @@ export class LoginService {
   }
 
   async login(server: URL): Promise<boolean> {
+    let useProxy = false
     this.cancelRetryLoop = false
-    let url
     if (server.hostname == "localhost" &&  this.platform.is("desktop")) {
       //using proxy
-      url = '/index.php/login/v2'
-    } else {
-      url = server.toString() + 'index.php/login/v2'
+      useProxy = true
+      server.host = 'localhost:8100'
     }
+    server.pathname = 'index.php/login/v2'
 
-    const resp1 = await this.httpService.post<LoginPollInfo>(url, null, false, false)
+    const resp1 = await this.httpService.post<LoginPollInfo>(server.toString(), null, false, false)
 
     return new Promise((resolve, reject) => {
       if (resp1) {
@@ -60,7 +60,7 @@ export class LoginService {
           //remove used proxy url
           const mywindow = window.open(resp1.login.replace('http://localhost:8100', server.toString()), "_blank")
           if (mywindow) mywindow.onunload = () => console.log('window closed')
-          options1.url = options1.url.replace('http://localhost:8100', '')
+          options1.url = options1.url.replace('http://localhost:8080', 'http://localhost:8100')
         }
 
         const pollCall = () => this.httpService.post<LoginCredentials>(options1.url, options1.params, false, false)
@@ -72,7 +72,7 @@ export class LoginService {
             // timeInterval.unsubscribe()
             console.log("loginService: login true: " + resp2.loginName)
             this.cancelRetryLoop = true
-            const succ: boolean = await this.authService.saveCredentials(server.toString(), resp2.loginName, resp2.appPassword, true)
+            const succ: boolean = await this.authService.saveCredentials(server.protocol +  "//" +server.hostname + ":" +server.port, resp2.loginName, resp2.appPassword, true)
             if (succ)
             resolve(succ)
         }).catch(reason => {
