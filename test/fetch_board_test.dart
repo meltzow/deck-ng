@@ -4,6 +4,7 @@ import 'package:deck_ng/service/board_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 import 'fetch_board_test.mocks.dart';
 
@@ -20,9 +21,10 @@ void main() {
       final BoardRepositoryImpl boardRepo =
           Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
 
-      //FIXME
-      // when(httpServiceMock.getResponse('/index.php/apps/deck/api/v1/boards'))
-      //     .thenAnswer((_) async => [Board(title: 'foo', id: 1).toJson()]);
+      var resp = [Board(title: 'foo', id: 1)].map((e) => e.toJson()).toList();
+      when(httpServiceMock
+              .getListResponse('/index.php/apps/deck/api/v1/boards'))
+          .thenAnswer((_) async => resp);
 
       expect(await boardRepo.getAllBoards(), isA<List<Board>>());
     });
@@ -32,11 +34,10 @@ void main() {
       final BoardRepositoryImpl boardRepo =
           Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
 
-      //FIXME
-      // Use Mockito to return an unsuccessful response when it calls the
-      // provided http.Client.
-      // when(httpServiceMock.getResponse('/index.php/apps/deck/api/v1/boards'))
-      //     .thenAnswer((_) async => Exception('Not Found'));
+      // Use Mockito to return an unsuccessful response when it calls the provided http.Client.
+      when(httpServiceMock
+              .getListResponse('/index.php/apps/deck/api/v1/boards'))
+          .thenAnswer((_) async => throw Exception('Not Found'));
 
       expect(boardRepo.getAllBoards(), throwsException);
     });

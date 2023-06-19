@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:dio/dio.dart';
@@ -33,6 +32,11 @@ class HttpService extends getx.GetxService implements IHttpService {
   }
 
   @override
+  Future<List<Map<String, dynamic>>> getListResponse(String path) async {
+    return await getResponse(path) as List<Map<String, dynamic>>;
+  }
+
+  @override
   Future<Map<String, dynamic>> getResponse(String path) async {
     Map<String, dynamic> response;
     try {
@@ -40,7 +44,6 @@ class HttpService extends getx.GetxService implements IHttpService {
       Response resp = await httpClient.get(nextcloudBaseUrl + path,
           options: Options(headers: getHeaders(path, account)));
       response = returnResponse(resp);
-      // responseJson = returnResponse(response);
     } catch (error) {
       throw Exception(error.toString());
     }
@@ -48,7 +51,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   }
 
   @visibleForTesting
-  Map<String, dynamic> returnResponse(Response response) {
+  dynamic returnResponse(Response response) {
     switch (response.statusCode) {
       case 200:
         dynamic responseJson = jsonDecode(response.data);
@@ -63,11 +66,5 @@ class HttpService extends getx.GetxService implements IHttpService {
         throw Exception('Error occurred while communication with server' +
             ' with status code : ${response.statusCode}');
     }
-  }
-
-  @override
-  Future<List<Board>> getAllBoards() {
-    // TODO: implement getAllBoards
-    throw UnimplementedError();
   }
 }

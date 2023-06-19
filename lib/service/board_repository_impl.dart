@@ -6,7 +6,7 @@ class BoardRepositoryImpl extends GetxService {
   final httpService = Get.find<IHttpService>();
 
   Future<List<Board>> getAllBoards() async {
-    dynamic response = await httpService.getResponse(
+    dynamic response = await httpService.getListResponse(
       "/index.php/apps/deck/api/v1/boards",
     );
     final dynamic t = response;

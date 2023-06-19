@@ -5,7 +5,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:deck_ng/model/board.dart' as _i4;
 import 'package:deck_ng/service/Ihttp_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -39,11 +38,13 @@ class MockIHttpService extends _i1.Mock implements _i2.IHttpService {
             _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
       ) as _i3.Future<Map<String, dynamic>>);
   @override
-  _i3.Future<List<_i4.Board>> getAllBoards() => (super.noSuchMethod(
+  _i3.Future<List<Map<String, dynamic>>> getListResponse(String? path) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #getAllBoards,
-          [],
+          #getListResponse,
+          [path],
         ),
-        returnValue: _i3.Future<List<_i4.Board>>.value(<_i4.Board>[]),
-      ) as _i3.Future<List<_i4.Board>>);
+        returnValue: _i3.Future<List<Map<String, dynamic>>>.value(
+            <Map<String, dynamic>>[]),
+      ) as _i3.Future<List<Map<String, dynamic>>>);
 }

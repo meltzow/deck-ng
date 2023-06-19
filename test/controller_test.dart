@@ -9,7 +9,7 @@ void main() {
     /// You can test the controller without the lifecycle,
     /// but it's not recommended unless you're not using
     ///  GetX dependency injection
-    final controller = Controller();
+    final controller = Get.put(Controller());
     expect(controller.count.value, 0);
 
     /// If you are using it, you can test everything,
