@@ -14,7 +14,6 @@ import 'package:mockito/mockito.dart';
 import 'http_service_test.mocks.dart';
 
 @GenerateMocks([IAuthService])
-@GenerateNiceMocks([MockSpec<dio.Dio>()])
 void main() {
   late dio.Dio dioClient;
   late DioAdapter dioAdapter;
@@ -44,7 +43,6 @@ void main() {
     test('returns all boards if the http call completes successfully',
         () async {
       final authServiceMock = Get.put<IAuthService>(MockIAuthService());
-      final dio.Dio getConnectMock = Get.put<dio.Dio>(MockDio());
       final HttpService service = Get.put(HttpService());
 
       dioAdapter.onGet(
