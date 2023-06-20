@@ -1,5 +1,4 @@
 import 'package:deck_ng/model/card.dart' as NC;
-import 'package:deck_ng/screen/board_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class ListViewCardItem extends StatefulWidget {
@@ -30,14 +29,6 @@ class _ListViewCardItemState extends State<ListViewCardItem> {
         // navigate to a named route and
         // provide the arguments as an optional
         // parameter.
-        Navigator.pushNamed(
-          context,
-          '/boards/details',
-          arguments: ScreenArguments(
-            widget.data != null ? widget.data!.id : -1,
-            'This message is extracted in the build method.',
-          ),
-        );
       },
     );
   }

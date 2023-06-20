@@ -5,13 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ScreenArguments {
-  final int boardId;
-  final String message;
-
-  ScreenArguments(this.boardId, this.message);
-}
-
 class BoardDetailsScreen extends StatelessWidget {
   final controller = Get.find<BoardDetailsController>();
 
@@ -26,20 +19,24 @@ class BoardDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              MyAppBar(
+              const MyAppBar(
                 title: Text('board details '),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CupertinoSlidingSegmentedControl(
-                        groupValue: controller.selectedStack,
-                        children: controller.myTabs,
-                        onValueChanged: (i) {
-                          controller.selectStack(i!);
-                        }),
-                  )
-                ],
+              Obx(
+                () => Row(
+                  children: [
+                    !controller.isLoading.value
+                        ? Expanded(
+                            child: CupertinoSlidingSegmentedControl(
+                                groupValue: controller.selectedStack,
+                                children: controller.myTabs,
+                                onValueChanged: (i) {
+                                  controller.selectStack(i!);
+                                }),
+                          )
+                        : const Center()
+                  ],
+                ),
               ),
               Expanded(
                   child: RefreshIndicator(

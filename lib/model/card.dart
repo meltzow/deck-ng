@@ -30,4 +30,10 @@ class Card {
       // settings:json['settings'] as BoardSettings;
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'id': id,
+        'description': description,
+      };
 }

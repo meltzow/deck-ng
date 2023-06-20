@@ -10,11 +10,15 @@ class BoardDetailsController extends GetxController {
   final Rx<List<NC.Stack>> _stackData = Rx<List<NC.Stack>>([]);
   int? _boardId;
   final Rxn<int> _selectedStack = Rxn(0);
+  final RxBool isLoading = RxBool(true);
 
-  Map<int, Widget> myTabs = const <int, Widget>{
-    0: Text("Item 1"),
-    1: Text("Item 2")
-  };
+  Map<int, Widget> get myTabs {
+    Map<int, Widget> m = <int, Widget>{};
+    for (var element in _stackData.value) {
+      m[element.id] = Text(element.title);
+    }
+    return m;
+  }
 
   final BoardRepositoryImpl _boardRepository = Get.find<BoardRepositoryImpl>();
   final StackRepositoryImpl _stackRepository = Get.find<StackRepositoryImpl>();
@@ -38,8 +42,11 @@ class BoardDetailsController extends GetxController {
   }
 
   Future<void> refreshData() async {
+    isLoading.value = true;
     _boardsData.value = await _boardRepository.getBoard(_boardId!);
     _stackData.value = (await _stackRepository.getAll(_boardId!))!;
+    _selectedStack.value = _stackData.value[0].id;
+    isLoading.value = false;
   }
 
   Future<void> selectStack(int stackId) async {

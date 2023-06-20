@@ -38,10 +38,12 @@ void main() {
 
     if (!kIsWeb) {
       // Not required for the web. This is required prior to taking the screenshot.
-      await binding.convertFlutterSurfaceToImage();
 
       if (Platform.isAndroid) {
+        await binding.convertFlutterSurfaceToImage();
         platformName = "android";
+        // To make sure at least one frame has rendered
+        await tester.pumpAndSettle();
       } else {
         platformName = "ios";
       }
@@ -49,10 +51,7 @@ void main() {
       platformName = "web";
     }
 
-    // await binding.convertFlutterSurfaceToImage();
-    // To make sure at least one frame has rendered
-    await tester.pumpAndSettle();
     // Take the screenshot
-    await binding.takeScreenshot('board-overview-$platformName');
+    await binding.takeScreenshot('$platformName/board-overview');
   });
 }

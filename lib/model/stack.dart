@@ -40,4 +40,9 @@ class Stack {
       id: json['id'] as int,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'id': id,
+      };
 }
