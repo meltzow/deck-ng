@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
+  archive:
+    dependency: transitive
+    description:
+      name: archive
+      sha256: "0c8368c9b3f0abbc193b9d6133649a614204b528982bebc7026372d61677ce3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.7"
   args:
     dependency: transitive
     description:
@@ -231,7 +239,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_driver:
-    dependency: "direct dev"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -243,6 +251,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -322,6 +335,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: a3715e3bc90294e971cb7dc063fbf3cd9ee0ebf8604ffeafabd9e6f16abbdbe6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.0"
   io:
     dependency: transitive
     description:
@@ -490,6 +511,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.3"
   pool:
     dependency: transitive
     description:
@@ -506,6 +535,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
+  pub_cache:
+    dependency: transitive
+    description:
+      name: pub_cache
+      sha256: "6dda58dc069d153b7373977244ee6da4e6cb726c6e50903c1c4f278d0c111db5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   pub_semver:
     dependency: transitive
     description:
@@ -522,6 +559,21 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  resource_portable:
+    dependency: transitive
+    description:
+      name: resource_portable
+      sha256: "004f8c5ed07557ad9a21aa075214b6be2b968309a7dfc465fa0aa85e4002518e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
+  screenshots:
+    dependency: "direct dev"
+    description:
+      path: "../screenshots"
+      relative: true
+    source: path
+    version: "3.0.1"
   shelf:
     dependency: transitive
     description:
@@ -671,6 +723,24 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  tool_base:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "8ce712f94f06d35bf7063233b0234d05ef4e6989"
+      url: "https://github.com/felixgabler/tool_base.git"
+    source: git
+    version: "2.0.0"
+  tool_mobile:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: e9535137f49dc423467756df4668842573656058
+      url: "https://github.com/felixgabler/tool_mobile.git"
+    source: git
+    version: "1.9.5+1"
   typed_data:
     dependency: transitive
     description:

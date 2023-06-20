@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:deck_ng/main.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/stack.dart';
@@ -8,22 +6,20 @@ import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:deck_ng/service/auth_repository_impl.dart';
 import 'package:deck_ng/service/board_repository_impl.dart';
 import 'package:deck_ng/service/stack_repository_impl.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:screenshots/screenshots.dart';
 
 import '../test/widget_test.mocks.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
-  var deviceName = const String.fromEnvironment("DEVICE_NAME");
   late IHttpService httpServiceMock;
   final IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
   setUp(() {
     Get.put<IAuthService>(AuthRepositoryImpl());
     httpServiceMock = Get.put<IHttpService>(MockIHttpService());
@@ -52,25 +48,6 @@ void main() {
     await tester.pumpWidget(const MyApp());
     Get.toNamed('/boards/details', arguments: {'boardId': 1});
     await tester.pumpAndSettle();
-    String platformName = '';
-
-    if (!kIsWeb) {
-      // Not required for the web. This is required prior to taking the screenshot.
-      await binding.convertFlutterSurfaceToImage();
-
-      if (Platform.isAndroid) {
-        platformName = "android";
-      } else {
-        platformName = "ios";
-      }
-    } else {
-      platformName = "web";
-    }
-
-    // await binding.convertFlutterSurfaceToImage();
-    // To make sure at least one frame has rendered
-    await tester.pumpAndSettle();
-    // Take the screenshot
-    await binding.takeScreenshot('$platformName/$deviceName/board-details');
+    await screenshot(binding, tester, 'en-US', 'myscreenshot1', silent: false);
   });
 }

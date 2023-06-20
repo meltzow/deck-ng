@@ -39,6 +39,9 @@ dependencies:
   get_storage: ^2.1.1
   dio: ^5.2.1+1
   path_provider: ^2.0.15
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 
 dev_dependencies:
@@ -49,8 +52,8 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.1
   build_runner: ^2.4.5
-  flutter_driver:
-    sdk: flutter
+  screenshots:
+    path: ../screenshots
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -65,7 +68,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

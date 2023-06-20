@@ -1,17 +1,17 @@
-import 'dart:io';
-
 import 'package:deck_ng/main.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:deck_ng/service/auth_repository_impl.dart';
 import 'package:deck_ng/service/board_repository_impl.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:screenshots/screenshots.dart';
 
 import '../test/widget_test.mocks.dart';
 
@@ -19,7 +19,7 @@ import '../test/widget_test.mocks.dart';
 void main() {
   late IHttpService httpServiceMock;
   final IntegrationTestWidgetsFlutterBinding binding =
-      IntegrationTestWidgetsFlutterBinding();
+      IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
     Get.put<IAuthService>(AuthRepositoryImpl());
@@ -33,25 +33,27 @@ void main() {
 
   testWidgets('display board overview', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
-    await tester.pumpAndSettle();
-    String platformName = '';
-
-    if (!kIsWeb) {
-      // Not required for the web. This is required prior to taking the screenshot.
-
-      if (Platform.isAndroid) {
-        await binding.convertFlutterSurfaceToImage();
-        platformName = "android";
-        // To make sure at least one frame has rendered
-        await tester.pumpAndSettle();
-      } else {
-        platformName = "ios";
-      }
-    } else {
-      platformName = "web";
-    }
-
-    // Take the screenshot
-    await binding.takeScreenshot('$platformName/board-overview');
+    var lo = await getLocalizations(tester);
+    await screenshot(binding, tester, lo.localeName, 'board-overview',
+        silent: false);
   });
+}
+
+Future<AppLocalizations> getLocalizations(WidgetTester t) async {
+  late AppLocalizations result;
+  await t.pumpWidget(
+    MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Material(
+        child: Builder(
+          builder: (BuildContext context) {
+            result = AppLocalizations.of(context)!;
+            return Container();
+          },
+        ),
+      ),
+    ),
+  );
+  return result;
 }
