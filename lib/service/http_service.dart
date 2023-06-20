@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:deck_ng/model/account.dart';
@@ -32,13 +31,22 @@ class HttpService extends getx.GetxService implements IHttpService {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getListResponse(String path) async {
-    return await getResponse(path) as List<Map<String, dynamic>>;
+  Future<List<dynamic>> getListResponse(String path) async {
+    List<dynamic> response;
+    Account? account = await authRepo.getAccount();
+    try {
+      Response resp = await httpClient.get(nextcloudBaseUrl + path,
+          options: Options(headers: getHeaders(path, account)));
+      response = (returnResponse(resp) as List<dynamic>);
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+    return response;
   }
 
   @override
   Future<Map<String, dynamic>> getResponse(String path) async {
-    Map<String, dynamic> response;
+    dynamic response;
     try {
       Account? account = await authRepo.getAccount();
       Response resp = await httpClient.get(nextcloudBaseUrl + path,
@@ -54,8 +62,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   dynamic returnResponse(Response response) {
     switch (response.statusCode) {
       case 200:
-        dynamic responseJson = jsonDecode(response.data);
-        return responseJson;
+        return response.data;
       case 400:
         throw Exception(response.data.toString());
       case 401:

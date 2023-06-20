@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
@@ -49,7 +47,7 @@ void main() {
           'http://192.168.178.59:8080/index.php/apps/deck/api/v1/boards',
           (server) => server.reply(
                 200,
-                jsonEncode(Board(title: 'foo', id: 1).toJson()),
+                Board(title: 'foo', id: 1).toJson(),
                 // Adds one-sec delay to reply method.
                 // Basically, I'd wait for one second before returning reply data.
                 // See -> issue:[106] & pr:[126]

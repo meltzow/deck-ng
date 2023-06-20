@@ -26,12 +26,12 @@ void main() {
     httpServiceMock = Get.put<IHttpService>(MockIHttpService());
     Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
 
-    var resp = [Board(title: 'foo', id: 1)].map((e) => e.toJson()).toList();
+    var resp = [Board(title: 'garden', id: 1)].map((e) => e.toJson()).toList();
     when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
         .thenAnswer((_) async => resp);
   });
 
-  testWidgets('screenshot', (WidgetTester tester) async {
+  testWidgets('display board overview', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
     await tester.pumpAndSettle();
     String platformName = '';
@@ -53,6 +53,6 @@ void main() {
     // To make sure at least one frame has rendered
     await tester.pumpAndSettle();
     // Take the screenshot
-    await binding.takeScreenshot('screenshot-$platformName');
+    await binding.takeScreenshot('board-overview-$platformName');
   });
 }

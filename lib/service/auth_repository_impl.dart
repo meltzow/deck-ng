@@ -7,16 +7,16 @@ import 'package:get_storage/get_storage.dart';
 
 class AuthRepositoryImpl extends GetxService implements IAuthService {
   final String keyUser = 'user';
-  final _box = GetStorage();
+  late final _box;
 
-  AuthRepositoryImpl() {
-    GetStorage.init();
+  Future<IAuthService> init() async {
+    await GetStorage.init();
+    _box = GetStorage();
+    print('$runtimeType ready!');
+    //FIXME remove fixed data
+    saveCredentials("http://192.168.178.59:8080", "admin", "admin", true);
+    return this;
   }
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
 
   @override
   Future<Account> getAccount() async {

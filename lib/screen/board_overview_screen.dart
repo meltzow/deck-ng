@@ -1,0 +1,68 @@
+import 'package:deck_ng/component/board_item_widget.dart';
+import 'package:deck_ng/controller/board_overview_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class BoardOverviewScreen extends StatelessWidget {
+  final BoardOverviewController controller =
+      Get.find<BoardOverviewController>();
+
+  BoardOverviewScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (context) => SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      // child: AddTaskScreen(
+                      //   onAddTaskClicked: viewModel.onAddTaskClicked,
+                      // )
+                    ),
+                  ));
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: SafeArea(
+        child: Container(
+          color: Colors.lightBlue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppBar(
+                title: Obx(() => Text("Clicks: ${controller.boardDataCount}")),
+              ),
+              Expanded(
+                  child: RefreshIndicator(
+                onRefresh: controller.refreshData,
+                child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30))),
+                    margin: const EdgeInsets.only(top: 25),
+                    child: Obx(
+                      () => ListView.builder(
+                        itemCount: controller.boardDataCount,
+                        itemBuilder: (context, index) {
+                          return BoardItemWidget(
+                              board: controller.boardData[index]);
+                        },
+                      ),
+                    )),
+              ))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
