@@ -3,7 +3,7 @@ import 'package:deck_ng/binding/auth_binding.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/screen/board_details_screen.dart';
 import 'package:deck_ng/screen/board_overview_screen.dart';
-import 'package:deck_ng/service/auth_repository_impl.dart';
+import 'package:deck_ng/service/impl/auth_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

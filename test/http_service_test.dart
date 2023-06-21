@@ -1,7 +1,7 @@
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/http_service.dart';
+import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';

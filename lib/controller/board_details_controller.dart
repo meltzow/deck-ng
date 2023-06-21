@@ -1,7 +1,7 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
 import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/stack_repository_impl.dart';
+import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
