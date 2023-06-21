@@ -13,7 +13,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:screenshots/screenshots.dart';
 
-import '../test/widget_test.mocks.dart';
+import '../test/board_overview_screen_test.mocks.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
@@ -48,6 +48,7 @@ void main() {
     await tester.pumpWidget(const MyApp());
     Get.toNamed('/boards/details', arguments: {'boardId': 1});
     await tester.pumpAndSettle();
+
     await screenshot(binding, tester, 'en-US', 'myscreenshot1', silent: false);
   });
 }

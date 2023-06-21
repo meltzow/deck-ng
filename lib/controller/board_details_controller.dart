@@ -1,6 +1,6 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
-import 'package:deck_ng/service/board_repository_impl.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/stack_repository_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,7 @@ class BoardDetailsController extends GetxController {
     return m;
   }
 
-  final BoardRepositoryImpl _boardRepository = Get.find<BoardRepositoryImpl>();
+  final IBoardService _boardRepository = Get.find<IBoardService>();
   final StackRepositoryImpl _stackRepository = Get.find<StackRepositoryImpl>();
 
   Board? get boardData => _boardsData.value;

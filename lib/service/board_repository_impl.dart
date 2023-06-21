@@ -1,10 +1,12 @@
 import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:get/get.dart';
 
-class BoardRepositoryImpl extends GetxService {
+class BoardRepositoryImpl extends GetxService implements IBoardService {
   final httpService = Get.find<IHttpService>();
 
+  @override
   Future<List<Board>> getAllBoards() async {
     dynamic response = await httpService.getListResponse(
       "/index.php/apps/deck/api/v1/boards",
@@ -15,6 +17,7 @@ class BoardRepositoryImpl extends GetxService {
     return mediaList;
   }
 
+  @override
   Future<Board> getBoard(int boardId) async {
     dynamic response = await httpService
         .getResponse("/index.php/apps/deck/api/v1/boards/$boardId");

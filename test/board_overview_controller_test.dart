@@ -1,21 +1,24 @@
 import 'package:deck_ng/controller/board_overview_controller.dart';
+import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
-import 'package:deck_ng/service/auth_repository_impl.dart';
-import 'package:deck_ng/service/board_repository_impl.dart';
-import 'package:deck_ng/service/http_service.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
+import 'board_overview_controller_test.mocks.dart';
+
+@GenerateMocks([IAuthService, IBoardService])
 void main() {
   test(
       '''Test the state of the reactive variable "boardDataCount" across all of its lifecycles''',
       () async {
-    Get.put<IAuthService>(AuthRepositoryImpl());
+    IAuthService authServiceMock = Get.put<IAuthService>(MockIAuthService());
     Get.put<Dio>(Dio());
-    Get.put<IHttpService>(HttpService());
-    Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
+    IBoardService boardRepositoryImplMock =
+        Get.put<IBoardService>(MockIBoardService());
     final controller = Get.put(BoardOverviewController());
     expect(controller.boardDataCount, 0);
 
@@ -23,6 +26,10 @@ void main() {
     /// including the state of the application after each lifecycle.
     Get.put(controller); // onInit was called
     expect(controller.boardDataCount, 0);
+
+    var resp = [Board(title: 'foo', id: 1)];
+    when(boardRepositoryImplMock.getAllBoards()).thenAnswer((_) async => resp);
+    controller.onReady();
 
     /// Test your functions
     await controller.refreshData();

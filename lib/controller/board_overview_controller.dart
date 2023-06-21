@@ -1,11 +1,11 @@
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/service/board_repository_impl.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:get/get.dart';
 
 class BoardOverviewController extends GetxController {
   final Rx<List<Board>> _boardsData = Rx<List<Board>>([]);
 
-  final BoardRepositoryImpl _boardRepository = Get.find<BoardRepositoryImpl>();
+  final IBoardService _boardRepository = Get.find<IBoardService>();
 
   List<Board> get boardData => _boardsData.value ?? [];
   int get boardDataCount => _boardsData.value.length ?? 0;
@@ -13,7 +13,7 @@ class BoardOverviewController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    _boardsData.value = (await _boardRepository.getAllBoards()).obs;
+    await refreshData();
   }
 
   Future<void> refreshData() async {

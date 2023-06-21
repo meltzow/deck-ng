@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'widget_test.mocks.dart';
+import 'board_overview_screen_test.mocks.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
