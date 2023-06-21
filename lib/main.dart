@@ -1,3 +1,4 @@
+import 'package:catcher/catcher.dart';
 import 'package:deck_ng/binding/auth_binding.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/screen/board_details_screen.dart';
@@ -8,7 +9,41 @@ import 'package:get/get.dart';
 
 Future<void> main() async {
   await initServices();
-  runApp(const MyApp());
+  // runApp(const MyApp());
+
+  var snackHandler = SnackbarHandler(
+    const Duration(seconds: 5),
+    backgroundColor: Colors.red,
+    elevation: 2,
+    margin: EdgeInsets.all(16),
+    padding: EdgeInsets.all(16),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    behavior: SnackBarBehavior.floating,
+    // action: SnackBarAction(
+    //     label: "Button",
+    //     onPressed: () {
+    //       print("Click!");
+    //     }),
+    textStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 16,
+    ),
+  );
+
+  /// STEP 1. Create catcher configuration.
+  /// Debug configuration with dialog report mode and console handler. It will show dialog and once user accepts it, error will be shown   /// in console.
+  CatcherOptions debugOptions =
+      CatcherOptions(DialogReportMode(), [ConsoleHandler(), snackHandler]);
+
+  /// Release configuration. Same as above, but once user accepts dialog, user will be prompted to send email with crash to support.
+  CatcherOptions releaseOptions =
+      CatcherOptions(DialogReportMode(), [snackHandler]);
+
+  /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
+  Catcher(
+      rootWidget: const MyApp(),
+      debugConfig: debugOptions,
+      releaseConfig: releaseOptions);
 }
 
 /// Is a smart move to make your Services intiialize before you run the Flutter app.
@@ -31,6 +66,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: Catcher.navigatorKey,
       title: 'Flutter Demo',
       initialBinding: AuthBinding(),
       theme: ThemeData(
