@@ -8,9 +8,10 @@
 import 'package:deck_ng/main.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
-import 'package:deck_ng/service/board_repository_impl.dart';
 import 'package:deck_ng/service/impl/auth_repository_impl.dart';
+import 'package:deck_ng/service/impl/board_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ void main() {
   setUp(() {
     Get.put<IAuthService>(AuthRepositoryImpl());
     httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-    Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
+    Get.put<IBoardService>(BoardRepositoryImpl());
   });
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

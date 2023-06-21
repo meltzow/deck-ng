@@ -1,6 +1,7 @@
 import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
-import 'package:deck_ng/service/board_repository_impl.dart';
+import 'package:deck_ng/service/impl/board_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
@@ -18,8 +19,8 @@ void main() {
     test('returns all boards if the http call completes successfully',
         () async {
       final httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-      final BoardRepositoryImpl boardRepo =
-          Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
+      final IBoardService boardRepo =
+          Get.put<IBoardService>(BoardRepositoryImpl());
 
       var resp = [Board(title: 'foo', id: 1)].map((e) => e.toJson()).toList();
       when(httpServiceMock
@@ -31,8 +32,8 @@ void main() {
 
     test('throws an exception if the http call completes with an error', () {
       final httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-      final BoardRepositoryImpl boardRepo =
-          Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
+      final IBoardService boardRepo =
+          Get.put<IBoardService>(BoardRepositoryImpl());
 
       // Use Mockito to return an unsuccessful response when it calls the provided http.Client.
       when(httpServiceMock
