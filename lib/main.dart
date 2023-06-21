@@ -1,8 +1,10 @@
 import 'package:catcher/catcher.dart';
 import 'package:deck_ng/binding/auth_binding.dart';
+import 'package:deck_ng/controller/LoginController.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/screen/board_details_screen.dart';
 import 'package:deck_ng/screen/board_overview_screen.dart';
+import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/service/impl/auth_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,7 +90,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: '/auth/login',
       getPages: [
         GetPage(name: '/', page: () => BoardOverviewScreen()),
         GetPage(
@@ -96,6 +98,13 @@ class MyApp extends StatelessWidget {
           page: () => BoardDetailsScreen(),
           binding: BindingsBuilder(() {
             Get.lazyPut<BoardDetailsController>(() => BoardDetailsController());
+          }),
+        ),
+        GetPage(
+          name: '/auth/login',
+          page: () => LoginScreen(),
+          binding: BindingsBuilder(() {
+            Get.lazyPut<LoginController>(() => LoginController());
           }),
         ),
       ],

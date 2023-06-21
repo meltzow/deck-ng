@@ -1,4 +1,5 @@
 import 'package:deck_ng/component/board_item_widget.dart';
+import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,41 +18,7 @@ class BoardOverviewScreen extends StatelessWidget {
       appBar: AppBar(
         title: Obx(() => MyAppBar(title: Text("${controller.boardDataCount}"))),
       ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Boards'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
