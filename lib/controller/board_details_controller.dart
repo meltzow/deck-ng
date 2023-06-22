@@ -1,6 +1,7 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
 import 'package:deck_ng/service/Iboard_service.dart';
+import 'package:deck_ng/service/Istack_service.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -8,9 +9,11 @@ import 'package:get/get.dart';
 class BoardDetailsController extends GetxController {
   final Rxn<Board> _boardsData = Rxn<Board>();
   final Rx<List<NC.Stack>> _stackData = Rx<List<NC.Stack>>([]);
-  int? _boardId;
-  final Rxn<int> _selectedStack = Rxn(0);
+  late final int _boardId;
+  final Rxn<int> _selectedStackId = Rxn(0);
   final RxBool isLoading = RxBool(true);
+
+  int get boardId => _boardId;
 
   Map<int, Widget> get myTabs {
     Map<int, Widget> m = <int, Widget>{};
@@ -21,17 +24,18 @@ class BoardDetailsController extends GetxController {
   }
 
   final IBoardService _boardRepository = Get.find<IBoardService>();
-  final StackRepositoryImpl _stackRepository = Get.find<StackRepositoryImpl>();
+  final IStackService _stackRepository = Get.find<IStackService>();
 
   Board? get boardData => _boardsData.value;
-  int? get selectedStack => _selectedStack.value;
+  int? get selectedStackId => _selectedStackId.value;
 
   NC.Stack? get selectedStackData => _stackData.value.isNotEmpty
       ? _stackData.value
-          .firstWhere((element) => element.id == _selectedStack.value)
+          .firstWhere((element) => element.id == _selectedStackId.value)
       : null;
 
-  set boardId(int? value) => _boardId = value;
+  @visibleForTesting
+  set boardId(int value) => _boardId = value;
   List<NC.Stack>? get stackData => _stackData.value;
 
   @override
@@ -43,13 +47,13 @@ class BoardDetailsController extends GetxController {
 
   Future<void> refreshData() async {
     isLoading.value = true;
-    _boardsData.value = await _boardRepository.getBoard(_boardId!);
-    _stackData.value = (await _stackRepository.getAll(_boardId!))!;
-    _selectedStack.value = _stackData.value[0].id;
+    _boardsData.value = await _boardRepository.getBoard(_boardId);
+    _stackData.value = (await _stackRepository.getAll(_boardId))!;
+    _selectedStackId.value = _stackData.value[0].id;
     isLoading.value = false;
   }
 
   Future<void> selectStack(int stackId) async {
-    _selectedStack.value = stackId;
+    _selectedStackId.value = stackId;
   }
 }

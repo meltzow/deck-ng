@@ -1,8 +1,9 @@
 import 'package:deck_ng/model/stack.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/Istack_service.dart';
 import 'package:get/get.dart';
 
-class StackRepositoryImpl extends GetxService {
+class StackRepositoryImpl extends GetxService implements IStackService {
   IHttpService get httpService => Get.find<IHttpService>();
 
   @override

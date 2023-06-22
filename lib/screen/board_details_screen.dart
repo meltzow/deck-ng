@@ -45,7 +45,7 @@ class BoardDetailsScreen extends StatelessWidget {
                                             child:
                                                 CupertinoSlidingSegmentedControl(
                                                     groupValue: controller
-                                                        .selectedStack,
+                                                        .selectedStackId,
                                                     children: controller.myTabs,
                                                     onValueChanged: (i) {
                                                       controller
@@ -54,18 +54,30 @@ class BoardDetailsScreen extends StatelessWidget {
                                           )
                                         ],
                                       ),
-                                       ListView.builder(
-                                         shrinkWrap: true,
-                                          itemCount: controller.selectedStackData != null
-                                              ? controller.selectedStackData!.cards.length
-                                              : 0,
-                                          itemBuilder: (context, index) {
-                                            return ListViewCardItem(
-                                                data: controller.selectedStackData != null
-                                                    ? controller.selectedStackData!.cards[index]
-                                                    : null);
+                                      Expanded(child: GestureDetector(
+                                          onPanUpdate: (details) {
+                                            // Swiping in right direction.
+                                            if (details.delta.dx > 0) {
+                                              print ("swipe right");
+                                            }
+
+                                            // Swiping in left direction.
+                                            if (details.delta.dx < 0) {
+                                              print ("swipe left");
+                                            }
                                           },
-                                        )
+                                          child: ListView.builder(
+                                            itemCount: controller.selectedStackData != null
+                                                ? controller.selectedStackData!.cards.length
+                                                : 0,
+                                            itemBuilder: (context, index) {
+                                              return ListViewCardItem(
+                                                  data: controller.selectedStackData != null
+                                                      ? controller.selectedStackData!.cards[index]
+                                                      : null);
+                                            },
+                                          ),
+                                        ),)
                                     ],
                                   )),
                           )))

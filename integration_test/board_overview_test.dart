@@ -13,7 +13,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:screenshots/screenshots.dart';
 
-import '../test/board_service_test.mocks.dart';
+import '../test/service/board_service_test.mocks.dart';
 
 @GenerateMocks([IHttpService])
 void main() {

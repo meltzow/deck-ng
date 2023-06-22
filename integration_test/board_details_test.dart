@@ -4,6 +4,7 @@ import 'package:deck_ng/model/stack.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/Istack_service.dart';
 import 'package:deck_ng/service/impl/auth_repository_impl.dart';
 import 'package:deck_ng/service/impl/board_repository_impl.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
@@ -14,7 +15,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:screenshots/screenshots.dart';
 
-import '../test/board_service_test.mocks.dart';
+import '../test/service/board_service_test.mocks.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
@@ -25,7 +26,7 @@ void main() {
     Get.put<IAuthService>(AuthRepositoryImpl());
     httpServiceMock = Get.put<IHttpService>(MockIHttpService());
     Get.put<IBoardService>(BoardRepositoryImpl());
-    Get.put<StackRepositoryImpl>(StackRepositoryImpl());
+    Get.put<IStackService>(StackRepositoryImpl());
 
     var resp = Board(title: 'garden', id: 1).toJson();
     when(httpServiceMock.getResponse('/index.php/apps/deck/api/v1/boards/1'))
