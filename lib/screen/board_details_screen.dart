@@ -1,3 +1,4 @@
+import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/list_view_card_item_widget.dart';
 import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
@@ -13,54 +14,63 @@ class BoardDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const MyAppBar(
-                title: Text('board details '),
-              ),
-              Obx(
-                () => Row(
-                  children: [
-                    !controller.isLoading.value
-                        ? Expanded(
-                            child: CupertinoSlidingSegmentedControl(
-                                groupValue: controller.selectedStack,
-                                children: controller.myTabs,
-                                onValueChanged: (i) {
-                                  controller.selectStack(i!);
-                                }),
-                          )
-                        : const Center()
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: RefreshIndicator(
-                onRefresh: () async {
-                  controller.refreshData();
-                },
-                child: ListView.builder(
-                  itemCount: controller.selectedStackData != null
-                      ? controller.selectedStackData!.cards.length
-                      : 0,
-                  itemBuilder: (context, index) {
-                    if (controller.stackData != null) {
-                      return ListViewCardItem(
-                          data: controller.selectedStackData != null
-                              ? controller.selectedStackData!.cards[index]
-                              : null);
-                    }
-                  },
-                ),
-              ))
-            ],
-          ),
+        appBar: AppBar(
+          title: const MyAppBar(title: Text("Boards details")),
         ),
-      ),
-    );
+        drawer: const DrawerWidget(),
+        body: SafeArea(
+          child: Container(
+              color: Colors.lightBlue,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: RefreshIndicator(
+                          onRefresh: controller.refreshData,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30))),
+                            margin: const EdgeInsets.only(top: 25),
+                            child: Obx(() => controller.isLoading.value
+                                ? const Center(child: Text('loading'))
+                                : Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child:
+                                                CupertinoSlidingSegmentedControl(
+                                                    groupValue: controller
+                                                        .selectedStack,
+                                                    children: controller.myTabs,
+                                                    onValueChanged: (i) {
+                                                      controller
+                                                          .selectStack(i!);
+                                                    }),
+                                          )
+                                        ],
+                                      ),
+                                       ListView.builder(
+                                         shrinkWrap: true,
+                                          itemCount: controller.selectedStackData != null
+                                              ? controller.selectedStackData!.cards.length
+                                              : 0,
+                                          itemBuilder: (context, index) {
+                                            return ListViewCardItem(
+                                                data: controller.selectedStackData != null
+                                                    ? controller.selectedStackData!.cards[index]
+                                                    : null);
+                                          },
+                                        )
+                                    ],
+                                  )),
+                          )))
+                ],
+              )),
+        ));
   }
 }

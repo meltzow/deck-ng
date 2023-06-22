@@ -16,26 +16,9 @@ class BoardOverviewScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() => MyAppBar(title: Text("${controller.boardDataCount}"))),
+        title: const MyAppBar(title: Text("Boards")),
       ),
       drawer: const DrawerWidget(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) => SingleChildScrollView(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      // child: AddTaskScreen(
-                      //   onAddTaskClicked: viewModel.onAddTaskClicked,
-                      // )
-                    ),
-                  ));
-        },
-        child: const Icon(Icons.add),
-      ),
       body: SafeArea(
         child: Container(
           color: Colors.lightBlue,

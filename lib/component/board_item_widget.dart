@@ -9,19 +9,23 @@ class BoardItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        board.title,
-        style: TextStyle(
-            decoration:
-                board.archived != true ? TextDecoration.lineThrough : null),
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title: Text(
+              board.title,
+            ),
+            onTap: () {
+              Get.toNamed(
+                '/boards/details',
+                arguments: {'boardId': board.id},
+              );
+            },
+          )
+        ],
       ),
-      onTap: () {
-        Get.toNamed(
-          '/boards/details',
-          arguments: {'boardId': board.id},
-        );
-      },
+
     );
   }
 }

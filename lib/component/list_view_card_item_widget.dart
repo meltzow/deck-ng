@@ -20,7 +20,9 @@ class _ListViewCardItemState extends State<ListViewCardItem> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return Card(
+      child:
+    ListTile(
       title: Text(
         widget.data != null ? widget.data!.title : "",
       ),
@@ -29,7 +31,8 @@ class _ListViewCardItemState extends State<ListViewCardItem> {
         // navigate to a named route and
         // provide the arguments as an optional
         // parameter.
+        print("tab on ${widget.data!.title}");
       },
-    );
+    ));
   }
 }
