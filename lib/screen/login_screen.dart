@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController controller = Get.find<LoginController>();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
   LoginScreen({super.key});
 
@@ -15,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Obx(() => MyAppBar(title: Text("Login"))),
+          title: Obx(() => const MyAppBar(title: Text("Login"))),
         ),
         drawer: DrawerWidget(),
         body: Padding(
@@ -42,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: nameController,
+                    controller: controller.nameController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'User Name',
@@ -53,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
                     obscureText: true,
-                    controller: passwordController,
+                    controller: controller.passwordController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
@@ -74,8 +72,8 @@ class LoginScreen extends StatelessWidget {
                     child: ElevatedButton(
                       child: const Text('Login'),
                       onPressed: () {
-                        print(nameController.text);
-                        print(passwordController.text);
+                        print(controller.nameController.text);
+                        print(controller.passwordController.text);
                       },
                     )),
                 Row(

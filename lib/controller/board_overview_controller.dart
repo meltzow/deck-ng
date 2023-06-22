@@ -2,7 +2,7 @@ import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:get/get.dart';
 
-class BoardOverviewController extends GetxController {
+class BoardOverviewController extends FullLifeCycleController {
   final Rx<List<Board>> _boardsData = Rx<List<Board>>([]);
 
   final IBoardService _boardRepository = Get.find<IBoardService>();
@@ -11,9 +11,9 @@ class BoardOverviewController extends GetxController {
   int get boardDataCount => _boardsData.value.length ?? 0;
 
   @override
-  void onReady() async {
-    super.onReady();
+  Future<bool> didPushRoute(String route) async {
     await refreshData();
+    return super.didPushRoute(route);
   }
 
   Future<void> refreshData() async {

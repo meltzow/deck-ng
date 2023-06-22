@@ -17,7 +17,5 @@ class AuthBinding implements Bindings {
     Get.lazyPut<StackRepositoryImpl>(() => StackRepositoryImpl());
     Get.lazyPut<Dio>(() => Dio());
     Get.lazyPut<IHttpService>(() => HttpService());
-
-    Get.put<BoardOverviewController>(BoardOverviewController());
   }
 }
