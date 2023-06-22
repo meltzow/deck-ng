@@ -1,6 +1,6 @@
 class Account {
   final String username;
-  String? password;
+  final String password;
   final String authData;
   final String url;
 
@@ -8,7 +8,7 @@ class Account {
 
   Account(
       {required this.username,
-      this.password,
+      required this.password,
       required this.authData,
       required this.url,
       required this.isAuthenticated});
@@ -16,7 +16,7 @@ class Account {
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
         username: json['username'] as String,
-        password: json['password'] as String?,
+        password: json['password'] as String,
         authData: json['authData'] as String,
         url: json['url'] as String,
         isAuthenticated: json['isAuthenticated'] as bool);

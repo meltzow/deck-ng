@@ -1,6 +1,5 @@
 import 'package:catcher/catcher.dart';
 import 'package:deck_ng/binding/auth_binding.dart';
-import 'package:deck_ng/controller/LoginController.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:deck_ng/screen/board_details_screen.dart';
@@ -44,7 +43,7 @@ Future<void> main() async {
 
   /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
   Catcher(
-      rootWidget: const MyApp(),
+      rootWidget: MyApp(),
       debugConfig: debugOptions,
       releaseConfig: releaseOptions);
 }
@@ -63,26 +62,33 @@ Future<void> initServices() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  String? initialRoute;
+
+  MyApp({super.key, this.initialRoute});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       navigatorKey: Catcher.navigatorKey,
+      // supportedLocales: const [
+      //   Locale('en', 'US'),
+      //   Locale('de', 'DE'),
+      // ],
       title: 'Flutter Demo',
       initialBinding: AuthBinding(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/auth/login',
+      initialRoute: initialRoute ?? '/auth/login',
       getPages: [
-        GetPage(name: '/', page: () => BoardOverviewScreen(),
-        binding: BindingsBuilder(() {
-          Get.put<BoardOverviewController>(BoardOverviewController());
-        })
-        ),
+        GetPage(
+            name: '/',
+            page: () => const BoardOverviewScreen(),
+            binding: BindingsBuilder(() {
+              Get.put<BoardOverviewController>(BoardOverviewController());
+            })),
         GetPage(
           name: '/boards/details',
           page: () => BoardDetailsScreen(),
@@ -93,9 +99,6 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/auth/login',
           page: () => LoginScreen(),
-          binding: BindingsBuilder(() {
-            Get.lazyPut<LoginController>(() => LoginController());
-          }),
         ),
       ],
     );

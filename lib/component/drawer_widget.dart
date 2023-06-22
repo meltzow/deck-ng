@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DrawerWidget extends StatelessWidget {
+  const DrawerWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -18,21 +21,18 @@ class DrawerWidget extends StatelessWidget {
             child: Text('Boards'),
           ),
           ListTile(
-            title: const Text('Item 1'),
+            title: const Text('Board 1'),
             onTap: () {
               // Update the state of the app
               // ...
               // Then close the drawer
-              Navigator.pop(context);
+              Get.toNamed('/boards');
             },
           ),
           ListTile(
-            title: const Text('Item 2'),
+            title: const Text('Login'),
             onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.pop(context);
+              Get.toNamed('/auth/login');
             },
           ),
         ],

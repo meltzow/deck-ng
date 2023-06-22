@@ -7,46 +7,41 @@
 
 import 'package:deck_ng/main.dart';
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
-import 'package:deck_ng/service/impl/auth_repository_impl.dart';
-import 'package:deck_ng/service/impl/board_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'board_overview_screen_test.mocks.dart';
+import 'board_overview_controller_test.mocks.dart';
 
-@GenerateMocks([IHttpService])
+@GenerateMocks([IBoardService])
 void main() {
-  late IHttpService httpServiceMock;
+  late IBoardService boardServiceMock;
 
   setUp(() {
-    Get.put<IAuthService>(AuthRepositoryImpl());
-    httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-    Get.put<IBoardService>(BoardRepositoryImpl());
+    boardServiceMock = Get.put<IBoardService>(MockIBoardService());
   });
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    var resp = [Board(title: 'foo', id: 1)].map((e) => e.toJson()).toList();
-    when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
-        .thenAnswer((_) async => resp);
+    var resp = [Board(title: 'foo', id: 1)];
+    when(boardServiceMock.getAllBoards()).thenAnswer((_) async => resp);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(
+      initialRoute: '/boards',
+    ));
 
     // Verify that our counter starts at 0.
-    expect(find.text('Clicks: 0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('foo'), findsNothing);
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('Clicks: 1'), findsOneWidget);
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('foo'), findsOneWidget);
   });
 }

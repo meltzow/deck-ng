@@ -44,7 +44,7 @@ void main() {
       final HttpService service = Get.put(HttpService());
 
       dioAdapter.onGet(
-          'http://192.168.178.59:8080/index.php/apps/deck/api/v1/boards',
+          'http://url.foo/index.php/apps/deck/api/v1/boards',
           (server) => server.reply(
                 200,
                 Board(title: 'foo', id: 1).toJson(),
@@ -57,8 +57,9 @@ void main() {
       when(authServiceMock.getAccount()).thenAnswer((realInvocation) => Future(
           () => Account(
               username: 'username',
+              password: 'foobar',
               authData: 'authData',
-              url: 'url',
+              url: 'http://url.foo',
               isAuthenticated: true)));
 
       expect(await service.getResponse('/index.php/apps/deck/api/v1/boards'),

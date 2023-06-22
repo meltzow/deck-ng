@@ -7,18 +7,18 @@ import 'package:get/get.dart';
 import '../component/my_app_bar_widget.dart';
 
 class BoardOverviewScreen extends StatelessWidget {
-  final BoardOverviewController controller =
-      Get.find<BoardOverviewController>();
-
-  BoardOverviewScreen({super.key});
+  const BoardOverviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final BoardOverviewController controller =
+        Get.put<BoardOverviewController>(BoardOverviewController());
+
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => MyAppBar(title: Text("${controller.boardDataCount}"))),
       ),
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(

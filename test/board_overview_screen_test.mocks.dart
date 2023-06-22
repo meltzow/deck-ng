@@ -3,9 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
-import 'package:deck_ng/service/Ihttp_service.dart' as _i2;
+import 'package:deck_ng/model/board.dart' as _i2;
+import 'package:deck_ng/service/Iboard_service.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -19,31 +20,44 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [IHttpService].
+class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
+  _FakeBoard_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [IBoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIHttpService extends _i1.Mock implements _i2.IHttpService {
-  MockIHttpService() {
+class MockIBoardService extends _i1.Mock implements _i3.IBoardService {
+  MockIBoardService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<Map<String, dynamic>> getResponse(String? path) =>
-      (super.noSuchMethod(
+  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
-          #getResponse,
-          [path],
+          #getAllBoards,
+          [],
         ),
-        returnValue:
-            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i3.Future<Map<String, dynamic>>);
+        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+      ) as _i4.Future<List<_i2.Board>>);
   @override
-  _i3.Future<List<dynamic>> getListResponse(String? path) =>
-      (super.noSuchMethod(
+  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
-          #getListResponse,
-          [path],
+          #getBoard,
+          [boardId],
         ),
-        returnValue: _i3.Future<List<dynamic>>.value(<dynamic>[]),
-      ) as _i3.Future<List<dynamic>>);
+        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_0(
+          this,
+          Invocation.method(
+            #getBoard,
+            [boardId],
+          ),
+        )),
+      ) as _i4.Future<_i2.Board>);
 }

@@ -8,8 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' as getx;
 
 class HttpService extends getx.GetxService implements IHttpService {
-  final String nextcloudBaseUrl = "http://192.168.178.59:8080";
-
   final authRepo = getx.Get.find<IAuthService>();
   final Dio httpClient = getx.Get.find<Dio>();
 
@@ -35,7 +33,7 @@ class HttpService extends getx.GetxService implements IHttpService {
     List<dynamic> response;
     Account? account = await authRepo.getAccount();
     try {
-      Response resp = await httpClient.get(nextcloudBaseUrl + path,
+      Response resp = await httpClient.get(account.url + path,
           options: Options(headers: getHeaders(path, account)));
       response = (returnResponse(resp) as List<dynamic>);
     } catch (error) {
@@ -49,7 +47,7 @@ class HttpService extends getx.GetxService implements IHttpService {
     dynamic response;
     try {
       Account? account = await authRepo.getAccount();
-      Response resp = await httpClient.get(nextcloudBaseUrl + path,
+      Response resp = await httpClient.get(account.url + path,
           options: Options(headers: getHeaders(path, account)));
       response = returnResponse(resp);
     } catch (error) {
