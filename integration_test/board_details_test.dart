@@ -14,7 +14,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:screenshots/screenshots.dart';
 
-import '../test/board_overview_screen_test.mocks.dart';
+import '../test/board_service_test.mocks.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
@@ -46,7 +46,7 @@ void main() {
   });
 
   testWidgets('display board details', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
     Get.toNamed('/boards/details', arguments: {'boardId': 1});
     await tester.pumpAndSettle();
 

@@ -13,7 +13,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:screenshots/screenshots.dart';
 
-import '../test/board_overview_screen_test.mocks.dart';
+import '../test/board_service_test.mocks.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
@@ -33,7 +33,7 @@ void main() {
 
   testWidgets('display board overview', (WidgetTester tester) async {
     var lo = await getLocalizations(tester);
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp());
     await Future.delayed(const Duration(seconds: 4), () {});
     await tester.pumpAndSettle();
     await screenshot(binding, tester, lo.localeName, 'board-overview',
