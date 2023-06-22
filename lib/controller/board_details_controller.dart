@@ -1,6 +1,7 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
 import 'package:deck_ng/service/Iboard_service.dart';
+import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,8 +24,9 @@ class BoardDetailsController extends GetxController {
     return m;
   }
 
-  final IBoardService _boardRepository = Get.find<IBoardService>();
-  final IStackService _stackRepository = Get.find<IStackService>();
+  final IBoardService _boardService = Get.find<IBoardService>();
+  final IStackService _stackService = Get.find<IStackService>();
+  final ICardService _cardService = Get.find<ICardService>();
 
   Board? get boardData => _boardsData.value;
   int? get selectedStackId => _selectedStackId.value;
@@ -47,13 +49,26 @@ class BoardDetailsController extends GetxController {
 
   Future<void> refreshData() async {
     isLoading.value = true;
-    _boardsData.value = await _boardRepository.getBoard(_boardId);
-    _stackData.value = (await _stackRepository.getAll(_boardId))!;
+    _boardsData.value = await _boardService.getBoard(_boardId);
+    _stackData.value = (await _stackService.getAll(_boardId))!;
     _selectedStackId.value = _stackData.value[0].id;
     isLoading.value = false;
   }
 
   Future<void> selectStack(int stackId) async {
     _selectedStackId.value = stackId;
+  }
+
+  swipeToStack({direction = const {'left': 'right'} } ) {
+    var idx = _stackData.value.indexWhere((element) => element.id == _selectedStackId.value);
+    var newIdx = direction == 'left' ? idx - 1 : idx + 1;
+    if (_stackData.value.asMap().containsKey(newIdx)) {
+      _selectedStackId.value = _stackData.value[newIdx].id;
+    }
+  }
+
+  addCard(String title) {
+    _cardService.createCard(boardId, _selectedStackId.value!, title);
+    print("in controller: $title");
   }
 }

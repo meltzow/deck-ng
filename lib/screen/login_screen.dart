@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Login"),
+          title: const Text("Login"),
         ),
         drawer: DrawerWidget(),
         body: Padding(

@@ -56,6 +56,20 @@ class HttpService extends getx.GetxService implements IHttpService {
     return response;
   }
 
+  @override
+  Future<Map<String, dynamic>> post(String path, dynamic body) async {
+    dynamic response;
+    try {
+      Account? account = await authRepo.getAccount();
+      Response resp = await httpClient.post(account.url + path,
+          options: Options(headers: getHeaders(path, account)), data: body );
+      response = returnResponse(resp);
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+    return response;
+  }
+
   @visibleForTesting
   dynamic returnResponse(Response response) {
     switch (response.statusCode) {

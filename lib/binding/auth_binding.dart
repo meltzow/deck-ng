@@ -1,10 +1,12 @@
 import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
+import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
 import 'package:deck_ng/service/impl/auth_repository_impl.dart';
 import 'package:deck_ng/service/impl/board_repository_impl.dart';
+import 'package:deck_ng/service/impl/card_service_impl.dart';
 import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:dio/dio.dart';
@@ -18,5 +20,6 @@ class AuthBinding implements Bindings {
     Get.lazyPut<IStackService>(() => StackRepositoryImpl());
     Get.lazyPut<Dio>(() => Dio());
     Get.lazyPut<IHttpService>(() => HttpService());
+    Get.lazyPut<ICardService>(() => CardServiceImpl());
   }
 }
