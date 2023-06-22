@@ -648,9 +648,11 @@ packages:
   screenshots:
     dependency: "direct dev"
     description:
-      path: "../screenshots"
-      relative: true
-    source: path
+      path: "."
+      ref: master
+      resolved-ref: d6b14d7253e41a916f7caec3c2a781261b6b7013
+      url: "https://github.com/meltzow/screenshots.git"
+    source: git
     version: "3.0.1"
   sentry:
     dependency: transitive

@@ -57,7 +57,9 @@ dev_dependencies:
   mockito: ^5.4.1
   build_runner: ^2.4.5
   screenshots:
-    path: ../screenshots
+    git:
+      url: https://github.com/meltzow/screenshots.git
+      ref: master
   http_mock_adapter: ^0.4.4
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
