@@ -21,8 +21,6 @@ devices:
     iPad Pro (12.9-inch) (6th generation):
       orientation: LandscapeRight
       frame: false
-  android:
-    Nexus 6P:
 
 # Frame screenshots
 frame: true

@@ -35,7 +35,7 @@ class Card {
       this.order});
 
   factory Card.fromJson(Map<String, dynamic> json) {
-    final ownerData = User.fromJson(json['owner']);
+    final ownerData = json.containsKey('owner') ? User.fromJson(json['owner']) : User();
     return Card(
       title: json['title'] as String,
       id: json['id'] as int,
@@ -51,7 +51,7 @@ class Card {
         'id': id,
         'description': description,
         'type': type,
-        'owner': owner!.toJson(),
+        'owner': owner?.toJson(),
         'order': order
       };
 }

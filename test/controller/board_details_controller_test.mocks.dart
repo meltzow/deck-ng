@@ -129,4 +129,34 @@ class MockICardService extends _i1.Mock implements _i8.ICardService {
           ),
         )),
       ) as _i5.Future<_i3.Card>);
+  @override
+  _i5.Future<_i3.Card> updateCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i3.Card? card,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            card,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_1(
+          this,
+          Invocation.method(
+            #updateCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              card,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
 }

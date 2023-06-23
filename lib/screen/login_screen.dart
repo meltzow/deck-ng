@@ -2,9 +2,10 @@ import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/controller/LoginController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class LoginScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Login"),
         ),
-        drawer: DrawerWidget(),
+        drawer: const DrawerWidget(),
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
@@ -23,9 +24,9 @@ class LoginScreen extends StatelessWidget {
                 Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
-                      'Sign in',
-                      style: TextStyle(
+                    child:  Text(
+                      'Sign in ${AppLocalizations.of(context)?.helloWorld}',
+                      style: const TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.w500,
                           fontSize: 30),

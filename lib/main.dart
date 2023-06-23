@@ -7,6 +7,7 @@ import 'package:deck_ng/screen/board_overview_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/service/impl/auth_repository_impl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 Future<void> main() async {
@@ -73,10 +74,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: debugShowCheckedModeBanner,
       navigatorKey: Catcher.navigatorKey,
-      // supportedLocales: const [
-      //   Locale('en', 'US'),
-      //   Locale('de', 'DE'),
-      // ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       title: 'Flutter Demo',
       initialBinding: AuthBinding(),
       theme: ThemeData(
