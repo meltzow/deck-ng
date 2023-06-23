@@ -9,8 +9,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:screenshots/screenshots.dart';
 
-import './Localization.dart';
 import '../test/service/board_service_test.mocks.dart';
+import 'Localization.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
@@ -23,9 +23,7 @@ void main() {
     httpServiceMock = Get.put<IHttpService>(MockIHttpService());
     Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
 
-    var resp = [Board(title: 'garden', id: 1), Board(title: 'home', id: 2)]
-        .map((e) => e.toJson())
-        .toList();
+    var resp = [Board(title: 'garden', id: 1)].map((e) => e.toJson()).toList();
     when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
         .thenAnswer((_) async => resp);
   });
@@ -33,10 +31,8 @@ void main() {
   testWidgets('display board overview', (WidgetTester tester) async {
     var lo = await Localization.getLocalizations(tester);
     await tester.pumpWidget(MyApp());
-    Get.toNamed('/boards');
-    await Future.delayed(const Duration(seconds: 1), () {});
+    await Future.delayed(const Duration(seconds: 4), () {});
     await tester.pumpAndSettle();
-    await screenshot(binding, tester, lo.localeName, 'board-overview',
-        silent: false);
+    await screenshot(binding, tester, lo.localeName, 'login', silent: false);
   });
 }

@@ -17,8 +17,8 @@ Future<void> main() async {
     const Duration(seconds: 5),
     backgroundColor: Colors.red,
     elevation: 2,
-    margin: EdgeInsets.all(16),
-    padding: EdgeInsets.all(16),
+    margin: const EdgeInsets.all(16),
+    padding: const EdgeInsets.all(16),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     behavior: SnackBarBehavior.floating,
     // action: SnackBarAction(
@@ -26,7 +26,7 @@ Future<void> main() async {
     //     onPressed: () {
     //       print("Click!");
     //     }),
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
       color: Colors.white,
       fontSize: 16,
     ),

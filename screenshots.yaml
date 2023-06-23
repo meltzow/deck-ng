@@ -1,7 +1,9 @@
 # A list of screen capture tests
 tests:
   # Note: flutter driver expects a pair of files eg, main1.dart and main1_test.dart
+  - --target=integration_test/login_test.dart --driver=test_driver/integration_test.dart
   - --target=integration_test/board_overview_test.dart --driver=test_driver/integration_test.dart
+  - --target=integration_test/board_details_test.dart --driver=test_driver/integration_test.dart
 
 # Interim location of screenshots from tests
 staging: /tmp/screenshots
@@ -13,13 +15,13 @@ locales:
 
 # A map of devices to emulate
 devices:
-#  ios:
-#    iPhone XS Max:
-#      frame: false
-#    iPad Pro (12.9-inch) (3rd generation):
-#      orientation: LandscapeRight
+  #  ios:
+  #    iPhone XS Max:
+  #      frame: false
+  #    iPad Pro (12.9-inch) (3rd generation):
+  #      orientation: LandscapeRight
   android:
     Nexus 6P:
 
 # Frame screenshots
-frame: false
+frame: true

@@ -46,4 +46,20 @@ class MockIHttpService extends _i1.Mock implements _i2.IHttpService {
         ),
         returnValue: _i3.Future<List<dynamic>>.value(<dynamic>[]),
       ) as _i3.Future<List<dynamic>>);
+  @override
+  _i3.Future<Map<String, dynamic>> post(
+    String? path,
+    dynamic body,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #post,
+          [
+            path,
+            body,
+          ],
+        ),
+        returnValue:
+            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i3.Future<Map<String, dynamic>>);
 }

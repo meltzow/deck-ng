@@ -6,6 +6,7 @@ class Stack {
   final int? deletedAt;
   final List<NCCard.Card> cards;
   final int id;
+
   // final String? color;
   // final Bool? archived;
   // // final Array<String>? labels;
@@ -41,8 +42,19 @@ class Stack {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'id': id,
-      };
+  Map<String, dynamic> toJson() {
+    final cardsJson = cards != null
+        // map each review to a Review object
+        ? cards
+            .map((reviewData) => reviewData.toJson())
+            .toList() // use an empty list as fallback value
+        : [];
+
+    return {
+      'title': title,
+      'id': id,
+      'deletedAt': deletedAt,
+      'cards': cardsJson
+    };
+  }
 }

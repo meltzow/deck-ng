@@ -11,7 +11,7 @@ class BoardDetailsController extends GetxController {
   final Rxn<Board> _boardsData = Rxn<Board>();
   final Rx<List<NC.Stack>> _stackData = Rx<List<NC.Stack>>([]);
   late final int _boardId;
-  final Rxn<int> _selectedStackId = Rxn(0);
+  final Rxn<int> _selectedStackId = Rxn();
   final RxBool isLoading = RxBool(true);
 
   int get boardId => _boardId;
@@ -51,7 +51,7 @@ class BoardDetailsController extends GetxController {
     isLoading.value = true;
     _boardsData.value = await _boardService.getBoard(_boardId);
     _stackData.value = (await _stackService.getAll(_boardId))!;
-    _selectedStackId.value = _stackData.value[0].id;
+    _selectedStackId.value = _stackData.value.length > 0 ? _stackData.value[0].id : null;
     isLoading.value = false;
   }
 
