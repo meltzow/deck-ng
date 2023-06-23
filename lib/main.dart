@@ -63,13 +63,15 @@ Future<void> initServices() async {
 
 class MyApp extends StatelessWidget {
   String? initialRoute;
+  bool debugShowCheckedModeBanner;
 
-  MyApp({super.key, this.initialRoute});
+  MyApp({super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: debugShowCheckedModeBanner,
       navigatorKey: Catcher.navigatorKey,
       // supportedLocales: const [
       //   Locale('en', 'US'),

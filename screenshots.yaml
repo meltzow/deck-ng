@@ -6,7 +6,7 @@ tests:
   - --target=integration_test/board_details_test.dart --driver=test_driver/integration_test.dart
 
 # Interim location of screenshots from tests
-staging: /tmp/screenshots
+staging: /tmp/snapshots
 
 # A list of locales supported by the app
 locales:

@@ -30,8 +30,8 @@ void main() {
 
   testWidgets('display board overview', (WidgetTester tester) async {
     var lo = await Localization.getLocalizations(tester);
-    await tester.pumpWidget(MyApp());
-    await Future.delayed(const Duration(seconds: 4), () {});
+    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+    await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
     await screenshot(binding, tester, lo.localeName, 'login', silent: false);
   });
