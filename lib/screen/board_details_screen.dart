@@ -1,6 +1,5 @@
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/list_view_card_item_widget.dart';
-import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/screen/add_task_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,24 +16,25 @@ class BoardDetailsScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Boards details"),
-            actions: [
-              IconButton(
-                onPressed:() {
-                  showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => SingleChildScrollView(
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                bottom: MediaQuery.of(context).viewInsets.bottom),
-                            child: AddTaskScreen(
-                              onAddTaskClicked: (title) => controller.addCard(title),
-                            )
-                        ),
-                      ));
-                },
-                icon: const Icon(Icons.add),
-              ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => SingleChildScrollView(
+                          child: Container(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom),
+                              child: AddTaskScreen(
+                                onAddTaskClicked: (title) =>
+                                    controller.addCard(title),
+                              )),
+                        ));
+              },
+              icon: const Icon(Icons.add),
+            ),
           ],
         ),
         drawer: const DrawerWidget(),
@@ -74,28 +74,51 @@ class BoardDetailsScreen extends StatelessWidget {
                                           )
                                         ],
                                       ),
-                                      Expanded(child: GestureDetector(
-                                        onHorizontalDragEnd: (DragEndDetails details) {
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onHorizontalDragEnd:
+                                              (DragEndDetails details) {
                                             if (details.primaryVelocity! > 0) {
                                               // User swiped Left
-                                              controller.swipeToStack(direction: 'left');
-                                            } else if (details.primaryVelocity! < 0) {
+                                              controller.swipeToStack(
+                                                  direction: 'left');
+                                            } else if (details
+                                                    .primaryVelocity! <
+                                                0) {
                                               // User swiped Right
-                                              controller.swipeToStack(direction: 'right');
+                                              controller.swipeToStack(
+                                                  direction: 'right');
                                             }
                                           },
-                                          child: ListView.builder(
-                                            itemCount: controller.selectedStackData != null
-                                                ? controller.selectedStackData!.cards.length
-                                                : 0,
+                                          child: ReorderableListView.builder(
+                                            itemCount:
+                                                controller.selectedStackData !=
+                                                        null
+                                                    ? controller
+                                                        .selectedStackData!
+                                                        .cards
+                                                        .length
+                                                    : 0,
                                             itemBuilder: (context, index) {
                                               return ListViewCardItem(
-                                                  data: controller.selectedStackData != null
-                                                      ? controller.selectedStackData!.cards[index]
+                                                  key: Key('$index'),
+                                                  index: index,
+                                                  data: controller
+                                                              .selectedStackData !=
+                                                          null
+                                                      ? controller
+                                                          .selectedStackData!
+                                                          .cards[index]
                                                       : null);
                                             },
+                                            onReorder:
+                                                (int oldIndex, int newIndex) {
+                                              controller.reorder(
+                                                  oldIndex, newIndex);
+                                            },
                                           ),
-                                        ),)
+                                        ),
+                                      )
                                     ],
                                   )),
                           )))

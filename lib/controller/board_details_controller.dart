@@ -1,9 +1,9 @@
 import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
-import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +29,7 @@ class BoardDetailsController extends GetxController {
   final ICardService _cardService = Get.find<ICardService>();
 
   Board? get boardData => _boardsData.value;
+
   int? get selectedStackId => _selectedStackId.value;
 
   NC.Stack? get selectedStackData => _stackData.value.isNotEmpty
@@ -38,6 +39,7 @@ class BoardDetailsController extends GetxController {
 
   @visibleForTesting
   set boardId(int value) => _boardId = value;
+
   List<NC.Stack>? get stackData => _stackData.value;
 
   @override
@@ -51,7 +53,8 @@ class BoardDetailsController extends GetxController {
     isLoading.value = true;
     _boardsData.value = await _boardService.getBoard(_boardId);
     _stackData.value = (await _stackService.getAll(_boardId))!;
-    _selectedStackId.value = _stackData.value.length > 0 ? _stackData.value[0].id : null;
+    _selectedStackId.value =
+        _stackData.value.isNotEmpty ? _stackData.value[0].id : null;
     isLoading.value = false;
   }
 
@@ -59,8 +62,9 @@ class BoardDetailsController extends GetxController {
     _selectedStackId.value = stackId;
   }
 
-  swipeToStack({direction = const {'left': 'right'} } ) {
-    var idx = _stackData.value.indexWhere((element) => element.id == _selectedStackId.value);
+  swipeToStack({direction = const {'left': 'right'}}) {
+    var idx = _stackData.value
+        .indexWhere((element) => element.id == _selectedStackId.value);
     var newIdx = direction == 'left' ? idx - 1 : idx + 1;
     if (_stackData.value.asMap().containsKey(newIdx)) {
       _selectedStackId.value = _stackData.value[newIdx].id;
@@ -69,6 +73,17 @@ class BoardDetailsController extends GetxController {
 
   addCard(String title) {
     _cardService.createCard(boardId, _selectedStackId.value!, title);
-    print("in controller: $title");
+  }
+
+  void reorder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    var orderFromOldIndex = selectedStackData?.cards[newIndex].order;
+    final Card item = selectedStackData!.cards.removeAt(oldIndex);
+
+    selectedStackData!.cards.insert(newIndex, item);
+    item.order = orderFromOldIndex! + 1;
+    _cardService.updateCard(_boardId, _selectedStackId.value!, item.id!, item);
   }
 }

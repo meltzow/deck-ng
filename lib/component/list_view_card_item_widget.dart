@@ -1,37 +1,31 @@
 import 'package:deck_ng/model/card.dart' as NC;
 import 'package:flutter/material.dart';
 
-class ListViewCardItem extends StatefulWidget {
+class ListViewCardItem extends StatelessWidget {
   final NC.Card? data;
+  final int index;
 
-  const ListViewCardItem({Key? key, required this.data}) : super(key: key);
-
-  @override
-  State<ListViewCardItem> createState() => _ListViewCardItemState();
-}
-
-class _ListViewCardItemState extends State<ListViewCardItem> {
-  @mustCallSuper
-  @override
-  void initState() {
-    super.initState();
-    // _isChecked = widget.data.isDone;
-  }
+  const ListViewCardItem({Key? key, required this.data, required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child:
-    ListTile(
+        child: ListTile(
       title: Text(
-        widget.data != null ? widget.data!.title : "",
+        data != null ? data!.title : "",
+      ),
+      trailing: ReorderableDragStartListener(
+        //<-- add this to leading
+        index: index,
+        child: const Icon(Icons.drag_handle),
       ),
       onTap: () {
         // When the user taps the button,
         // navigate to a named route and
         // provide the arguments as an optional
         // parameter.
-        print("tab on ${widget.data!.title}");
+        print("tab on ${data!.title}");
       },
     ));
   }

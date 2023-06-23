@@ -13,7 +13,7 @@ class HttpService extends getx.GetxService implements IHttpService {
 
   HttpService();
 
-  Map<String, String> getHeaders(String path, Account account) {
+  Map<String, String> getHeaders(String path, Account account, [Object? body]) {
     var headers = <String, String>{
       HttpHeaders.authorizationHeader: account.authData,
       HttpHeaders.acceptHeader: "application/json"
@@ -23,7 +23,9 @@ class HttpService extends getx.GetxService implements IHttpService {
       headers['OCS-APIREQUEST'] = "true";
     }
 
-    // headers['Content-Type'] = 'application/json';
+    if (body != null) {
+      headers['Content-Type'] = 'application/json';
+    }
 
     return headers;
   }
@@ -57,12 +59,28 @@ class HttpService extends getx.GetxService implements IHttpService {
   }
 
   @override
-  Future<Map<String, dynamic>> post(String path, dynamic body) async {
+  Future<Map<String, dynamic>> post(String path, Object? body) async {
     dynamic response;
     try {
       Account? account = await authRepo.getAccount();
       Response resp = await httpClient.post(account.url + path,
-          options: Options(headers: getHeaders(path, account)), data: body );
+          options: Options(headers: getHeaders(path, account, body)),
+          data: body);
+      response = returnResponse(resp);
+    } catch (error) {
+      throw Exception(error.toString());
+    }
+    return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>> put(String path, Object? body) async {
+    dynamic response;
+    try {
+      Account? account = await authRepo.getAccount();
+      var headers = getHeaders(path, account, body);
+      Response resp = await httpClient.put(account.url + path,
+          options: Options(headers: headers), data: body);
       response = returnResponse(resp);
     } catch (error) {
       throw Exception(error.toString());

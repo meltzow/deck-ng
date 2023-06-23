@@ -1,33 +1,48 @@
-class Card {
-  final String title;
-  final String? description;
-  final int id;
-  // final Array<Card> cards;
-  // final String? color;
-  // final Bool? archived;
-  // // final Array<String>? labels;
-  // final String? acl;
-  // final Int? shared;
-  // final DateTime? deletedAt;
-  // final DateTime? lastModified;
+import 'package:deck_ng/model/assigment.dart';
+import 'package:deck_ng/model/attachement.dart';
+import 'package:deck_ng/model/label.dart';
+import 'package:deck_ng/model/user.dart';
 
-  Card({required this.title, this.description, required this.id});
+class Card {
+  String? ETag;
+  bool? archived;
+  List<Assignment>? assignedUsers;
+  int? attachmentCount;
+  List<Attachement>? attachments;
+  int? commentsCount;
+  int? commentsUnread;
+  int? createdAt;
+  int? deletedAt;
+  final String? description;
+  String? duedate;
+  final int? id;
+  List<Label>? labels;
+  String? lastEditor;
+  int? lastModified;
+  int? order;
+  int? overdue;
+  late User? owner;
+  int? stackId;
+  final String title;
+  String type;
+
+  Card(
+      {required this.title,
+      this.description,
+      required this.id,
+      this.type = 'text',
+      this.owner,
+      this.order});
 
   factory Card.fromJson(Map<String, dynamic> json) {
+    final ownerData = User.fromJson(json['owner']);
     return Card(
       title: json['title'] as String,
       id: json['id'] as int,
       description: json['description'] as String?,
-      // archived: json['archived'] as Bool?,
-      // labels: json['labels'] as Label?,
-      // acl: json['acl'] as String[]?,
-
-      // permissions?: BoardPermissions;
-      // users?: Array<User>;
-      // shared: json['shared'] as Int?,
-      // deletedAt:  json['deletedAt'] as DateTime?,
-      // lastModified: json['lastModified'] as DateTime?,
-      // settings:json['settings'] as BoardSettings;
+      type: json['type'] as String,
+      owner: ownerData,
+      order: json['order'] as int,
     );
   }
 
@@ -35,5 +50,8 @@ class Card {
         'title': title,
         'id': id,
         'description': description,
+        'type': type,
+        'owner': owner!.toJson(),
+        'order': order
       };
 }
