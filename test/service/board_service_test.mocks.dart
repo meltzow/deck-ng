@@ -28,8 +28,7 @@ class MockIHttpService extends _i1.Mock implements _i2.IHttpService {
   }
 
   @override
-  _i3.Future<Map<String, dynamic>> getResponse(String? path) =>
-      (super.noSuchMethod(
+  _i3.Future<Map<String, dynamic>> get(String? path) => (super.noSuchMethod(
         Invocation.method(
           #getResponse,
           [path],

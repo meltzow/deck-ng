@@ -29,7 +29,7 @@ void main() {
     Get.put<IStackService>(StackRepositoryImpl());
 
     var resp = Board(title: 'garden', id: 1).toJson();
-    when(httpServiceMock.getResponse('/index.php/apps/deck/api/v1/boards/1'))
+    when(httpServiceMock.get('/index.php/apps/deck/api/v1/boards/1'))
         .thenAnswer((_) async => resp);
 
     var stackList = [

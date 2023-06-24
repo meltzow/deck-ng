@@ -2,8 +2,10 @@ import 'package:catcher/catcher.dart';
 import 'package:deck_ng/binding/auth_binding.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/controller/board_overview_controller.dart';
+import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/screen/board_details_screen.dart';
 import 'package:deck_ng/screen/board_overview_screen.dart';
+import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/service/impl/auth_repository_impl.dart';
 import 'package:flutter/material.dart';
@@ -95,6 +97,13 @@ class MyApp extends StatelessWidget {
           page: () => BoardDetailsScreen(),
           binding: BindingsBuilder(() {
             Get.lazyPut<BoardDetailsController>(() => BoardDetailsController());
+          }),
+        ),
+        GetPage(
+          name: '/cards/details',
+          page: () => CardDetailsScreen(),
+          binding: BindingsBuilder(() {
+            Get.lazyPut<CardDetailsController>(() => CardDetailsController());
           }),
         ),
         GetPage(

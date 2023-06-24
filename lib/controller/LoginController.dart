@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
+  final RxBool isLoading = RxBool(true);
   RxString nameControllerText = ''.obs;
   var nameController = TextEditingController();
   RxString passwordControllerText = ''.obs;

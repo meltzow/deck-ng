@@ -19,8 +19,8 @@ class BoardRepositoryImpl extends GetxService implements IBoardService {
 
   @override
   Future<Board> getBoard(int boardId) async {
-    dynamic response = await httpService
-        .getResponse("/index.php/apps/deck/api/v1/boards/$boardId");
+    dynamic response =
+        await httpService.get("/index.php/apps/deck/api/v1/boards/$boardId");
     Board board = Board.fromJson(response);
     return board;
   }

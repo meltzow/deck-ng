@@ -62,7 +62,7 @@ void main() {
               url: 'http://url.foo',
               isAuthenticated: true)));
 
-      expect(await service.getResponse('/index.php/apps/deck/api/v1/boards'),
+      expect(await service.get('/index.php/apps/deck/api/v1/boards'),
           isA<Map<String, dynamic>>());
     });
 

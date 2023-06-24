@@ -3,6 +3,7 @@ import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:get/get.dart';
 
 class BoardOverviewController extends GetxController {
+  final RxBool isLoading = RxBool(true);
   final Rx<List<Board>> _boardsData = Rx<List<Board>>([]);
 
   final IBoardService _boardRepository = Get.find<IBoardService>();

@@ -32,10 +32,11 @@ class Card {
       required this.id,
       this.type = 'text',
       this.owner,
-      this.order});
+      this.order,
+      this.stackId});
 
   factory Card.fromJson(Map<String, dynamic> json) {
-    final ownerData = json.containsKey('owner') ? User.fromJson(json['owner']) : User();
+    final ownerData = User.fromJson(json['owner']);
     return Card(
       title: json['title'] as String,
       id: json['id'] as int,
@@ -43,6 +44,7 @@ class Card {
       type: json['type'] as String,
       owner: ownerData,
       order: json['order'] as int,
+      stackId: json['stackId'] as int,
     );
   }
 
@@ -51,7 +53,8 @@ class Card {
         'id': id,
         'description': description,
         'type': type,
-        'owner': owner?.toJson(),
-        'order': order
+        'owner': owner!.toJson(),
+        'order': order,
+        'stackId': stackId
       };
 }

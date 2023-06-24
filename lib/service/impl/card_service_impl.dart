@@ -24,4 +24,18 @@ class CardServiceImpl extends GetxService implements ICardService {
     Card cardResp = Card.fromJson(response);
     return cardResp;
   }
+
+  @override
+  Future<void> deleteCard(int boardId, int stackId, int cardId) {
+    // TODO: implement deleteCard
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Card> getCard(int boardId, int stackId, int cardId) async {
+    dynamic response = await httpService.get(
+        "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId");
+    Card cardResp = Card.fromJson(response);
+    return cardResp;
+  }
 }

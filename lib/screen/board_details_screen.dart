@@ -101,6 +101,7 @@ class BoardDetailsScreen extends StatelessWidget {
                                                     : 0,
                                             itemBuilder: (context, index) {
                                               return ListViewCardItem(
+                                                  boardId: controller.boardId,
                                                   key: Key('$index'),
                                                   index: index,
                                                   data: controller

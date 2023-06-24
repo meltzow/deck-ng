@@ -45,7 +45,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   }
 
   @override
-  Future<Map<String, dynamic>> getResponse(String path) async {
+  Future<Map<String, dynamic>> get(String path) async {
     dynamic response;
     try {
       Account? account = await authRepo.getAccount();
