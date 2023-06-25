@@ -1,8 +1,8 @@
 import 'package:deck_ng/component/drawer_widget.dart';
-import 'package:deck_ng/controller/LoginController.dart';
+import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                 Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(10),
-                    child:  Text(
+                    child: Text(
                       'Sign in ${AppLocalizations.of(context)?.helloWorld}',
                       style: const TextStyle(
                           color: Colors.blue,

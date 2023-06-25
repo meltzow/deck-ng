@@ -34,17 +34,62 @@ class CardDetailsScreen extends StatelessWidget {
                             margin: const EdgeInsets.only(top: 25),
                             child: Obx(() => controller.isLoading.value
                                 ? const Center(child: Text('loading'))
-                                : const Column(
-                                    children: [
-                                      Expanded(
-                                          child: Card(
-                                        child: Text("I'm a Card"),
-                                      ))
-                                    ],
+                                : Card(
+                                    color: Colors.white70,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            children: [
+                                              Obx(() => _editTitleTextField())
+                                            ],
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              Expanded(
+                                                  child: Text(
+                                                "Bemerkung",
+                                              )),
+                                              Expanded(
+                                                child: TextField(),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   )),
                           )))
                 ],
               )),
+        ));
+  }
+
+  Widget _editTitleTextField() {
+    if (controller.isEditingText.value) {
+      return Expanded(
+          child: Center(
+        child: TextField(
+          onSubmitted: (newValue) {
+            controller.descriptionControllerText.value = newValue;
+            controller.isEditingText.value = false;
+          },
+          autofocus: true,
+          controller: controller.editingController,
+        ),
+      ));
+    }
+    return InkWell(
+        onTap: () {
+          controller.isEditingText.value = true;
+        },
+        child: Text(
+          controller.descriptionControllerText.value,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 18.0,
+          ),
         ));
   }
 }
