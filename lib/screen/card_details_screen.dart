@@ -42,18 +42,22 @@ class CardDetailsScreen extends StatelessWidget {
                                         children: <Widget>[
                                           Row(
                                             children: [
-                                              Obx(() => _editTitleTextField())
+                                              _editTitleTextField(
+                                                  controller.isTitleEditing,
+                                                  controller
+                                                      .titleControllerText,
+                                                  controller.titleController!)
                                             ],
                                           ),
                                           Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                  child: Text(
-                                                "Bemerkung",
-                                              )),
-                                              Expanded(
-                                                child: TextField(),
-                                              ),
+                                            children: [
+                                              _editTitleTextField(
+                                                  controller
+                                                      .isDescriptionEditing,
+                                                  controller
+                                                      .descriptionControllerText,
+                                                  controller
+                                                      .descriptionEditingController!)
                                             ],
                                           ),
                                         ],
@@ -66,26 +70,27 @@ class CardDetailsScreen extends StatelessWidget {
         ));
   }
 
-  Widget _editTitleTextField() {
-    if (controller.isEditingText.value) {
+  Widget _editTitleTextField(RxBool isEditingField, RxString isEditingText,
+      TextEditingController editingController) {
+    if (isEditingField.value) {
       return Expanded(
           child: Center(
         child: TextField(
           onSubmitted: (newValue) {
-            controller.descriptionControllerText.value = newValue;
-            controller.isEditingText.value = false;
+            isEditingText.value = newValue;
+            isEditingField.value = false;
           },
           autofocus: true,
-          controller: controller.editingController,
+          controller: editingController,
         ),
       ));
     }
     return InkWell(
         onTap: () {
-          controller.isEditingText.value = true;
+          isEditingField.value = true;
         },
         child: Text(
-          controller.descriptionControllerText.value,
+          isEditingText.value,
           style: const TextStyle(
             color: Colors.black,
             fontSize: 18.0,
