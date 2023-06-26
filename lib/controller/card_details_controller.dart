@@ -1,7 +1,11 @@
 import 'package:deck_ng/model/card.dart';
+import 'package:deck_ng/model/label.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+
+import '../model/board.dart';
 
 class CardDetailsController extends GetxController {
   final RxBool isLoading = RxBool(true);
@@ -17,13 +21,17 @@ class CardDetailsController extends GetxController {
   late RxString titleControllerText = 'Initial Text'.obs;
 
   late final Rxn<Card> _cardData = Rxn<Card>();
+  late final Rxn<Board> _boardData = Rxn<Board>();
 
-  final ICardService _cardRepository = Get.find<ICardService>();
+  final ICardService _cardService = Get.find<ICardService>();
+  final IBoardService _boardService = Get.find<IBoardService>();
 
   Card? get cardData => _cardData.value;
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;
   TextEditingController? get titleController => _titleEditingController;
+
+  List<Label>? get allLabel => _boardData.value?.labels;
 
   @override
   void onClose() {
@@ -42,6 +50,7 @@ class CardDetailsController extends GetxController {
     await refreshData();
     descriptionControllerText.value =
         _cardData.value?.description ?? 'Initial Text';
+    titleControllerText.value = _cardData.value!.title;
     _descriptionEditingController =
         TextEditingController(text: descriptionControllerText.value);
     _titleEditingController =
@@ -49,8 +58,16 @@ class CardDetailsController extends GetxController {
   }
 
   Future<void> refreshData() async {
-    _cardData.value = (await _cardRepository
-        .getCard(_boardId!.value!, _stackId!.value!, _cardId!.value!)
-        .whenComplete(() => isLoading.value = false));
+    isLoading.value = true;
+    _cardData.value = await _cardService.getCard(
+        _boardId!.value!, _stackId!.value!, _cardId!.value!);
+    _boardData.value = await _boardService.getBoard(_boardId.value!);
+    isLoading.value = false;
+  }
+
+  saveLabels(List<Label> newLabels) async {
+    _cardData.value?.labels = newLabels;
+    await _cardService.updateCard(
+        _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value!);
   }
 }
