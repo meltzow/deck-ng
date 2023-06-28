@@ -3,9 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
-import 'package:deck_ng/service/Ihttp_service.dart' as _i2;
+import 'package:deck_ng/service/Ihttp_service.dart' as _i3;
+import 'package:dio/dio.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -19,50 +20,62 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeResponse_0<T1> extends _i1.SmartFake implements _i2.Response<T1> {
+  _FakeResponse_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [IHttpService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIHttpService extends _i1.Mock implements _i2.IHttpService {
+class MockIHttpService extends _i1.Mock implements _i3.IHttpService {
   MockIHttpService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<Map<String, dynamic>> get(String? path) => (super.noSuchMethod(
+  _i4.Future<Map<String, dynamic>> get(String? path) => (super.noSuchMethod(
         Invocation.method(
-          #getResponse,
+          #get,
           [path],
         ),
         returnValue:
-            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i3.Future<Map<String, dynamic>>);
+            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i4.Future<Map<String, dynamic>>);
   @override
-  _i3.Future<List<dynamic>> getListResponse(String? path) =>
+  _i4.Future<List<dynamic>> getListResponse(String? path) =>
       (super.noSuchMethod(
         Invocation.method(
           #getListResponse,
           [path],
         ),
-        returnValue: _i3.Future<List<dynamic>>.value(<dynamic>[]),
-      ) as _i3.Future<List<dynamic>>);
+        returnValue: _i4.Future<List<dynamic>>.value(<dynamic>[]),
+      ) as _i4.Future<List<dynamic>>);
   @override
-  _i3.Future<Map<String, dynamic>> post(
-    String? path,
+  _i4.Future<Map<String, dynamic>> post(
+    String? path, [
     dynamic body,
-  ) =>
+    bool? useAccount,
+  ]) =>
       (super.noSuchMethod(
         Invocation.method(
           #post,
           [
             path,
             body,
+            useAccount,
           ],
         ),
         returnValue:
-            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i3.Future<Map<String, dynamic>>);
+            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i4.Future<Map<String, dynamic>>);
   @override
-  _i3.Future<Map<String, dynamic>> put(
+  _i4.Future<Map<String, dynamic>> put(
     String? path,
     dynamic body,
   ) =>
@@ -75,6 +88,35 @@ class MockIHttpService extends _i1.Mock implements _i2.IHttpService {
           ],
         ),
         returnValue:
-            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i3.Future<Map<String, dynamic>>);
+            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i4.Future<Map<String, dynamic>>);
+  @override
+  _i4.Future<_i2.Response<T>> retry<T>({
+    required String? path,
+    required String? method,
+    Map<String, dynamic>? queryParameters,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #retry,
+          [],
+          {
+            #path: path,
+            #method: method,
+            #queryParameters: queryParameters,
+          },
+        ),
+        returnValue: _i4.Future<_i2.Response<T>>.value(_FakeResponse_0<T>(
+          this,
+          Invocation.method(
+            #retry,
+            [],
+            {
+              #path: path,
+              #method: method,
+              #queryParameters: queryParameters,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<T>>);
 }

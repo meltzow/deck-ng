@@ -80,6 +80,14 @@ class MockIAuthService extends _i1.Mock implements _i4.IAuthService {
           isAuth,
         ],
       ));
+  @override
+  _i5.Future<bool> login(String? fullUrl) => (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [fullUrl],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 }
 
 /// A class which mocks [IBoardService].

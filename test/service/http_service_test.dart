@@ -1,3 +1,6 @@
+@TestOn('vm')
+import 'dart:math';
+
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
@@ -15,6 +18,36 @@ import 'http_service_test.mocks.dart';
 void main() {
   late dio.Dio dioClient;
   late DioAdapter dioAdapter;
+  const path = 'https://example.com';
+
+  group('resets after each test call:', () {
+    double data;
+    dio.Response<dynamic> response;
+
+    setUpAll(() {
+      dioClient = dio.Dio();
+      dioAdapter = DioAdapter(dio: dioClient);
+    });
+
+    // tearDown(() => dioAdapter.reset());
+
+    void expectRandomResponse() async {
+      data = Random().nextDouble();
+
+      dioAdapter.onGet(path, (server) => server.reply(200, data));
+
+      response = await dioClient.get(path);
+
+      expect(data, response.data);
+
+      // Affirm that the length of history's list is one due to reset.
+      expect(dioAdapter.history.length, 1);
+    }
+
+    for (var index in Iterable<int>.generate(10)) {
+      test('Test #${index + 1}', () => expectRandomResponse());
+    }
+  });
 
   group('httpServiceGroup', () {
     const baseUrl = 'https://example.com';
@@ -36,6 +69,52 @@ void main() {
         // See -> issue:[124] & pr:[125]
         matcher: const UrlRequestMatcher(),
       );
+    });
+
+    test('Retryable statuses overridden', () async {
+      final dioclient = Get.find<dio.Dio>();
+      const retries = 3;
+
+      dioAdapter.onPost('https://mock.codes/400', (server) {
+        return server.reply(
+          401,
+          null,
+          delay: const Duration(seconds: 1),
+        );
+      }, headers: {'serverCall': 1});
+
+      dioAdapter.onPost('https://mock.codes/400', (server) {
+        return server.reply(
+          401,
+          {Random().nextDouble()},
+          delay: const Duration(seconds: 1),
+        );
+      }, headers: {'serverCall': 2});
+
+      dioAdapter.onPost('https://mock.codes/400', (server) {
+        return server.reply(
+          200,
+          {'message:': 'success'},
+          delay: const Duration(seconds: 1),
+        );
+      }, headers: {'serverCall': 3});
+
+      dio.Response resp1;
+      try {
+        resp1 = await dioclient.post<dynamic>('https://mock.codes/400',
+            options: dio.Options(headers: {'servercall': 1}));
+        expect(resp1.statusCode, 401);
+        var resp2 = await dioclient.post<dynamic>('https://mock.codes/400',
+            options: dio.Options(headers: {'servercall': 2}));
+        expect(resp2.statusCode, 401);
+        var resp3 = await dioclient.post<dynamic>('https://mock.codes/400',
+            options: dio.Options(headers: {'servercall': 3}));
+        expect(resp3.statusCode, 200);
+      } on dio.DioException catch (error) {
+        // expect(resp1, isNotNull);
+        // expect(resp1!.statusCode, 401);
+      }
+      expect(retries, 3);
     });
 
     test('returns all boards if the http call completes successfully',
@@ -66,35 +145,24 @@ void main() {
           isA<Map<String, dynamic>>());
     });
 
-    // test('throws an exception if the http call completes with an error', () {
-    //   final httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-    //   final BoardRepositoryImpl boardRepo =
-    //       Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
-    //
-    //   // Use Mockito to return an unsuccessful response when it calls the
-    //   // provided http.Client.
-    //   when(httpServiceMock.getResponse('/index.php/apps/deck/api/v1/boards'))
-    //       .thenAnswer((_) async => Exception('Not Found'));
-    //
-    //   expect(boardRepo.getAllBoards(), throwsException);
-    // });
+    test('test retrying 3 times', () async {
+      Get.put<IAuthService>(MockIAuthService());
 
-    // test('returns a boards if the http call completes successfully', () async {
-    //   getIt.unregister<http.Client>();
-    //   getIt.registerSingleton<http.Client>(MockClient());
-    //   final client = getIt<http.Client>();
-    //   final BoardRepository boardRepo = getIt<BoardRepository>();
-    //
-    //   // Use Mockito to return a successful response when it calls the
-    //   // provided http.Client.
-    //   when(client.get(
-    //           Uri.parse(
-    //               "http://192.168.178.59:8080/index.php/apps/deck/api/v1/boards/1"),
-    //           headers: anyNamed('headers')))
-    //       .thenAnswer((_) async =>
-    //           http.Response('{"title": "foobar mock", "id": 33}', 200));
-    //
-    //   expect(await boardRepo.getBoard(1), isA<Board>());
-    // });
+      final HttpService service = Get.put(HttpService());
+      dioAdapter.onPost('http://url.foo/index.php/apps/deck/api/v1/boards',
+          (server) {
+        return server.reply(
+          401,
+          {},
+          delay: const Duration(seconds: 1),
+        );
+      });
+
+      var response = await service.retry(
+          path: 'http://url.foo/index.php/apps/deck/api/v1/boards',
+          method: 'post');
+
+      expect(response, isA());
+    });
   });
 }

@@ -14,11 +14,14 @@ class DrawerWidget extends StatelessWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+          GestureDetector(
+            child: const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text('Boards'),
             ),
-            child: Text('Boards'),
+            onTap: () => Get.toNamed('/boards'),
           ),
           ListTile(
             title: const Text('Board 1'),

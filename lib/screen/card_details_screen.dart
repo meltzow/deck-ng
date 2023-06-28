@@ -13,6 +13,7 @@ class CardDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: const BackButton(),
           title: const Text("Card details"),
         ),
         drawer: const DrawerWidget(),

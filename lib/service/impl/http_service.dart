@@ -4,6 +4,7 @@ import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' as getx;
 
@@ -13,11 +14,14 @@ class HttpService extends getx.GetxService implements IHttpService {
 
   HttpService();
 
-  Map<String, String> getHeaders(String path, Account account, [Object? body]) {
+  Map<String, String> getHeaders(String path,
+      [Account? account, Object? body]) {
     var headers = <String, String>{
-      HttpHeaders.authorizationHeader: account.authData,
       HttpHeaders.acceptHeader: "application/json"
     };
+    if (account?.authData != null) {
+      headers[HttpHeaders.authorizationHeader] = account!.authData;
+    }
 
     if (path.startsWith('/ocs') || path.startsWith('/index.php/login/v2')) {
       headers['OCS-APIREQUEST'] = "true";
@@ -59,11 +63,13 @@ class HttpService extends getx.GetxService implements IHttpService {
   }
 
   @override
-  Future<Map<String, dynamic>> post(String path, Object? body) async {
+  Future<Map<String, dynamic>> post(String path,
+      [dynamic body, bool useAccount = true]) async {
     dynamic response;
     try {
-      Account? account = await authRepo.getAccount();
-      Response resp = await httpClient.post(account.url + path,
+      Account? account = useAccount ? await authRepo.getAccount() : null;
+      var url = account != null ? account.url : '';
+      Response resp = await httpClient.post(url + path,
           options: Options(headers: getHeaders(path, account, body)),
           data: body);
       response = returnResponse(resp);
@@ -103,5 +109,32 @@ class HttpService extends getx.GetxService implements IHttpService {
         throw Exception('Error occurred while communication with server' +
             ' with status code : ${response.statusCode}');
     }
+  }
+
+  @override
+  Future<Response<T>> retry<T>(
+      {required String path,
+      required String method,
+      Map<String, dynamic>? queryParameters}) async {
+    final evaluator = DefaultRetryEvaluator({status400BadRequest});
+    httpClient.interceptors.add(
+      RetryInterceptor(
+          // ignoreRetryEvaluatorExceptions: true,
+          dio: httpClient,
+          logPrint: print, // specify log function (optional)
+          retries: 4, // retry count (optional)
+          retryDelays: const [
+            // set delays between retries (optional)
+            Duration(seconds: 1), // wait 1 sec before the first retry
+            Duration(seconds: 2), // wait 2 sec before the second retry
+            Duration(seconds: 3), // wait 3 sec before the third retry
+            Duration(seconds: 4), // wait 4 sec before the fourth retry
+          ],
+          retryEvaluator: evaluator.evaluate),
+    );
+
+    var ops = RequestOptions(path: path, method: method);
+
+    return await httpClient.fetch<T>(ops);
   }
 }
