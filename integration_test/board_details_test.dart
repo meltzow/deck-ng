@@ -2,11 +2,7 @@ import 'package:deck_ng/main.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/stack.dart';
-import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
-import 'package:deck_ng/service/Istack_service.dart';
-import 'package:deck_ng/service/impl/board_repository_impl.dart';
-import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
@@ -24,9 +20,8 @@ void main() {
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUp(() async {
     await initServices();
-    httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-    Get.put<IBoardService>(BoardRepositoryImpl());
-    Get.put<IStackService>(StackRepositoryImpl());
+    Get.replace<IHttpService>(MockIHttpService());
+    httpServiceMock = Get.find<IHttpService>();
 
     var resp = Board(title: 'garden', id: 1).toJson();
     when(httpServiceMock.get('/index.php/apps/deck/api/v1/boards/1'))

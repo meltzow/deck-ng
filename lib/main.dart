@@ -1,5 +1,4 @@
 import 'package:catcher/catcher.dart';
-import 'package:deck_ng/binding/auth_binding.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
@@ -7,7 +6,19 @@ import 'package:deck_ng/screen/board_details_screen.dart';
 import 'package:deck_ng/screen/board_overview_screen.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
+import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
+import 'package:deck_ng/service/Icard_service.dart';
+import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/Istack_service.dart';
 import 'package:deck_ng/service/impl/auth_repository_impl.dart';
+import 'package:deck_ng/service/impl/board_repository_impl.dart';
+import 'package:deck_ng/service/impl/card_service_impl.dart';
+import 'package:deck_ng/service/impl/credential_service_impl.dart';
+import 'package:deck_ng/service/impl/http_service.dart';
+import 'package:deck_ng/service/impl/stack_repository_impl.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -58,10 +69,13 @@ Future<void> main() async {
 Future<void> initServices() async {
   print('starting services ...');
 
-  /// Here is where you put get_storage, hive, shared_pref initialization.
-  /// or moor connection, or whatever that's async.
-  await Get.putAsync(() => AuthRepositoryImpl().init());
-  print('All services started...');
+  await Get.putAsync<ICredentialService>(() => CredentialServiceImpl().init());
+  Get.lazyPut<IHttpService>(() => HttpService());
+  Get.lazyPut<IAuthService>(() => AuthRepositoryImpl());
+  Get.lazyPut<IBoardService>(() => BoardRepositoryImpl());
+  Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+  Get.lazyPut<Dio>(() => Dio());
+  Get.lazyPut<ICardService>(() => CardServiceImpl());
 }
 
 class MyApp extends StatelessWidget {
@@ -79,7 +93,6 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       title: 'Flutter Demo',
-      initialBinding: AuthBinding(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -108,7 +121,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/auth/login',
-          page: () => LoginScreen(),
+          page: () => const LoginScreen(),
         ),
       ],
     );

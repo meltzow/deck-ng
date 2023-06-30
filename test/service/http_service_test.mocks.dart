@@ -7,6 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:deck_ng/model/account.dart' as _i2;
 import 'package:deck_ng/service/Iauth_service.dart' as _i3;
+import 'package:deck_ng/service/Icredential_service.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -35,6 +36,25 @@ class _FakeAccount_0 extends _i1.SmartFake implements _i2.Account {
 /// See the documentation for Mockito's code generation for more information.
 class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
   MockIAuthService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<bool> login(String? fullUrl) => (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [fullUrl],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+}
+
+/// A class which mocks [ICredentialService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockICredentialService extends _i1.Mock
+    implements _i5.ICredentialService {
+  MockICredentialService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -68,12 +88,4 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
           isAuth,
         ],
       ));
-  @override
-  _i4.Future<bool> login(String? fullUrl) => (super.noSuchMethod(
-        Invocation.method(
-          #login,
-          [fullUrl],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
 }

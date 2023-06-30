@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/impl/retry.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' as getx;
 
 class HttpService extends getx.GetxService implements IHttpService {
-  final authRepo = getx.Get.find<IAuthService>();
+  final credService = getx.Get.find<ICredentialService>();
   final Dio httpClient = getx.Get.find<Dio>();
 
   HttpService();
@@ -37,7 +37,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   @override
   Future<List<dynamic>> getListResponse(String path) async {
     List<dynamic> response;
-    Account? account = await authRepo.getAccount();
+    Account? account = await credService.getAccount();
     try {
       Response resp = await httpClient.get(account.url + path,
           options: Options(headers: getHeaders(path, account)));
@@ -52,7 +52,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   Future<Map<String, dynamic>> get(String path) async {
     dynamic response;
     try {
-      Account? account = await authRepo.getAccount();
+      Account? account = await credService.getAccount();
       Response resp = await httpClient.get(account.url + path,
           options: Options(headers: getHeaders(path, account)));
       response = returnResponse(resp);
@@ -67,7 +67,7 @@ class HttpService extends getx.GetxService implements IHttpService {
       [dynamic body, bool useAccount = true]) async {
     dynamic response;
     try {
-      Account? account = useAccount ? await authRepo.getAccount() : null;
+      Account? account = useAccount ? await credService.getAccount() : null;
       var url = account != null ? account.url : '';
       Response resp = await httpClient.post(url + path,
           options: Options(headers: getHeaders(path, account, body)),
@@ -83,7 +83,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   Future<Map<String, dynamic>> put(String path, Object? body) async {
     dynamic response;
     try {
-      Account? account = await authRepo.getAccount();
+      Account? account = await credService.getAccount();
       var headers = getHeaders(path, account, body);
       Response resp = await httpClient.put(account.url + path,
           options: Options(headers: headers), data: body);
@@ -112,29 +112,21 @@ class HttpService extends getx.GetxService implements IHttpService {
   }
 
   @override
-  Future<Response<T>> retry<T>(
-      {required String path,
-      required String method,
-      Map<String, dynamic>? queryParameters}) async {
-    final evaluator = DefaultRetryEvaluator({status400BadRequest});
-    httpClient.interceptors.add(
-      RetryInterceptor(
-          // ignoreRetryEvaluatorExceptions: true,
-          dio: httpClient,
-          logPrint: print, // specify log function (optional)
-          retries: 4, // retry count (optional)
-          retryDelays: const [
-            // set delays between retries (optional)
-            Duration(seconds: 1), // wait 1 sec before the first retry
-            Duration(seconds: 2), // wait 2 sec before the second retry
-            Duration(seconds: 3), // wait 3 sec before the third retry
-            Duration(seconds: 4), // wait 4 sec before the fourth retry
-          ],
-          retryEvaluator: evaluator.evaluate),
-    );
-
-    var ops = RequestOptions(path: path, method: method);
-
-    return await httpClient.fetch<T>(ops);
+  Future<Response<T>> retry<T>(RequestOptions? ops,
+      [RetryOptions? retryOptions]) async {
+    var retryOps = retryOptions ??
+        const RetryOptions(
+            delayFactor: Duration(seconds: 2),
+            maxDelay: Duration(minutes: 2),
+            maxAttempts: 200);
+    return retryOps.retry<Response<T>>(
+        () async => await httpClient.fetch<T>(ops!),
+        retryIf: (e) => e is DioException,
+        onRetry: (e) {
+          ops!.headers[RetryOptions.retryHeader] =
+              ops.headers[RetryOptions.retryHeader] != null
+                  ? ops.headers[RetryOptions.retryHeader] + 1
+                  : 1;
+        });
   }
 }

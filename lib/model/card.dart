@@ -1,14 +1,18 @@
-import 'package:deck_ng/model/assigment.dart';
-import 'package:deck_ng/model/attachement.dart';
+import 'package:deck_ng/model/assignment.dart';
+import 'package:deck_ng/model/attachment.dart';
 import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/model/user.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'card.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Card {
   String? ETag;
   bool? archived;
   List<Assignment>? assignedUsers;
   int? attachmentCount;
-  List<Attachement>? attachments;
+  List<Attachment>? attachments;
   int? commentsCount;
   int? commentsUnread;
   int? createdAt;
@@ -35,26 +39,7 @@ class Card {
       this.order,
       this.stackId});
 
-  factory Card.fromJson(Map<String, dynamic> json) {
-    final ownerData = User.fromJson(json['owner']);
-    return Card(
-      title: json['title'] as String,
-      id: json['id'] as int,
-      description: json['description'] as String?,
-      type: json['type'] as String,
-      owner: ownerData,
-      order: json['order'] as int,
-      stackId: json['stackId'] as int,
-    );
-  }
+  factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'id': id,
-        'description': description,
-        'type': type,
-        'owner': owner!.toJson(),
-        'order': order,
-        'stackId': stackId
-      };
+  Map<String, dynamic> toJson() => _$CardToJson(this);
 }

@@ -1,4 +1,3 @@
-import 'package:deck_ng/model/account.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 /// This allows the `User` class to access private members in
@@ -58,9 +57,5 @@ class LoginCredentials {
 }
 
 abstract class IAuthService {
-  Future<Account> getAccount();
-
-  saveCredentials(String url, String username, String password, bool isAuth);
-
   Future<bool> login(String fullUrl);
 }

@@ -1,4 +1,4 @@
-import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -47,8 +47,8 @@ class LoginController extends GetxController {
   }
 
   readAccountData() async {
-    var authService = Get.find<IAuthService>();
-    var account = await authService.getAccount();
+    var credService = Get.find<ICredentialService>();
+    var account = await credService.getAccount();
 
     urlControllerText.value = account.url;
     urlController.text = urlControllerText.value;
@@ -59,8 +59,8 @@ class LoginController extends GetxController {
   }
 
   login() async {
-    var authService = Get.find<IAuthService>();
-    authService.saveCredentials(urlControllerText.value,
+    var credService = Get.find<ICredentialService>();
+    credService.saveCredentials(urlControllerText.value,
         nameControllerText.value, passwordControllerText.value, true);
     Get.toNamed('/boards');
   }

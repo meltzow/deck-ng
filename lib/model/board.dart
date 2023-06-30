@@ -25,8 +25,9 @@ class Board {
       this.labels});
 
   factory Board.fromJson(Map<String, dynamic> json) {
-    var labels =
-        (json['labels'] as List).map((e) => Label.fromJson(e)).toList();
+    var labels = json.containsKey('labels') && json['labels'] != null
+        ? (json['labels'] as List).map((e) => Label.fromJson(e)).toList()
+        : null;
     return Board(
       title: json['title'] as String,
       id: json['id'] as int,

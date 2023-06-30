@@ -6,6 +6,7 @@
 import 'dart:async' as _i4;
 
 import 'package:deck_ng/service/Ihttp_service.dart' as _i3;
+import 'package:deck_ng/service/impl/retry.dart' as _i5;
 import 'package:dio/dio.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -91,31 +92,26 @@ class MockIHttpService extends _i1.Mock implements _i3.IHttpService {
             _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
       ) as _i4.Future<Map<String, dynamic>>);
   @override
-  _i4.Future<_i2.Response<T>> retry<T>({
-    required String? path,
-    required String? method,
-    Map<String, dynamic>? queryParameters,
-  }) =>
+  _i4.Future<_i2.Response<T>> retry<T>(
+    _i2.RequestOptions? ops, [
+    _i5.RetryOptions? retryOptions,
+  ]) =>
       (super.noSuchMethod(
         Invocation.method(
           #retry,
-          [],
-          {
-            #path: path,
-            #method: method,
-            #queryParameters: queryParameters,
-          },
+          [
+            ops,
+            retryOptions,
+          ],
         ),
         returnValue: _i4.Future<_i2.Response<T>>.value(_FakeResponse_0<T>(
           this,
           Invocation.method(
             #retry,
-            [],
-            {
-              #path: path,
-              #method: method,
-              #queryParameters: queryParameters,
-            },
+            [
+              ops,
+              retryOptions,
+            ],
           ),
         )),
       ) as _i4.Future<_i2.Response<T>>);

@@ -3,12 +3,11 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:deck_ng/model/account.dart' as _i2;
-import 'package:deck_ng/model/board.dart' as _i3;
-import 'package:deck_ng/service/Iauth_service.dart' as _i4;
-import 'package:deck_ng/service/Iboard_service.dart' as _i6;
+import 'package:deck_ng/model/board.dart' as _i2;
+import 'package:deck_ng/service/Iauth_service.dart' as _i3;
+import 'package:deck_ng/service/Iboard_service.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -22,18 +21,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeAccount_0 extends _i1.SmartFake implements _i2.Account {
-  _FakeAccount_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeBoard_1 extends _i1.SmartFake implements _i3.Board {
-  _FakeBoard_1(
+class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
+  _FakeBoard_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -45,79 +34,49 @@ class _FakeBoard_1 extends _i1.SmartFake implements _i3.Board {
 /// A class which mocks [IAuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIAuthService extends _i1.Mock implements _i4.IAuthService {
+class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
   MockIAuthService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.Account> getAccount() => (super.noSuchMethod(
-        Invocation.method(
-          #getAccount,
-          [],
-        ),
-        returnValue: _i5.Future<_i2.Account>.value(_FakeAccount_0(
-          this,
-          Invocation.method(
-            #getAccount,
-            [],
-          ),
-        )),
-      ) as _i5.Future<_i2.Account>);
-  @override
-  dynamic saveCredentials(
-    String? url,
-    String? username,
-    String? password,
-    bool? isAuth,
-  ) =>
-      super.noSuchMethod(Invocation.method(
-        #saveCredentials,
-        [
-          url,
-          username,
-          password,
-          isAuth,
-        ],
-      ));
-  @override
-  _i5.Future<bool> login(String? fullUrl) => (super.noSuchMethod(
+  _i4.Future<bool> login(String? fullUrl) => (super.noSuchMethod(
         Invocation.method(
           #login,
           [fullUrl],
         ),
-        returnValue: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 }
 
 /// A class which mocks [IBoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIBoardService extends _i1.Mock implements _i6.IBoardService {
+class MockIBoardService extends _i1.Mock implements _i5.IBoardService {
   MockIBoardService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<List<_i3.Board>> getAllBoards() => (super.noSuchMethod(
+  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
           #getAllBoards,
           [],
         ),
-        returnValue: _i5.Future<List<_i3.Board>>.value(<_i3.Board>[]),
-      ) as _i5.Future<List<_i3.Board>>);
+        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+      ) as _i4.Future<List<_i2.Board>>);
   @override
-  _i5.Future<_i3.Board> getBoard(int? boardId) => (super.noSuchMethod(
+  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getBoard,
           [boardId],
         ),
-        returnValue: _i5.Future<_i3.Board>.value(_FakeBoard_1(
+        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_0(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-      ) as _i5.Future<_i3.Board>);
+      ) as _i4.Future<_i2.Board>);
 }

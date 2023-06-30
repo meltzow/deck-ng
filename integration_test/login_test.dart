@@ -1,7 +1,6 @@
 import 'package:deck_ng/main.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
-import 'package:deck_ng/service/impl/board_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
@@ -20,8 +19,8 @@ void main() {
 
   setUp(() async {
     await initServices();
-    httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-    Get.put<BoardRepositoryImpl>(BoardRepositoryImpl());
+    Get.replace<IHttpService>(MockIHttpService());
+    httpServiceMock = Get.find<IHttpService>();
 
     var resp = [Board(title: 'garden', id: 1)].map((e) => e.toJson()).toList();
     when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
