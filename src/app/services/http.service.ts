@@ -22,17 +22,13 @@ export class HttpService {
 
 
   public async post<T>(relativeURL: string, body?: any, withCredentials = true, displayError = true): Promise<T> {
-
-    let account, url: URL
+    let account;
     if (withCredentials) {
-      account = await this.authService.getAccount()
-      if (!relativeURL.startsWith("/")) {
-        throw new Error('Required parameter relativeURL must start with an "/"');
-      }
-      url = new URL(relativeURL, account.url)
-    } else {
-      url = new URL(relativeURL)
+      try {
+        account = await this.authService.getAccount()
+      } catch (e) { /* empty */ }
     }
+    const url = this.getUrl(relativeURL, account);
 
 
     if (this.isNativePlatform()) {
@@ -83,16 +79,13 @@ export class HttpService {
   }
 
   public async put<T>(relativeURL: string, body: any, withCredentials = true, displayError = true): Promise<T> {
-    let account, url: URL
+    let account;
     if (withCredentials) {
-      account = await this.authService.getAccount()
-      if (!relativeURL.startsWith("/")) {
-        throw new Error('Required parameter relativeURL must start with an "/"');
-      }
-        url = new URL(relativeURL, account.url)
-    } else {
-      url = new URL(relativeURL)
+      try {
+        account = await this.authService.getAccount()
+      } catch (e) { /* empty */ }
     }
+    const url = this.getUrl(relativeURL, account);
 
     if (this.isNativePlatform()) {
       const headers = await this.getHeadersNative(account, url, body)
@@ -140,15 +133,13 @@ export class HttpService {
   }
 
   public async get<T>(relativeURL: string, withCredentials = true, displayError = true): Promise<T> {
-    let account, url: URL
+    let account;
     if (withCredentials) {
-      account = await this.authService.getAccount()
-      if (!relativeURL.startsWith("/"))
-        throw new Error('Required parameter relativeURL must start with an "/"');
-        url = new URL(relativeURL, account.url)
-    } else {
-      url = new URL(relativeURL)
+      try {
+        account = await this.authService.getAccount()
+      } catch (e) { /* empty */ }
     }
+    const url = this.getUrl(relativeURL, account);
 
 
     if (this.isNativePlatform()) {
@@ -185,15 +176,13 @@ export class HttpService {
   }
 
   public async delete<T>(relativeURL: string, withCredentials = true, displayError = true): Promise<T> {
-    let account, url: URL
+    let account;
     if (withCredentials) {
-      account = await this.authService.getAccount()
-      if (!relativeURL.startsWith("/"))
-        throw new Error('Required parameter relativeURL must start with an "/"');
-        url = new URL(relativeURL, account.url)
-    } else {
-      url = new URL(relativeURL)
+      try {
+        account = await this.authService.getAccount()
+      } catch (e) { /* empty */ }
     }
+    const url = this.getUrl(relativeURL, account);
 
     if (this.isNativePlatform()) {
       const options: Cap.HttpOptions = {
@@ -237,7 +226,7 @@ export class HttpService {
       localVarHeaders = localVarHeaders.set('Authorization', 'Basic ' + account.authdata);
     }
 
-    if (url.pathname.startsWith('/ocs') || url.pathname.startsWith('/index.php/login/v2') || url.pathname.startsWith('/login/v2')) {
+    if (url.pathname.includes('/ocs') || url.pathname.includes('/index.php/login/v2') || url.pathname.includes('/login/v2')) {
       localVarHeaders = localVarHeaders.set('OCS-APIREQUEST', 'true');
     }
     if (body) {
@@ -267,4 +256,22 @@ export class HttpService {
     return headers;
   }
 
+  public joinRelativeUrlPath(...args: string[]) {
+    return "/" + args.map( pathPart => pathPart.replace(/(^\/|\/$)/g, "") ).join("/");
+  }
+
+  private getUrl(relativeURL: string, account?: Account): URL {
+    let url, relativePath;
+    if (account) {
+      if (!relativeURL.startsWith("/"))
+        throw new Error('Required parameter relativeURL must start with an "/"');
+      const accountURL = new URL(account.url);
+      relativePath = this.joinRelativeUrlPath(accountURL.pathname, relativeURL);
+      url = new URL(relativePath, accountURL)
+    } else {
+      url = new URL(relativeURL, 'http://localhost')
+    }
+
+    return url;
+  }
 }
