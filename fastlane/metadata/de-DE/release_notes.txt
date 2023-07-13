@@ -1,3 +1,4 @@
+1.6.1 add support for URL with subpath for example https://exampl.com/nextcloud
 1.6.0 add support for assigning users, labels and due date for cards
 1.5.0 add support for move cards to other stacks, order cards and delete cards
 1.4.0 add support for duedate
