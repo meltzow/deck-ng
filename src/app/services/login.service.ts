@@ -73,7 +73,7 @@ export class LoginService {
             // timeInterval.unsubscribe()
             console.log("loginService: login true: " + resp2.loginName)
             this.cancelRetryLoop = true
-            const serverUrl = server.protocol +  "//" +server.hostname + ":" +server.port + (originPathname ? originPathname : '');
+            const serverUrl = server.protocol +  "//" +server.hostname + (server.port ? ":" +server.port : '') + (originPathname ? originPathname : '');
             const succ: boolean = await this.authService.saveCredentials(serverUrl, resp2.loginName, resp2.appPassword, true)
             if (succ)
             resolve(succ)

@@ -1,0 +1,29 @@
+{
+  "http://localhost:8100/nextcloud/ocs/*": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/nextcloud/ocs/": "/ocs/"
+    }
+  },
+  "http://localhost:8100/nextcloud/index.php/*": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/nextcloud/index.php/": "/index.php/"
+    }
+  },
+  "http://localhost:8100/nextcloud/login/*": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/nextcloud/login/": "/login/"
+    }
+  }
+}
