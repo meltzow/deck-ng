@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+    inputs:
+      device:
+        description: 'which track device should be used? '
+        required: true
+        default: 'iPhone 14'
+        options:
+          - iPhone 14
+          - production
+        type: choice
+jobs:
+  release:
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/workflows/ionic
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - run: |
+        brew update
+        brew install fastlane
+    - run: cd ios/App && pod install
+    - run: bundle exec fastlane ios snapshots
+    - uses: actions/upload-artifact@v3
+      with:
+        name: snapshots
+        path: ./fastlane/screenshots/*
+        model: ${{ inputs.device }}
+        os_version: 16.1
+        os: iOS

@@ -1,0 +1,11 @@
+name: "setup for ios"
+description: "setup environment"
+runs:
+  using: "composite"
+  steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+    - run: |
+        brew install fastlane
+      shell: bash

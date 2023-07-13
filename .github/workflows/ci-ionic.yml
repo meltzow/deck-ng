@@ -1,0 +1,19 @@
+name: "CI for ionic"
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  test: # make sure the action works on a clean machine without building
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/ionic
+      - uses: actions/upload-artifact@v3
+        with:
+          name: coverage files
+          path:
+            coverage/ngv
+#      - run: npm run lint
