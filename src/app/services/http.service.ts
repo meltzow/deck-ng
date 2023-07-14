@@ -257,7 +257,7 @@ export class HttpService {
   }
 
   public joinRelativeUrlPath(...args: string[]) {
-    return "/" + args.map( pathPart => pathPart.replace(/(^\/|\/$)/g, "") ).join("/");
+    return (args[0].startsWith("/")? '' : "/") + args.map( pathPart => pathPart.replace(/(^\/|\/$)/g, "") ).join("/");
   }
 
   private getUrl(relativeURL: string, account?: Account): URL {
