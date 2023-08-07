@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv=content-type content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="private, no-transform" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="x-rim-auto-match" content="none" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimal-ui" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta http-equiv="cleartype" content="on">
+<link rel="icon" href="/favicon.ico" size="16x16"/>
+<link rel="icon" href="/icon.svg" type="image/svg+xml"/>
+<link rel="icon" href="/icon.png" type="image/png"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="apple-touch-startup-image" href="/apple-touch-icon.png" />
+<style>
+/*@font-face {
+font-family: 'Source Sans Pro';
+font-style: italic;
+font-stretch: normal;
+font-weight: 400;
+src: url('/assets/fonts/SourceSansPro-Italic.woff2') format('woff2');
+}*/
+@font-face {
+font-family: 'Source Sans Pro';
+font-style: normal;
+font-stretch: normal;
+font-weight: 400;
+src: url('/assets/fonts/source-sans-pro-v11-latin-ext_latin-regular.woff2') format('woff2');
+}
+@font-face {
+font-family: 'Source Sans Pro';
+font-style: normal;
+font-stretch: normal;
+font-weight: 600;
+src: url('/assets/fonts/source-sans-pro-v11-latin-ext_latin-600.woff2') format('woff2');
+}
+@font-face {
+font-family: 'Source Sans Pro';
+font-style: normal;
+font-stretch: normal;
+font-weight: 900;
+src: url('/assets/fonts/SourceSansPro-Black.woff2') format('woff2');
+}
+html, input, textarea, keygen, select, button {
+font-family: 'Source Sans Pro', Arial, sans-serif;
+font-size: 100%;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="/css/box.css">
+<link rel='stylesheet' type='text/css' href="/css/rd/login.css"/>
+<title>
+FRITZ!Box
+</title>
+</head>
+<body>
+<script>
+var gNbc = false;
+</script>
+<script src="/js/browser.js"></script>
+<script src="/js/vendor.js"></script>
+<script src="/js/box-login.js"></script>
+<script type="module">
+import { setConfig } from "/js/config.js";
+import login from "/js/login.js";
+setConfig({"ZIGBEE":false,"GUI_IS_POWERLINE":false,"isDebug":false,"gu_type":"release","WLAN":{"is_double_wlan":false},"GUI_IS_REPEATER":false,"GUI_IS_GATEWAY":false,"language":"de","GUI_HIDE_TEASER":false});
+const data = {"firstTenMin":false,"challenge":"2$60000$2ccae1c0c3531f5771999e5eaff2f019$6000$1c7bbd5bd294decec9571ff40d653b8a","blockTime":0,"pageTitle":"Willkommen bei Ihrer FRITZ!Box 7490","lastPage":"","loginReason":0,"username":"fritz4582","abortConfig":false,"facTitle":"FRITZ!Box Werkseinstellungen","falseUsername":false,"facWhatNextTxt":"Nach dem Zurücksetzen werden Sie automatisch auf die Übersichtsseite der FRITZ!Box weitergeleitet.","showFactoryPasswordHint":false,"txt":{"forgotPassword":"Kennwort vergessen?","loginWithPassword":"Sie können sich auch %1%showPasswordLink%nur mit dem FRITZ!Box-Kennwort anmelden%\/1%showPasswordLink%.","facOnAllowedComp":"Das Wiederherstellen der Werkseinstellungen starten Sie von einem Computer aus, für den die Internetnutzung in der FRITZ!Box unbegrenzt ist.","pleaseChoose":"Bitte wählen ...","facNotSet":"FRITZ!Box wurde nicht auf Werkseinstellungen zurückgesetzt","loginLinkMailPossibleMyF":"Falls Ihre FRITZ!Box bei MyFRITZ! angemeldet ist, wird der Zugangslink auch an die E-Mail-Adresse geschickt, auf die das MyFRITZ!-Konto registriert ist.","notAuthorized":"Sie sind momentan als Benutzer %1%Name% angemeldet. Dieser Benutzer hat keine Berechtigung, auf die von Ihnen angeforderten FRITZ!Box-Inhalte zuzugreifen.","autoLogoutLoginAgain":"Sie wurden automatisch abgemeldet, bitte melden Sie sich erneut an.","pushNotWorking":"Push Service funktioniert nicht?","sendLoginLink":"Zugangslink senden","pushLoginRestartExplain":"Zur Sicherheit ist die Anmeldung an Ihrer FRITZ!Box nur in einem vorgegebenen Zeitraum möglich. Dieser Zeitraum wurde überschritten.","hint_headline":"Hinweis:","waitMore":"Bitte warten Sie %1 Sekunden.","facNotAllowed":"Das Wiederherstellen der Werkseinstellungen ist gescheitert, da dieser Computer nicht dazu berechtigt ist.","pushLoginRestartBtn":"Anmeldevorgang starten","waitOne":"Bitte warten Sie 1 Sekunde.","loginWithAnotherUser":"Sie können sich auch %1%showUsersLink%mit Ihrem Benutzernamen und Kennwort anmelden%\/1%showUsersLink%.","chooseUsername":"Bitte geben Sie einen Benutzernamen an.","sendPushServiceMail":"Push Service Mail senden","facLoseSettings":"Beachten Sie bitte, dass beim Zurücksetzen alle Ihre Einstellungen verloren gehen!","mistypedOrNotAuthorized":"Haben Sie sich vielleicht vertippt oder fehlt Ihnen die Zugangsberechtigung für diesen Bereich?","pushLoginRestartRequest":"Bitte starten Sie erneut den Anmeldevorgang.","defaultUserHint":"Automatisch angelegter Benutzer. Sie können sich mit dem FRITZ!Box-Kennwort anmelden.","login":"Anmelden","loginMailSent":"Die E-Mail mit den Zugangsdaten zur Benutzeroberfläche wurde versendet.","waitTryAgain":"Bitte melden Sie sich erneut an.","caution":"Achtung","facRepeat":"Sie können dann die Werkseinstellungen erneut wiederherstellen.","autoLogoutTimeout":"Sie wurden automatisch abgemeldet, da seit längerer Zeit keine Aktivität registriert wurde.","user":"Benutzername","facDisconnectPower":"Trennen Sie die FRITZ!Box für mindestens eine Minute von der Stromversorgung. Nach einer weiteren Minute können Sie erneut auf die Benutzeroberfläche zugreifen. Klicken Sie dann auf \"Zur Übersicht\".","facNotAllowedOr10Min":"Sie haben keine Berechtigung diese Aktion durchzuführen oder Ihre FRITZ!Box ist schon länger als 10 Minuten in Betrieb.","pass":"Kennwort","pushBtnWelcome":"Bitte drücken Sie kurz eine beliebige Taste an Ihrer FRITZ!Box, um sich anzumelden.","setFacDefaults":"Werkseinstellungen wiederherstellen","choose":"OK","boxPassword":"FRITZ!Box-Kennwort","loginFailed":"Anmeldung fehlgeschlagen.","tooManyLogins":"Es wurden zu viele Sitzungen gleichzeitig gestartet.","pushNeedsWan":"Für den Versand einer Push Service Mail benötigt Ihre FRITZ!Box eine aktive Internetverbindung.","loginLinkMailPossible":"Wenn Sie Ihr Kennwort für die Benutzeroberfläche vergessen haben, können Sie sich einen Zugangslink per Push Service Mail senden lassen.","facFailed":"Das Wiederherstellen der Werkseinstellungen ist gescheitert."},"cutPowerTxt":"Trennen Sie zunächst die FRITZ!Box für mindestens eine Minute vom Strom und kehren Sie auf diese Seite zurück, nachdem Ihre FRITZ!Box neu gestartet ist.","facPationsTxt":"Es kann bis zu 5 Minuten dauern, bis die FRITZ!Box wieder erreichbar ist, bitte haben Sie etwas Geduld.","logoutTxt":"\"Sie haben sich erfolgreich von der FRITZ!Box abgemeldet.\"","showUser":true,"fallbackRedirectUrl":"http:\/\/192.168.178.1\/","ifSetFacTxt":"Wenn Sie Ihr Kennwort vergessen haben, kann die Benutzeroberfläche erst dann wieder geöffnet werden, wenn die FRITZ!Box auf die Werkseinstellungen zurückgesetzt wurde.","facIsSetTxt":"Die FRITZ!Box wird auf Werkseinstellungen zurückgesetzt und startet anschließend neu. Alle Verbindungen gehen dabei kurz verloren.","pageTitleProduct":"FRITZ!Box 7490","changedPassTxt":"\"Das Kennwort wurde geändert.\"","defaultPassword":false,"pushBtnLogin":false,"activeUsers":[{"value":"fritz4582","text":"fritz4582","UID":"boxuser98"},{"value":"mario","text":"mario","UID":"boxuser10"}],"fromInternet":false,"pushmailEnabled":true,"sid":"0000000000000000"};
+if (window.gNbc) {
+data.nbc = true;
+}
+function localInit() {
+"use strict";
+window.history.replaceState({}, '', '/');
+login.init(data);
+}
+localInit();
+</script>
+</body>
+</html>
+

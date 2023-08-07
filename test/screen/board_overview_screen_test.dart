@@ -5,10 +5,9 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:deck_ng/main.dart';
 import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
