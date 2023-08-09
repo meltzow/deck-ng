@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="deck_ng"
+        android:label="deck ng"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
