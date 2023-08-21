@@ -1,3 +1,4 @@
+import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/impl/credential_service_impl.dart';
@@ -19,6 +20,7 @@ void main() {
   group('credentialServiceGroup', () {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
+      BuildEnvironment.init(flavor: BuildFlavor.staging);
     });
 
     setUp(() {
