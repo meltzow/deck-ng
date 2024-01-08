@@ -1,10 +1,16 @@
+import 'package:deck_ng/component/board_item_widget.dart';
+import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final BoardOverviewController controller =
+        Get.put<BoardOverviewController>(BoardOverviewController());
+
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: AppBar(
@@ -24,9 +30,9 @@ class DashboardScreen extends StatelessWidget {
             color: Color(0xfff9f9f9),
           ),
         ),
-        actions: [
-          const Icon(Icons.search, color: Color(0xffffffff), size: 22),
-          const Padding(
+        actions: const [
+          Icon(Icons.search, color: Color(0xffffffff), size: 22),
+          Padding(
             padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
             child: Icon(Icons.dashboard, color: Color(0xffffffff), size: 22),
           ),
@@ -64,230 +70,14 @@ class DashboardScreen extends StatelessWidget {
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.zero,
                   ),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: const EdgeInsets.all(12),
-                        width: 150,
-                        height: 170,
-                        decoration: BoxDecoration(
-                          color: const Color(0x00ffffff),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12.0),
-                          border: Border.all(
-                              color: const Color(0x4d9e9e9e), width: 1),
-                        ),
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.push_pin,
-                                  color: Color(0xffffc000),
-                                  size: 24,
-                                ),
-                                Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xff212435),
-                                  size: 24,
-                                ),
-                              ],
-                            ),
-                            ImageIcon(
-                              AssetImage("images/logo.png"),
-                              size: 80,
-                              color: Color(0xffd46d24),
-                            ),
-                            Text(
-                              "Youtube Ideas",
-                              textAlign: TextAlign.start,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: const EdgeInsets.all(12),
-                        width: 150,
-                        height: 170,
-                        decoration: BoxDecoration(
-                          color: const Color(0x00ffffff),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12.0),
-                          border: Border.all(
-                              color: const Color(0x4d9e9e9e), width: 1),
-                        ),
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                ),
-                                Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xff212435),
-                                  size: 24,
-                                ),
-                              ],
-                            ),
-                            ImageIcon(
-                              NetworkImage(
-                                  "https://cdn4.iconfinder.com/data/icons/xicons/25/xicons_about_book-128.png"),
-                              size: 80,
-                              color: Color(0xff3a57e8),
-                            ),
-                            Text(
-                              "User Research Movie App",
-                              textAlign: TextAlign.start,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: const EdgeInsets.all(12),
-                        width: 150,
-                        height: 170,
-                        decoration: BoxDecoration(
-                          color: const Color(0x00ffffff),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12.0),
-                          border: Border.all(
-                              color: const Color(0x4d9e9e9e), width: 1),
-                        ),
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                ),
-                                Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xff212435),
-                                  size: 24,
-                                ),
-                              ],
-                            ),
-                            ImageIcon(
-                              NetworkImage(
-                                  "https://cdn4.iconfinder.com/data/icons/xicons/25/xicons_about_book-128.png"),
-                              size: 80,
-                              color: Color(0xffe4c00d),
-                            ),
-                            Text(
-                              "Web Develop Portfolio",
-                              textAlign: TextAlign.start,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: const EdgeInsets.all(12),
-                        width: 150,
-                        height: 170,
-                        decoration: BoxDecoration(
-                          color: const Color(0x00ffffff),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12.0),
-                          border: Border.all(
-                              color: const Color(0x4d9e9e9e), width: 1),
-                        ),
-                        child: const Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Icon(
-                                  Icons.push_pin,
-                                  color: Color(0xffffc000),
-                                  size: 24,
-                                ),
-                                Icon(
-                                  Icons.more_horiz,
-                                  color: Color(0xff212435),
-                                  size: 24,
-                                ),
-                              ],
-                            ),
-                            ImageIcon(
-                              NetworkImage(
-                                  "https://cdn4.iconfinder.com/data/icons/xicons/25/xicons_about_book-128.png"),
-                              size: 80,
-                              color: Color(0xffd46d24),
-                            ),
-                            Text(
-                              "Youtube Ideas",
-                              textAlign: TextAlign.start,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  child: Obx(
+                    () => ListView.builder(
+                      itemCount: controller.boardDataCount,
+                      itemBuilder: (context, index) {
+                        return BoardItemWidget(
+                            board: controller.boardData[index]);
+                      },
+                    ),
                   ),
                 ),
                 const Padding(

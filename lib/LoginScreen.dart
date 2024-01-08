@@ -1,15 +1,12 @@
-import 'package:deck_ng/controller/login_controller.dart';
+///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
+
+///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final LoginController controller =
-        Get.put<LoginController>(LoginController());
-
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       body: Align(
@@ -32,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.fromLTRB(0, 8, 0, 30),
                   child: Text(
-                    "ToDo",
+                    "deck NG",
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.clip,
                     style: TextStyle(
@@ -54,6 +51,51 @@ class LoginScreen extends StatelessWidget {
                       fontStyle: FontStyle.normal,
                       fontSize: 24,
                       color: Color(0xff000000),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: TextField(
+                    controller: TextEditingController(),
+                    obscureText: false,
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: const BorderSide(
+                            color: Color(0xff000000), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: const BorderSide(
+                            color: Color(0xff000000), width: 1),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        borderSide: const BorderSide(
+                            color: Color(0xff000000), width: 1),
+                      ),
+                      hintText: "Hint Text",
+                      hintStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color: Color(0xff000000),
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xfff2f2f3),
+                      isDense: false,
+                      contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                      prefixIcon: const Icon(Icons.insert_link,
+                          color: Color(0xff212435), size: 24),
                     ),
                   ),
                 ),
@@ -99,6 +141,8 @@ class LoginScreen extends StatelessWidget {
                       isDense: false,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 12),
+                      prefixIcon: const Icon(Icons.person,
+                          color: Color(0xff212435), size: 24),
                     ),
                   ),
                 ),
@@ -141,6 +185,8 @@ class LoginScreen extends StatelessWidget {
                     isDense: false,
                     contentPadding:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    prefixIcon: const Icon(Icons.admin_panel_settings,
+                        color: Color(0xff212435), size: 24),
                   ),
                 ),
                 Padding(
@@ -181,9 +227,7 @@ class LoginScreen extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: MaterialButton(
-                          onPressed: () {
-                            controller.login();
-                          },
+                          onPressed: () {},
                           color: const Color(0xff3a57e8),
                           elevation: 0,
                           shape: RoundedRectangleBorder(

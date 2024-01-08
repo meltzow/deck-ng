@@ -30,4 +30,4 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db
       - TRUSTED_PROXIES=127.0.0.1 localhost
-      - NEXTCLOUD_TRUSTED_DOMAINS=127.0.0.1 localhost:8100
+      - NEXTCLOUD_TRUSTED_DOMAINS=127.0.0.1 localhost:8100 192.168.178.81:8080
