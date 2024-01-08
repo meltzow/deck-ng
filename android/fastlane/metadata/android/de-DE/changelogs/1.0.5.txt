@@ -1,2 +1,0 @@
-fix strange UI-Bug in combination with headers in board/stack-overview
-fix back links in headers

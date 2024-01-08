@@ -1,1 +1,0 @@
-Unterstützung für URL mit subpath z.b. https://exampl.com/nextcloud

@@ -1,3 +1,0 @@
-link all boards into menu
-fix some value displaying bugs
-
