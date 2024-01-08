@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffffffff),
+      backgroundColor: const Color(0xffffffff),
       appBar: AppBar(
         elevation: 4,
         centerTitle: false,
         automaticallyImplyLeading: false,
-        backgroundColor: Color(0xff3a57e8),
-        shape: RoundedRectangleBorder(
+        backgroundColor: const Color(0xff3a57e8),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
-        title: Text(
+        title: const Text(
           "Home",
           style: TextStyle(
             fontWeight: FontWeight.w700,
@@ -23,8 +25,8 @@ class DashboardScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          Icon(Icons.search, color: Color(0xffffffff), size: 22),
-          Padding(
+          const Icon(Icons.search, color: Color(0xffffffff), size: 22),
+          const Padding(
             padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
             child: Icon(Icons.dashboard, color: Color(0xffffffff), size: 22),
           ),
@@ -39,7 +41,7 @@ class DashboardScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(16),
                   child: Text(
                     "Boards",
@@ -54,33 +56,33 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(0),
-                  padding: EdgeInsets.all(0),
+                  margin: const EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   height: 170,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0x00ffffff),
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.zero,
                   ),
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                     shrinkWrap: true,
-                    physics: ScrollPhysics(),
+                    physics: const ScrollPhysics(),
                     children: [
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: EdgeInsets.all(12),
+                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                        padding: const EdgeInsets.all(12),
                         width: 150,
                         height: 170,
                         decoration: BoxDecoration(
-                          color: Color(0x00ffffff),
+                          color: const Color(0x00ffffff),
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(12.0),
-                          border:
-                              Border.all(color: Color(0x4d9e9e9e), width: 1),
+                          border: Border.all(
+                              color: const Color(0x4d9e9e9e), width: 1),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -123,18 +125,18 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: EdgeInsets.all(12),
+                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                        padding: const EdgeInsets.all(12),
                         width: 150,
                         height: 170,
                         decoration: BoxDecoration(
-                          color: Color(0x00ffffff),
+                          color: const Color(0x00ffffff),
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(12.0),
-                          border:
-                              Border.all(color: Color(0x4d9e9e9e), width: 1),
+                          border: Border.all(
+                              color: const Color(0x4d9e9e9e), width: 1),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -177,18 +179,18 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: EdgeInsets.all(12),
+                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                        padding: const EdgeInsets.all(12),
                         width: 150,
                         height: 170,
                         decoration: BoxDecoration(
-                          color: Color(0x00ffffff),
+                          color: const Color(0x00ffffff),
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(12.0),
-                          border:
-                              Border.all(color: Color(0x4d9e9e9e), width: 1),
+                          border: Border.all(
+                              color: const Color(0x4d9e9e9e), width: 1),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -231,18 +233,18 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        padding: EdgeInsets.all(12),
+                        margin: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                        padding: const EdgeInsets.all(12),
                         width: 150,
                         height: 170,
                         decoration: BoxDecoration(
-                          color: Color(0x00ffffff),
+                          color: const Color(0x00ffffff),
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(12.0),
-                          border:
-                              Border.all(color: Color(0x4d9e9e9e), width: 1),
+                          border: Border.all(
+                              color: const Color(0x4d9e9e9e), width: 1),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
@@ -288,7 +290,7 @@ class DashboardScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
                   child: Text(
                     "Notes",
@@ -303,11 +305,11 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
                 GridView(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
@@ -315,20 +317,21 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   children: [
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Color(0x00ffffff),
+                        color: const Color(0x00ffffff),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -345,7 +348,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                             child: Text(
                               "Web Ideas ",
@@ -360,7 +363,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
@@ -375,15 +378,15 @@ class DashboardScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Color(0x343a57e8),
+                              color: const Color(0x343a57e8),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Ideas",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
@@ -399,20 +402,21 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Color(0x00ffffff),
+                        color: const Color(0x00ffffff),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -428,7 +432,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                             child: Text(
                               "The Role of creativity in UX design?",
@@ -443,7 +447,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
@@ -458,15 +462,15 @@ class DashboardScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Color(0x343a57e8),
+                              color: const Color(0x343a57e8),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: Text(
+                            child: const Text(
                               "UX",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
@@ -482,20 +486,21 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Color(0x00ffffff),
+                        color: const Color(0x00ffffff),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -511,7 +516,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                             child: Text(
                               "Chap 1",
@@ -526,7 +531,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
@@ -541,15 +546,15 @@ class DashboardScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Color(0x343a57e8),
+                              color: const Color(0x343a57e8),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Story",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
@@ -565,20 +570,21 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Color(0x00ffffff),
+                        color: const Color(0x00ffffff),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -595,7 +601,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                             child: Text(
                               "Chap 2",
@@ -610,7 +616,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
@@ -625,15 +631,15 @@ class DashboardScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Color(0x343a57e8),
+                              color: const Color(0x343a57e8),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Ideas",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
@@ -649,20 +655,21 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Color(0x00ffffff),
+                        color: const Color(0x00ffffff),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -679,7 +686,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                             child: Text(
                               "Web Ideas ",
@@ -694,7 +701,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
@@ -709,15 +716,15 @@ class DashboardScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Color(0x343a57e8),
+                              color: const Color(0x343a57e8),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Ideas",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
@@ -733,20 +740,21 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Color(0x00ffffff),
+                        color: const Color(0x00ffffff),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -763,7 +771,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                             child: Text(
                               "Chap 3 ",
@@ -778,7 +786,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
@@ -793,15 +801,15 @@ class DashboardScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Color(0x343a57e8),
+                              color: const Color(0x343a57e8),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Story",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
@@ -817,20 +825,21 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Color(0x00ffffff),
+                        color: const Color(0x00ffffff),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -847,7 +856,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
                             child: Text(
                               "Web Ideas ",
@@ -862,7 +871,7 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Expanded(
+                          const Expanded(
                             flex: 1,
                             child: Text(
                               "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
@@ -877,15 +886,15 @@ class DashboardScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            padding: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Color(0x343a57e8),
+                              color: const Color(0x343a57e8),
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: Text(
+                            child: const Text(
                               "Ideas",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
@@ -908,15 +917,15 @@ class DashboardScreen extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 16, 16),
-              padding: EdgeInsets.all(0),
+              margin: const EdgeInsets.fromLTRB(0, 0, 16, 16),
+              padding: const EdgeInsets.all(0),
               width: 60,
               height: 60,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xff3a57e8),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.add,
                 color: Color(0xffffffff),
                 size: 24,
