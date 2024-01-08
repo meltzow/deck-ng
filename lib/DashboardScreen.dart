@@ -30,12 +30,17 @@ class DashboardScreen extends StatelessWidget {
             color: Color(0xfff9f9f9),
           ),
         ),
-        actions: const [
-          Icon(Icons.search, color: Color(0xffffffff), size: 22),
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
-            child: Icon(Icons.dashboard, color: Color(0xffffffff), size: 22),
-          ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.refresh,
+              color: Color(0xffffffff),
+              size: 22,
+            ),
+            onPressed: () {
+              controller.refreshData();
+            },
+          )
         ],
       ),
       body: Stack(
