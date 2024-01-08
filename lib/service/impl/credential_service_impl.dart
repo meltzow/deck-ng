@@ -14,7 +14,7 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
     await GetStorage.init();
     _box = GetStorage();
     if (env!.isDev()) {
-      saveCredentials("http://192.168.178.59:8080", "admin", "admin", true);
+      saveCredentials("http://192.168.178.81:8080", "admin", "admin", true);
     }
     return this;
   }
