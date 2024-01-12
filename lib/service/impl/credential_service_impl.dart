@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:get/get.dart';
@@ -12,8 +13,9 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
   Future<ICredentialService> init() async {
     await GetStorage.init();
     _box = GetStorage();
-    //FIXME remove fixed data
-    saveCredentials("http://192.168.178.59:8080", "admin", "admin", true);
+    if (env!.isDev()) {
+      saveCredentials("http://192.168.178.81:8080", "admin", "admin", true);
+    }
     return this;
   }
 
@@ -27,7 +29,7 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
       String url, String username, String password, bool isAuth) async {
     String basicAuth =
         'Basic ${base64.encode(utf8.encode('$username:$password'))}';
-    url = url.endsWith('/') ? url.substring(1) : url;
+    url = url.endsWith('/') ? url.substring(0, url.length - 1) : url;
     var a = Account(
         username: username,
         password: password,
