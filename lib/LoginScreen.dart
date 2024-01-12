@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: controller.urlController,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -88,7 +88,8 @@ class LoginScreen extends StatelessWidget {
                         borderSide: const BorderSide(
                             color: Color(0xff000000), width: 1),
                       ),
-                      hintText: "Enter Text",
+                      hintText: "enter nextcloud server url",
+                      labelText: "Nextcloud server url",
                       hintStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
@@ -109,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: controller.nameController,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -135,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                         borderSide: const BorderSide(
                             color: Color(0xff9e9e9e), width: 1),
                       ),
-                      labelText: "Email",
+                      labelText: "username",
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
@@ -153,7 +154,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 TextField(
-                  controller: TextEditingController(text: "12345678"),
+                  controller: controller.passwordController,
                   obscureText: true,
                   textAlign: TextAlign.start,
                   maxLines: 1,
@@ -214,6 +215,9 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           padding: const EdgeInsets.all(16),
+                          textColor: const Color(0xffffffff),
+                          height: 40,
+                          minWidth: 140,
                           child: const Text(
                             "Login",
                             style: TextStyle(
@@ -222,9 +226,6 @@ class LoginScreen extends StatelessWidget {
                               fontStyle: FontStyle.normal,
                             ),
                           ),
-                          textColor: const Color(0xffffffff),
-                          height: 40,
-                          minWidth: 140,
                         ),
                       ),
                     ],

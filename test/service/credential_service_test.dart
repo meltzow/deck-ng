@@ -45,6 +45,28 @@ void main() {
 
       var savedAccount = await credentialService.getAccount();
       expect(savedAccount.password, account.password);
+      expect(savedAccount.url, 'http://localhost:1234/login');
+    });
+
+    test('remove last "/"  if url ends with it', () async {
+      await Get.putAsync<ICredentialService>(
+          () => CredentialServiceImpl().init());
+      final ICredentialService credentialService =
+          Get.find<ICredentialService>();
+
+      await credentialService.saveCredentials(
+          'http://localhost:1234/login/', 'username', 'password', true);
+
+      var account = Account(
+          username: 'username',
+          password: 'password',
+          authData: '',
+          url: '',
+          isAuthenticated: false);
+
+      var savedAccount = await credentialService.getAccount();
+      expect(savedAccount.password, account.password);
+      expect(savedAccount.url, 'http://localhost:1234/login');
     });
   });
 }

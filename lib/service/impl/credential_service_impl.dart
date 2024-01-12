@@ -29,7 +29,7 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
       String url, String username, String password, bool isAuth) async {
     String basicAuth =
         'Basic ${base64.encode(utf8.encode('$username:$password'))}';
-    url = url.endsWith('/') ? url.substring(1) : url;
+    url = url.endsWith('/') ? url.substring(0, url.length - 1) : url;
     var a = Account(
         username: username,
         password: password,
