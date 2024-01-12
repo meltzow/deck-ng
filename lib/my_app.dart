@@ -1,9 +1,9 @@
 import 'package:catcher/catcher.dart';
 import 'package:deck_ng/DashboardScreen.dart';
-import 'package:deck_ng/LoginScreen.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
+import 'package:deck_ng/screen/LoginScreen.dart';
 import 'package:deck_ng/screen/board_details_screen.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:flutter/material.dart';

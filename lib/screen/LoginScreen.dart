@@ -2,6 +2,7 @@
 
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -45,10 +46,10 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Sign In",
+                    'Sign in ${AppLocalizations.of(context)?.helloWorld}',
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.clip,
                     style: TextStyle(

@@ -1,5 +1,6 @@
 {
   "helloWorld": "Hallo Welt!",
+  "sign_in": "log Dich ein",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   }
