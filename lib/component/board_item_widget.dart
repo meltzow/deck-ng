@@ -16,6 +16,7 @@ class BoardItemWidget extends StatelessWidget {
             title: Text(
               board.title,
             ),
+            subtitle: Text(board.color.toString()),
             onTap: () {
               Get.toNamed(
                 '/boards/details',
@@ -25,7 +26,6 @@ class BoardItemWidget extends StatelessWidget {
           )
         ],
       ),
-
     );
   }
 }

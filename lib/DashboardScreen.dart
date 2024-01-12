@@ -22,7 +22,7 @@ class DashboardScreen extends StatelessWidget {
           borderRadius: BorderRadius.zero,
         ),
         title: const Text(
-          "Home",
+          "Dashboard",
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.normal,
@@ -49,9 +49,39 @@ class DashboardScreen extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
+                Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    child: const Column(children: [
+                      Card(
+                          child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            title: Text('4'),
+                            subtitle: Text('Boards'),
+                          ),
+                        ],
+                      )),
+                      Card(
+                          child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            title: Text('10'),
+                            subtitle: Text('Tasks'),
+                          ),
+                        ],
+                      ))
+                    ])),
                 const Padding(
                   padding: EdgeInsets.all(16),
                   child: Text(
@@ -131,10 +161,9 @@ class DashboardScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Icon(
-                                Icons.push_pin,
-                                color: Color(0xffffc000),
-                                size: 24,
+                              SizedBox(
+                                height: 16,
+                                width: 16,
                               ),
                               Icon(
                                 Icons.more_horiz,
