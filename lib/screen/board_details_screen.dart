@@ -1,10 +1,9 @@
-import 'package:deck_ng/component/drawer_widget.dart';
-import 'package:deck_ng/component/list_view_card_item_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/screen/add_task_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kanban_board/custom/board.dart';
+import 'package:kanban_board/models/inputs.dart';
 
 class BoardDetailsScreen extends StatelessWidget {
   final controller = Get.find<BoardDetailsController>();
@@ -14,8 +13,18 @@ class BoardDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color(0xffffffff),
         appBar: AppBar(
-          title: const Text("Boards details"),
+          backgroundColor: const Color(0xff3a57e8),
+          title: const Text(
+            "Boards details",
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontStyle: FontStyle.normal,
+              fontSize: 20,
+              color: Color(0xfff9f9f9),
+            ),
+          ),
           actions: [
             IconButton(
               onPressed: () {
@@ -37,94 +46,42 @@ class BoardDetailsScreen extends StatelessWidget {
             ),
           ],
         ),
-        drawer: const DrawerWidget(),
-        body: SafeArea(
-          child: Container(
-              color: Colors.lightBlue,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: RefreshIndicator(
-                          onRefresh: controller.refreshData,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30))),
-                            margin: const EdgeInsets.only(top: 25),
-                            child: Obx(() => controller.isLoading.value
-                                ? const Center(child: Text('loading'))
-                                : Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child:
-                                                CupertinoSlidingSegmentedControl(
-                                                    groupValue: controller
-                                                        .selectedStackId,
-                                                    children: controller.myTabs,
-                                                    onValueChanged: (i) {
-                                                      controller
-                                                          .selectStack(i!);
-                                                    }),
-                                          )
-                                        ],
-                                      ),
-                                      Expanded(
-                                        child: GestureDetector(
-                                          onHorizontalDragEnd:
-                                              (DragEndDetails details) {
-                                            if (details.primaryVelocity! > 0) {
-                                              // User swiped Left
-                                              controller.swipeToStack(
-                                                  direction: 'left');
-                                            } else if (details
-                                                    .primaryVelocity! <
-                                                0) {
-                                              // User swiped Right
-                                              controller.swipeToStack(
-                                                  direction: 'right');
-                                            }
-                                          },
-                                          child: ReorderableListView.builder(
-                                            itemCount:
-                                                controller.selectedStackData !=
-                                                        null
-                                                    ? controller
-                                                        .selectedStackData!
-                                                        .cards
-                                                        .length
-                                                    : 0,
-                                            itemBuilder: (context, index) {
-                                              return ListViewCardItem(
-                                                  boardId: controller.boardId,
-                                                  key: Key('$index'),
-                                                  index: index,
-                                                  data: controller
-                                                              .selectedStackData !=
-                                                          null
-                                                      ? controller
-                                                          .selectedStackData!
-                                                          .cards[index]
-                                                      : null);
-                                            },
-                                            onReorder:
-                                                (int oldIndex, int newIndex) {
-                                              controller.reorder(
-                                                  oldIndex, newIndex);
-                                            },
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )),
-                          )))
-                ],
-              )),
-        ));
+        body: RefreshIndicator(
+            onRefresh: controller.refreshData,
+            child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30))),
+                margin: const EdgeInsets.only(top: 25),
+                child: Obx(() => controller.isLoading.value
+                    ? const Center(child: Text('loading'))
+                    : KanbanBoard(
+                        List.generate(
+                          controller.stackData!.length,
+                          (index) => BoardListsData(
+                              title: 'Project $index',
+                              items: List.generate(
+                                50,
+                                (index) => Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(4),
+                                      border: Border.all(
+                                        color: Colors.grey.shade200,
+                                      )),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                      "Lorem ipsum dolor sit amet, sunt in culpa qui officia deserunt mollit anim id est laborum. $index",
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500)),
+                                ),
+                              )),
+                        ),
+                      )))));
   }
 }

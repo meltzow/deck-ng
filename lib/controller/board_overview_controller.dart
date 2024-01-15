@@ -18,6 +18,8 @@ class BoardOverviewController extends GetxController {
   }
 
   Future<void> refreshData() async {
+    isLoading.value = true;
     _boardsData.value = (await _boardRepository.getAllBoards()).obs;
+    isLoading.value = false;
   }
 }

@@ -313,6 +313,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_riverpod:
+    dependency: transitive
+    description:
+      name: flutter_riverpod
+      sha256: da9591d1f8d5881628ccd5c25c40e74fc3eef50ba45e40c3905a06e1712412d5
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.9"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -461,6 +469,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.7.1"
+  kanban_board:
+    dependency: "direct main"
+    description:
+      name: kanban_board
+      sha256: "7891794411bed70bb853256a1b0793d6bb031b7b3c9c914133caf5b22e9475bf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   lints:
     dependency: transitive
     description:
@@ -709,14 +725,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
-  pub_cache:
-    dependency: transitive
-    description:
-      name: pub_cache
-      sha256: "6dda58dc069d153b7373977244ee6da4e6cb726c6e50903c1c4f278d0c111db5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.2"
   pub_semver:
     dependency: transitive
     description:
@@ -733,23 +741,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  resource_portable:
+  riverpod:
     dependency: transitive
     description:
-      name: resource_portable
-      sha256: "76af61ea5af4719f0a5a9776dddb7bc61e0a85fa5b7978423cc20566f2f97b53"
+      name: riverpod
+      sha256: "942999ee48b899f8a46a860f1e13cee36f2f77609eb54c5b7a669bb20d550b11"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
-  screenshots:
-    dependency: "direct dev"
-    description:
-      path: "."
-      ref: master
-      resolved-ref: d6b14d7253e41a916f7caec3c2a781261b6b7013
-      url: "https://github.com/meltzow/screenshots.git"
-    source: git
-    version: "3.0.1"
+    version: "2.4.9"
   sentry:
     dependency: transitive
     description:
@@ -851,6 +850,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.1"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      sha256: b8677376aa54f2d7c58280d5a007f9e8774f1968d1fb1c096adcb4792fba29bb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   stream_channel:
     dependency: transitive
     description:
@@ -923,24 +930,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  tool_base:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "8ce712f94f06d35bf7063233b0234d05ef4e6989"
-      url: "https://github.com/felixgabler/tool_base.git"
-    source: git
-    version: "2.0.0"
-  tool_mobile:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: e9535137f49dc423467756df4668842573656058
-      url: "https://github.com/felixgabler/tool_mobile.git"
-    source: git
-    version: "1.9.5+1"
   typed_data:
     dependency: transitive
     description:

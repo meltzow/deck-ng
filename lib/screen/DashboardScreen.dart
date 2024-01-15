@@ -106,20 +106,22 @@ class DashboardScreen extends StatelessWidget {
                     borderRadius: BorderRadius.zero,
                   ),
                   child: Obx(
-                    () => GridView.builder(
-                      itemCount: controller.boardDataCount,
-                      itemBuilder: (context, index) {
-                        return BoardItemWidget(
-                            board: controller.boardData[index]);
-                      },
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: 0.6,
-                      ),
-                    ),
+                    () => controller.isLoading.value
+                        ? const Center(child: Text('loading'))
+                        : GridView.builder(
+                            itemCount: controller.boardDataCount,
+                            itemBuilder: (context, index) {
+                              return BoardItemWidget(
+                                  board: controller.boardData[index]);
+                            },
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              childAspectRatio: 0.6,
+                            ),
+                          ),
                   ),
                 ),
               ],
