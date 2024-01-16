@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:kanban_board/custom/board.dart';
 import 'package:kanban_board/models/inputs.dart';
 
-class BoardDetailsScreen extends StatelessWidget {
+class KanbanBoardScreen extends StatelessWidget {
   final controller = Get.find<BoardDetailsController>();
 
-  BoardDetailsScreen({super.key});
+  KanbanBoardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +60,11 @@ class BoardDetailsScreen extends StatelessWidget {
                     ? const Center(child: Text('loading'))
                     : KanbanBoard(
                         List.generate(
-                          controller.stackData!.length,
-                          (index) => BoardListsData(
-                              title: 'Project $index',
+                          controller.stackData.length,
+                          (stackIndex) => BoardListsData(
+                              title: controller.stackData[stackIndex].title,
                               items: List.generate(
-                                50,
+                                10,
                                 (index) => Container(
                                   decoration: BoxDecoration(
                                       color: Colors.white,
@@ -82,6 +82,13 @@ class BoardDetailsScreen extends StatelessWidget {
                                 ),
                               )),
                         ),
+                        backgroundColor: Colors.white,
+                        displacementY: 124,
+                        displacementX: 100,
+                        textStyle: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500),
                       )))));
   }
 }

@@ -40,7 +40,7 @@ class BoardDetailsController extends GetxController {
   @visibleForTesting
   set boardId(int value) => _boardId = value;
 
-  List<NC.Stack>? get stackData => _stackData.value;
+  List<NC.Stack> get stackData => _stackData.value;
 
   @override
   void onReady() async {
