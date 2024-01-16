@@ -62,10 +62,12 @@ class KanbanBoardScreen extends StatelessWidget {
                         List.generate(
                           controller.stackData.length,
                           (stackIndex) => BoardListsData(
+                              // header: Container(),
+                              footer: Container(),
                               title: controller.stackData[stackIndex].title,
                               items: List.generate(
-                                10,
-                                (index) => Container(
+                                controller.stackData[stackIndex].cards.length,
+                                (cardIndex) => Container(
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(4),
@@ -74,7 +76,8 @@ class KanbanBoardScreen extends StatelessWidget {
                                       )),
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                      "Lorem ipsum dolor sit amet, sunt in culpa qui officia deserunt mollit anim id est laborum. $index",
+                                      controller.stackData[stackIndex]
+                                          .cards[cardIndex].title,
                                       style: const TextStyle(
                                           fontSize: 16,
                                           color: Colors.black,
@@ -83,8 +86,8 @@ class KanbanBoardScreen extends StatelessWidget {
                               )),
                         ),
                         backgroundColor: Colors.white,
-                        displacementY: 124,
-                        displacementX: 100,
+                        displacementY: 400,
+                        displacementX: 400,
                         textStyle: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,

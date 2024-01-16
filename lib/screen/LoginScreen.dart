@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 ///***If you have exported images you must have to copy those images in assets/images directory.
                 const Image(
-                  image: AssetImage("assets/images/albums-outline.png"),
+                  image: AssetImage("assets/images/icon.png"),
                   height: 90,
                   width: 90,
                   fit: BoxFit.cover,

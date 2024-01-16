@@ -51,8 +51,8 @@ dependencies:
   url_launcher: ^6.1.11
   local_auth: ^2.1.6
   flutter_launcher_icons: ^0.13.1
-  kanban_board: ^0.1.0
-
+  kanban_board:
+    path: ./FlutterKanbanBoard
 
 dev_dependencies:
   flutter_test:
@@ -66,13 +66,13 @@ dev_dependencies:
 #    git:
 #      url: https://github.com/meltzow/screenshots.git
 #      ref: master
-  http_mock_adapter: ^0.4.4
+  http_mock_adapter: ^0.6.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   json_serializable: any
 
 flutter_launcher_icons:
