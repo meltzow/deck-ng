@@ -8,11 +8,10 @@ class ListViewCardItem extends StatelessWidget {
   final int boardId;
 
   const ListViewCardItem(
-      {Key? key,
+      {super.key,
       required this.data,
       required this.index,
-      required this.boardId})
-      : super(key: key);
+      required this.boardId});
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:deck_ng/component/list_view_card_item_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/screen/add_task_widget.dart';
 import 'package:flutter/material.dart';
@@ -75,13 +76,19 @@ class KanbanBoardScreen extends StatelessWidget {
                                         color: Colors.grey.shade200,
                                       )),
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                      controller.stackData[stackIndex]
-                                          .cards[cardIndex].title,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500)),
+                                  child: ListViewCardItem(
+                                      data: controller.stackData[stackIndex]
+                                          .cards[cardIndex],
+                                      index: cardIndex,
+                                      boardId: controller.boardId),
+                                  //
+                                  // Text(
+                                  //     controller.stackData[stackIndex]
+                                  //         .cards[cardIndex].title,
+                                  //     style: const TextStyle(
+                                  //         fontSize: 16,
+                                  //         color: Colors.black,
+                                  //         fontWeight: FontWeight.w500)),
                                 ),
                               )),
                         ),
