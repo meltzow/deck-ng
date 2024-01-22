@@ -20,8 +20,8 @@ class CardDetailsController extends GetxController {
   late RxString descriptionControllerText = 'Initial Text'.obs;
   late RxString titleControllerText = 'Initial Text'.obs;
 
-  late final Rxn<Card> _cardData = Rxn<Card>();
-  late final Rxn<Board> _boardData = Rxn<Board>();
+  final Rxn<Card> _cardData = Rxn<Card>();
+  final Rxn<Board> _boardData = Rxn<Board>();
 
   final ICardService _cardService = Get.find<ICardService>();
   final IBoardService _boardService = Get.find<IBoardService>();
@@ -48,13 +48,6 @@ class CardDetailsController extends GetxController {
     _stackId.value = Get.arguments['stackId'] as int;
     _cardId.value = Get.arguments['cardId'] as int;
     await refreshData();
-    descriptionControllerText.value =
-        _cardData.value?.description ?? 'Initial Text';
-    titleControllerText.value = _cardData.value!.title;
-    _descriptionEditingController =
-        TextEditingController(text: descriptionControllerText.value);
-    _titleEditingController =
-        TextEditingController(text: titleControllerText.value);
   }
 
   Future<void> refreshData() async {
@@ -62,6 +55,13 @@ class CardDetailsController extends GetxController {
     _cardData.value = await _cardService.getCard(
         _boardId.value!, _stackId.value!, _cardId.value!);
     _boardData.value = await _boardService.getBoard(_boardId.value!);
+    descriptionControllerText.value =
+        _cardData.value?.description ?? 'Initial Text';
+    titleControllerText.value = _cardData.value!.title;
+    _descriptionEditingController =
+        TextEditingController(text: descriptionControllerText.value);
+    _titleEditingController =
+        TextEditingController(text: titleControllerText.value);
     isLoading.value = false;
   }
 

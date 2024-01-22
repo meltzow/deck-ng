@@ -17,7 +17,7 @@ import 'package:meta/meta.dart';
 enum BuildFlavor { production, development, staging, testing }
 
 class Environment {
-  static late final  BuildFlavor flavor;
+  static late final BuildFlavor flavor;
 
   static Future<void> init({@required flavor}) async {
     Environment.flavor = flavor;
@@ -29,10 +29,15 @@ class Environment {
   }
 
   static Future<void> initServices() async {
-    await Get.putAsync<ICredentialService>(() => CredentialServiceImpl().init());
+    await Get.putAsync<ICredentialService>(
+        () => CredentialServiceImpl().init());
 
     if (Environment.isDev()) {
-      Get.find<ICredentialService>().saveCredentials("http://192.168.178.49:8080", "admin", "admin", true);
+      ICredentialService service = Get.find<ICredentialService>();
+      if (!service.hasAccount()) {
+        service.saveCredentials(
+            "http://192.168.178.49:8080", "admin", "admin", true);
+      }
     }
     Get.lazyPut<IHttpService>(() => HttpService());
     Get.lazyPut<IAuthService>(() => AuthRepositoryImpl());
