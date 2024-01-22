@@ -13,9 +13,7 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
   Future<ICredentialService> init() async {
     await GetStorage.init();
     _box = GetStorage();
-    if (env.isDev()) {
-      saveCredentials("http://192.168.178.81:8080", "admin", "admin", true);
-    }
+    _box.write(keyUser, {} as Map<String, dynamic>);
     return this;
   }
 

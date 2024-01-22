@@ -16,28 +16,24 @@ import 'package:meta/meta.dart';
 
 enum BuildFlavor { production, development, staging, testing }
 
-BuildEnvironment get env => _env;
-late BuildEnvironment _env;
+class Environment {
+  static late final  BuildFlavor flavor;
 
-class BuildEnvironment {
-  final BuildFlavor flavor;
-
-  BuildEnvironment._init({required this.flavor});
-
-  /// Sets up the top-level [env] getter on the first call only.
   static Future<void> init({@required flavor}) async {
-    BuildEnvironment._init(flavor: flavor);
-
-    initServices();
+    Environment.flavor = flavor;
+    await initServices();
   }
 
-  bool isDev() {
+  static bool isDev() {
     return flavor == BuildFlavor.development;
   }
 
   static Future<void> initServices() async {
-    await Get.putAsync<ICredentialService>(
-        () => CredentialServiceImpl().init());
+    await Get.putAsync<ICredentialService>(() => CredentialServiceImpl().init());
+
+    if (Environment.isDev()) {
+      Get.find<ICredentialService>().saveCredentials("http://192.168.178.49:8080", "admin", "admin", true);
+    }
     Get.lazyPut<IHttpService>(() => HttpService());
     Get.lazyPut<IAuthService>(() => AuthRepositoryImpl());
     Get.lazyPut<IBoardService>(() => BoardRepositoryImpl());
