@@ -1,11 +1,11 @@
-import 'package:catcher/catcher.dart';
-import 'package:deck_ng/DashboardScreen.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
+import 'package:deck_ng/screen/DashboardScreen.dart';
 import 'package:deck_ng/screen/LoginScreen.dart';
-import 'package:deck_ng/screen/board_details_screen.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
+import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: debugShowCheckedModeBanner,
-      navigatorKey: Catcher.navigatorKey,
+      navigatorKey: Catcher2.navigatorKey,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       title: 'deck NG',
@@ -33,13 +33,13 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
             name: '/',
-            page: () => DashboardScreen(),
+            page: () => const DashboardScreen(),
             binding: BindingsBuilder(() {
               Get.put<BoardOverviewController>(BoardOverviewController());
             })),
         GetPage(
           name: '/boards/details',
-          page: () => BoardDetailsScreen(),
+          page: () => KanbanBoardScreen(),
           binding: BindingsBuilder(() {
             Get.lazyPut<BoardDetailsController>(() => BoardDetailsController());
           }),
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/auth/login',
-          page: () => LoginScreen(),
+          page: () => const LoginScreen(),
         ),
       ],
     );

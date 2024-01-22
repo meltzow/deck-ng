@@ -1,25 +1,32 @@
 import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/model/card.dart';
+import 'package:deck_ng/model/stack.dart';
 import 'package:deck_ng/my_app.dart';
+import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:screenshots/screenshots.dart';
 
 import './Localization.dart';
-import '../test/service/board_service_test.mocks.dart';
+import 'board_overview_test.mocks.dart';
 
-@GenerateMocks([IHttpService])
+@GenerateMocks([IHttpService, ICredentialService])
 void main() {
   late IHttpService httpServiceMock;
+  late ICredentialService credentialServiceMock;
+
   final IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    await initServices();
+    Environment.init(flavor: BuildFlavor.testing);
+    Get.replace<ICredentialService>(MockICredentialService());
+    credentialServiceMock = Get.find<ICredentialService>();
+
     Get.replace<IHttpService>(MockIHttpService());
     httpServiceMock = Get.find<IHttpService>();
 
@@ -36,7 +43,8 @@ void main() {
     Get.toNamed('/boards');
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
-    await screenshot(binding, tester, lo.localeName, 'board-overview',
-        silent: false);
+    //FIXME
+    // await screenshot(binding, tester, lo.localeName, 'board-overview',
+    //     silent: false);
   });
 }

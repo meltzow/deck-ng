@@ -8,8 +8,8 @@ class BoardOverviewController extends GetxController {
 
   final IBoardService _boardRepository = Get.find<IBoardService>();
 
-  List<Board> get boardData => _boardsData.value ?? [];
-  int get boardDataCount => _boardsData.value.length ?? 0;
+  List<Board> get boardData => _boardsData.value;
+  int get boardDataCount => _boardsData.value.length;
 
   @override
   void onReady() async {
@@ -18,6 +18,8 @@ class BoardOverviewController extends GetxController {
   }
 
   Future<void> refreshData() async {
+    isLoading.value = true;
     _boardsData.value = (await _boardRepository.getAllBoards()).obs;
+    isLoading.value = false;
   }
 }

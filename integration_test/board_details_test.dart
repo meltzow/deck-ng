@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:screenshots/screenshots.dart';
 
 import '../test/service/board_service_test.mocks.dart';
 import 'Localization.dart';
@@ -20,7 +19,8 @@ void main() {
   final IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUp(() async {
-    await initServices();
+    Environment.init(flavor: BuildFlavor.testing);
+
     Get.replace<IHttpService>(MockIHttpService());
     httpServiceMock = Get.find<IHttpService>();
 
@@ -47,7 +47,8 @@ void main() {
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
 
-    await screenshot(binding, tester, lo.localeName, 'board-details',
-        silent: false);
+    //FIXME
+    // await screenshot(binding, tester, lo.localeName, 'board-details',
+    //     silent: false);
   });
 }

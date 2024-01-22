@@ -20,7 +20,7 @@ void main() {
   group('credentialServiceGroup', () {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
-      BuildEnvironment.init(flavor: BuildFlavor.staging);
+      Environment.init(flavor: BuildFlavor.staging);
     });
 
     setUp(() {

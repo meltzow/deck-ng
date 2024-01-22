@@ -14,33 +14,31 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 
-enum BuildFlavor { production, development, staging }
+enum BuildFlavor { production, development, staging, testing }
 
-BuildEnvironment? get env => _env;
-BuildEnvironment? _env;
+class Environment {
+  static late final  BuildFlavor flavor;
 
-class BuildEnvironment {
-  final BuildFlavor flavor;
+  static Future<void> init({@required flavor}) async {
+    Environment.flavor = flavor;
+    await initServices();
+  }
 
-  BuildEnvironment._init({required this.flavor});
-
-  /// Sets up the top-level [env] getter on the first call only.
-  static void init({@required flavor}) =>
-      _env ??= BuildEnvironment._init(flavor: flavor);
-
-  bool isDev() {
+  static bool isDev() {
     return flavor == BuildFlavor.development;
   }
-}
 
-Future<void> initServices() async {
-  print('starting services ...');
+  static Future<void> initServices() async {
+    await Get.putAsync<ICredentialService>(() => CredentialServiceImpl().init());
 
-  await Get.putAsync<ICredentialService>(() => CredentialServiceImpl().init());
-  Get.lazyPut<IHttpService>(() => HttpService());
-  Get.lazyPut<IAuthService>(() => AuthRepositoryImpl());
-  Get.lazyPut<IBoardService>(() => BoardRepositoryImpl());
-  Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-  Get.lazyPut<Dio>(() => Dio());
-  Get.lazyPut<ICardService>(() => CardServiceImpl());
+    if (Environment.isDev()) {
+      Get.find<ICredentialService>().saveCredentials("http://192.168.178.49:8080", "admin", "admin", true);
+    }
+    Get.lazyPut<IHttpService>(() => HttpService());
+    Get.lazyPut<IAuthService>(() => AuthRepositoryImpl());
+    Get.lazyPut<IBoardService>(() => BoardRepositoryImpl());
+    Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+    Get.lazyPut<Dio>(() => Dio());
+    Get.lazyPut<ICardService>(() => CardServiceImpl());
+  }
 }

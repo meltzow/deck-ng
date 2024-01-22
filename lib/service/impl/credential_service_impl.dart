@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:get/get.dart';
@@ -13,15 +12,13 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
   Future<ICredentialService> init() async {
     await GetStorage.init();
     _box = GetStorage();
-    if (env!.isDev()) {
-      saveCredentials("http://192.168.178.81:8080", "admin", "admin", true);
-    }
+    _box.write(keyUser, {'foo': 'bar'});
     return this;
   }
 
   @override
   Future<Account> getAccount() async {
-    return Account.fromJson(_box.read(keyUser)!);
+    return Account.fromJson(_box.read(keyUser));
   }
 
   @override
