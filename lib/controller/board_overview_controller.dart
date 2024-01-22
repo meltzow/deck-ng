@@ -8,8 +8,8 @@ class BoardOverviewController extends GetxController {
 
   final IBoardService _boardRepository = Get.find<IBoardService>();
 
-  List<Board> get boardData => _boardsData.value ?? [];
-  int get boardDataCount => _boardsData.value.length ?? 0;
+  List<Board> get boardData => _boardsData.value;
+  int get boardDataCount => _boardsData.value.length;
 
   @override
   void onReady() async {

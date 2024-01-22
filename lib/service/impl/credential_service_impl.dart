@@ -13,7 +13,7 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
   Future<ICredentialService> init() async {
     await GetStorage.init();
     _box = GetStorage();
-    if (env!.isDev()) {
+    if (env.isDev()) {
       saveCredentials("http://192.168.178.81:8080", "admin", "admin", true);
     }
     return this;
@@ -21,7 +21,7 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
 
   @override
   Future<Account> getAccount() async {
-    return Account.fromJson(_box.read(keyUser)!);
+    return Account.fromJson(_box.read(keyUser));
   }
 
   @override

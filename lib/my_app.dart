@@ -4,7 +4,7 @@ import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/screen/DashboardScreen.dart';
 import 'package:deck_ng/screen/LoginScreen.dart';
-import 'package:deck_ng/screen/card_details_screen.dart';
+import 'package:deck_ng/screen/SettingScreen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/cards/details',
-          page: () => CardDetailsScreen(),
+          page: () => const SettingScreen(),
           binding: BindingsBuilder(() {
             Get.lazyPut<CardDetailsController>(() => CardDetailsController());
           }),

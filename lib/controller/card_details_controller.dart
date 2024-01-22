@@ -60,7 +60,7 @@ class CardDetailsController extends GetxController {
   Future<void> refreshData() async {
     isLoading.value = true;
     _cardData.value = await _cardService.getCard(
-        _boardId!.value!, _stackId!.value!, _cardId!.value!);
+        _boardId.value!, _stackId.value!, _cardId.value!);
     _boardData.value = await _boardService.getBoard(_boardId.value!);
     isLoading.value = false;
   }

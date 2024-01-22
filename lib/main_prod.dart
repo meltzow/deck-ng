@@ -7,9 +7,6 @@ Future<void> main() async {
   BuildEnvironment.init(flavor: BuildFlavor.production);
   assert(env != null);
 
-  await initServices();
-  // runApp(const MyApp());
-
   var snackHandler = SnackbarHandler(
     const Duration(seconds: 5),
     backgroundColor: Colors.red,
