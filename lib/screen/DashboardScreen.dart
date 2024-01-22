@@ -1,35 +1,21 @@
 import 'package:deck_ng/component/board_item_widget.dart';
+import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  final BoardOverviewController controller =
+      Get.put<BoardOverviewController>(BoardOverviewController());
+
+  DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final BoardOverviewController controller =
-        Get.put<BoardOverviewController>(BoardOverviewController());
-
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: AppBar(
-        elevation: 4,
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xff3a57e8),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-        ),
-        title: const Text(
-          "Dashboard",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontStyle: FontStyle.normal,
-            fontSize: 20,
-            color: Color(0xfff9f9f9),
-          ),
-        ),
+      appBar: MyAppBar(
+        title: "Dashboard",
         actions: [
           IconButton(
             icon: const Icon(
@@ -56,7 +42,7 @@ class DashboardScreen extends StatelessWidget {
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
-                      color: Color(0xffffffff),
+                      color: Color(0x00000000),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.zero,
                     ),

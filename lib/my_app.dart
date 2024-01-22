@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
             name: '/',
-            page: () => const DashboardScreen(),
+            page: () => DashboardScreen(),
             binding: BindingsBuilder(() {
               Get.put<BoardOverviewController>(BoardOverviewController());
             })),

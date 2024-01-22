@@ -1,4 +1,5 @@
 import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,9 +13,8 @@ class CardDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: const Text("Card details"),
+        appBar: MyAppBar(
+          title: "Card details",
         ),
         drawer: const DrawerWidget(),
         body: SafeArea(
