@@ -1,7 +1,6 @@
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:local_auth/local_auth.dart';
 
 class LoginController extends GetxController {
   final RxBool isLoading = RxBool(true);
@@ -11,13 +10,6 @@ class LoginController extends GetxController {
   var passwordController = TextEditingController();
   RxString urlControllerText = ''.obs;
   var urlController = TextEditingController();
-
-  final LocalAuthentication auth = LocalAuthentication();
-  Rx<_SupportState> _supportState = _SupportState.unknown.obs;
-  Rx<bool>? _canCheckBiometrics;
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = 'Not Authorized';
-  Rx<bool> _isAuthenticating = Rx(false);
 
   @override
   void onInit() {
@@ -46,12 +38,6 @@ class LoginController extends GetxController {
     // }, time: Duration(seconds: 1));
 
     super.onInit();
-
-    auth.isDeviceSupported().then(
-          (bool isSupported) => _supportState = isSupported
-              ? _SupportState.supported.obs
-              : _SupportState.unsupported.obs,
-        );
   }
 
   @override

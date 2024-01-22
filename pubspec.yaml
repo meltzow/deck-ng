@@ -41,18 +41,14 @@ dependencies:
   path_provider: ^2.0.15
   flutter_localizations:
     sdk: flutter
-  intl: any
-  catcher:
-    git:
-      url: https://github.com/Frank292/catcher.git
-      ref: master
+  intl: ^0.18.0
   multi_select_flutter: ^4.1.3
   json_annotation: ^4.8.1
   url_launcher: ^6.1.11
-  local_auth: ^2.1.6
   flutter_launcher_icons: ^0.13.1
   kanban_board:
     path: ./FlutterKanbanBoard
+  catcher_2: ^1.0.7
 
 dev_dependencies:
   flutter_test:

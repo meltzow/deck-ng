@@ -113,15 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.8.1"
-  catcher:
+  catcher_2:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: d55cd8b75d284ae57731325b76d352e2aa2572e9
-      url: "https://github.com/Frank292/catcher.git"
-    source: git
-    version: "0.7.0"
+      name: catcher_2
+      sha256: "1f0f94b263124b4c27e60f6d1ba8d8ba9306f68e39e1bda892239c3f29dfc2ec"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.7"
   characters:
     dependency: transitive
     description:
@@ -313,14 +312,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      sha256: b068ffc46f82a55844acfa4fdbb61fad72fa2aef0905548419d97f0f95c456da
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.17"
   flutter_riverpod:
     dependency: transitive
     description:
@@ -396,10 +387,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: d4872660c46d929f6b8a9ef4e7a7eff7e49bbf0c4ec3f385ee32df5119175139
+      sha256: a2bbf9d017fcced29139daa8ed2bba4ece450ab222871df93ca9eec6f80c34ba
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.2"
+    version: "1.2.0"
   http_mock_adapter:
     dependency: "direct dev"
     description:
@@ -492,46 +483,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  local_auth:
-    dependency: "direct main"
-    description:
-      name: local_auth
-      sha256: "27679ed8e0d7daab2357db6bb7076359e083a56b295c0c59723845301da6aed9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.8"
-  local_auth_android:
-    dependency: transitive
-    description:
-      name: local_auth_android
-      sha256: "54e9c35ce52c06333355ab0d0f41e4c06dbca354b23426765ba41dfb1de27598"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.36"
-  local_auth_ios:
-    dependency: transitive
-    description:
-      name: local_auth_ios
-      sha256: eb283b530029b334698918f1e282d4483737cbca972ff21b9193be3d6de8e2b8
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.6"
-  local_auth_platform_interface:
-    dependency: transitive
-    description:
-      name: local_auth_platform_interface
-      sha256: "1b842ff177a7068442eae093b64abe3592f816afd2a533c0ebcdbe40f9d2075a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.10"
-  local_auth_windows:
-    dependency: transitive
-    description:
-      name: local_auth_windows
-      sha256: "505ba3367ca781efb1c50d3132e44a2446bccc4163427bc203b9b4d8994d97ea"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.10"
   logger:
     dependency: transitive
     description:
@@ -624,10 +575,10 @@ packages:
     dependency: transitive
     description:
       name: package_info_plus
-      sha256: "7e76fad405b3e4016cd39d08f455a4eb5199723cf594cd1b8916d47140d93017"
+      sha256: "88bc797f44a94814f2213db1c9bd5badebafdfb8290ca9f78d4b9ee2a3db4d79"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "5.0.1"
   package_info_plus_platform_interface:
     dependency: transitive
     description:

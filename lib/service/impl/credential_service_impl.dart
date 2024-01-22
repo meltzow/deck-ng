@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,7 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
   Future<ICredentialService> init() async {
     await GetStorage.init();
     _box = GetStorage();
-    _box.write(keyUser, {} as Map<String, dynamic>);
+    _box.write(keyUser, {'foo': 'bar'});
     return this;
   }
 

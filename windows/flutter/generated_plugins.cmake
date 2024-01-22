@@ -3,8 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  catcher
-  local_auth_windows
   url_launcher_windows
 )
 
