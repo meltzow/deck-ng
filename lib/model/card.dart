@@ -27,7 +27,7 @@ class Card {
   int? overdue;
   late User? owner;
   int? stackId;
-  final String title;
+  String title;
   String type;
 
   Card(

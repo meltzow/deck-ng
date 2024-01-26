@@ -16,7 +16,7 @@ class CardDetailsController extends GetxController {
   RxBool isDescriptionEditing = RxBool(false);
   RxBool isTitleEditing = RxBool(false);
   late TextEditingController _descriptionEditingController;
-  late TextEditingController _titleEditingController;
+  TextEditingController _titleEditingController = TextEditingController();
   late RxString descriptionControllerText = 'Initial Text'.obs;
   late RxString titleControllerText = 'Initial Text'.obs;
 
@@ -29,7 +29,7 @@ class CardDetailsController extends GetxController {
   Card? get cardData => _cardData.value;
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;
-  TextEditingController? get titleController => _titleEditingController;
+  TextEditingController get titleController => _titleEditingController;
 
   List<Label>? get allLabel => _boardData.value?.labels;
 
@@ -38,6 +38,15 @@ class CardDetailsController extends GetxController {
     _descriptionEditingController.dispose();
     _titleEditingController.dispose();
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    _titleEditingController.addListener(() {
+      titleControllerText.value = _titleEditingController.text;
+    });
+
+    super.onInit();
   }
 
   @override
@@ -60,9 +69,15 @@ class CardDetailsController extends GetxController {
     titleControllerText.value = _cardData.value!.title;
     _descriptionEditingController =
         TextEditingController(text: descriptionControllerText.value);
-    _titleEditingController =
-        TextEditingController(text: titleControllerText.value);
+    _titleEditingController.text = titleControllerText.value;
     isLoading.value = false;
+  }
+
+  saveCard() {
+    _cardData.value!.title = titleControllerText.value;
+
+    _cardService.updateCard(
+        _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value!);
   }
 
   saveLabels(List<Label> newLabels) async {

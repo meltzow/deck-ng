@@ -75,7 +75,7 @@ class BoardDetailsController extends GetxController {
     _cardService.createCard(boardId, _selectedStackId.value!, title);
   }
 
-  void reorder(int oldIndex, int newIndex) {
+  void reorder(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
@@ -84,6 +84,9 @@ class BoardDetailsController extends GetxController {
 
     selectedStackData!.cards.insert(newIndex, item);
     item.order = orderFromOldIndex! + 1;
-    _cardService.updateCard(_boardId, _selectedStackId.value!, item.id!, item);
+    try {
+      var card = await _cardService.updateCard(
+          _boardId, _selectedStackId.value!, item.id!, item);
+    } catch (e) {}
   }
 }

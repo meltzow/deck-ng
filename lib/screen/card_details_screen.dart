@@ -24,6 +24,16 @@ class CardDetailsScreen extends StatelessWidget {
               onPressed: () {
                 controller.refreshData();
               },
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.save,
+                color: Color(0xffffffff),
+                size: 22,
+              ),
+              onPressed: () {
+                controller.saveCard();
+              },
             )
           ],
         ),
@@ -91,23 +101,51 @@ class CardDetailsScreen extends StatelessWidget {
                                       const EdgeInsets.fromLTRB(0, 30, 0, 0),
                                   child: ListTile(
                                     tileColor: const Color(0x00ffffff),
-                                    title: const Text(
-                                      "Title",
-                                      style: TextStyle(
+                                    title: TextField(
+                                      controller: controller.titleController,
+                                      decoration: InputDecoration(
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: const BorderSide(
+                                              color: Color(0xff9e9e9e),
+                                              width: 1),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: const BorderSide(
+                                              color: Color(0xff9e9e9e),
+                                              width: 1),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          borderSide: const BorderSide(
+                                              color: Color(0xff9e9e9e),
+                                              width: 1),
+                                        ),
+                                        labelText: "Title",
+                                        labelStyle: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 16,
+                                          color: Color(0xff9e9e9e),
+                                        ),
+                                        filled: true,
+                                        fillColor: const Color(0xffffffff),
+                                        isDense: false,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 12),
+                                        prefixIcon: const Icon(Icons.person,
+                                            color: Color(0xff212435), size: 24),
+                                      ),
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontStyle: FontStyle.normal,
                                         fontSize: 14,
                                         color: Color(0xff424141),
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                    subtitle: Text(
-                                      controller.titleControllerText.value,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 16,
-                                        color: Color(0xff000000),
                                       ),
                                       textAlign: TextAlign.start,
                                     ),
@@ -120,8 +158,6 @@ class CardDetailsScreen extends StatelessWidget {
                                     ),
                                     leading: const Icon(Icons.title,
                                         color: Color(0xff3a57e8), size: 24),
-                                    trailing: const Icon(Icons.edit,
-                                        color: Color(0xff79797c), size: 22),
                                   ),
                                 ),
                                 const Divider(
@@ -132,8 +168,8 @@ class CardDetailsScreen extends StatelessWidget {
                                   endIndent: 0,
                                 ),
                                 ListTile(
-                                  tileColor: Color(0x00ffffff),
-                                  title: Text(
+                                  tileColor: const Color(0x00ffffff),
+                                  title: const Text(
                                     "Description",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w400,
@@ -143,29 +179,23 @@ class CardDetailsScreen extends StatelessWidget {
                                     ),
                                     textAlign: TextAlign.start,
                                   ),
-                                  subtitle: Text(
-                                    controller.descriptionControllerText.value,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 16,
-                                      color: Color(0xff000000),
-                                    ),
-                                    textAlign: TextAlign.start,
-                                  ),
+                                  subtitle: _editTitleTextField(
+                                      controller.isDescriptionEditing,
+                                      controller.descriptionControllerText,
+                                      controller.descriptionEditingController!),
                                   dense: true,
-                                  contentPadding: EdgeInsets.all(0),
+                                  contentPadding: const EdgeInsets.all(0),
                                   selected: false,
-                                  selectedTileColor: Color(0x42000000),
-                                  shape: RoundedRectangleBorder(
+                                  selectedTileColor: const Color(0x42000000),
+                                  shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.zero,
                                   ),
-                                  leading: Icon(Icons.subtitles,
+                                  leading: const Icon(Icons.subtitles,
                                       color: Color(0xff3a57e8), size: 24),
-                                  trailing: Icon(Icons.edit,
+                                  trailing: const Icon(Icons.edit,
                                       color: Color(0xff79797c), size: 22),
                                 ),
-                                Divider(
+                                const Divider(
                                   color: Color(0xffdddddd),
                                   height: 20,
                                   thickness: 0,
@@ -175,17 +205,6 @@ class CardDetailsScreen extends StatelessWidget {
                                 Card(
                                   child: Column(
                                     children: <Widget>[
-                                      ListTile(
-                                          title: _editTitleTextField(
-                                              controller.isTitleEditing,
-                                              controller.titleControllerText,
-                                              controller.titleController!),
-                                          subtitle: _editTitleTextField(
-                                              controller.isDescriptionEditing,
-                                              controller
-                                                  .descriptionControllerText,
-                                              controller
-                                                  .descriptionEditingController!)),
                                       Row(
                                         children: [
                                           Expanded(
@@ -218,6 +237,7 @@ class CardDetailsScreen extends StatelessWidget {
       TextEditingController editingController) {
     if (isEditingField.value) {
       return Center(
+          child: Focus(
         child: TextField(
           onSubmitted: (newValue) {
             isEditingText.value = newValue;
@@ -226,7 +246,10 @@ class CardDetailsScreen extends StatelessWidget {
           autofocus: true,
           controller: editingController,
         ),
-      );
+        onFocusChange: (hasFocus) {
+          isEditingField.value = hasFocus;
+        },
+      ));
     }
     return InkWell(
         splashColor: Colors.blue.withAlpha(30),
