@@ -21,3 +21,9 @@ samples, guidance on mobile development, and a full API reference.
 * screenshots --config=<screenshots.yaml>
 
 * dart run build_runner watch --delete-conflicting-outputs
+
+## documentation:
+* https://github.com/nextcloud/deck/blob/master/docs/API.md
+* https://github.com/nextcloud/deck/blob/master/docs/API-Nextcloud.md
+* https://docs.nextcloud.com/server/latest/developer_manual/client_apis/LoginFlow/index.html
+* https://docs.nextcloud.com/server/latest/developer_manual/digging_deeper/rest_apis.html

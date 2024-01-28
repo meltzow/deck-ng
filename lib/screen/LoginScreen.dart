@@ -1,20 +1,18 @@
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final LoginController controller =
+      Get.put<LoginController>(LoginController());
+
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final LoginController controller =
-        Get.put<LoginController>(LoginController());
-
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Align(
         alignment: Alignment.center,
         child: Padding(
@@ -63,6 +61,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
+                    focusNode: controller.focusNode,
                     controller: controller.urlController,
                     obscureText: false,
                     textAlign: TextAlign.start,
@@ -89,8 +88,8 @@ class LoginScreen extends StatelessWidget {
                         borderSide: const BorderSide(
                             color: Color(0xff000000), width: 1),
                       ),
-                      hintText: "enter nextcloud server url",
-                      labelText: "Nextcloud server url",
+                      hintText: "enter nextcloud server url".tr,
+                      labelText: "Nextcloud server url".tr,
                       hintStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
@@ -98,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                         color: Color(0xff000000),
                       ),
                       filled: true,
-                      fillColor: const Color(0xffffffff),
+                      fillColor: Theme.of(context).colorScheme.background,
                       isDense: false,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 12),
@@ -210,7 +209,7 @@ class LoginScreen extends StatelessWidget {
                           onPressed: () {
                             controller.login();
                           },
-                          color: const Color(0xff3a57e8),
+                          color: Theme.of(context).colorScheme.primary,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
@@ -219,9 +218,9 @@ class LoginScreen extends StatelessWidget {
                           textColor: const Color(0xffffffff),
                           height: 40,
                           minWidth: 140,
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
+                          child: Text(
+                            "Login".tr,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,

@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       title: 'deck NG',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blue, background: Colors.white),
         useMaterial3: true,
       ),
       initialRoute: initialRoute ?? '/auth/login',
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/auth/login',
-          page: () => const LoginScreen(),
+          page: () => LoginScreen(),
         ),
       ],
     );

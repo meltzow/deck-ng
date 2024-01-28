@@ -52,7 +52,7 @@ class CardDetailsScreen extends StatelessWidget {
                           topRight: Radius.circular(30))),
                   margin: const EdgeInsets.only(top: 25),
                   child: Obx(() => controller.isLoading.value
-                      ? const Center(child: Text('loading'))
+                      ? Center(child: Text('loading'.tr))
                       : Padding(
                           padding: const EdgeInsets.all(16),
                           child: SingleChildScrollView(
@@ -138,8 +138,6 @@ class CardDetailsScreen extends StatelessWidget {
                                         contentPadding:
                                             const EdgeInsets.symmetric(
                                                 vertical: 8, horizontal: 12),
-                                        prefixIcon: const Icon(Icons.person,
-                                            color: Color(0xff212435), size: 24),
                                       ),
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -169,9 +167,43 @@ class CardDetailsScreen extends StatelessWidget {
                                 ),
                                 ListTile(
                                   tileColor: const Color(0x00ffffff),
-                                  title: const Text(
-                                    "Description",
-                                    style: TextStyle(
+                                  title: TextField(
+                                    controller:
+                                        controller.descriptionEditingController,
+                                    decoration: InputDecoration(
+                                      disabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xff9e9e9e), width: 1),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xff9e9e9e), width: 1),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xff9e9e9e), width: 1),
+                                      ),
+                                      labelText: "Description".tr,
+                                      labelStyle: const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 16,
+                                        color: Color(0xff9e9e9e),
+                                      ),
+                                      filled: true,
+                                      fillColor: const Color(0xffffffff),
+                                      isDense: false,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 12),
+                                    ),
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontStyle: FontStyle.normal,
                                       fontSize: 14,
@@ -179,10 +211,6 @@ class CardDetailsScreen extends StatelessWidget {
                                     ),
                                     textAlign: TextAlign.start,
                                   ),
-                                  subtitle: _editTitleTextField(
-                                      controller.isDescriptionEditing,
-                                      controller.descriptionControllerText,
-                                      controller.descriptionEditingController!),
                                   dense: true,
                                   contentPadding: const EdgeInsets.all(0),
                                   selected: false,
@@ -192,8 +220,6 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   leading: const Icon(Icons.subtitles,
                                       color: Color(0xff3a57e8), size: 24),
-                                  trailing: const Icon(Icons.edit,
-                                      color: Color(0xff79797c), size: 22),
                                 ),
                                 const Divider(
                                   color: Color(0xffdddddd),
@@ -209,8 +235,7 @@ class CardDetailsScreen extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: MultiSelectDialogField(
-                                                title:
-                                                    const Text('select labels'),
+                                                title: Text('select labels'.tr),
                                                 items: controller.allLabel!
                                                     .map((e) => MultiSelectItem(
                                                         e, e.title))
@@ -231,33 +256,5 @@ class CardDetailsScreen extends StatelessWidget {
             ),
           )
         ])));
-  }
-
-  Widget _editTitleTextField(RxBool isEditingField, RxString isEditingText,
-      TextEditingController editingController) {
-    if (isEditingField.value) {
-      return Center(
-          child: Focus(
-        child: TextField(
-          onSubmitted: (newValue) {
-            isEditingText.value = newValue;
-            isEditingField.value = false;
-          },
-          autofocus: true,
-          controller: editingController,
-        ),
-        onFocusChange: (hasFocus) {
-          isEditingField.value = hasFocus;
-        },
-      ));
-    }
-    return InkWell(
-        splashColor: Colors.blue.withAlpha(30),
-        onTap: () {
-          isEditingField.value = true;
-        },
-        child: Text(
-          isEditingText.value,
-        ));
   }
 }

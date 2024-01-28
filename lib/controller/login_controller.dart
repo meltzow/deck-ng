@@ -16,20 +16,33 @@ class LoginController extends GetxController {
   var passwordController = TextEditingController();
   RxString urlControllerText = ''.obs;
   var urlController = TextEditingController();
+  final FocusNode focusNode = FocusNode();
 
   @override
   void onInit() {
     urlController.addListener(() {
       urlControllerText.value = urlController.text;
     });
+
     nameController.addListener(() {
       nameControllerText.value = nameController.text;
     });
+
     passwordController.addListener(() {
       passwordControllerText.value = passwordController.text;
     });
 
+    focusNode.addListener(() {
+      //FIXME: if focus lost => check server url for validation
+    });
+
     super.onInit();
+  }
+
+  @override
+  onClose() {
+    focusNode.dispose();
+    super.onClose();
   }
 
   @override
@@ -39,6 +52,7 @@ class LoginController extends GetxController {
   }
 
   readAccountData() async {
+    var credService = Get.find<ICredentialService>();
     var account = await credService.getAccount();
 
     urlControllerText.value = account.url;
@@ -67,10 +81,4 @@ class LoginController extends GetxController {
       );
     }
   }
-}
-
-enum _SupportState {
-  unknown,
-  supported,
-  unsupported,
 }
