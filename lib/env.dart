@@ -4,8 +4,8 @@ import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
-import 'package:deck_ng/service/impl/auth_repository_impl.dart';
-import 'package:deck_ng/service/impl/board_repository_impl.dart';
+import 'package:deck_ng/service/impl/auth_service_impl.dart';
+import 'package:deck_ng/service/impl/board_service_impl.dart';
 import 'package:deck_ng/service/impl/card_service_impl.dart';
 import 'package:deck_ng/service/impl/credential_service_impl.dart';
 import 'package:deck_ng/service/impl/http_service.dart';
@@ -32,18 +32,18 @@ class Environment {
     await Get.putAsync<ICredentialService>(
         () => CredentialServiceImpl().init());
 
-    if (Environment.isDev()) {
-      ICredentialService service = Get.find<ICredentialService>();
-      if (!service.hasAccount()) {
-        service.saveCredentials(
-            "http://192.168.178.49:8080", "admin", "admin", true);
-      }
+  if (Environment.isDev()) {
+    ICredentialService service = Get.find<ICredentialService>();
+    if (!service.hasAccount()) {
+      service.saveCredentials(
+          "http://192.168.178.49:8080", "admin", "admin", true);
     }
-    Get.lazyPut<IHttpService>(() => HttpService());
-    Get.lazyPut<IAuthService>(() => AuthRepositoryImpl());
-    Get.lazyPut<IBoardService>(() => BoardRepositoryImpl());
-    Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-    Get.lazyPut<Dio>(() => Dio());
-    Get.lazyPut<ICardService>(() => CardServiceImpl());
   }
+  await Get.putAsync<ICredentialService>(() => CredentialServiceImpl().init());
+  Get.lazyPut<IHttpService>(() => HttpService());
+  Get.lazyPut<IAuthService>(() => AuthServiceImpl());
+  Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+  Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+  Get.lazyPut<Dio>(() => Dio());
+  Get.lazyPut<ICardService>(() => CardServiceImpl());
 }
