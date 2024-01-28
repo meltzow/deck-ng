@@ -1,6 +1,5 @@
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -77,8 +76,7 @@ class LoginController extends GetxController {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
     }
   }
 }
