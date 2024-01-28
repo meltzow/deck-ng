@@ -26,9 +26,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       title: 'deck NG',
       theme: ThemeData(
-        primaryColor: Colors.blue,
-        useMaterial3: true,
-      ),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)),
       initialRoute: initialRoute ?? '/auth/login',
       getPages: [
         GetPage(

@@ -6,7 +6,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize; // default is 56.0
 
-  MyAppBar({required this.title, this.actions, key})
+  const MyAppBar({required this.title, this.actions, key})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
   @override
@@ -20,7 +20,7 @@ class _CustomAppBarState extends State<MyAppBar> {
         elevation: 4,
         centerTitle: false,
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xff3a57e8),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),

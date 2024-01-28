@@ -13,12 +13,12 @@ class CardDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
-          title: "Card details",
+          title: "Card details".tr,
           actions: [
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.refresh,
-                color: Color(0xffffffff),
+                color: Theme.of(context).colorScheme.secondary,
                 size: 22,
               ),
               onPressed: () {
@@ -28,7 +28,7 @@ class CardDetailsScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(
                 Icons.save,
-                color: Color(0xffffffff),
+                color: Colors.white,
                 size: 22,
               ),
               onPressed: () {
@@ -38,71 +38,140 @@ class CardDetailsScreen extends StatelessWidget {
           ],
         ),
         body: SafeArea(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: controller.refreshData,
-              child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30))),
-                  margin: const EdgeInsets.only(top: 25),
-                  child: Obx(() => controller.isLoading.value
-                      ? Center(child: Text('loading'.tr))
-                      : Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: SingleChildScrollView(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Stack(
-                                    alignment: Alignment.bottomRight,
-                                    children: [
-                                      Container(
-                                        height: 120,
-                                        width: 120,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                  child: RefreshIndicator(
+                onRefresh: controller.refreshData,
+                child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30))),
+                    margin: const EdgeInsets.only(top: 25),
+                    child: Obx(
+                      () => controller.isLoading.value
+                          ? Center(child: Text('loading'.tr))
+                          : Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: SingleChildScrollView(
+                                  child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        Container(
+                                          height: 120,
+                                          width: 120,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Image.network(
+                                              "https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_960_720.jpg",
+                                              fit: BoxFit.cover),
                                         ),
-                                        child: Image.network(
-                                            "https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_960_720.jpg",
-                                            fit: BoxFit.cover),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.all(0),
-                                        padding: const EdgeInsets.all(0),
-                                        width: 40,
-                                        height: 40,
-                                        decoration: const BoxDecoration(
-                                          color: Color(0xff3a57e8),
-                                          shape: BoxShape.circle,
+                                        Container(
+                                          alignment: Alignment.center,
+                                          margin: const EdgeInsets.all(0),
+                                          padding: const EdgeInsets.all(0),
+                                          width: 40,
+                                          height: 40,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xff3a57e8),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(
+                                            Icons.photo_camera,
+                                            color: Color(0xffffffff),
+                                            size: 20,
+                                          ),
                                         ),
-                                        child: const Icon(
-                                          Icons.photo_camera,
-                                          color: Color(0xffffffff),
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                                  child: ListTile(
-                                    tileColor: const Color(0x00ffffff),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                    child: ListTile(
+                                      tileColor: const Color(0x00ffffff),
+                                      title: TextField(
+                                        controller: controller.titleController,
+                                        decoration: InputDecoration(
+                                          disabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xff9e9e9e),
+                                                width: 1),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xff9e9e9e),
+                                                width: 1),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xff9e9e9e),
+                                                width: 1),
+                                          ),
+                                          labelText: "Title",
+                                          labelStyle: const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 16,
+                                            color: Color(0xff9e9e9e),
+                                          ),
+                                          filled: true,
+                                          fillColor: const Color(0xffffffff),
+                                          isDense: false,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 8, horizontal: 12),
+                                        ),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 14,
+                                          color: Color(0xff424141),
+                                        ),
+                                        textAlign: TextAlign.start,
+                                      ),
+                                      dense: true,
+                                      contentPadding: const EdgeInsets.all(0),
+                                      selected: false,
+                                      selectedTileColor:
+                                          const Color(0x42000000),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.zero,
+                                      ),
+                                      leading:
+                                          const Icon(Icons.title, size: 24),
+                                    ),
+                                  ),
+                                  const Divider(
+                                    color: Color(0xffdddddd),
+                                    height: 30,
+                                    thickness: 0,
+                                    indent: 50,
+                                    endIndent: 0,
+                                  ),
+                                  ListTile(
                                     title: TextField(
-                                      controller: controller.titleController,
+                                      controller: controller
+                                          .descriptionEditingController,
                                       decoration: InputDecoration(
                                         disabledBorder: OutlineInputBorder(
                                           borderRadius:
@@ -125,7 +194,7 @@ class CardDetailsScreen extends StatelessWidget {
                                               color: Color(0xff9e9e9e),
                                               width: 1),
                                         ),
-                                        labelText: "Title",
+                                        labelText: "Description".tr,
                                         labelStyle: const TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontStyle: FontStyle.normal,
@@ -143,7 +212,7 @@ class CardDetailsScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w400,
                                         fontStyle: FontStyle.normal,
                                         fontSize: 14,
-                                        color: Color(0xff424141),
+                                        color: Color(0xff000000),
                                       ),
                                       textAlign: TextAlign.start,
                                     ),
@@ -154,107 +223,38 @@ class CardDetailsScreen extends StatelessWidget {
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.zero,
                                     ),
-                                    leading: const Icon(Icons.title,
-                                        color: Color(0xff3a57e8), size: 24),
+                                    leading: Icon(Icons.subtitles,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        size: 24),
                                   ),
-                                ),
-                                const Divider(
-                                  color: Color(0xffdddddd),
-                                  height: 30,
-                                  thickness: 0,
-                                  indent: 50,
-                                  endIndent: 0,
-                                ),
-                                ListTile(
-                                  tileColor: const Color(0x00ffffff),
-                                  title: TextField(
-                                    controller:
-                                        controller.descriptionEditingController,
-                                    decoration: InputDecoration(
-                                      disabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        borderSide: const BorderSide(
-                                            color: Color(0xff9e9e9e), width: 1),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        borderSide: const BorderSide(
-                                            color: Color(0xff9e9e9e), width: 1),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        borderSide: const BorderSide(
-                                            color: Color(0xff9e9e9e), width: 1),
-                                      ),
-                                      labelText: "Description".tr,
-                                      labelStyle: const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 16,
-                                        color: Color(0xff9e9e9e),
-                                      ),
-                                      filled: true,
-                                      fillColor: const Color(0xffffffff),
-                                      isDense: false,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8, horizontal: 12),
-                                    ),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 14,
-                                      color: Color(0xff000000),
-                                    ),
-                                    textAlign: TextAlign.start,
+                                  const Divider(
+                                    color: Color(0xffdddddd),
+                                    height: 20,
+                                    thickness: 0,
+                                    indent: 50,
+                                    endIndent: 0,
                                   ),
-                                  dense: true,
-                                  contentPadding: const EdgeInsets.all(0),
-                                  selected: false,
-                                  selectedTileColor: const Color(0x42000000),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.zero,
+                                  ListTile(
+                                    title: MultiSelectBottomSheetField(
+                                        title: Text('select labels'.tr),
+                                        items: controller.allLabel!
+                                            .map((e) =>
+                                                MultiSelectItem(e, e.title))
+                                            .toList(),
+                                        listType: MultiSelectListType.CHIP,
+                                        onConfirm: (values) =>
+                                            controller.saveLabels(values)),
+                                    leading: const Icon(Icons.label, size: 24),
                                   ),
-                                  leading: const Icon(Icons.subtitles,
-                                      color: Color(0xff3a57e8), size: 24),
-                                ),
-                                const Divider(
-                                  color: Color(0xffdddddd),
-                                  height: 20,
-                                  thickness: 0,
-                                  indent: 50,
-                                  endIndent: 0,
-                                ),
-                                Card(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: MultiSelectDialogField(
-                                                title: Text('select labels'.tr),
-                                                items: controller.allLabel!
-                                                    .map((e) => MultiSelectItem(
-                                                        e, e.title))
-                                                    .toList(),
-                                                listType:
-                                                    MultiSelectListType.CHIP,
-                                                onConfirm: (values) =>
-                                                    controller
-                                                        .saveLabels(values)),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ])),
-                        ))),
-            ),
-          )
-        ])));
+                                ],
+                              )),
+                            ),
+                    )),
+              ))
+            ],
+          ),
+        ));
   }
 }

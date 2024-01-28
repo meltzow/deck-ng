@@ -15,7 +15,7 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: MyAppBar(
-        title: "Dashboard",
+        title: "Dashboard".tr,
         actions: [
           IconButton(
             icon: const Icon(
