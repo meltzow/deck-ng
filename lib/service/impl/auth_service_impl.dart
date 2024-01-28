@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AuthRepositoryImpl extends GetxService implements IAuthService {
+class AuthServiceImpl extends GetxService implements IAuthService {
   final httpService = Get.find<IHttpService>();
   final credService = Get.find<ICredentialService>();
 
