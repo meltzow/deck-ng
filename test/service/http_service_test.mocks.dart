@@ -3,13 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
-import 'package:deck_ng/model/account.dart' as _i2;
-import 'package:deck_ng/service/Iauth_service.dart' as _i3;
-import 'package:deck_ng/service/Icredential_service.dart' as _i5;
+import 'package:deck_ng/service/Iauth_service.dart' as _i2;
+import 'package:deck_ng/service/Icredential_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:mockito/src/dummies.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -24,26 +23,16 @@ import 'package:mockito/src/dummies.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeAccount_0 extends _i1.SmartFake implements _i2.Account {
-  _FakeAccount_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [IAuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
+class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
   MockIAuthService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<bool> login(
+  _i3.Future<bool> login(
     String? serverUrl,
     String? username,
     String? password,
@@ -57,33 +46,18 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
             password,
           ],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
 }
 
 /// A class which mocks [ICredentialService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockICredentialService extends _i1.Mock
-    implements _i5.ICredentialService {
+    implements _i4.ICredentialService {
   MockICredentialService() {
     _i1.throwOnMissingStub(this);
   }
-
-  @override
-  _i4.Future<_i2.Account> getAccount() => (super.noSuchMethod(
-        Invocation.method(
-          #getAccount,
-          [],
-        ),
-        returnValue: _i4.Future<_i2.Account>.value(_FakeAccount_0(
-          this,
-          Invocation.method(
-            #getAccount,
-            [],
-          ),
-        )),
-      ) as _i4.Future<_i2.Account>);
 
   @override
   bool hasAccount() => (super.noSuchMethod(
@@ -124,7 +98,7 @@ class MockICredentialService extends _i1.Mock
             password,
           ],
         ),
-        returnValue: _i6.dummyValue<String>(
+        returnValue: _i5.dummyValue<String>(
           this,
           Invocation.method(
             #computeAuth,

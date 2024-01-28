@@ -54,11 +54,11 @@ class LoginController extends GetxController {
     var credService = Get.find<ICredentialService>();
     var account = await credService.getAccount();
 
-    urlControllerText.value = account.url;
+    urlControllerText.value = account!=null?account.url:'';
     urlController.text = urlControllerText.value;
-    nameControllerText.value = account.username;
+    nameControllerText.value = account!=null?account.username:'';
     nameController.text = nameControllerText.value;
-    passwordControllerText.value = account.password;
+    passwordControllerText.value = account!=null?account.password:'';
     passwordController.text = passwordControllerText.value;
   }
 

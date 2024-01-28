@@ -13,17 +13,18 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
     await GetStorage.init();
     _box = GetStorage();
     if (!_box.hasData(keyUser)) {
-      _box.write(keyUser, {'foo': 'bar'});
+      _box.write(keyUser, {});
     }
     return this;
   }
 
+  @override
   bool hasAccount() {
     return _box.hasData(keyUser);
   }
 
   @override
-  Future<Account> getAccount() async {
+  Future<Account>? getAccount() async {
     return Account.fromJson(_box.read(keyUser));
   }
 

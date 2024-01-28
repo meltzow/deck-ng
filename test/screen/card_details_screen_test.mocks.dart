@@ -3,14 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:deck_ng/model/account.dart' as _i3;
 import 'package:deck_ng/model/card.dart' as _i2;
-import 'package:deck_ng/service/Icard_service.dart' as _i4;
-import 'package:deck_ng/service/Icredential_service.dart' as _i6;
+import 'package:deck_ng/service/Icard_service.dart' as _i3;
+import 'package:deck_ng/service/Icredential_service.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -35,26 +34,16 @@ class _FakeCard_0 extends _i1.SmartFake implements _i2.Card {
         );
 }
 
-class _FakeAccount_1 extends _i1.SmartFake implements _i3.Account {
-  _FakeAccount_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [ICardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockICardService extends _i1.Mock implements _i4.ICardService {
+class MockICardService extends _i1.Mock implements _i3.ICardService {
   MockICardService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.Card> createCard(
+  _i4.Future<_i2.Card> createCard(
     int? boardId,
     int? stackId,
     String? title,
@@ -68,7 +57,7 @@ class MockICardService extends _i1.Mock implements _i4.ICardService {
             title,
           ],
         ),
-        returnValue: _i5.Future<_i2.Card>.value(_FakeCard_0(
+        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_0(
           this,
           Invocation.method(
             #createCard,
@@ -79,10 +68,10 @@ class MockICardService extends _i1.Mock implements _i4.ICardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Card>);
+      ) as _i4.Future<_i2.Card>);
 
   @override
-  _i5.Future<_i2.Card> updateCard(
+  _i4.Future<_i2.Card> updateCard(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -98,7 +87,7 @@ class MockICardService extends _i1.Mock implements _i4.ICardService {
             card,
           ],
         ),
-        returnValue: _i5.Future<_i2.Card>.value(_FakeCard_0(
+        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_0(
           this,
           Invocation.method(
             #updateCard,
@@ -110,10 +99,10 @@ class MockICardService extends _i1.Mock implements _i4.ICardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Card>);
+      ) as _i4.Future<_i2.Card>);
 
   @override
-  _i5.Future<_i2.Card> getCard(
+  _i4.Future<_i2.Card> getCard(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -127,7 +116,7 @@ class MockICardService extends _i1.Mock implements _i4.ICardService {
             cardId,
           ],
         ),
-        returnValue: _i5.Future<_i2.Card>.value(_FakeCard_0(
+        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_0(
           this,
           Invocation.method(
             #getCard,
@@ -138,10 +127,10 @@ class MockICardService extends _i1.Mock implements _i4.ICardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Card>);
+      ) as _i4.Future<_i2.Card>);
 
   @override
-  _i5.Future<void> deleteCard(
+  _i4.Future<void> deleteCard(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -155,34 +144,19 @@ class MockICardService extends _i1.Mock implements _i4.ICardService {
             cardId,
           ],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [ICredentialService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockICredentialService extends _i1.Mock
-    implements _i6.ICredentialService {
+    implements _i5.ICredentialService {
   MockICredentialService() {
     _i1.throwOnMissingStub(this);
   }
-
-  @override
-  _i5.Future<_i3.Account> getAccount() => (super.noSuchMethod(
-        Invocation.method(
-          #getAccount,
-          [],
-        ),
-        returnValue: _i5.Future<_i3.Account>.value(_FakeAccount_1(
-          this,
-          Invocation.method(
-            #getAccount,
-            [],
-          ),
-        )),
-      ) as _i5.Future<_i3.Account>);
 
   @override
   bool hasAccount() => (super.noSuchMethod(
@@ -223,7 +197,7 @@ class MockICredentialService extends _i1.Mock
             password,
           ],
         ),
-        returnValue: _i7.dummyValue<String>(
+        returnValue: _i6.dummyValue<String>(
           this,
           Invocation.method(
             #computeAuth,

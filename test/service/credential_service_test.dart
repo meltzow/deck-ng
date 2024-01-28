@@ -44,8 +44,8 @@ void main() {
           isAuthenticated: false);
 
       var savedAccount = await credentialService.getAccount();
-      expect(savedAccount.password, account.password);
-      expect(savedAccount.url, 'http://localhost:1234/login');
+      expect(savedAccount?.password, account.password);
+      expect(savedAccount?.url, 'http://localhost:1234/login');
     });
 
     test('remove last "/"  if url ends with it', () async {
@@ -65,8 +65,8 @@ void main() {
           isAuthenticated: false);
 
       var savedAccount = await credentialService.getAccount();
-      expect(savedAccount.password, account.password);
-      expect(savedAccount.url, 'http://localhost:1234/login');
+      expect(savedAccount?.password, account.password);
+      expect(savedAccount?.url, 'http://localhost:1234/login');
     });
   });
 }
