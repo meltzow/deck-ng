@@ -30,20 +30,22 @@ class Environment {
 
   static Future<void> initServices() async {
     await Get.putAsync<ICredentialService>(
-        () => CredentialServiceImpl().init());
+            () => CredentialServiceImpl().init());
 
-  if (Environment.isDev()) {
-    ICredentialService service = Get.find<ICredentialService>();
-    if (!service.hasAccount()) {
-      service.saveCredentials(
-          "http://192.168.178.49:8080", "admin", "admin", true);
+    if (Environment.isDev()) {
+      ICredentialService service = Get.find<ICredentialService>();
+      if (!service.hasAccount()) {
+        service.saveCredentials(
+            "http://192.168.178.49:8080", "admin", "admin", true);
+      }
     }
+    await Get.putAsync<ICredentialService>(() =>
+        CredentialServiceImpl().init());
+    Get.lazyPut<IHttpService>(() => HttpService());
+    Get.lazyPut<IAuthService>(() => AuthServiceImpl());
+    Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+    Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+    Get.lazyPut<Dio>(() => Dio());
+    Get.lazyPut<ICardService>(() => CardServiceImpl());
   }
-  await Get.putAsync<ICredentialService>(() => CredentialServiceImpl().init());
-  Get.lazyPut<IHttpService>(() => HttpService());
-  Get.lazyPut<IAuthService>(() => AuthServiceImpl());
-  Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-  Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-  Get.lazyPut<Dio>(() => Dio());
-  Get.lazyPut<ICardService>(() => CardServiceImpl());
 }
