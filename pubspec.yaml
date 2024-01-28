@@ -30,8 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
@@ -49,6 +47,7 @@ dependencies:
   kanban_board:
     path: ./FlutterKanbanBoard
   catcher_2: ^1.0.7
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:

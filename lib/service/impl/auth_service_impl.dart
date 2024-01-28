@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
@@ -6,26 +8,27 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthServiceImpl extends GetxService implements IAuthService {
-  final httpService = Get.find<IHttpService>();
+  final Dio httpClient = Get.find<Dio>();
   final credService = Get.find<ICredentialService>();
 
+  final url = '/ocs/v2.php/core/getapppassword';
+
   @override
-  Future<bool> login(String fullUrl) async {
-    var resp = await httpService.post(fullUrl, false);
-    var loginPollInfo = LoginPollInfo.fromJson(resp);
-    // _launchInBrowser(Uri.parse(loginPollInfo.poll.endpoint));
+  Future<bool> login(String serverUrl, String username, String password) async {
+    var headers = <String, String>{
+      HttpHeaders.acceptHeader: "application/json",
+      'OCS-APIREQUEST': "true",
+      HttpHeaders.authorizationHeader: account!.authData;
+    };
 
-    var ops = RequestOptions(
-        path: loginPollInfo.poll.endpoint,
-        queryParameters: {'token': loginPollInfo.poll.token},
-        method: 'post');
+    var resp = await httpClient.get(serverUrl + url,options: Options(headers: headers));
+    if (resp.statusCode == 200 ) {
+      var response = resp.data as Map<String, dynamic>;
+      var apppassword = AppPassword.fromJson(response);
+      await credService.saveCredentials(serverUrl,
+          username, apppassword.ocs.data.apppassword, true);
 
-    var response = await httpService
-        .retry<LoginCredentials>(ops, null)
-        .catchError((err) => false);
-
-    await credService.saveCredentials(response.data!.server,
-        response.data!.loginName, response.data!.appPassword, true);
+    }
 
     return true;
   }

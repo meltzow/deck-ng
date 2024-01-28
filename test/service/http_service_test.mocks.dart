@@ -76,6 +76,15 @@ class MockICredentialService extends _i1.Mock
       ) as _i4.Future<_i2.Account>);
 
   @override
+  bool hasAccount() => (super.noSuchMethod(
+        Invocation.method(
+          #hasAccount,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
   dynamic saveCredentials(
     String? url,
     String? username,

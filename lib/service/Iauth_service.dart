@@ -6,54 +6,58 @@ import 'package:json_annotation/json_annotation.dart';
 part 'Iauth_service.g.dart';
 
 @JsonSerializable()
-class Poll {
-  late String token;
-  late String endpoint;
+class AppPassword {
+  late Ocs ocs;
 
-  Poll(this.token, this.endpoint);
+  AppPassword(
+    this.ocs,
+  );
 
-  /// A necessary factory constructor for creating a new User instance
-  /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.
-  /// The constructor is named after the source class, in this case, User.
-  factory Poll.fromJson(Map<String, dynamic> json) => _$PollFromJson(json);
-
-  /// `toJson` is the convention for a class to declare support for serialization
-  /// to JSON. The implementation simply calls the private, generated
-  /// helper method `_$UserToJson`.
-  Map<String, dynamic> toJson() => _$PollToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class LoginPollInfo {
-  late Poll poll;
-  late String login;
-
-  LoginPollInfo(this.poll, this.login);
-
-  /// A necessary factory constructor for creating a new User instance
-  /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.
-  /// The constructor is named after the source class, in this case, User.
-  factory LoginPollInfo.fromJson(Map<String, dynamic> json) =>
-      _$LoginPollInfoFromJson(json);
-
-  /// `toJson` is the convention for a class to declare support for serialization
-  /// to JSON. The implementation simply calls the private, generated
-  /// helper method `_$UserToJson`.
-  Map<String, dynamic> toJson() => _$LoginPollInfoToJson(this);
+  factory AppPassword.fromJson(Map<String, dynamic> json) => _$AppPasswordFromJson(json);
+  Map<String, dynamic> toJson() => _$AppPasswordToJson(this);
 }
 
 @JsonSerializable()
-class LoginCredentials {
-  late String server;
-  late String loginName;
-  late String appPassword;
+class Ocs {
+  late Meta meta;
+  late Data data;
 
-  LoginCredentials(this.server, this.loginName, this.appPassword);
+  Ocs({
+    required this.meta,
+    required this.data,
+  });
 
-  factory LoginCredentials.fromJson(Map<String, dynamic> json) =>
-      _$LoginCredentialsFromJson(json);
+  factory Ocs.fromJson(Map<String, dynamic> json) => _$OcsFromJson(json);
+  Map<String, dynamic> toJson() => _$OcsToJson(this);
 
-  Map<String, dynamic> toJson() => _$LoginCredentialsToJson(this);
+}
+
+@JsonSerializable()
+class Data {
+  late String apppassword;
+
+  Data(
+    this.apppassword,
+  );
+
+  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  Map<String, dynamic> toJson() => _$DataToJson(this);
+}
+
+@JsonSerializable()
+class Meta {
+  late String status;
+  late int statuscode;
+  late String message;
+
+  Meta(
+    this.status,
+    this.statuscode,
+    this.message,
+  );
+
+  factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
+  Map<String, dynamic> toJson() => _$MetaToJson(this);
 }
 
 abstract class IAuthService {

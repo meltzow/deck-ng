@@ -6,38 +6,41 @@ part of 'Iauth_service.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Poll _$PollFromJson(Map<String, dynamic> json) => Poll(
-      json['token'] as String,
-      json['endpoint'] as String,
+AppPassword _$AppPasswordFromJson(Map<String, dynamic> json) => AppPassword(
+      Ocs.fromJson(json['ocs'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$PollToJson(Poll instance) => <String, dynamic>{
-      'token': instance.token,
-      'endpoint': instance.endpoint,
+Map<String, dynamic> _$AppPasswordToJson(AppPassword instance) =>
+    <String, dynamic>{
+      'ocs': instance.ocs,
     };
 
-LoginPollInfo _$LoginPollInfoFromJson(Map<String, dynamic> json) =>
-    LoginPollInfo(
-      Poll.fromJson(json['poll'] as Map<String, dynamic>),
-      json['login'] as String,
+Ocs _$OcsFromJson(Map<String, dynamic> json) => Ocs(
+      meta: Meta.fromJson(json['meta'] as Map<String, dynamic>),
+      data: Data.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$LoginPollInfoToJson(LoginPollInfo instance) =>
-    <String, dynamic>{
-      'poll': instance.poll.toJson(),
-      'login': instance.login,
+Map<String, dynamic> _$OcsToJson(Ocs instance) => <String, dynamic>{
+      'meta': instance.meta,
+      'data': instance.data,
     };
 
-LoginCredentials _$LoginCredentialsFromJson(Map<String, dynamic> json) =>
-    LoginCredentials(
-      json['server'] as String,
-      json['loginName'] as String,
-      json['appPassword'] as String,
+Data _$DataFromJson(Map<String, dynamic> json) => Data(
+      json['apppassword'] as String,
     );
 
-Map<String, dynamic> _$LoginCredentialsToJson(LoginCredentials instance) =>
-    <String, dynamic>{
-      'server': instance.server,
-      'loginName': instance.loginName,
-      'appPassword': instance.appPassword,
+Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+      'apppassword': instance.apppassword,
+    };
+
+Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
+      json['status'] as String,
+      json['statuscode'] as int,
+      json['message'] as String,
+    );
+
+Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
+      'status': instance.status,
+      'statuscode': instance.statuscode,
+      'message': instance.message,
     };
