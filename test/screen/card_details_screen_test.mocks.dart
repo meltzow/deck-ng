@@ -10,6 +10,7 @@ import 'package:deck_ng/model/card.dart' as _i2;
 import 'package:deck_ng/service/Icard_service.dart' as _i4;
 import 'package:deck_ng/service/Icredential_service.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -208,4 +209,29 @@ class MockICredentialService extends _i1.Mock
           isAuth,
         ],
       ));
+
+  @override
+  String computeAuth(
+    dynamic username,
+    dynamic password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #computeAuth,
+          [
+            username,
+            password,
+          ],
+        ),
+        returnValue: _i7.dummyValue<String>(
+          this,
+          Invocation.method(
+            #computeAuth,
+            [
+              username,
+              password,
+            ],
+          ),
+        ),
+      ) as String);
 }

@@ -42,10 +42,19 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
   }
 
   @override
-  _i4.Future<bool> login(String? fullUrl) => (super.noSuchMethod(
+  _i4.Future<bool> login(
+    String? serverUrl,
+    String? username,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
         Invocation.method(
           #login,
-          [fullUrl],
+          [
+            serverUrl,
+            username,
+            password,
+          ],
         ),
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);

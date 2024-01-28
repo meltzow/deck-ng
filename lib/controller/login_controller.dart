@@ -63,7 +63,8 @@ class LoginController extends GetxController {
   }
 
   login() async {
-    var successful = await authService.login(urlControllerText.value);
+    var successful = await authService.login(urlControllerText.value,
+        nameControllerText.value, passwordControllerText.value);
     if (successful) {
       credService.saveCredentials(urlControllerText.value,
           nameControllerText.value, passwordControllerText.value, true);

@@ -1,8 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-/// This allows the `User` class to access private members in
-/// the generated file. The value for this is *.g.dart, where
-/// the star denotes the source file name.
 part 'Iauth_service.g.dart';
 
 @JsonSerializable()
@@ -13,7 +10,8 @@ class AppPassword {
     this.ocs,
   );
 
-  factory AppPassword.fromJson(Map<String, dynamic> json) => _$AppPasswordFromJson(json);
+  factory AppPassword.fromJson(Map<String, dynamic> json) =>
+      _$AppPasswordFromJson(json);
   Map<String, dynamic> toJson() => _$AppPasswordToJson(this);
 }
 
@@ -29,7 +27,6 @@ class Ocs {
 
   factory Ocs.fromJson(Map<String, dynamic> json) => _$OcsFromJson(json);
   Map<String, dynamic> toJson() => _$OcsToJson(this);
-
 }
 
 @JsonSerializable()
@@ -61,5 +58,5 @@ class Meta {
 }
 
 abstract class IAuthService {
-  Future<bool> login(String fullUrl);
+  Future<bool> login(String serverUrl, String username, String password);
 }

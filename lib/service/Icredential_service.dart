@@ -5,4 +5,6 @@ abstract class ICredentialService {
   bool hasAccount();
 
   saveCredentials(String url, String username, String password, bool isAuth);
+
+  String computeAuth(username, password);
 }

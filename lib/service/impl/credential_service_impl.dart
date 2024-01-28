@@ -28,10 +28,14 @@ class CredentialServiceImpl extends GetxService implements ICredentialService {
   }
 
   @override
+  String computeAuth(username, password) {
+    return 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+  }
+
+  @override
   saveCredentials(
       String url, String username, String password, bool isAuth) async {
-    String basicAuth =
-        'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+    String basicAuth = computeAuth(username, password);
     url = url.endsWith('/') ? url.substring(0, url.length - 1) : url;
     var a = Account(
         username: username,
