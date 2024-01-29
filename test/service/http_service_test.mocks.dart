@@ -5,10 +5,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
+import 'package:deck_ng/model/account.dart' as _i5;
 import 'package:deck_ng/service/Iauth_service.dart' as _i2;
 import 'package:deck_ng/service/Icredential_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -50,12 +50,11 @@ class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
       ) as _i3.Future<bool>);
 }
 
-/// A class which mocks [ICredentialService].
+/// A class which mocks [IStorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockICredentialService extends _i1.Mock
-    implements _i4.ICredentialService {
-  MockICredentialService() {
+class MockIStorageService extends _i1.Mock implements _i4.IStorageService {
+  MockIStorageService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -69,44 +68,9 @@ class MockICredentialService extends _i1.Mock
       ) as bool);
 
   @override
-  dynamic saveCredentials(
-    String? url,
-    String? username,
-    String? password,
-    bool? isAuth,
-  ) =>
+  dynamic saveAccount(_i5.Account? account) =>
       super.noSuchMethod(Invocation.method(
-        #saveCredentials,
-        [
-          url,
-          username,
-          password,
-          isAuth,
-        ],
+        #saveAccount,
+        [account],
       ));
-
-  @override
-  String computeAuth(
-    dynamic username,
-    dynamic password,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #computeAuth,
-          [
-            username,
-            password,
-          ],
-        ),
-        returnValue: _i5.dummyValue<String>(
-          this,
-          Invocation.method(
-            #computeAuth,
-            [
-              username,
-              password,
-            ],
-          ),
-        ),
-      ) as String);
 }

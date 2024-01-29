@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' as getx;
 
 class HttpService extends getx.GetxService implements IHttpService {
-  final credService = getx.Get.find<ICredentialService>();
+  final credService = getx.Get.find<IStorageService>();
   final Dio httpClient = getx.Get.find<Dio>();
 
   HttpService();
@@ -39,7 +39,8 @@ class HttpService extends getx.GetxService implements IHttpService {
     List<dynamic> response;
     Account? account = await credService.getAccount();
     try {
-      Response resp = await httpClient.get((account!=null?account.url:'') + path,
+      Response resp = await httpClient.get(
+          (account != null ? account.url : '') + path,
           options: Options(headers: getHeaders(path, account)));
       response = (returnResponse(resp) as List<dynamic>);
     } catch (error) {
@@ -53,7 +54,9 @@ class HttpService extends getx.GetxService implements IHttpService {
     dynamic response;
     try {
       Account? account = await credService.getAccount();
-      Response resp = await httpClient.get((account!=null?account.url:'') + path,
+      Response resp = await httpClient.get(
+          ((account != null && account.isAuthenticated) ? account.url : '') +
+              path,
           options: Options(headers: getHeaders(path, account)));
       response = returnResponse(resp);
     } catch (error) {
@@ -85,8 +88,10 @@ class HttpService extends getx.GetxService implements IHttpService {
     try {
       Account? account = await credService.getAccount();
       var headers = getHeaders(path, account, body);
-      Response resp = await httpClient.put((account!=null?account.url:'') + path,
-          options: Options(headers: headers), data: body);
+      Response resp = await httpClient.put(
+          (account != null ? account.url : '') + path,
+          options: Options(headers: headers),
+          data: body);
       response = returnResponse(resp);
     } catch (error) {
       throw Exception(error.toString());

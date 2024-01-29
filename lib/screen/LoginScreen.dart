@@ -1,6 +1,5 @@
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -47,46 +46,33 @@ class LoginScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '${AppLocalizations.of(context)?.sign_in}',
+                    'sign in'.tr,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.clip,
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.normal,
                       fontSize: 24,
-                      color: Color(0xff000000),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                  child: TextField(
+                  child: TextFormField(
                     focusNode: controller.focusNode,
                     controller: controller.urlController,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 14,
-                      color: Color(0xff000000),
-                    ),
                     decoration: InputDecoration(
                       disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff000000), width: 1),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff000000), width: 1),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff000000), width: 1),
                       ),
                       hintText: "enter nextcloud server url".tr,
                       labelText: "Nextcloud server url".tr,
@@ -94,15 +80,11 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
                         fontSize: 14,
-                        color: Color(0xff000000),
                       ),
-                      filled: true,
-                      fillColor: Theme.of(context).colorScheme.background,
                       isDense: false,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 12),
-                      prefixIcon: const Icon(Icons.insert_link,
-                          color: Color(0xff212435), size: 24),
+                      prefixIcon: const Icon(Icons.insert_link, size: 24),
                     ),
                   ),
                 ),
@@ -118,38 +100,27 @@ class LoginScreen extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 16,
-                      color: Color(0xff000000),
                     ),
                     decoration: InputDecoration(
                       disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
                       ),
                       labelText: "username",
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
                         fontSize: 16,
-                        color: Color(0xff9e9e9e),
                       ),
-                      filled: true,
-                      fillColor: const Color(0xffffffff),
                       isDense: false,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 12),
-                      prefixIcon: const Icon(Icons.person,
-                          color: Color(0xff212435), size: 24),
+                      prefixIcon: const Icon(Icons.person, size: 24),
                     ),
                   ),
                 ),
@@ -162,38 +133,28 @@ class LoginScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
                     fontSize: 16,
-                    color: Color(0xff000000),
                   ),
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
                     ),
-                    labelText: "Password",
+                    labelText: "Password".tr,
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 16,
-                      color: Color(0xff9e9e9e),
                     ),
-                    filled: true,
-                    fillColor: const Color(0xffffffff),
                     isDense: false,
                     contentPadding:
                         const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    prefixIcon: const Icon(Icons.admin_panel_settings,
-                        color: Color(0xff212435), size: 24),
+                    prefixIcon:
+                        const Icon(Icons.admin_panel_settings, size: 24),
                   ),
                 ),
                 Padding(
@@ -220,11 +181,7 @@ class LoginScreen extends StatelessWidget {
                           minWidth: 140,
                           child: Text(
                             "Login".tr,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                            ),
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
                       ),

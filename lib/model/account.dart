@@ -1,10 +1,10 @@
 class Account {
-  final String username;
-  final String password;
-  final String authData;
-  final String url;
+  String username;
+  String password;
+  String authData;
+  String url;
 
-  final bool isAuthenticated;
+  bool isAuthenticated;
 
   Account(
       {required this.username,

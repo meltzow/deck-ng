@@ -1,10 +1,8 @@
 import 'package:deck_ng/model/account.dart';
 
-abstract class ICredentialService {
+abstract class IStorageService {
   Future<Account>? getAccount();
   bool hasAccount();
 
-  saveCredentials(String url, String username, String password, bool isAuth);
-
-  String computeAuth(username, password);
+  saveAccount(Account account);
 }

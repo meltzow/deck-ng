@@ -1,7 +1,5 @@
 import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/model/card.dart';
-import 'package:deck_ng/model/stack.dart';
 import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
@@ -14,18 +12,18 @@ import 'package:mockito/mockito.dart';
 import './Localization.dart';
 import 'board_overview_test.mocks.dart';
 
-@GenerateMocks([IHttpService, ICredentialService])
+@GenerateMocks([IHttpService, IStorageService])
 void main() {
   late IHttpService httpServiceMock;
-  late ICredentialService credentialServiceMock;
+  late IStorageService credentialServiceMock;
 
   final IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
     Environment.init(flavor: BuildFlavor.testing);
-    Get.replace<ICredentialService>(MockICredentialService());
-    credentialServiceMock = Get.find<ICredentialService>();
+    Get.replace<IStorageService>(MockIStorageService());
+    credentialServiceMock = Get.find<IStorageService>();
 
     Get.replace<IHttpService>(MockIHttpService());
     httpServiceMock = Get.find<IHttpService>();

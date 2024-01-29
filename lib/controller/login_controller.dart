@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  var credService = Get.find<ICredentialService>();
+  var credService = Get.find<IStorageService>();
   var authService = Get.find<IAuthService>();
 
   final RxBool isLoading = RxBool(true);
@@ -51,14 +51,14 @@ class LoginController extends GetxController {
   }
 
   readAccountData() async {
-    var credService = Get.find<ICredentialService>();
+    var credService = Get.find<IStorageService>();
     var account = await credService.getAccount();
 
-    urlControllerText.value = account!=null?account.url:'';
+    urlControllerText.value = account != null ? account.url : '';
     urlController.text = urlControllerText.value;
-    nameControllerText.value = account!=null?account.username:'';
+    nameControllerText.value = account != null ? account.username : '';
     nameController.text = nameControllerText.value;
-    passwordControllerText.value = account!=null?account.password:'';
+    passwordControllerText.value = account != null ? account.password : '';
     passwordController.text = passwordControllerText.value;
   }
 
@@ -66,8 +66,6 @@ class LoginController extends GetxController {
     var successful = await authService.login(urlControllerText.value,
         nameControllerText.value, passwordControllerText.value);
     if (successful) {
-      credService.saveCredentials(urlControllerText.value,
-          nameControllerText.value, passwordControllerText.value, true);
       Get.toNamed('/boards');
     } else {
       Fluttertoast.showToast(

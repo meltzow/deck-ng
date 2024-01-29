@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
@@ -7,19 +10,18 @@ import 'package:deck_ng/service/Istack_service.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
 import 'package:deck_ng/service/impl/board_service_impl.dart';
 import 'package:deck_ng/service/impl/card_service_impl.dart';
-import 'package:deck_ng/service/impl/credential_service_impl.dart';
 import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
+import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
 
 enum BuildFlavor { production, development, staging, testing }
 
 class Environment {
   static late final BuildFlavor flavor;
 
-  static Future<void> init({@required flavor}) async {
+  static Future<void> init({required flavor}) async {
     Environment.flavor = flavor;
     await initServices();
   }
@@ -29,18 +31,21 @@ class Environment {
   }
 
   static Future<void> initServices() async {
-    await Get.putAsync<ICredentialService>(
-            () => CredentialServiceImpl().init());
+    await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
 
     if (Environment.isDev()) {
-      ICredentialService service = Get.find<ICredentialService>();
+      IStorageService service = Get.find<IStorageService>();
       if (!service.hasAccount()) {
-        service.saveCredentials(
-            "http://192.168.178.49:8080", "admin", "admin", true);
+        var a = Account(
+            username: "admin",
+            password: "admin",
+            authData: 'Basic ${base64.encode(utf8.encode('admin:admin'))}',
+            url: "http://192.168.178.49:8080",
+            isAuthenticated: false);
+        service.saveAccount(a);
       }
     }
-    await Get.putAsync<ICredentialService>(() =>
-        CredentialServiceImpl().init());
+    await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
     Get.lazyPut<IHttpService>(() => HttpService());
     Get.lazyPut<IAuthService>(() => AuthServiceImpl());
     Get.lazyPut<IBoardService>(() => BoardServiceImpl());

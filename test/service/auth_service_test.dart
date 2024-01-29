@@ -8,10 +8,10 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 import 'auth_service_test.mocks.dart';
 import 'fake_provider.dart';
 
-@GenerateMocks([IHttpService, ICredentialService])
+@GenerateMocks([IHttpService, IStorageService])
 void main() {
   late IHttpService httpService;
-  late ICredentialService credServiceMock;
+  late IStorageService credServiceMock;
 
   group('authServiceGroup', () {
     setUpAll(() async {
@@ -19,7 +19,7 @@ void main() {
     });
 
     setUp(() {
-      credServiceMock = Get.put<ICredentialService>(MockICredentialService());
+      credServiceMock = Get.put<IStorageService>(MockIStorageService());
       httpService = Get.put(MockIHttpService());
       PathProviderPlatform.instance = FakePathProviderPlatform();
     });

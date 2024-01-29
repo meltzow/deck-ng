@@ -17,7 +17,7 @@ import 'package:mockito/mockito.dart';
 import 'http_matcher.dart';
 import 'http_service_test.mocks.dart';
 
-@GenerateMocks([IAuthService, ICredentialService])
+@GenerateMocks([IAuthService, IStorageService])
 void main() {
   late dio.Dio dioClient;
   late DioAdapter dioAdapter;
@@ -91,7 +91,7 @@ void main() {
       expect(resp3.statusCode, 200);
 
       final authServiceMock = Get.put<IAuthService>(MockIAuthService());
-      Get.put<ICredentialService>(MockICredentialService());
+      Get.put<IStorageService>(MockIStorageService());
       final HttpService service = Get.put(HttpService());
       var response;
       try {
@@ -109,7 +109,7 @@ void main() {
 
     test('test simple GET Request by getting all boards', () async {
       final credServiceMock =
-          Get.put<ICredentialService>(MockICredentialService());
+          Get.put<IStorageService>(MockIStorageService());
       final HttpService service = Get.put(HttpService());
 
       dioAdapter.onGet(
