@@ -23,7 +23,7 @@ class HttpService extends getx.GetxService implements IHttpService {
       headers[HttpHeaders.authorizationHeader] = account!.authData;
     }
 
-    if (path.startsWith('/ocs') || path.startsWith('/index.php/login/v2')) {
+    if (path.contains('/ocs') || path.contains('/index.php/login/v2')) {
       headers['OCS-APIREQUEST'] = "true";
     }
 
