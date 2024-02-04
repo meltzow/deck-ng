@@ -10,6 +10,7 @@ class BoardItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.background,
       child: Column(
         children: <Widget>[
           ListTile(

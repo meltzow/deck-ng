@@ -11,7 +11,7 @@ class Board {
   final int? shared;
   final DateTime? deletedAt;
   final DateTime? lastModified;
-  List<Label>? labels;
+  late List<Label> labels;
 
   Board(
       {required this.title,
@@ -22,7 +22,8 @@ class Board {
       this.deletedAt,
       this.lastModified,
       required this.id,
-      this.labels});
+      List<Label>? labels})
+      : labels = labels ?? [];
 
   factory Board.fromJson(Map<String, dynamic> json) {
     var labels = json.containsKey('labels') && json['labels'] != null

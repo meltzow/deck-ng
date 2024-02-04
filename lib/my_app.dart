@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'deck NG',
       theme:
           ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),
-      initialRoute: initialRoute ?? '/auth/login',
+      initialRoute: initialRoute ?? '/',
       getPages: [
         GetPage(
             name: '/',

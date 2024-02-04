@@ -1,5 +1,6 @@
 import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
+import 'package:deck_ng/model/label.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -238,14 +239,18 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   ListTile(
                                     title: MultiSelectBottomSheetField(
-                                        title: Text('select labels'.tr),
-                                        items: controller.allLabel!
-                                            .map((e) =>
-                                                MultiSelectItem(e, e.title))
-                                            .toList(),
-                                        listType: MultiSelectListType.CHIP,
-                                        onConfirm: (values) =>
-                                            controller.saveLabels(values)),
+                                      title: Text('select labels'.tr),
+                                      items: controller.allLabel
+                                          .map((e) => MultiSelectItem<Label>(
+                                              e, e.title))
+                                          .toList(),
+                                      listType: MultiSelectListType.CHIP,
+                                      onConfirm: (List<Label> foos) {
+                                        foos;
+                                      },
+                                      // onConfirm: (values) =>
+                                      //     controller.saveLabels(values),
+                                    ),
                                     leading: const Icon(Icons.label, size: 24),
                                   ),
                                 ],
