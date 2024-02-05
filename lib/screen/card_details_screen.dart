@@ -241,11 +241,11 @@ class CardDetailsScreen extends StatelessWidget {
                                     title: MultiSelectBottomSheetField(
                                       title: Text('select labels'.tr),
                                       items: controller.allLabel
-                                          .map((e) => MultiSelectItem<Label>(
-                                              e, e.title))
+                                          .map((label) => MultiSelectItem<Label>(
+                                              label!, label.title))
                                           .toList(),
                                       listType: MultiSelectListType.CHIP,
-                                      onConfirm: (List<Label> foos) {
+                                      onConfirm: (List<Label?> foos) {
                                         foos;
                                       },
                                       // onConfirm: (values) =>

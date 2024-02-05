@@ -31,7 +31,7 @@ class CardDetailsController extends GetxController {
       _descriptionEditingController;
   TextEditingController get titleController => _titleEditingController;
 
-  List<Label> get allLabel => _boardData.value!.labels;
+  List<Label?> get allLabel => _boardData.value!.labels;
 
   @override
   void onClose() {
