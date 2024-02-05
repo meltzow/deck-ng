@@ -120,13 +120,12 @@ void main() {
                 delay: const Duration(milliseconds: 10),
               ));
 
-      when(credServiceMock.getAccount()).thenAnswer((realInvocation) => Future(
-          () => Account(
-              username: 'username',
-              password: 'foobar',
-              authData: 'authData',
-              url: 'http://url.foo',
-              isAuthenticated: true)));
+      when(credServiceMock.getAccount()).thenReturn(Account(
+              'username',
+               'foobar',
+               'authData',
+               'http://url.foo',
+               true));
 
       var response = await service.get('/index.php/apps/deck/api/v1/boards');
       expect(response, isA<Map<String, dynamic>>());

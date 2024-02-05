@@ -35,11 +35,11 @@ void main() {
       //     'http://localhost:1234/login', 'username', 'password', true);
 
       var account = Account(
-          username: 'username',
-          password: 'password',
-          authData: '',
-          url: '',
-          isAuthenticated: false);
+          'username',
+          'password',
+           '',
+          '',
+          false);
 
       var savedAccount = await credentialService.getAccount();
       expect(savedAccount?.password, account.password);
@@ -54,11 +54,11 @@ void main() {
       //     'http://localhost:1234/login/', 'username', 'password', true);
 
       var account = Account(
-          username: 'username',
-          password: 'password',
-          authData: '',
-          url: '',
-          isAuthenticated: false);
+          'username',
+          'password',
+           '',
+          '',
+          false);
 
       var savedAccount = await credentialService.getAccount();
       expect(savedAccount?.password, account.password);

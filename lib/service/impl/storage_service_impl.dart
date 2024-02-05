@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:get/get.dart';
@@ -10,8 +12,8 @@ class StorageServiceImpl extends GetxService implements IStorageService {
   Future<IStorageService> init() async {
     await GetStorage.init();
     _box = GetStorage();
-    if (!_box.hasData(keyUser)) {
-      _box.write(keyUser, {});
+    if (_box.hasData(keyUser)) {
+      _box.remove(keyUser);
     }
     return this;
   }
@@ -22,8 +24,8 @@ class StorageServiceImpl extends GetxService implements IStorageService {
   }
 
   @override
-  Future<Account>? getAccount() async {
-    return Account.fromJson(_box.read(keyUser));
+  Account? getAccount() {
+    return hasAccount() ? Account.fromJson(_box.read(keyUser)) : null ;
   }
 
   @override

@@ -59,4 +59,7 @@ class Meta {
 
 abstract class IAuthService {
   Future<bool> login(String serverUrl, String username, String password);
+
+  bool isAuth();
+
 }

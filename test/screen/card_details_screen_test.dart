@@ -25,12 +25,12 @@ void main() {
 
   testWidgets('show a simple card', (tester) async {
     var resp = Account(
-        username: 'admin',
-        password: 'password',
-        authData: 'authData',
-        url: 'http://localhost',
-        isAuthenticated: true);
-    when(credentialServiceMock.getAccount()).thenAnswer((_) async => resp);
+        'admin',
+        'password',
+         'authData',
+        'http://localhost',
+        true);
+    when(credentialServiceMock.getAccount()).thenReturn(resp);
 
     var lo = await Localization.getLocalizations(tester);
     Environment.init(flavor: BuildFlavor.testing);

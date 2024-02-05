@@ -20,13 +20,13 @@ class AuthServiceImpl extends GetxService implements IAuthService {
   Future<bool> login(String serverUrl, String username, String password) async {
     //just save it, so the framework can use... but not authenticated (=false)
     var a = Account(
-        username: username,
-        password: password,
-        authData: computeAuth(username, password),
-        url: serverUrl.endsWith('/')
+        username,
+        password,
+        computeAuth(username, password),
+        serverUrl.endsWith('/')
             ? serverUrl.substring(0, serverUrl.length - 1)
             : serverUrl,
-        isAuthenticated: false);
+        false);
     await credService.saveAccount(a);
     var resp = await httpService.get(serverUrl + url);
     var apppassword = AppPassword.fromJson(resp);
@@ -35,5 +35,10 @@ class AuthServiceImpl extends GetxService implements IAuthService {
     await credService.saveAccount(a);
 
     return true;
+  }
+
+  @override
+  bool isAuth() {
+    return credService.hasAccount();
   }
 }

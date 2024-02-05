@@ -37,11 +37,11 @@ class Environment {
       IStorageService service = Get.find<IStorageService>();
       if (!service.hasAccount()) {
         var a = Account(
-            username: "admin",
-            password: "admin",
-            authData: 'Basic ${base64.encode(utf8.encode('admin:admin'))}',
-            url: "http://192.168.178.49:8080",
-            isAuthenticated: false);
+            "admin",
+            "admin",
+            'Basic ${base64.encode(utf8.encode('admin:admin'))}',
+            "http://192.168.178.49:8080",
+            false);
         service.saveAccount(a);
       }
     }

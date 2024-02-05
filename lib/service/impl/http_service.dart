@@ -37,7 +37,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   @override
   Future<List<dynamic>> getListResponse(String path) async {
     List<dynamic> response;
-    Account? account = await credService.getAccount();
+    Account? account = credService.getAccount();
     try {
       Response resp = await httpClient.get(
           (account != null ? account.url : '') + path,
@@ -53,7 +53,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   Future<Map<String, dynamic>> get(String path) async {
     dynamic response;
     try {
-      Account? account = await credService.getAccount();
+      Account? account =  credService.getAccount();
       Response resp = await httpClient.get(
           ((account != null && account.isAuthenticated) ? account.url : '') +
               path,

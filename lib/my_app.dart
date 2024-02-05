@@ -6,6 +6,7 @@ import 'package:deck_ng/screen/DashboardScreen.dart';
 import 'package:deck_ng/screen/LoginScreen.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
+import 'package:deck_ng/service/guard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -32,12 +33,18 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/',
             page: () => DashboardScreen(),
+            middlewares: [
+              Guard(), // Add the middleware here
+            ],
             binding: BindingsBuilder(() {
               Get.put<BoardOverviewController>(BoardOverviewController());
             })),
         GetPage(
           name: '/boards/details',
           page: () => KanbanBoardScreen(),
+          middlewares: [
+            Guard(), // Add the middleware here
+          ],
           binding: BindingsBuilder(() {
             Get.lazyPut<BoardDetailsController>(() => BoardDetailsController());
           }),
@@ -45,6 +52,9 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/cards/details',
           page: () => CardDetailsScreen(),
+          middlewares: [
+            Guard(), // Add the middleware here
+          ],
           binding: BindingsBuilder(() {
             Get.lazyPut<CardDetailsController>(() => CardDetailsController());
           }),
