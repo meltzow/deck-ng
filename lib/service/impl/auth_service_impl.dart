@@ -1,19 +1,40 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class AuthServiceImpl extends GetxService implements IAuthService {
-  final httpService = Get.find<IHttpService>();
+  final Dio dioClient = Get.find<Dio>();
   final credService = Get.find<IStorageService>();
 
   final url = '/ocs/v2.php/core/getapppassword';
 
   String computeAuth(username, password) {
     return 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+  }
+
+  Map<String, String> _getHeaders(String path,
+      [Account? account, Object? body]) {
+    var headers = <String, String>{
+      HttpHeaders.acceptHeader: "application/json"
+    };
+    if (account?.authData != null) {
+      headers[HttpHeaders.authorizationHeader] = account!.authData;
+    }
+
+    if (path.contains('/ocs') || path.contains('/index.php/login/v2')) {
+      headers['OCS-APIREQUEST'] = "true";
+    }
+
+    if (body != null) {
+      headers['Content-Type'] = 'application/json';
+    }
+
+    return headers;
   }
 
   @override
@@ -28,8 +49,10 @@ class AuthServiceImpl extends GetxService implements IAuthService {
             : serverUrl,
         false);
     await credService.saveAccount(a);
-    var resp = await httpService.get(serverUrl + url);
-    var apppassword = AppPassword.fromJson(resp);
+
+    var resp = await dioClient.get(serverUrl + url,
+        options: Options(headers: _getHeaders(url, a)));
+    var apppassword = AppPassword.fromJson(resp.data);
     a.password = apppassword.ocs.data.apppassword;
     a.isAuthenticated = true;
     await credService.saveAccount(a);
@@ -39,6 +62,12 @@ class AuthServiceImpl extends GetxService implements IAuthService {
 
   @override
   bool isAuth() {
-    return credService.hasAccount();
+    var auth = credService.getAccount();
+    return auth != null && auth.isAuthenticated;
+  }
+
+  @override
+  Account? getAccount() {
+    return credService.getAccount();
   }
 }

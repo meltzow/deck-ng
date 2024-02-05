@@ -1,4 +1,4 @@
-import 'package:deck_ng/controller/board_overview_controller.dart';
+import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
@@ -16,7 +16,7 @@ void main() {
       () async {
     IBoardService boardRepositoryImplMock =
         Get.put<IBoardService>(MockIBoardService());
-    final controller = Get.put(BoardOverviewController());
+    final controller = Get.put(DashboardController());
     expect(controller.boardDataCount, 0);
 
     /// If you are using it, you can test everything,
@@ -33,7 +33,7 @@ void main() {
     expect(controller.boardDataCount, 1);
 
     /// onClose was called
-    Get.delete<BoardOverviewController>();
+    Get.delete<DashboardController>();
 
     expect(controller.boardDataCount, 1);
   });

@@ -11,7 +11,7 @@ class DashboardData {
   DashboardData({required this.valueName, required this.count});
 }
 
-class BoardOverviewController extends GetxController {
+class DashboardController extends GetxController {
   final RxBool isLoading = RxBool(true);
   final Rx<List<Board>> _boardsData = Rx<List<Board>>([]);
 
@@ -31,10 +31,13 @@ class BoardOverviewController extends GetxController {
   Future<void> refreshData() async {
     isLoading.value = true;
     _boardsData.value = (await _boardRepository.getAllBoards()).obs;
+    computeDashboard();
     isLoading.value = false;
   }
 
   List<DashboardData> computeDashboard() {
-    return [DashboardData(valueName: 'count Boards', count: 13)];
+    return [
+      DashboardData(valueName: '# Boards', count: _boardsData.value.length)
+    ];
   }
 }

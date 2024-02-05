@@ -14,10 +14,11 @@ class BoardItemWidget extends StatelessWidget {
       child: Column(
         children: <Widget>[
           ListTile(
+            leading: CircleAvatar(
+                foregroundColor: Color(int.parse(board.color!, radix: 16))),
             title: Text(
               board.title,
             ),
-            subtitle: Text(board.color.toString()),
             onTap: () {
               Get.toNamed(
                 '/boards/details',

@@ -40,14 +40,14 @@ class Environment {
             "admin",
             "admin",
             'Basic ${base64.encode(utf8.encode('admin:admin'))}',
-            "http://192.168.178.49:8080",
+            "http://192.168.178.81:8080",
             false);
-        service.saveAccount(a);
+        await service.saveAccount(a);
       }
     }
     await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
-    Get.lazyPut<IHttpService>(() => HttpService());
     Get.lazyPut<IAuthService>(() => AuthServiceImpl());
+    Get.lazyPut<IHttpService>(() => HttpService());
     Get.lazyPut<IBoardService>(() => BoardServiceImpl());
     Get.lazyPut<IStackService>(() => StackRepositoryImpl());
     Get.lazyPut<Dio>(() => Dio());

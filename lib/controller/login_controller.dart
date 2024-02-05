@@ -51,8 +51,7 @@ class LoginController extends GetxController {
   }
 
   readAccountData() async {
-    var credService = Get.find<IStorageService>();
-    var account = await credService.getAccount();
+    var account = credService.getAccount();
 
     urlControllerText.value = account != null ? account.url : '';
     urlController.text = urlControllerText.value;

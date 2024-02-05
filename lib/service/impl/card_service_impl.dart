@@ -9,7 +9,7 @@ class CardServiceImpl extends GetxService implements ICardService {
   @override
   Future<Card> createCard(int boardId, int stackId, String title) async {
     dynamic response = await httpService.post(
-        "/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards",
+        "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards",
         {'title': title});
     Card card = Card.fromJson(response);
     return card;

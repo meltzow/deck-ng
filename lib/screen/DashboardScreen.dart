@@ -1,12 +1,12 @@
 import 'package:deck_ng/component/board_item_widget.dart';
 import 'package:deck_ng/component/my_app_bar_widget.dart';
-import 'package:deck_ng/controller/board_overview_controller.dart';
+import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
-  final BoardOverviewController controller =
-      Get.put<BoardOverviewController>(BoardOverviewController());
+  final DashboardController controller =
+      Get.put<DashboardController>(DashboardController());
 
   DashboardScreen({super.key});
 

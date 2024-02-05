@@ -12,9 +12,6 @@ class StorageServiceImpl extends GetxService implements IStorageService {
   Future<IStorageService> init() async {
     await GetStorage.init();
     _box = GetStorage();
-    if (_box.hasData(keyUser)) {
-      _box.remove(keyUser);
-    }
     return this;
   }
 
@@ -25,7 +22,7 @@ class StorageServiceImpl extends GetxService implements IStorageService {
 
   @override
   Account? getAccount() {
-    return hasAccount() ? Account.fromJson(_box.read(keyUser)) : null ;
+    return hasAccount() ? Account.fromJson(_box.read(keyUser)) : null;
   }
 
   @override

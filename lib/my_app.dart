@@ -1,7 +1,7 @@
 import 'package:catcher_2/catcher_2.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
-import 'package:deck_ng/controller/board_overview_controller.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
+import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/screen/DashboardScreen.dart';
 import 'package:deck_ng/screen/LoginScreen.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               Guard(), // Add the middleware here
             ],
             binding: BindingsBuilder(() {
-              Get.put<BoardOverviewController>(BoardOverviewController());
+              Get.put<DashboardController>(DashboardController());
             })),
         GetPage(
           name: '/boards/details',

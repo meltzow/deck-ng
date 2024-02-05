@@ -1,3 +1,4 @@
+import 'package:deck_ng/model/account.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Iauth_service.g.dart';
@@ -62,4 +63,5 @@ abstract class IAuthService {
 
   bool isAuth();
 
+  Account? getAccount();
 }

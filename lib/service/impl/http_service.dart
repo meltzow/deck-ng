@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:deck_ng/service/impl/retry.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart' as getx;
+import 'package:get/get.dart' as getX;
 
-class HttpService extends getx.GetxService implements IHttpService {
-  final credService = getx.Get.find<IStorageService>();
-  final Dio httpClient = getx.Get.find<Dio>();
+class HttpService extends getX.GetxService implements IHttpService {
+  final IAuthService authService = getX.Get.find<IAuthService>();
+  final Dio httpClient = getX.Get.find<Dio>();
 
   HttpService();
 
@@ -37,13 +37,13 @@ class HttpService extends getx.GetxService implements IHttpService {
   @override
   Future<List<dynamic>> getListResponse(String path) async {
     List<dynamic> response;
-    Account? account = credService.getAccount();
+    Account? account = authService.getAccount();
     try {
       Response resp = await httpClient.get(
-          (account != null ? account.url : '') + path,
+          (authService.isAuth() ? account!.url : '') + path,
           options: Options(headers: getHeaders(path, account)));
       response = (returnResponse(resp) as List<dynamic>);
-    } catch (error) {
+    } on DioException catch (error) {
       throw Exception(error.toString());
     }
     return response;
@@ -53,10 +53,9 @@ class HttpService extends getx.GetxService implements IHttpService {
   Future<Map<String, dynamic>> get(String path) async {
     dynamic response;
     try {
-      Account? account =  credService.getAccount();
+      Account? account = authService.getAccount();
       Response resp = await httpClient.get(
-          ((account != null && account.isAuthenticated) ? account.url : '') +
-              path,
+          (authService.isAuth() ? account!.url : '') + path,
           options: Options(headers: getHeaders(path, account)));
       response = returnResponse(resp);
     } catch (error) {
@@ -70,7 +69,7 @@ class HttpService extends getx.GetxService implements IHttpService {
       [dynamic body, bool useAccount = true]) async {
     dynamic response;
     try {
-      Account? account = useAccount ? await credService.getAccount() : null;
+      Account? account = useAccount ? await authService.getAccount() : null;
       var url = account != null ? account.url : '';
       Response resp = await httpClient.post(url + path,
           options: Options(headers: getHeaders(path, account, body)),
@@ -86,7 +85,7 @@ class HttpService extends getx.GetxService implements IHttpService {
   Future<Map<String, dynamic>> put(String path, Object? body) async {
     dynamic response;
     try {
-      Account? account = await credService.getAccount();
+      Account? account = await authService.getAccount();
       var headers = getHeaders(path, account, body);
       Response resp = await httpClient.put(
           (account != null ? account.url : '') + path,
@@ -111,8 +110,8 @@ class HttpService extends getx.GetxService implements IHttpService {
         throw Exception(response.data.toString());
       case 500:
       default:
-        throw Exception('Error occurred while communication with server' +
-            ' with status code : ${response.statusCode}');
+        throw Exception(
+            'Error occurred while communication with server with status code : ${response.statusCode}');
     }
   }
 
