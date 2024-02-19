@@ -31,8 +31,8 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
       ..createdAt = json['createdAt'] as int?
       ..deletedAt = json['deletedAt'] as int?
       ..duedate = json['duedate'] as String?
-      ..labels = (json['labels'] as List<dynamic>?)
-          ?.map((e) => Label.fromJson(e as Map<String, dynamic>))
+      ..labels = (json['labels'] as List<dynamic>)
+          .map((e) => Label.fromJson(e as Map<String, dynamic>))
           .toList()
       ..lastEditor = json['lastEditor'] as String?
       ..lastModified = json['lastModified'] as int?
@@ -51,7 +51,7 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'description': instance.description,
       'duedate': instance.duedate,
       'id': instance.id,
-      'labels': instance.labels?.map((e) => e.toJson()).toList(),
+      'labels': instance.labels.map((e) => e.toJson()).toList(),
       'lastEditor': instance.lastEditor,
       'lastModified': instance.lastModified,
       'order': instance.order,

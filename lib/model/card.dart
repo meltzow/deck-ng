@@ -20,7 +20,7 @@ class Card {
   final String? description;
   String? duedate;
   final int? id;
-  List<Label>? labels;
+  late List<Label> labels;
   String? lastEditor;
   int? lastModified;
   int? order;

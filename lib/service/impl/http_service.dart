@@ -14,7 +14,6 @@ class HttpService extends getX.GetxService implements IHttpService {
 
   HttpService();
 
-
   Map<String, String> getHeaders(String path,
       [Account? account, Object? body]) {
     var headers = <String, String>{
@@ -39,21 +38,21 @@ class HttpService extends getX.GetxService implements IHttpService {
   Future<List<dynamic>> getListResponse(String path) async {
     List<dynamic> response;
     Account? account = authService.getAccount();
-      Response resp = await httpClient.get(
-          (authService.isAuth() ? account!.url : '') + path,
-          options: Options(headers: getHeaders(path, account)));
-      response = (resp.data as List<dynamic>);
+    Response resp = await httpClient.get(
+        (authService.isAuth() ? account!.url : '') + path,
+        options: Options(headers: getHeaders(path, account)));
+    response = (resp.data as List<dynamic>);
     return response;
   }
 
   @override
   Future<Map<String, dynamic>> get(String path) async {
     dynamic response;
-      Account? account = authService.getAccount();
-      Response resp = await httpClient.get(
-          (authService.isAuth() ? account!.url : '') + path,
-          options: Options(headers: getHeaders(path, account)));
-      response = resp.data;
+    Account? account = authService.getAccount();
+    Response resp = await httpClient.get(
+        (authService.isAuth() ? account!.url : '') + path,
+        options: Options(headers: getHeaders(path, account)));
+    response = resp.data;
     return response;
   }
 
@@ -61,28 +60,26 @@ class HttpService extends getX.GetxService implements IHttpService {
   Future<Map<String, dynamic>> post(String path,
       [dynamic body, bool useAccount = true]) async {
     dynamic response;
-      Account? account = useAccount ? await authService.getAccount() : null;
-      var url = account != null ? account.url : '';
-      Response resp = await httpClient.post(url + path,
-          options: Options(headers: getHeaders(path, account, body)),
-          data: body);
-      response = resp.data;
+    Account? account = useAccount ? await authService.getAccount() : null;
+    var url = account != null ? account.url : '';
+    Response resp = await httpClient.post(url + path,
+        options: Options(headers: getHeaders(path, account, body)), data: body);
+    response = resp.data;
     return response;
   }
 
   @override
   Future<Map<String, dynamic>> put(String path, Object? body) async {
     dynamic response;
-      Account? account = await authService.getAccount();
-      var headers = getHeaders(path, account, body);
-      Response resp = await httpClient.put(
-          (account != null ? account.url : '') + path,
-          options: Options(headers: headers),
-          data: body);
-      response = resp.data;
+    Account? account = await authService.getAccount();
+    var headers = getHeaders(path, account, body);
+    Response resp = await httpClient.put(
+        (account != null ? account.url : '') + path,
+        options: Options(headers: headers),
+        data: body);
+    response = resp.data;
     return response;
   }
-
 
   @override
   Future<Response<T>> retry<T>(RequestOptions? ops,
@@ -107,18 +104,17 @@ class HttpService extends getX.GetxService implements IHttpService {
   void onInit() {
     super.onInit();
 
-      httpClient.interceptors.add(CustomInterceptor());
-    }
+    httpClient.interceptors.add(CustomInterceptor());
+  }
 }
 
 class CustomInterceptor extends Interceptor {
-
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
-      if (kDebugMode) {
-        print("onError: ${err.response?.statusCode}");
-      }
-      getX.Get.toNamed('/auth/login');
+    if (kDebugMode) {
+      print("onError: ${err.response?.statusCode}");
+    }
+    getX.Get.toNamed('/auth/login');
     return handler.next(err);
   }
 }

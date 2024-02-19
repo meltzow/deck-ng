@@ -238,15 +238,18 @@ class CardDetailsScreen extends StatelessWidget {
                                     endIndent: 0,
                                   ),
                                   ListTile(
-                                    title: MultiSelectBottomSheetField(
+                                    title: MultiSelectDialogField<Label>(
                                       title: Text('select labels'.tr),
+                                      initialValue: controller.cardData!.labels,
                                       items: controller.allLabel
-                                          .map((label) => MultiSelectItem<Label>(
-                                              label!, label.title))
+                                          .map((label) =>
+                                              MultiSelectItem<Label>(
+                                                  label!, label.title))
                                           .toList(),
                                       listType: MultiSelectListType.CHIP,
-                                      onConfirm: (List<Label?> foos) {
-                                        foos;
+                                      onConfirm: (foos) {
+                                        // foos;
+                                        print(foos);
                                       },
                                       // onConfirm: (values) =>
                                       //     controller.saveLabels(values),

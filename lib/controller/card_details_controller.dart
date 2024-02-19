@@ -18,7 +18,7 @@ class CardDetailsController extends GetxController {
   RxBool isDescriptionEditing = RxBool(false);
   RxBool isTitleEditing = RxBool(false);
   late TextEditingController _descriptionEditingController;
-  TextEditingController _titleEditingController = TextEditingController();
+  final TextEditingController _titleEditingController = TextEditingController();
   late RxString descriptionControllerText = 'Initial Text'.obs;
   late RxString titleControllerText = 'Initial Text'.obs;
 
