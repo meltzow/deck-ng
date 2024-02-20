@@ -5,7 +5,7 @@ import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:deck_ng/service/impl/retry.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as getX;
 
 class HttpService extends getX.GetxService implements IHttpService {
@@ -13,6 +13,7 @@ class HttpService extends getX.GetxService implements IHttpService {
   final Dio httpClient = getX.Get.find<Dio>();
 
   HttpService();
+
 
   Map<String, String> getHeaders(String path,
       [Account? account, Object? body]) {
@@ -132,5 +133,24 @@ class HttpService extends getX.GetxService implements IHttpService {
                   ? ops.headers[RetryOptions.retryHeader] + 1
                   : 1;
         });
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+      httpClient.interceptors.add(CustomInterceptor());
+    }
+}
+
+class CustomInterceptor extends Interceptor {
+
+  @override
+  Future onError(DioException err, ErrorInterceptorHandler handler) async {
+      if (kDebugMode) {
+        print("onError: ${err.response?.statusCode}");
+      }
+      getX.Get.toNamed('/auth/login');
+    return handler.next(err);
   }
 }
