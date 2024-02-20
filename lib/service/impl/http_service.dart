@@ -39,29 +39,21 @@ class HttpService extends getX.GetxService implements IHttpService {
   Future<List<dynamic>> getListResponse(String path) async {
     List<dynamic> response;
     Account? account = authService.getAccount();
-    try {
       Response resp = await httpClient.get(
           (authService.isAuth() ? account!.url : '') + path,
           options: Options(headers: getHeaders(path, account)));
-      response = (returnResponse(resp) as List<dynamic>);
-    } on DioException catch (error) {
-      throw Exception(error.toString());
-    }
+      response = (resp.data as List<dynamic>);
     return response;
   }
 
   @override
   Future<Map<String, dynamic>> get(String path) async {
     dynamic response;
-    try {
       Account? account = authService.getAccount();
       Response resp = await httpClient.get(
           (authService.isAuth() ? account!.url : '') + path,
           options: Options(headers: getHeaders(path, account)));
-      response = returnResponse(resp);
-    } catch (error) {
-      throw Exception(error.toString());
-    }
+      response = resp.data;
     return response;
   }
 
@@ -69,52 +61,28 @@ class HttpService extends getX.GetxService implements IHttpService {
   Future<Map<String, dynamic>> post(String path,
       [dynamic body, bool useAccount = true]) async {
     dynamic response;
-    try {
       Account? account = useAccount ? await authService.getAccount() : null;
       var url = account != null ? account.url : '';
       Response resp = await httpClient.post(url + path,
           options: Options(headers: getHeaders(path, account, body)),
           data: body);
-      response = returnResponse(resp);
-    } catch (error) {
-      throw Exception(error.toString());
-    }
+      response = resp.data;
     return response;
   }
 
   @override
   Future<Map<String, dynamic>> put(String path, Object? body) async {
     dynamic response;
-    try {
       Account? account = await authService.getAccount();
       var headers = getHeaders(path, account, body);
       Response resp = await httpClient.put(
           (account != null ? account.url : '') + path,
           options: Options(headers: headers),
           data: body);
-      response = returnResponse(resp);
-    } catch (error) {
-      throw Exception(error.toString());
-    }
+      response = resp.data;
     return response;
   }
 
-  @visibleForTesting
-  dynamic returnResponse(Response response) {
-    switch (response.statusCode) {
-      case 200:
-        return response.data;
-      case 400:
-        throw Exception(response.data.toString());
-      case 401:
-      case 403:
-        throw Exception(response.data.toString());
-      case 500:
-      default:
-        throw Exception(
-            'Error occurred while communication with server with status code : ${response.statusCode}');
-    }
-  }
 
   @override
   Future<Response<T>> retry<T>(RequestOptions? ops,

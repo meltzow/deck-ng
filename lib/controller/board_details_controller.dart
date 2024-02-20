@@ -84,9 +84,8 @@ class BoardDetailsController extends GetxController {
 
     selectedStackData!.cards.insert(newIndex, item);
     item.order = orderFromOldIndex! + 1;
-    try {
       var card = await _cardService.updateCard(
           _boardId, _selectedStackId.value!, item.id!, item);
-    } catch (e) {}
+
   }
 }

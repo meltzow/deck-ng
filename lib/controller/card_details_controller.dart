@@ -2,10 +2,12 @@ import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
-import '../model/board.dart';
+import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/model/card.dart' as card;
 
 class CardDetailsController extends GetxController {
   final RxBool isLoading = RxBool(true);
@@ -20,13 +22,13 @@ class CardDetailsController extends GetxController {
   late RxString descriptionControllerText = 'Initial Text'.obs;
   late RxString titleControllerText = 'Initial Text'.obs;
 
-  final Rxn<Card> _cardData = Rxn<Card>();
+  final Rxn<card.Card> _cardData = Rxn<card.Card>();
   final Rxn<Board> _boardData = Rxn<Board>();
 
   final ICardService _cardService = Get.find<ICardService>();
   final IBoardService _boardService = Get.find<IBoardService>();
 
-  Card? get cardData => _cardData.value;
+  card.Card? get cardData => _cardData.value;
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;
   TextEditingController get titleController => _titleEditingController;
@@ -78,6 +80,14 @@ class CardDetailsController extends GetxController {
 
     _cardService.updateCard(
         _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value!);
+    Get.showSnackbar(
+      const GetSnackBar(
+        title: 'Card',
+        message: 'Card Updated Successfully',
+        icon: Icon(Icons.update),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   saveLabels(List<Label> newLabels) async {

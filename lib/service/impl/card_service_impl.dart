@@ -22,6 +22,7 @@ class CardServiceImpl extends GetxService implements ICardService {
         "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId",
         card);
     Card cardResp = Card.fromJson(response);
+
     return cardResp;
   }
 
