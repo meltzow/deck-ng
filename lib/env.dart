@@ -14,26 +14,18 @@ import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
-enum BuildFlavor { production, development, staging, testing }
-
 class Environment {
-  static late final BuildFlavor flavor;
-
-  static Future<void> init({required flavor}) async {
-    Environment.flavor = flavor;
-    await initServices();
+  static Future<void> init() async {
+    await _initServices();
   }
 
-  static bool isDev() {
-    return flavor == BuildFlavor.development;
-  }
-
-  static Future<void> initServices() async {
+  static Future<void> _initServices() async {
     await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
 
-    if (Environment.isDev()) {
+    if (kDebugMode) {
       IStorageService service = Get.find<IStorageService>();
       if (!service.hasAccount()) {
         var a = Account(

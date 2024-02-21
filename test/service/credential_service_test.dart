@@ -20,7 +20,7 @@ void main() {
   group('credentialServiceGroup', () {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
-      Environment.init(flavor: BuildFlavor.staging);
+      Environment.init();
     });
 
     setUp(() {
@@ -34,12 +34,7 @@ void main() {
       // await credentialService.saveAccount(
       //     'http://localhost:1234/login', 'username', 'password', true);
 
-      var account = Account(
-          'username',
-          'password',
-           '',
-          '',
-          false);
+      var account = Account('username', 'password', '', '', false);
 
       var savedAccount = await credentialService.getAccount();
       expect(savedAccount?.password, account.password);
@@ -53,12 +48,7 @@ void main() {
       // await credentialService.saveAccount(
       //     'http://localhost:1234/login/', 'username', 'password', true);
 
-      var account = Account(
-          'username',
-          'password',
-           '',
-          '',
-          false);
+      var account = Account('username', 'password', '', '', false);
 
       var savedAccount = await credentialService.getAccount();
       expect(savedAccount?.password, account.password);

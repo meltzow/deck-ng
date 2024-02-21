@@ -19,7 +19,7 @@ void main() {
   final IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUp(() async {
-    Environment.init(flavor: BuildFlavor.testing);
+    Environment.init();
 
     Get.replace<IHttpService>(MockIHttpService());
     httpServiceMock = Get.find<IHttpService>();

@@ -21,7 +21,7 @@ void main() {
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    Environment.init(flavor: BuildFlavor.testing);
+    Environment.init();
     Get.replace<IStorageService>(MockIStorageService());
     credentialServiceMock = Get.find<IStorageService>();
 

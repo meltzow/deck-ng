@@ -1,10 +1,11 @@
 import 'package:catcher_2/catcher_2.dart';
 import 'package:deck_ng/env.dart';
 import 'package:deck_ng/my_app.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  await Environment.init(flavor: BuildFlavor.production);
+  await Environment.init();
 
   var snackHandler = SnackbarHandler(
     const Duration(seconds: 5),
@@ -36,7 +37,7 @@ Future<void> main() async {
 
   /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
   Catcher2(
-      rootWidget: MyApp(debugShowCheckedModeBanner: false),
+      rootWidget: MyApp(debugShowCheckedModeBanner: kDebugMode ? true : false),
       debugConfig: debugOptions,
       releaseConfig: releaseOptions);
 }

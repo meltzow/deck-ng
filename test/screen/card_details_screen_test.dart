@@ -24,16 +24,12 @@ void main() {
   });
 
   testWidgets('show a simple card', (tester) async {
-    var resp = Account(
-        'admin',
-        'password',
-         'authData',
-        'http://localhost',
-        true);
+    var resp =
+        Account('admin', 'password', 'authData', 'http://localhost', true);
     when(credentialServiceMock.getAccount()).thenReturn(resp);
 
     var lo = await Localization.getLocalizations(tester);
-    Environment.init(flavor: BuildFlavor.testing);
+    Environment.init();
 
     await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
     //Get.toNamed('/cards/details');

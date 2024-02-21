@@ -4,7 +4,7 @@ import 'package:deck_ng/my_app.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  await Environment.init(flavor: BuildFlavor.development);
+  await Environment.init();
 
   var snackHandler = SnackbarHandler(
     const Duration(seconds: 5),
