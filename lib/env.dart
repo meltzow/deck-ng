@@ -38,11 +38,11 @@ class Environment {
       }
     }
     await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
+    Get.lazyPut<Dio>(() => Dio());
     Get.lazyPut<IAuthService>(() => AuthServiceImpl());
     Get.lazyPut<IHttpService>(() => HttpService());
     Get.lazyPut<IBoardService>(() => BoardServiceImpl());
     Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-    Get.lazyPut<Dio>(() => Dio());
     Get.lazyPut<ICardService>(() => CardServiceImpl());
   }
 }

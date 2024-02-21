@@ -1,7 +1,7 @@
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
@@ -62,19 +62,39 @@ class LoginController extends GetxController {
   }
 
   login() async {
-    var successful = await authService.login(urlControllerText.value,
-        nameControllerText.value, passwordControllerText.value);
-    if (successful) {
-      Get.toNamed('/boards');
-    } else {
-      Fluttertoast.showToast(
-          msg: "This is Center Short Toast",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+    var successful = false;
+    try {
+      successful = await authService.login(urlControllerText.value,
+          nameControllerText.value, passwordControllerText.value);
+      if (successful) {
+        Get.toNamed('/boards');
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: 'Login',
+            message: 'Login Successful',
+            icon: Icon(Icons.login),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      } else {
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: 'Login',
+            message: 'Login not Successful',
+            icon: Icon(Icons.update),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Login',
+          message: 'Login not Successful',
+          icon: Icon(Icons.update),
+          duration: Duration(seconds: 3),
+        ),
+      );
     }
   }
 }
