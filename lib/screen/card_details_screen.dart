@@ -19,7 +19,7 @@ class CardDetailsScreen extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.refresh,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.primary,
                 size: 22,
               ),
               onPressed: () {
@@ -27,9 +27,9 @@ class CardDetailsScreen extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.save,
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
                 size: 22,
               ),
               onPressed: () {
@@ -128,7 +128,7 @@ class CardDetailsScreen extends StatelessWidget {
                                                 color: Color(0xff9e9e9e),
                                                 width: 1),
                                           ),
-                                          labelText: "Title",
+                                          labelText: "Title".tr,
                                           labelStyle: const TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontStyle: FontStyle.normal,

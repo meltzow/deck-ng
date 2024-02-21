@@ -17,7 +17,7 @@ class Card {
   int? commentsUnread;
   int? createdAt;
   int? deletedAt;
-  final String? description;
+  String? description;
   String? duedate;
   final int? id;
   late List<Label> labels;

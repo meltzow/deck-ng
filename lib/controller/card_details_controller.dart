@@ -1,13 +1,10 @@
-import 'package:deck_ng/model/card.dart';
+import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/model/card.dart' as card;
 import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/model/card.dart' as card;
 
 class CardDetailsController extends GetxController {
   final RxBool isLoading = RxBool(true);
@@ -17,7 +14,8 @@ class CardDetailsController extends GetxController {
 
   RxBool isDescriptionEditing = RxBool(false);
   RxBool isTitleEditing = RxBool(false);
-  late TextEditingController _descriptionEditingController;
+  final TextEditingController _descriptionEditingController =
+      TextEditingController();
   final TextEditingController _titleEditingController = TextEditingController();
   late RxString descriptionControllerText = 'Initial Text'.obs;
   late RxString titleControllerText = 'Initial Text'.obs;
@@ -47,6 +45,9 @@ class CardDetailsController extends GetxController {
     _titleEditingController.addListener(() {
       titleControllerText.value = _titleEditingController.text;
     });
+    _descriptionEditingController.addListener(() {
+      descriptionControllerText.value = _descriptionEditingController.text;
+    });
 
     super.onInit();
   }
@@ -66,17 +67,16 @@ class CardDetailsController extends GetxController {
     _cardData.value = await _cardService.getCard(
         _boardId.value!, _stackId.value!, _cardId.value!);
     _boardData.value = await _boardService.getBoard(_boardId.value!);
-    descriptionControllerText.value =
-        _cardData.value?.description ?? 'Initial Text';
     titleControllerText.value = _cardData.value!.title;
-    _descriptionEditingController =
-        TextEditingController(text: descriptionControllerText.value);
+    descriptionControllerText.value = _cardData.value!.description ?? '';
     _titleEditingController.text = titleControllerText.value;
+    _descriptionEditingController.text = descriptionControllerText.value;
     isLoading.value = false;
   }
 
   saveCard() {
     _cardData.value!.title = titleControllerText.value;
+    _cardData.value!.description = descriptionControllerText.value;
 
     _cardService.updateCard(
         _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value!);

@@ -71,7 +71,7 @@ class HttpService extends getX.GetxService implements IHttpService {
   @override
   Future<Map<String, dynamic>> put(String path, Object? body) async {
     dynamic response;
-    Account? account = await authService.getAccount();
+    Account? account = authService.getAccount();
     var headers = getHeaders(path, account, body);
     Response resp = await httpClient.put(
         (account != null ? account.url : '') + path,
