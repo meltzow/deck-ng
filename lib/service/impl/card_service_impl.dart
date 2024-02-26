@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
@@ -42,22 +44,20 @@ class CardServiceImpl extends GetxService implements ICardService {
   /// see https://deck.readthedocs.io/en/latest/API/#cards
   /// PUT /boards/{boardId}/stacks/{stackId}/cards/{cardId}/assignLabel
   @override
-  Future<Card> assignLabel2Card(
+  Future<void> assignLabel2Card(
       int boardId, int stackId, int cardId, int labelId) async {
-    dynamic response = await httpService.put(
-        "/boards/{boardId}/stacks/{stackId}/cards/{cardId}/assignLabel",
-        labelId);
-    return Card.fromJson(response);
+    httpService.put<void>(
+        "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId/assignLabel",
+        json.encode({'labelId': labelId}));
   }
 
   /// @see https://deck.readthedocs.io/en/latest/API/#cards
   ///PUT /boards/{boardId}/stacks/{stackId}/cards/{cardId}/removeLabel
   @override
-  Future<Card> removeLabel2Card(
+  Future<void> removeLabel2Card(
       int boardId, int stackId, int cardId, int labelId) async {
-    dynamic response = httpService.put(
-        "/boards/{boardId}/stacks/{stackId}/cards/{cardId}/removeLabel",
-        labelId);
-    return Card.fromJson(response);
+    httpService.put<void>(
+        "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId/removeLabel",
+        json.encode({'labelId': labelId}));
   }
 }

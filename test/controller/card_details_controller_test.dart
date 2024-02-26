@@ -39,7 +39,7 @@ void main() {
     Card resp1 = card..labels.add(labels.first);
     Card resp2 = card..labels.add(labels[1]);
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 1))
-        .thenAnswer((_) async => resp1);
+        .thenAnswer((_) async => null);
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 2))
         .thenAnswer((_) async => resp2);
 

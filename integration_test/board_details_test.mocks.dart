@@ -3,12 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i2;
 
-import 'package:deck_ng/service/Ihttp_service.dart' as _i3;
-import 'package:deck_ng/service/impl/retry.dart' as _i5;
-import 'package:dio/dio.dart' as _i2;
+import 'package:deck_ng/service/Ihttp_service.dart' as _i4;
+import 'package:deck_ng/service/impl/retry.dart' as _i6;
+import 'package:dio/dio.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -23,8 +24,18 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeResponse_0<T1> extends _i1.SmartFake implements _i2.Response<T1> {
-  _FakeResponse_0(
+class _FakeFuture_0<T1> extends _i1.SmartFake implements _i2.Future<T1> {
+  _FakeFuture_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeResponse_1<T1> extends _i1.SmartFake implements _i3.Response<T1> {
+  _FakeResponse_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -36,33 +47,33 @@ class _FakeResponse_0<T1> extends _i1.SmartFake implements _i2.Response<T1> {
 /// A class which mocks [IHttpService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIHttpService extends _i1.Mock implements _i3.IHttpService {
+class MockIHttpService extends _i1.Mock implements _i4.IHttpService {
   MockIHttpService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<Map<String, dynamic>> get(String? path) => (super.noSuchMethod(
+  _i2.Future<Map<String, dynamic>> get(String? path) => (super.noSuchMethod(
         Invocation.method(
           #get,
           [path],
         ),
         returnValue:
-            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i4.Future<Map<String, dynamic>>);
+            _i2.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i2.Future<Map<String, dynamic>>);
 
   @override
-  _i4.Future<List<dynamic>> getListResponse(String? path) =>
+  _i2.Future<List<dynamic>> getListResponse(String? path) =>
       (super.noSuchMethod(
         Invocation.method(
           #getListResponse,
           [path],
         ),
-        returnValue: _i4.Future<List<dynamic>>.value(<dynamic>[]),
-      ) as _i4.Future<List<dynamic>>);
+        returnValue: _i2.Future<List<dynamic>>.value(<dynamic>[]),
+      ) as _i2.Future<List<dynamic>>);
 
   @override
-  _i4.Future<Map<String, dynamic>> post(
+  _i2.Future<Map<String, dynamic>> post(
     String? path, [
     dynamic body,
     bool? useAccount,
@@ -77,11 +88,11 @@ class MockIHttpService extends _i1.Mock implements _i3.IHttpService {
           ],
         ),
         returnValue:
-            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i4.Future<Map<String, dynamic>>);
+            _i2.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i2.Future<Map<String, dynamic>>);
 
   @override
-  _i4.Future<Map<String, dynamic>> put(
+  _i2.Future<T> put<T>(
     String? path,
     dynamic body,
   ) =>
@@ -93,14 +104,35 @@ class MockIHttpService extends _i1.Mock implements _i3.IHttpService {
             body,
           ],
         ),
-        returnValue:
-            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i4.Future<Map<String, dynamic>>);
+        returnValue: _i5.ifNotNull(
+              _i5.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #put,
+                  [
+                    path,
+                    body,
+                  ],
+                ),
+              ),
+              (T v) => _i2.Future<T>.value(v),
+            ) ??
+            _FakeFuture_0<T>(
+              this,
+              Invocation.method(
+                #put,
+                [
+                  path,
+                  body,
+                ],
+              ),
+            ),
+      ) as _i2.Future<T>);
 
   @override
-  _i4.Future<_i2.Response<T>> retry<T>(
-    _i2.RequestOptions? ops, [
-    _i5.RetryOptions? retryOptions,
+  _i2.Future<_i3.Response<T>> retry<T>(
+    _i3.RequestOptions? ops, [
+    _i6.RetryOptions? retryOptions,
   ]) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -110,7 +142,7 @@ class MockIHttpService extends _i1.Mock implements _i3.IHttpService {
             retryOptions,
           ],
         ),
-        returnValue: _i4.Future<_i2.Response<T>>.value(_FakeResponse_0<T>(
+        returnValue: _i2.Future<_i3.Response<T>>.value(_FakeResponse_1<T>(
           this,
           Invocation.method(
             #retry,
@@ -120,5 +152,5 @@ class MockIHttpService extends _i1.Mock implements _i3.IHttpService {
             ],
           ),
         )),
-      ) as _i4.Future<_i2.Response<T>>);
+      ) as _i2.Future<_i3.Response<T>>);
 }

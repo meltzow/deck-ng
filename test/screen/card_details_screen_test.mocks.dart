@@ -149,7 +149,7 @@ class MockICardService extends _i1.Mock implements _i3.ICardService {
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<_i2.Card> assignLabel2Card(
+  _i4.Future<void> assignLabel2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -165,22 +165,12 @@ class MockICardService extends _i1.Mock implements _i3.ICardService {
             labelId,
           ],
         ),
-        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_0(
-          this,
-          Invocation.method(
-            #assignLabel2Card,
-            [
-              boardId,
-              stackId,
-              cardId,
-              labelId,
-            ],
-          ),
-        )),
-      ) as _i4.Future<_i2.Card>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i4.Future<_i2.Card> removeLabel2Card(
+  _i4.Future<void> removeLabel2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -196,19 +186,9 @@ class MockICardService extends _i1.Mock implements _i3.ICardService {
             labelId,
           ],
         ),
-        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_0(
-          this,
-          Invocation.method(
-            #removeLabel2Card,
-            [
-              boardId,
-              stackId,
-              cardId,
-              labelId,
-            ],
-          ),
-        )),
-      ) as _i4.Future<_i2.Card>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [IStorageService].

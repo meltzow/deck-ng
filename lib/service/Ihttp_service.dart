@@ -8,7 +8,7 @@ abstract class IHttpService {
   Future<Map<String, dynamic>> post(String path,
       [dynamic body, bool useAccount]);
 
-  Future<Map<String, dynamic>> put(String path, dynamic body);
+  Future<T> put<T>(String path, dynamic body);
 
   Future<Response<T>> retry<T>(RequestOptions? ops,
       [RetryOptions? retryOptions]);

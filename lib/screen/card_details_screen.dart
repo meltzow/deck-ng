@@ -239,14 +239,13 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   ListTile(
                                     title: MultiSelectDialogField<Label>(
-                                      title: Text('select labels'.tr),
+                                      title: Text('sedlect labels'.tr),
                                       initialValue: controller.cardData!.labels,
                                       items: controller.allLabel
                                           .map((label) =>
                                               MultiSelectItem<Label>(
                                                   label!, label.title))
                                           .toList(),
-                                      listType: MultiSelectListType.CHIP,
                                       onConfirm: (List<Label> labels) {
                                         controller.saveLabels(labels);
                                       },

@@ -109,13 +109,14 @@ class CardDetailsController extends GetxController {
         _cardData.value!.labels.toSet().difference(selectedLabels.toSet());
 
     for (var element in newLabels) {
-      _cardData.value = await _cardService.assignLabel2Card(
+      await _cardService.assignLabel2Card(
           _boardId.value!, _stackId.value!, _cardId.value!, element.id!);
     }
 
     for (var element in removeLabels) {
-      _cardData.value = await _cardService.removeLabel2Card(
+      await _cardService.removeLabel2Card(
           _boardId.value!, _stackId.value!, _cardId.value!, element.id!);
     }
+    _cardData.value?.labels = selectedLabels;
   }
 }
