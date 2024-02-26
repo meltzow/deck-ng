@@ -10,6 +10,7 @@ class CardDetailsController extends GetxController {
   final RxBool isLoading = RxBool(true);
   final RxnInt _boardId = RxnInt();
   final RxnInt _stackId = RxnInt();
+
   final RxnInt _cardId = RxnInt();
 
   RxBool isDescriptionEditing = RxBool(false);
@@ -17,21 +18,33 @@ class CardDetailsController extends GetxController {
   final TextEditingController _descriptionEditingController =
       TextEditingController();
   final TextEditingController _titleEditingController = TextEditingController();
-  late RxString descriptionControllerText = 'Initial Text'.obs;
-  late RxString titleControllerText = 'Initial Text'.obs;
+  late RxString descriptionControllerText = ''.obs;
+  late RxString titleControllerText = ''.obs;
 
-  final Rxn<card.Card> _cardData = Rxn<card.Card>();
+  late final Rxn<card.Card> _cardData = Rxn<card.Card>();
   final Rxn<Board> _boardData = Rxn<Board>();
 
   final ICardService _cardService = Get.find<ICardService>();
   final IBoardService _boardService = Get.find<IBoardService>();
 
   card.Card? get cardData => _cardData.value;
+
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;
   TextEditingController get titleController => _titleEditingController;
 
   List<Label?> get allLabel => _boardData.value!.labels;
+
+  @visibleForTesting
+  set boardId(int boardId) => _boardId.value = boardId;
+  @visibleForTesting
+  set stackId(int stackId) => _stackId.value = stackId;
+
+  @visibleForTesting
+  set cardId(int cardId) => _cardId.value = cardId;
+
+  @visibleForTesting
+  set cardData(card.Card? card) => _cardData.value = card;
 
   @override
   void onClose() {
@@ -55,7 +68,6 @@ class CardDetailsController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-
     _boardId.value = Get.arguments['boardId'] as int;
     _stackId.value = Get.arguments['stackId'] as int;
     _cardId.value = Get.arguments['cardId'] as int;
@@ -90,9 +102,20 @@ class CardDetailsController extends GetxController {
     );
   }
 
-  saveLabels(List<Label> newLabels) async {
-    _cardData.value?.labels = newLabels;
-    await _cardService.updateCard(
-        _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value!);
+  saveLabels(List<Label> selectedLabels) async {
+    var newLabels =
+        selectedLabels.toSet().difference(_cardData.value!.labels.toSet());
+    var removeLabels =
+        _cardData.value!.labels.toSet().difference(selectedLabels.toSet());
+
+    for (var element in newLabels) {
+      _cardData.value = await _cardService.assignLabel2Card(
+          _boardId.value!, _stackId.value!, _cardId.value!, element.id!);
+    }
+
+    for (var element in removeLabels) {
+      _cardData.value = await _cardService.removeLabel2Card(
+          _boardId.value!, _stackId.value!, _cardId.value!, element.id!);
+    }
   }
 }

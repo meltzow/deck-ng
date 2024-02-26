@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+part 'label.g.dart';
+
 @JsonSerializable()
 class Label {
   String title;
@@ -19,25 +21,7 @@ class Label {
       this.ETAG,
       this.cardId});
 
-  factory Label.fromJson(Map<String, dynamic> json) {
-    return Label(
-      title: json['title'] as String,
-      color: json['color'] as String,
-      boardId: json['boardId'] as int?,
-      lastModified: json['lastModified'] as int,
-      id: json['id'] as int,
-      ETAG: json['ETAG'] as String?,
-      cardId: json['cardId'] as int?,
-    );
-  }
+  factory Label.fromJson(Map<String, dynamic> json) => _$LabelFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'color': color,
-        'boardId': boardId,
-        'lastModified': lastModified,
-        'id': id,
-        'String': ETAG,
-        'cardId': cardId
-      };
+  Map<String, dynamic> toJson() => _$LabelToJson(this);
 }

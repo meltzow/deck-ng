@@ -36,7 +36,28 @@ class CardServiceImpl extends GetxService implements ICardService {
   Future<Card> getCard(int boardId, int stackId, int cardId) async {
     dynamic response = await httpService.get(
         "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId");
-    Card cardResp = Card.fromJson(response);
-    return cardResp;
+    return Card.fromJson(response);
+  }
+
+  /// see https://deck.readthedocs.io/en/latest/API/#cards
+  /// PUT /boards/{boardId}/stacks/{stackId}/cards/{cardId}/assignLabel
+  @override
+  Future<Card> assignLabel2Card(
+      int boardId, int stackId, int cardId, int labelId) async {
+    dynamic response = await httpService.put(
+        "/boards/{boardId}/stacks/{stackId}/cards/{cardId}/assignLabel",
+        labelId);
+    return Card.fromJson(response);
+  }
+
+  /// @see https://deck.readthedocs.io/en/latest/API/#cards
+  ///PUT /boards/{boardId}/stacks/{stackId}/cards/{cardId}/removeLabel
+  @override
+  Future<Card> removeLabel2Card(
+      int boardId, int stackId, int cardId, int labelId) async {
+    dynamic response = httpService.put(
+        "/boards/{boardId}/stacks/{stackId}/cards/{cardId}/removeLabel",
+        labelId);
+    return Card.fromJson(response);
   }
 }

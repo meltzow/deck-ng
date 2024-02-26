@@ -9,8 +9,11 @@ abstract class ICardService {
 
   Future<void> deleteCard(int boardId, int stackId, int cardId);
 
-  // public assignLabel2Card(boardId: number, stackId: number, cardId: number, labelId: number): Promise<Card> {
-  // public removeLabel2Card(boardId: number, stackId: number, cardId: number, labelId: number): Promise<Card> {
+  Future<Card> assignLabel2Card(
+      int boardId, int stackId, int cardId, int labelId);
+
+  Future<Card> removeLabel2Card(
+      int boardId, int stackId, int cardId, int labelId);
   // public assignUser2Card(boardId: number, stackId: number, cardId: number, userId: string): Promise<Card> {
   // public unassignUser2Card(boardId: number, stackId: number, cardId: number, userId: string): Promise<Card> {
 }

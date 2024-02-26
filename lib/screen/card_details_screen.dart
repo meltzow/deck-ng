@@ -247,9 +247,8 @@ class CardDetailsScreen extends StatelessWidget {
                                                   label!, label.title))
                                           .toList(),
                                       listType: MultiSelectListType.CHIP,
-                                      onConfirm: (foos) {
-                                        // foos;
-                                        print(foos);
+                                      onConfirm: (List<Label> labels) {
+                                        controller.saveLabels(labels);
                                       },
                                       // onConfirm: (values) =>
                                       //     controller.saveLabels(values),

@@ -210,4 +210,66 @@ class MockICardService extends _i1.Mock implements _i8.ICardService {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<_i3.Card> assignLabel2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    int? labelId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #assignLabel2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            labelId,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_1(
+          this,
+          Invocation.method(
+            #assignLabel2Card,
+            [
+              boardId,
+              stackId,
+              cardId,
+              labelId,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
+
+  @override
+  _i5.Future<_i3.Card> removeLabel2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    int? labelId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeLabel2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            labelId,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_1(
+          this,
+          Invocation.method(
+            #removeLabel2Card,
+            [
+              boardId,
+              stackId,
+              cardId,
+              labelId,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
 }
