@@ -72,12 +72,13 @@ dev_dependencies:
   json_serializable: any
 
 flutter_launcher_icons:
-  android: "launcher_icon"
-  #ios: true
-  image_path_android: "assets/icon-foreground.png"
+  android: true
+  ios: true
+  image_path: "assets/images/icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
   adaptive_icon_background: assets/icon-background.png
-  adaptive_icon_foreground: "assets/albums-outline.png"
+  adaptive_icon_foreground: assets/albums-outline.png
 #  web:
 #    generate: true
 #    image_path: "web/icons/icon.png"
