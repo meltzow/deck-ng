@@ -29,7 +29,7 @@ class CardDetailsController extends GetxController {
 
   card.Card? get cardData => _cardData.value;
   
-  List<DateTime?> get dates => [DateTime.now()];
+  DateTime? get dueDate => DateTime.now();
 
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;

@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class CardDetailsScreen extends StatelessWidget {
@@ -239,7 +240,7 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
-                                    title: const Text('duedate'),
+                                    title: Text(DateFormat.MMMMEEEEd().format(controller.dueDate!)),
                                     leading:
                                         const Icon(Icons.calendar_month, size: 24),
                                     onTap: () async {
@@ -249,7 +250,7 @@ class CardDetailsScreen extends StatelessWidget {
                                         config:
                                             CalendarDatePicker2WithActionButtonsConfig(),
                                         dialogSize: const Size(325, 400),
-                                        value: controller.dates,
+                                        value: [controller.dueDate],
                                         borderRadius: BorderRadius.circular(15),
                                       );
                                     },
