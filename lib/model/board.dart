@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:deck_ng/model/label.dart';
+import 'package:get/get.dart';
 
 class Board {
   final String title;
@@ -50,6 +51,10 @@ class Board {
         'title': title,
         'id': id,
         'color': color,
-        'labels': labels?.map((e) => e.toJson()).toList()
+        'labels': labels.map((e) => e.toJson()).toList()
       };
+
+  Label? findLabelById(int id) {
+    return labels.firstWhereOrNull((element) => element.id == id);
+  }
 }

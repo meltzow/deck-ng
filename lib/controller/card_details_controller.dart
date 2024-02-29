@@ -1,10 +1,10 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart' as card;
-import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 
 class CardDetailsController extends GetxController {
   final RxBool isLoading = RxBool(true);
@@ -33,7 +33,21 @@ class CardDetailsController extends GetxController {
       _descriptionEditingController;
   TextEditingController get titleController => _titleEditingController;
 
-  List<Label?> get allLabel => _boardData.value!.labels;
+  List<ValueItem<int>> get allLabelValueItems {
+    var items = <ValueItem<int>>[];
+    for (var label in _boardData.value!.labels) {
+      items.add(ValueItem(label: label.title, value: label.id));
+    }
+    return items;
+  }
+
+  List<ValueItem<int>> get selectedLabelValueItems {
+    var items = <ValueItem<int>>[];
+    for (var label in _cardData.value!.labels) {
+      items.add(ValueItem(label: label.title, value: label.id));
+    }
+    return items;
+  }
 
   @visibleForTesting
   set boardId(int boardId) => _boardId.value = boardId;
@@ -102,21 +116,39 @@ class CardDetailsController extends GetxController {
     );
   }
 
-  saveLabels(List<Label> selectedLabels) async {
-    var newLabels =
-        selectedLabels.toSet().difference(_cardData.value!.labels.toSet());
-    var removeLabels =
-        _cardData.value!.labels.toSet().difference(selectedLabels.toSet());
+  saveLabels(List<ValueItem<int>> selectedLabels) async {
+    Set<int?> currentLabelIds =
+        (_cardData.value!.labels.map((e) => e.id)).toSet();
+    Set<int?> newLabels =
+        selectedLabels.map((e) => e.value).toSet().difference(currentLabelIds);
 
-    for (var element in newLabels) {
+    Set<int?> removeLabels =
+        currentLabelIds.difference(selectedLabels.map((e) => e.value).toSet());
+
+    _addLabels(newLabels);
+
+    for (var item in removeLabels) {
+      removeLabelByInt(item);
+    }
+  }
+
+  _addLabels(Set<int?> selectedLabel) async {
+    for (var item in selectedLabel) {
       await _cardService.assignLabel2Card(
-          _boardId.value!, _stackId.value!, _cardId.value!, element.id!);
+          _boardId.value!, _stackId.value!, _cardId.value!, item!);
+      _cardData.value?.labels.add(
+          _boardData.value!.labels.firstWhere((element) => element.id == item));
     }
+  }
 
-    for (var element in removeLabels) {
-      await _cardService.removeLabel2Card(
-          _boardId.value!, _stackId.value!, _cardId.value!, element.id!);
-    }
-    _cardData.value?.labels = selectedLabels;
+  removeLabelByInt(int? selectedLabel) async {
+    await _cardService.removeLabel2Card(
+        _boardId.value!, _stackId.value!, _cardId.value!, selectedLabel!);
+    _cardData.value?.labels
+        .remove(_boardData.value!.findLabelById(selectedLabel));
+  }
+
+  removeLabel(ValueItem<int> selectedLabel) async {
+    await removeLabelByInt(selectedLabel.value!);
   }
 }

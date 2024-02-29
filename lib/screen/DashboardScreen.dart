@@ -1,5 +1,4 @@
 import 'package:deck_ng/component/board_item_widget.dart';
-import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,8 +13,8 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      appBar: MyAppBar(
-        title: "Dashboard".tr,
+      appBar: AppBar(
+        title: Text("Dashboard".tr),
         actions: [
           IconButton(
             icon: const Icon(

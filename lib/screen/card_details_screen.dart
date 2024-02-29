@@ -1,20 +1,19 @@
-import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
-import 'package:deck_ng/model/label.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class CardDetailsScreen extends StatelessWidget {
   final controller = Get.find<CardDetailsController>();
+  final MultiSelectController<int> _selectController = MultiSelectController();
 
   CardDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(
-          title: "Card details".tr,
+        appBar: AppBar(
+          title: Text("Card details".tr),
           actions: [
             IconButton(
               icon: Icon(
@@ -238,19 +237,19 @@ class CardDetailsScreen extends StatelessWidget {
                                     endIndent: 0,
                                   ),
                                   ListTile(
-                                    title: MultiSelectDialogField<Label>(
-                                      title: Text('sedlect labels'.tr),
-                                      initialValue: controller.cardData!.labels,
-                                      items: controller.allLabel
-                                          .map((label) =>
-                                              MultiSelectItem<Label>(
-                                                  label!, label.title))
-                                          .toList(),
-                                      onConfirm: (List<Label> labels) {
+                                    title: MultiSelectDropDown<int>(
+                                      padding: const EdgeInsets.all(0),
+                                      controller: _selectController,
+                                      clearIcon: null,
+                                      onOptionSelected:
+                                          (List<ValueItem<int>> labels) {
                                         controller.saveLabels(labels);
                                       },
-                                      // onConfirm: (values) =>
-                                      //     controller.saveLabels(values),
+                                      onOptionRemoved: (index, selectedLabel) =>
+                                          controller.removeLabel(selectedLabel),
+                                      options: controller.allLabelValueItems,
+                                      selectedOptions:
+                                          controller.selectedLabelValueItems,
                                     ),
                                     leading: const Icon(Icons.label, size: 24),
                                   ),

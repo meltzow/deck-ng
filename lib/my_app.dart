@@ -12,10 +12,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
-  String? initialRoute;
-  bool debugShowCheckedModeBanner;
+  final String? initialRoute;
+  final bool debugShowCheckedModeBanner;
 
-  MyApp({super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
+  const MyApp(
+      {super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
 
   // This widget is the root of your application.
   @override

@@ -1,5 +1,4 @@
 import 'package:deck_ng/component/list_view_card_item_widget.dart';
-import 'package:deck_ng/component/my_app_bar_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/screen/add_task_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +15,8 @@ class KanbanBoardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
-        appBar: MyAppBar(
-          title: "Boards details",
+        appBar: AppBar(
+          title: Text("Boards details".tr),
           actions: [
             IconButton(
               onPressed: () {

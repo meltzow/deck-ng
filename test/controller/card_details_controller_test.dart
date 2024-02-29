@@ -8,6 +8,7 @@ import 'package:deck_ng/service/Icard_service.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:multi_dropdown/models/value_item.dart';
 import 'package:test/test.dart';
 
 import 'board_details_controller_test.mocks.dart';
@@ -39,11 +40,12 @@ void main() {
     Card resp1 = card..labels.add(labels.first);
     Card resp2 = card..labels.add(labels[1]);
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 1))
-        .thenAnswer((_) async => null);
+        .thenAnswer((_) async {});
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 2))
         .thenAnswer((_) async => resp2);
 
-    controller.saveLabels(labels);
+    controller.addLabels(
+        labels.map((e) => ValueItem(label: e.title, value: e)).toList());
 
     expect(controller.cardData?.labels.length, labels.length);
   });
