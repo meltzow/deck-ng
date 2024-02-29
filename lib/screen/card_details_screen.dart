@@ -237,8 +237,10 @@ class CardDetailsScreen extends StatelessWidget {
                                     endIndent: 0,
                                   ),
                                   ListTile(
+
+                                    contentPadding: const EdgeInsets.all(0),
                                     title: MultiSelectDropDown<int>(
-                                      padding: const EdgeInsets.all(0),
+                                      dropdownMargin: 0.0,
                                       controller: _selectController,
                                       clearIcon: null,
                                       onOptionSelected:
