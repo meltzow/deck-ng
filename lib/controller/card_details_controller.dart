@@ -28,6 +28,8 @@ class CardDetailsController extends GetxController {
   final IBoardService _boardService = Get.find<IBoardService>();
 
   card.Card? get cardData => _cardData.value;
+  
+  List<DateTime?> get dates => [DateTime.now()];
 
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;

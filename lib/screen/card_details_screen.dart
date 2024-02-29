@@ -1,3 +1,4 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -237,7 +238,53 @@ class CardDetailsScreen extends StatelessWidget {
                                     endIndent: 0,
                                   ),
                                   ListTile(
-
+                                    contentPadding: EdgeInsets.all(0),
+                                    title: Text('duedate'),
+                                    leading:
+                                        Icon(Icons.calendar_month, size: 24),
+                                    onTap: () async {
+                                      var results =
+                                          await showCalendarDatePicker2Dialog(
+                                        context: context,
+                                        config:
+                                            CalendarDatePicker2WithActionButtonsConfig(),
+                                        dialogSize: const Size(325, 400),
+                                        value: controller.dates,
+                                        borderRadius: BorderRadius.circular(15),
+                                      );
+                                    },
+                                  ),
+                                  const Divider(
+                                    color: Color(0xffdddddd),
+                                    height: 20,
+                                    thickness: 0,
+                                    indent: 50,
+                                    endIndent: 0,
+                                  ),
+                                  ListTile(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    title: MultiSelectDropDown<int>(
+                                      clearIcon: null,
+                                      onOptionSelected:
+                                          (List<ValueItem<int>> labels) {
+                                        controller.saveLabels(labels);
+                                      },
+                                      onOptionRemoved: (index, selectedLabel) =>
+                                          controller.removeLabel(selectedLabel),
+                                      options: controller.allLabelValueItems,
+                                      selectedOptions:
+                                          controller.selectedLabelValueItems,
+                                    ),
+                                    leading: const Icon(Icons.label, size: 24),
+                                  ),
+                                  const Divider(
+                                    color: Color(0xffdddddd),
+                                    height: 20,
+                                    thickness: 0,
+                                    indent: 50,
+                                    endIndent: 0,
+                                  ),
+                                  ListTile(
                                     contentPadding: const EdgeInsets.all(0),
                                     title: MultiSelectDropDown<int>(
                                       dropdownMargin: 0.0,
@@ -253,7 +300,7 @@ class CardDetailsScreen extends StatelessWidget {
                                       selectedOptions:
                                           controller.selectedLabelValueItems,
                                     ),
-                                    leading: const Icon(Icons.label, size: 24),
+                                    leading: const Icon(Icons.person, size: 24),
                                   ),
                                 ],
                               )),
