@@ -80,7 +80,7 @@ class CardDetailsScreen extends StatelessWidget {
                                               "https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_960_720.jpg",
                                               fit: BoxFit.cover),
                                         ),
-                                        Container(
+                                      /*  Container(
                                           alignment: Alignment.center,
                                           margin: const EdgeInsets.all(0),
                                           padding: const EdgeInsets.all(0),
@@ -95,7 +95,7 @@ class CardDetailsScreen extends StatelessWidget {
                                             color: Color(0xffffffff),
                                             size: 20,
                                           ),
-                                        ),
+                                        ),*/
                                       ],
                                     ),
                                   ),
