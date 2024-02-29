@@ -1,18 +1,24 @@
-import 'dart:ffi';
-
 import 'package:deck_ng/model/label.dart';
+import 'package:deck_ng/model/user.dart';
 import 'package:get/get.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'board.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Board {
   final String title;
   final String? color;
-  final Bool? archived;
+  final bool? archived;
   final int id;
-  final String? acl;
+  late List? acl;
   final int? shared;
+  @JsonKey(fromJson: _fromJson, toJson: _toJson)
   final DateTime? deletedAt;
+  @JsonKey(fromJson: _fromJson, toJson: _toJson)
   final DateTime? lastModified;
   late List<Label> labels;
+  late List<User> users;
 
   Board(
       {required this.title,
@@ -26,33 +32,14 @@ class Board {
       List<Label>? labels})
       : labels = labels ?? [];
 
-  factory Board.fromJson(Map<String, dynamic> json) {
-    var labels = json.containsKey('labels') && json['labels'] != null
-        ? (json['labels'] as List).map((e) => Label.fromJson(e)).toList()
-        : null;
-    return Board(
-      title: json['title'] as String,
-      id: json['id'] as int,
-      color: json['color'] as String?,
-      // archived: json['archived'] as Bool?,
-      labels: labels,
-      // acl: json['acl'] as String[]?,
+  factory Board.fromJson(Map<String, dynamic> json) => _$BoardFromJson(json);
 
-      // permissions?: BoardPermissions;
-      // users?: Array<User>;
-      // shared: json['shared'] as Int?,
-      // deletedAt:  json['deletedAt'] as DateTime?,
-      // lastModified: json['lastModified'] as DateTime?,
-      // settings:json['settings'] as BoardSettings;
-    );
-  }
+  Map<String, dynamic> toJson() => _$BoardToJson(this);
 
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'id': id,
-        'color': color,
-        'labels': labels.map((e) => e.toJson()).toList()
-      };
+  static DateTime? _fromJson(int int) =>
+      DateTime.fromMillisecondsSinceEpoch(int);
+
+  static int _toJson(DateTime? time) => time!.millisecondsSinceEpoch;
 
   Label? findLabelById(int id) {
     return labels.firstWhereOrNull((element) => element.id == id);

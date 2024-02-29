@@ -8,7 +8,7 @@ import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/service/guard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: debugShowCheckedModeBanner,
       navigatorKey: Catcher2.navigatorKey,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      // localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // supportedLocales: AppLocalizations.supportedLocales,
       title: 'deck NG',
       theme:
           ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),

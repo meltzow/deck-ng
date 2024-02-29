@@ -73,7 +73,6 @@ dev_dependencies:
   json_serializable: any
   devtools_extensions: ^0.0.9
 
-  flutter_gen: any
   path_provider_platform_interface: any
   plugin_platform_interface: any
 flutter_launcher_icons:
