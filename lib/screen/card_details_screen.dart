@@ -238,10 +238,10 @@ class CardDetailsScreen extends StatelessWidget {
                                     endIndent: 0,
                                   ),
                                   ListTile(
-                                    contentPadding: EdgeInsets.all(0),
-                                    title: Text('duedate'),
+                                    contentPadding: const EdgeInsets.all(0),
+                                    title: const Text('duedate'),
                                     leading:
-                                        Icon(Icons.calendar_month, size: 24),
+                                        const Icon(Icons.calendar_month, size: 24),
                                     onTap: () async {
                                       var results =
                                           await showCalendarDatePicker2Dialog(

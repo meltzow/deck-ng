@@ -42,7 +42,7 @@ void main() {
 
   testWidgets('display board details', (WidgetTester tester) async {
     var lo = await Localization.getLocalizations(tester);
-    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
     Get.toNamed('/boards/details', arguments: {'boardId': 1});
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();

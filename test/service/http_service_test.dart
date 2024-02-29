@@ -93,7 +93,7 @@ void main() {
       final authServiceMock = Get.put<IAuthService>(MockIAuthService());
       Get.put<IStorageService>(MockIStorageService());
       final HttpService service = Get.put(HttpService());
-      var response;
+      dio.Response response;
       try {
         var ops =
             dio.RequestOptions(method: 'POST', path: 'https://mock.codes/400');
@@ -102,7 +102,7 @@ void main() {
 
         expect(response, isA());
         expect(response.statusCode, 200);
-      } on dio.DioException catch (error) {
+      } on dio.DioException {
         fail("no exception expected");
       }
     });
@@ -150,7 +150,7 @@ void main() {
         return server.reply(200, null);
       }, headers: {RetryOptions.retryHeader: 3});
 
-      var response;
+      dio.Response response;
       try {
         var ops = dio.RequestOptions(
             method: 'POST',
@@ -162,7 +162,7 @@ void main() {
 
         expect(response, isA());
         expect(response.statusCode, 200);
-      } on dio.DioException catch (error) {
+      } on dio.DioException {
         fail("no exception expected");
       }
     });
@@ -181,7 +181,7 @@ void main() {
         );
       });
 
-      var response;
+      dio.Response response;
       try {
         var ops = dio.RequestOptions(
             method: 'POST',

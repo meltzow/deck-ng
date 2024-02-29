@@ -36,7 +36,7 @@ void main() {
 
       var account = Account('username', 'password', '', '', false);
 
-      var savedAccount = await credentialService.getAccount();
+      var savedAccount = credentialService.getAccount();
       expect(savedAccount?.password, account.password);
       expect(savedAccount?.url, 'http://localhost:1234/login');
     });
@@ -50,7 +50,7 @@ void main() {
 
       var account = Account('username', 'password', '', '', false);
 
-      var savedAccount = await credentialService.getAccount();
+      var savedAccount = credentialService.getAccount();
       expect(savedAccount?.password, account.password);
       expect(savedAccount?.url, 'http://localhost:1234/login');
     });

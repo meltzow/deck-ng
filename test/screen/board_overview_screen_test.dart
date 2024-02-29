@@ -27,7 +27,7 @@ void main() {
     var resp = [Board(title: 'foo', id: 1)];
     when(boardServiceMock.getAllBoards()).thenAnswer((_) async => resp);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(
+    await tester.pumpWidget(const MyApp(
       initialRoute: '/boards',
     ));
 

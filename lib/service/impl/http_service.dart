@@ -60,7 +60,7 @@ class HttpService extends getX.GetxService implements IHttpService {
   Future<Map<String, dynamic>> post(String path,
       [dynamic body, bool useAccount = true]) async {
     dynamic response;
-    Account? account = useAccount ? await authService.getAccount() : null;
+    Account? account = useAccount ? authService.getAccount() : null;
     var url = account != null ? account.url : '';
     Response resp = await httpClient.post(url + path,
         options: Options(headers: getHeaders(path, account, body)), data: body);

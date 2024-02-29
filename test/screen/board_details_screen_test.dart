@@ -35,7 +35,7 @@ void main() {
     when(boardServiceMock.getBoard(1)).thenAnswer((_) async => resp);
     when(stackServiceMock.getAll(1)).thenAnswer((_) async => stacks);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(
+    await tester.pumpWidget(const MyApp(
       initialRoute: '/',
     ));
 

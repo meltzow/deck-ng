@@ -31,7 +31,7 @@ void main() {
     var lo = await Localization.getLocalizations(tester);
     Environment.init();
 
-    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
     //Get.toNamed('/cards/details');
     //await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();

@@ -50,6 +50,7 @@ dependencies:
   multi_dropdown: ^2.1.4
   calendar_date_picker2: ^0.5.5
 
+  flutter_gen: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -72,6 +73,9 @@ dev_dependencies:
   json_serializable: any
   devtools_extensions: ^0.0.9
 
+  flutter_gen: any
+  path_provider_platform_interface: any
+  plugin_platform_interface: any
 flutter_launcher_icons:
   android: true
   ios: true

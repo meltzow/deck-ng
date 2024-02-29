@@ -86,7 +86,7 @@ class LoginController extends GetxController {
           ),
         );
       }
-    } on DioException catch (e) {
+    } on DioException {
       Get.showSnackbar(
         const GetSnackBar(
           title: 'Login',
