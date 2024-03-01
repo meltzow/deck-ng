@@ -1,4 +1,3 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -244,15 +243,14 @@ class CardDetailsScreen extends StatelessWidget {
                                     leading: const Icon(Icons.calendar_month,
                                         size: 24),
                                     onTap: () async {
-                                      var results =
-                                          await showCalendarDatePicker2Dialog(
+                                      var result = await showDatePicker(
                                         context: context,
-                                        config:
-                                            CalendarDatePicker2WithActionButtonsConfig(),
-                                        dialogSize: const Size(325, 400),
-                                        value: [controller.dueDate],
-                                        borderRadius: BorderRadius.circular(15),
+                                        initialDate: controller.dueDate,
+                                        firstDate: DateTime(2017, 1),
+                                        lastDate: DateTime(2027, 7),
+                                        helpText: 'Select a date',
                                       );
+                                      controller.setDueDate(result);
                                     },
                                   ),
                                   const Divider(

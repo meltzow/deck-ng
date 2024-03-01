@@ -1,4 +1,5 @@
 import 'package:deck_ng/model/card.dart';
+import 'package:deck_ng/model/converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'stack.g.dart';
@@ -7,11 +8,11 @@ part 'stack.g.dart';
 class Stack {
   final String title;
   final int? boardId;
-  @JsonKey(fromJson: _fromJson, toJson: _toJson)
+  @EpochDateTimeConverter()
   late DateTime? deletedAt;
-  @JsonKey(fromJson: _fromJson, toJson: _toJson)
+  @EpochDateTimeConverter()
   late DateTime? lastModified;
-  List<Card> cards;
+  List<Card>? cards;
   final int id;
   late int? order;
   late String? ETag;
@@ -26,9 +27,4 @@ class Stack {
   factory Stack.fromJson(Map<String, dynamic> json) => _$StackFromJson(json);
 
   Map<String, dynamic> toJson() => _$StackToJson(this);
-
-  static int _toJson(DateTime? time) => time!.millisecondsSinceEpoch;
-
-  static DateTime? _fromJson(int int) =>
-      DateTime.fromMillisecondsSinceEpoch(int);
 }

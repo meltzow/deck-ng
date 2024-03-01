@@ -30,13 +30,27 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
       ..commentsUnread = json['commentsUnread'] as int?
       ..createdAt = json['createdAt'] as int?
       ..deletedAt = json['deletedAt'] as int?
-      ..duedate = json['duedate'] as String?
+      ..duedate = json['duedate'] == null
+          ? null
+          : DateTime.parse(json['duedate'] as String)
       ..labels = (json['labels'] as List<dynamic>)
           .map((e) => Label.fromJson(e as Map<String, dynamic>))
           .toList()
       ..lastEditor = json['lastEditor'] as String?
       ..lastModified = json['lastModified'] as int?
-      ..overdue = json['overdue'] as int?;
+      ..overdue = json['overdue'] as int?
+      ..done =
+          json['done'] == null ? null : DateTime.parse(json['done'] as String)
+      ..notified = json['notified'] as bool?
+      ..participants = (json['participants'] as List<dynamic>?)
+          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..relatedStack = json['relatedStack'] == null
+          ? null
+          : Stack.fromJson(json['relatedStack'] as Map<String, dynamic>)
+      ..relatedBoard = json['relatedBoard'] == null
+          ? null
+          : Board.fromJson(json['relatedBoard'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'ETag': instance.ETag,
@@ -49,7 +63,7 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'createdAt': instance.createdAt,
       'deletedAt': instance.deletedAt,
       'description': instance.description,
-      'duedate': instance.duedate,
+      'duedate': instance.duedate?.toIso8601String(),
       'id': instance.id,
       'labels': instance.labels.map((e) => e.toJson()).toList(),
       'lastEditor': instance.lastEditor,
@@ -60,4 +74,9 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'stackId': instance.stackId,
       'title': instance.title,
       'type': instance.type,
+      'done': instance.done?.toIso8601String(),
+      'notified': instance.notified,
+      'participants': instance.participants?.map((e) => e.toJson()).toList(),
+      'relatedStack': instance.relatedStack?.toJson(),
+      'relatedBoard': instance.relatedBoard?.toJson(),
     };

@@ -1,6 +1,9 @@
 import 'package:deck_ng/model/assignment.dart';
 import 'package:deck_ng/model/attachment.dart';
+import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/model/converter.dart';
 import 'package:deck_ng/model/label.dart';
+import 'package:deck_ng/model/stack.dart';
 import 'package:deck_ng/model/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,7 +21,7 @@ class Card {
   int? createdAt;
   int? deletedAt;
   String? description;
-  String? duedate;
+  DateTime? duedate;
   final int? id;
   List<Label> labels = [];
   String? lastEditor;
@@ -29,6 +32,11 @@ class Card {
   int? stackId;
   String title;
   String type;
+  DateTime? done;
+  bool? notified;
+  List<User>? participants;
+  Stack? relatedStack;
+  Board? relatedBoard;
 
   Card(
       {required this.title,

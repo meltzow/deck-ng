@@ -30,7 +30,7 @@ class CardDetailsController extends GetxController {
 
   card.Card? get cardData => _cardData.value;
 
-  DateTime? get dueDate => DateTime.now();
+  DateTime? get dueDate => _cardData.value?.duedate;
 
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;
@@ -220,5 +220,11 @@ class CardDetailsController extends GetxController {
         _boardId.value!, _stackId.value!, _cardId.value!, userId);
     _cardData.value?.assignedUsers!
         .removeWhere((element) => element.participant.uid == userId);
+  }
+
+  void setDueDate(DateTime? result) {
+    if (result != null) {
+      _cardData.value!.duedate = result;
+    }
   }
 }

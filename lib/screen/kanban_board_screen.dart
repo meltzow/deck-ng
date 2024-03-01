@@ -58,7 +58,7 @@ class KanbanBoardScreen extends StatelessWidget {
                               footer: Container(),
                               title: controller.stackData[stackIndex].title,
                               items: List.generate(
-                                controller.stackData[stackIndex].cards.length,
+                                controller.stackData[stackIndex].cards!.length,
                                 (cardIndex) => Container(
                                   decoration: BoxDecoration(
                                       color: Colors.white,
@@ -69,7 +69,7 @@ class KanbanBoardScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: ListViewCardItem(
                                       data: controller.stackData[stackIndex]
-                                          .cards[cardIndex],
+                                          .cards?[cardIndex],
                                       index: cardIndex,
                                       boardId: controller.boardId),
                                   //

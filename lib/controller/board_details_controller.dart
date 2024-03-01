@@ -79,13 +79,12 @@ class BoardDetailsController extends GetxController {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    var orderFromOldIndex = selectedStackData?.cards[newIndex].order;
-    final Card item = selectedStackData!.cards.removeAt(oldIndex);
+    var orderFromOldIndex = selectedStackData?.cards?[newIndex].order;
+    final Card item = selectedStackData!.cards!.removeAt(oldIndex);
 
-    selectedStackData!.cards.insert(newIndex, item);
+    selectedStackData!.cards?.insert(newIndex, item);
     item.order = orderFromOldIndex! + 1;
-      var card = await _cardService.updateCard(
-          _boardId, _selectedStackId.value!, item.id!, item);
-
+    var card = await _cardService.updateCard(
+        _boardId, _selectedStackId.value!, item.id!, item);
   }
 }

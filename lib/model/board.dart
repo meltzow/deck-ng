@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:deck_ng/model/converter.dart';
 import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/model/user.dart';
 import 'package:get/get.dart';
@@ -15,9 +16,9 @@ class Board {
   final int id;
   late List? acl;
   final int? shared;
-  @JsonKey(fromJson: _fromJson, toJson: _toJson)
+  @EpochDateTimeConverter()
   final DateTime? deletedAt;
-  @JsonKey(fromJson: _fromJson, toJson: _toJson)
+  @EpochDateTimeConverter()
   final DateTime? lastModified;
   late List<Label> labels;
   late List<User> users;
@@ -37,11 +38,6 @@ class Board {
   factory Board.fromJson(Map<String, dynamic> json) => _$BoardFromJson(json);
 
   Map<String, dynamic> toJson() => _$BoardToJson(this);
-
-  static DateTime? _fromJson(int int) =>
-      DateTime.fromMillisecondsSinceEpoch(int);
-
-  static int _toJson(DateTime? time) => time!.millisecondsSinceEpoch;
 
   Label? findLabelById(int id) {
     return labels.firstWhereOrNull((element) => element.id == id);
