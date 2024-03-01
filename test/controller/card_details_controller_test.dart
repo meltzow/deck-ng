@@ -44,8 +44,8 @@ void main() {
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 2))
         .thenAnswer((_) async => resp2);
 
-    controller.addLabels(
-        labels.map((e) => ValueItem(label: e.title, value: e)).toList());
+    controller.saveLabels(
+        labels.map((e) => ValueItem(label: e.title, value: e.id)).toList());
 
     expect(controller.cardData?.labels.length, labels.length);
   });

@@ -9,7 +9,6 @@ import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import './Localization.dart';
 import 'board_overview_test.mocks.dart';
 
 @GenerateMocks([IHttpService, IStorageService])
@@ -36,7 +35,6 @@ void main() {
   });
 
   testWidgets('display board overview', (WidgetTester tester) async {
-    var lo = await Localization.getLocalizations(tester);
     await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
     Get.toNamed('/boards');
     await Future.delayed(const Duration(seconds: 1), () {});

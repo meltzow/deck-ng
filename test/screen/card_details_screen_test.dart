@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../integration_test/Localization.dart';
 import '../controller/board_details_controller_test.mocks.dart';
 import '../service/auth_service_test.mocks.dart';
 
@@ -28,7 +27,6 @@ void main() {
         Account('admin', 'password', 'authData', 'http://localhost', true);
     when(credentialServiceMock.getAccount()).thenReturn(resp);
 
-    var lo = await Localization.getLocalizations(tester);
     Environment.init();
 
     await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));

@@ -9,7 +9,6 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../test/service/board_service_test.mocks.dart';
-import 'Localization.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
@@ -28,7 +27,6 @@ void main() {
   });
 
   testWidgets('display login screen', (WidgetTester tester) async {
-    var lo = await Localization.getLocalizations(tester);
     await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
