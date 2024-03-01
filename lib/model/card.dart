@@ -10,7 +10,7 @@ part 'card.g.dart';
 class Card {
   String? ETag;
   bool? archived;
-  List<Assignment>? assignedUsers;
+  List<Assignment>? assignedUsers = [];
   int? attachmentCount;
   List<Attachment>? attachments;
   int? commentsCount;

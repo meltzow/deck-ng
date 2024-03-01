@@ -1,3 +1,4 @@
+import 'package:deck_ng/model/assignment.dart';
 import 'package:deck_ng/model/card.dart';
 
 abstract class ICardService {
@@ -14,6 +15,10 @@ abstract class ICardService {
 
   Future<void> removeLabel2Card(
       int boardId, int stackId, int cardId, int labelId);
-  // public assignUser2Card(boardId: number, stackId: number, cardId: number, userId: string): Promise<Card> {
-  // public unassignUser2Card(boardId: number, stackId: number, cardId: number, userId: string): Promise<Card> {
+
+  Future<Assignment> assignUser2Card(
+      int boardId, int stackId, int cardId, String userId);
+
+  Future<Assignment> unassignUser2Card(
+      int boardId, int stackId, int cardId, String userId);
 }

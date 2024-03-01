@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'assignment.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Assignment {
   late int cardId;
   late int id;

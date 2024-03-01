@@ -17,6 +17,6 @@ Map<String, dynamic> _$AssignmentToJson(Assignment instance) =>
     <String, dynamic>{
       'cardId': instance.cardId,
       'id': instance.id,
-      'participant': instance.participant,
+      'participant': instance.participant.toJson(),
       'type': instance.type,
     };

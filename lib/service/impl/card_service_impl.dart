@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:deck_ng/model/assignment.dart';
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
@@ -59,5 +60,29 @@ class CardServiceImpl extends GetxService implements ICardService {
     httpService.put<void>(
         "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId/removeLabel",
         json.encode({'labelId': labelId}));
+  }
+
+  //return this.httpService.put<Card>(`/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}/assignUser`,
+  //         {userId:userId})
+  @override
+  Future<Assignment> assignUser2Card(
+      int boardId, int stackId, int cardId, String userId) async {
+    var responseData = await httpService.put(
+        '/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId/assignUser',
+        json.encode({'userId': userId}));
+
+    return Assignment.fromJson(responseData);
+  }
+
+  //return this.httpService.put<Card>(`/index.php/apps/deck/api/v1/boards/${boardId}/stacks/${stackId}/cards/${cardId}/unassignUser`,
+  //         {userId:userId})
+  @override
+  Future<Assignment> unassignUser2Card(
+      int boardId, int stackId, int cardId, String userId) async {
+    var responseData = await httpService.put(
+        '/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId/unassignUser',
+        json.encode({'userId': userId}));
+
+    return Assignment.fromJson(responseData);
   }
 }

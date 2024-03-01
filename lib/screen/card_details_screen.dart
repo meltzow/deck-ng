@@ -7,7 +7,6 @@ import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class CardDetailsScreen extends StatelessWidget {
   final controller = Get.find<CardDetailsController>();
-  final MultiSelectController<int> _selectController = MultiSelectController();
 
   CardDetailsScreen({super.key});
 
@@ -81,7 +80,7 @@ class CardDetailsScreen extends StatelessWidget {
                                               "https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_960_720.jpg",
                                               fit: BoxFit.cover),
                                         ),
-                                      /*  Container(
+                                        /*  Container(
                                           alignment: Alignment.center,
                                           margin: const EdgeInsets.all(0),
                                           padding: const EdgeInsets.all(0),
@@ -240,9 +239,10 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
-                                    title: Text(DateFormat.MMMMEEEEd().format(controller.dueDate!)),
-                                    leading:
-                                        const Icon(Icons.calendar_month, size: 24),
+                                    title: Text(DateFormat.MMMMEEEEd()
+                                        .format(controller.dueDate!)),
+                                    leading: const Icon(Icons.calendar_month,
+                                        size: 24),
                                     onTap: () async {
                                       var results =
                                           await showCalendarDatePicker2Dialog(
@@ -265,6 +265,7 @@ class CardDetailsScreen extends StatelessWidget {
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
                                     title: MultiSelectDropDown<int>(
+                                      dropdownMargin: 0.0,
                                       clearIcon: null,
                                       onOptionSelected:
                                           (List<ValueItem<int>> labels) {
@@ -287,19 +288,19 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
-                                    title: MultiSelectDropDown<int>(
-                                      dropdownMargin: 0.0,
-                                      controller: _selectController,
+                                    title: MultiSelectDropDown<String>(
                                       clearIcon: null,
                                       onOptionSelected:
-                                          (List<ValueItem<int>> labels) {
-                                        controller.saveLabels(labels);
+                                          (List<ValueItem<String>> assignees) {
+                                        controller.saveUsers(assignees);
                                       },
-                                      onOptionRemoved: (index, selectedLabel) =>
-                                          controller.removeLabel(selectedLabel),
-                                      options: controller.allLabelValueItems,
-                                      selectedOptions:
-                                          controller.selectedLabelValueItems,
+                                      onOptionRemoved: (index,
+                                              selectedAssignee) =>
+                                          controller
+                                              .removeAssignee(selectedAssignee),
+                                      options: controller.allUsersValueItems,
+                                      selectedOptions: controller
+                                          .selectedAssigneesValueItems,
                                     ),
                                     leading: const Icon(Icons.person, size: 24),
                                   ),

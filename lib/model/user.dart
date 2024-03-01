@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
+part 'user.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class User {
   late String primaryKey;
   late String uid;
@@ -13,19 +15,7 @@ class User {
       required this.displayname,
       required this.type});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      primaryKey: json['primaryKey'] as String,
-      uid: json['uid'] as String,
-      displayname: json['displayname'] as String,
-      type: json['type'] as int,
-    );
-  }
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'primaryKey': primaryKey,
-        'uid': uid,
-        'displayname': displayname,
-        'type': type
-      };
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }

@@ -1,3 +1,4 @@
+import 'package:deck_ng/model/assignment.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart' as card;
 import 'package:deck_ng/service/Iboard_service.dart';
@@ -28,7 +29,7 @@ class CardDetailsController extends GetxController {
   final IBoardService _boardService = Get.find<IBoardService>();
 
   card.Card? get cardData => _cardData.value;
-  
+
   DateTime? get dueDate => DateTime.now();
 
   TextEditingController? get descriptionEditingController =>
@@ -47,6 +48,26 @@ class CardDetailsController extends GetxController {
     var items = <ValueItem<int>>[];
     for (var label in _cardData.value!.labels) {
       items.add(ValueItem(label: label.title, value: label.id));
+    }
+    return items;
+  }
+
+  List<ValueItem<String>> get allUsersValueItems {
+    var items = <ValueItem<String>>[];
+    for (var user in _boardData.value!.users) {
+      items.add(ValueItem(label: user.displayname, value: user.uid));
+    }
+    return items;
+  }
+
+  List<ValueItem<String>> get selectedAssigneesValueItems {
+    var items = <ValueItem<String>>[];
+    if (_cardData.value!.assignedUsers == null) {
+      return items;
+    }
+    for (var user in _cardData.value!.assignedUsers!) {
+      items.add(ValueItem(
+          label: user.participant.displayname, value: user.participant.uid));
     }
     return items;
   }
@@ -108,6 +129,10 @@ class CardDetailsController extends GetxController {
 
     _cardService.updateCard(
         _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value!);
+    successMsg();
+  }
+
+  void successMsg() {
     Get.showSnackbar(
       const GetSnackBar(
         title: 'Card',
@@ -132,6 +157,7 @@ class CardDetailsController extends GetxController {
     for (var item in removeLabels) {
       removeLabelByInt(item);
     }
+    successMsg();
   }
 
   _addLabels(Set<int?> selectedLabel) async {
@@ -140,6 +166,14 @@ class CardDetailsController extends GetxController {
           _boardId.value!, _stackId.value!, _cardId.value!, item!);
       _cardData.value?.labels.add(
           _boardData.value!.labels.firstWhere((element) => element.id == item));
+    }
+  }
+
+  _addUsers(Set<String?> selectedUsers) async {
+    for (var userId in selectedUsers) {
+      var assignment = await _cardService.assignUser2Card(
+          _boardId.value!, _stackId.value!, _cardId.value!, userId!);
+      _cardData.value?.assignedUsers?.add(assignment);
     }
   }
 
@@ -152,5 +186,39 @@ class CardDetailsController extends GetxController {
 
   removeLabel(ValueItem<int> selectedLabel) async {
     await removeLabelByInt(selectedLabel.value!);
+  }
+
+  void saveUsers(List<ValueItem<String>> selectedUsers) {
+    Set<Assignment?> currentAssigneeIds =
+        _cardData.value!.assignedUsers!.toSet();
+
+    Set<String?> newUsers = selectedUsers
+        .map((e) => e.value)
+        .toSet()
+        .difference(currentAssigneeIds.map((e) => e?.participant.uid).toSet());
+
+    Set<String?> removableUsers = currentAssigneeIds
+        .map((e) => e?.participant.uid)
+        .toSet()
+        .difference(selectedUsers.map((e) => e.value).toSet());
+
+    _addUsers(newUsers);
+
+    for (var assignee in removableUsers) {
+      _removeAssigneeByUserId(assignee);
+    }
+    successMsg();
+  }
+
+  removeAssignee(ValueItem<String> selectedAssignee) {}
+
+  void _removeAssigneeByUserId(String? userId) async {
+    if (userId == null) {
+      return;
+    }
+    await _cardService.unassignUser2Card(
+        _boardId.value!, _stackId.value!, _cardId.value!, userId);
+    _cardData.value?.assignedUsers!
+        .removeWhere((element) => element.participant.uid == userId);
   }
 }
