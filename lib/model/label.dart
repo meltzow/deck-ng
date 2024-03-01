@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'label.g.dart';
@@ -24,4 +26,6 @@ class Label {
   factory Label.fromJson(Map<String, dynamic> json) => _$LabelFromJson(json);
 
   Map<String, dynamic> toJson() => _$LabelToJson(this);
+
+  Color get color1 => Color(int.parse('0xFF$color'));
 }

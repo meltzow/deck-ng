@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/model/user.dart';
 import 'package:get/get.dart';
@@ -44,4 +46,6 @@ class Board {
   Label? findLabelById(int id) {
     return labels.firstWhereOrNull((element) => element.id == id);
   }
+
+  Color get color1 => Color(int.parse('0xFF$color'));
 }

@@ -1,19 +1,20 @@
-import 'package:deck_ng/model/card.dart' as NCCard;
+import 'package:deck_ng/model/card.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'stack.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Stack {
   final String title;
   final int? boardId;
-  final int? deletedAt;
-  final List<NCCard.Card> cards;
+  @JsonKey(fromJson: _fromJson, toJson: _toJson)
+  late DateTime? deletedAt;
+  @JsonKey(fromJson: _fromJson, toJson: _toJson)
+  late DateTime? lastModified;
+  List<Card> cards;
   final int id;
-
-  // final String? color;
-  // final Bool? archived;
-  // // final Array<String>? labels;
-  // final String? acl;
-  // final Int? shared;
-  // final DateTime? deletedAt;
-  // final DateTime? lastModified;
+  late int? order;
+  late String? ETag;
 
   Stack(
       {required this.title,
@@ -22,39 +23,12 @@ class Stack {
       required this.cards,
       required this.id});
 
-  factory Stack.fromJson(Map<String, dynamic> json) {
-    final cardsData = json['cards'] as List<dynamic>?;
-    final cards = cardsData != null
-        // map each review to a Review object
-        ? cardsData
-            .map((reviewData) => NCCard.Card.fromJson(reviewData))
-            // map() returns an Iterable so we convert it to a List
-            .toList() // use an empty list as fallback value
-        : <NCCard.Card>[];
+  factory Stack.fromJson(Map<String, dynamic> json) => _$StackFromJson(json);
 
-    return Stack(
-      title: json['title'] as String,
-      boardId: json['boardId'] as int?,
-      deletedAt: json['deletedAt'] as int?,
-      // cast to a nullable list as the cards may be missing
-      cards: cards,
-      id: json['id'] as int,
-    );
-  }
+  Map<String, dynamic> toJson() => _$StackToJson(this);
 
-  Map<String, dynamic> toJson() {
-    final cardsJson = cards != null
-        // map each review to a Review object
-        ? cards
-            .map((reviewData) => reviewData.toJson())
-            .toList() // use an empty list as fallback value
-        : [];
+  static int _toJson(DateTime? time) => time!.millisecondsSinceEpoch;
 
-    return {
-      'title': title,
-      'id': id,
-      'deletedAt': deletedAt,
-      'cards': cardsJson
-    };
-  }
+  static DateTime? _fromJson(int int) =>
+      DateTime.fromMillisecondsSinceEpoch(int);
 }

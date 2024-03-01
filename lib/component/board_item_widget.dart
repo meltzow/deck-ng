@@ -9,25 +9,22 @@ class BoardItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).colorScheme.background,
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: CircleAvatar(
-                foregroundColor: Color(int.parse(board.color!, radix: 16))),
-            title: Text(
-              board.title,
+    return GestureDetector(
+        onTap: () => Get.toNamed(
+              '/boards/details',
+              arguments: {'boardId': board.id},
             ),
-            onTap: () {
-              Get.toNamed(
-                '/boards/details',
-                arguments: {'boardId': board.id},
-              );
-            },
-          )
-        ],
-      ),
-    );
+        child: Column(children: [
+          Card(
+            color: board.color1,
+            child: ListTile(
+              title: Text(
+                board.title,
+              ),
+            ),
+          ),
+          CircleAvatar(
+              foregroundColor: Color(int.parse(board.color!, radix: 16)))
+        ]));
   }
 }

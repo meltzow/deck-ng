@@ -72,9 +72,11 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   json_serializable: any
   devtools_extensions: ^0.0.9
-
+  analyzer: ^6.4.1
   path_provider_platform_interface: any
   plugin_platform_interface: any
+
+
 flutter_launcher_icons:
   android: true
   ios: true
