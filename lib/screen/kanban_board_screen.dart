@@ -19,6 +19,16 @@ class KanbanBoardScreen extends StatelessWidget {
           title: Text("Boards details".tr),
           actions: [
             IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Theme.of(context).colorScheme.primary,
+                size: 22,
+              ),
+              onPressed: () {
+                controller.refreshData();
+              },
+            ),
+            IconButton(
               onPressed: () {
                 showModalBottomSheet(
                     context: context,
