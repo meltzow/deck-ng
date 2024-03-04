@@ -1,0 +1,1 @@
+add support for move cards to other stacks, order cards and delete cards

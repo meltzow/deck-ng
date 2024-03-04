@@ -11,7 +11,11 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+update_fastlane
+
+require 'yaml'
+pubspec = YAML.load_file( "../../pubspec.yaml")
+version_name = pubspec['version']
 
 default_platform(:android)
 
@@ -31,8 +35,8 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do |options|
-      ensure_git_branch(branch: 'master')
-      sh "cd .. && ionic cap sync android --prod"
+      ensure_git_branch(branch: 'main')
+      #sh "cd .. && ionic cap sync android --prod"
 
       if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
         previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
@@ -45,12 +49,12 @@ platform :android do
       previous_build_number = [previous_build_number_beta, previous_build_number_prod].max
       current_build_number = previous_build_number + 1
 
-      android_set_version_code(version_code: current_build_number, gradle_file: gradle_file_path)
-      android_set_version_name(version_name: version, gradle_file: gradle_file_path )
+      android_set_version_code(version_code: current_build_number)
+      android_set_version_name(version_name: %Q['#{version_name}'])
+
       gradle(
             task: 'clean bundle',
             build_type: 'Release',
-            project_dir: android_project_dir,
             properties: {
                 "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
                 "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
@@ -59,9 +63,9 @@ platform :android do
               }
           )
       if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
-        upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], skip_upload_apk: true, track: options[:track])
+        upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], skip_upload_apk: true, track: options[:track], aab: '../build/app/outputs/bundle/release/app-release.aab' )
       else
-        upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, track: options[:track])
+        upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, track: options[:track], aab: '../build/app/outputs/bundle/release/app-release.aab')
       end
     end
 
