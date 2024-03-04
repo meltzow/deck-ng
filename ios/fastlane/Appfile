@@ -1,0 +1,7 @@
+app_identifier("net.meltzow.deckng") # The bundle identifier of your app
+apple_id("appstore@meltzow.net") # Your Apple Developer Portal username
+
+itc_provider "F3C769M2C7"
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

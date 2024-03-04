@@ -1,0 +1,104 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+
+require 'yaml'
+pubspec = YAML.load_file( "../../pubspec.yaml")
+version_name = pubspec['version']
+
+scheme = "App"
+
+default_platform(:ios)
+
+platform :ios do
+  lane :build do |options|
+    ensure_git_branch(branch: 'main')
+    setup_ci
+
+    app_store_connect_api_key(key_id: ENV['FASTLANE_APPLE_API_KEY_ID'], issuer_id: ENV['FASTLANE_APPLE_API_ISSUER_ID'], key_content: ENV['FASTLANE_APPLE_API_KEY'])
+
+    if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
+      apple_intermediate_certificate_path = "/tmp/AppleWWDRCAG3.cer"
+      `curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer --output #{apple_intermediate_certificate_path}`
+      import_certificate(keychain_name: "login", certificate_path: apple_intermediate_certificate_path)
+      match(git_url: "https://github.com/meltzow/deck-ng-certs.git" , type: "appstore", git_basic_authorization: ENV['BASE64_BASIC_AUTH_CERTS_REPO'] , readonly: true)
+    else
+      match(git_url: "git@github.com:meltzow/deck-ng-certs.git", type: "appstore", readonly: false)
+    end
+
+    bundle_install
+    #sh "cd .. && ionic cap sync ios --prod"
+
+    increment_version_number(version_number: version_name)
+    previous_build_number_beta = latest_testflight_build_number(app_identifier:ENV["APP_IDENTIFIER"])
+    previous_build_number_prod = app_store_build_number(app_identifier: ENV["APP_IDENTIFIER"])
+    previous_build_number = [previous_build_number_beta, previous_build_number_prod].max
+    current_build_number = previous_build_number + 1
+
+    increment_build_number(build_number: current_build_number)
+
+    build_app(clean: true, scheme: scheme)
+
+    if options[:track] == 'beta'
+      identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+      upload_to_testflight(app_identifier: identifier, skip_waiting_for_build_processing: true, itc_provider: "F3C769M2C7", app_version: version_name )
+    else
+      upload_to_app_store(app_version: version_name, force: true, run_precheck_before_submit: false, submission_information: {
+                                                                add_id_info_uses_idfa: false,
+                                                                export_compliance_platform: 'ios',
+                                                                export_compliance_compliance_required: false,
+                                                                export_compliance_encryption_updated: false,
+                                                                export_compliance_app_type: nil,
+                                                                export_compliance_uses_encryption: false,
+                                                                export_compliance_is_exempt: false,
+                                                                export_compliance_contains_third_party_cryptography: false,
+                                                                export_compliance_contains_proprietary_cryptography: false,
+                                                                export_compliance_available_on_french_store: false
+                                                          },
+                                                           app_review_information: {
+                                                             demo_user: ENV["DEMO_USER"],
+                                                             demo_password: ENV["DEMO_PASSWORD"],
+                                                           })
+    end
+  end
+
+  lane :beta do
+    build(track: 'beta')
+#     update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
+#     update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
+    notification(subtitle: "Finished Building", message: "App uploaded")
+  end
+
+  lane :sim do
+    build_app(clean: true, scheme: scheme, skip_package_ipa: true, skip_archive: true, destination: "platform=iOS Simulator,name=iPhone 12")
+  end
+
+  lane :release do
+    build(track: 'production')
+
+    notification(subtitle: "Finished Building", message: "App uploaded")
+  end
+
+  lane :snapshots do
+    capture_ios_screenshots(scheme: scheme, reinstall_app: true, override_status_bar: true, concurrent_simulators: true, disable_slide_to_type: true)
+   end
+
+   lane :frameit do
+     frame_screenshots(silver: true, path: "./fastlane/screenshots")
+   end
+end
+
+lane :tests_ios do
+  run_tests(scheme: scheme)
+end
