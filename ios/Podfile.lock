@@ -14,7 +14,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - Toast (4.0.0)
+  - Toast (4.1.0)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -51,16 +51,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
+  device_info_plus: c334e08fddd83138bdf7feb7a10440a1d792ee91
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_mailer: 2ef5a67087bc8c6c4cefd04a178bf1ae2c94cd83
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
-  integration_test: 13825b8a9334a850581300559b8839134b124670
-  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
-  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
-  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  package_info_plus: fb4bb05f4f4f09075dd55521ba020cdd4fdabde6
+  path_provider_foundation: 116916d595a31e7196617c1cb96ca23b3952ee78
+  Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: 7be2f5f74864d463a8ad433546ed1de7e0f29aef
 
 COCOAPODS: 1.15.2

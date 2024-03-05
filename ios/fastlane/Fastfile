@@ -17,7 +17,7 @@ require 'yaml'
 pubspec = YAML.load_file( "../../pubspec.yaml")
 version_name = pubspec['version']
 
-scheme = "App"
+scheme = "Runner"
 
 default_platform(:ios)
 
@@ -81,7 +81,7 @@ platform :ios do
   end
 
   lane :sim do
-    build_app(clean: true, scheme: scheme, skip_package_ipa: true, skip_archive: true, destination: "platform=iOS Simulator,name=iPhone 12")
+    build_app(clean: true, scheme: scheme, skip_package_ipa: true, skip_archive: true, destination: "platform=iOS Simulator,name=iPhone 15")
   end
 
   lane :release do
@@ -94,7 +94,7 @@ platform :ios do
     capture_ios_screenshots(scheme: scheme, reinstall_app: true, override_status_bar: true, concurrent_simulators: true, disable_slide_to_type: true)
    end
 
-   lane :frameit do
+   lane :screenshots do
      frame_screenshots(silver: true, path: "./fastlane/screenshots")
    end
 end

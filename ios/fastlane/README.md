@@ -66,10 +66,10 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios frameit
+### ios screenshots
 
 ```sh
-[bundle exec] fastlane ios frameit
+[bundle exec] fastlane ios screenshots
 ```
 
 
