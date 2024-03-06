@@ -48,8 +48,10 @@ dependencies:
   catcher_2: ^1.0.7
   fluttertoast: ^8.2.4
   multi_dropdown: ^2.1.4
-
+  wiredash: ^2.0.0
   flutter_gen: any
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -57,7 +59,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   mockito: ^5.4.1
-  build_runner: ^2.4.5
+  build_runner: ^2.4.8
 #  screenshots:
 #    git:
 #      url: https://github.com/meltzow/screenshots.git
@@ -74,7 +76,6 @@ dev_dependencies:
   analyzer: ^6.2.0
   path_provider_platform_interface: any
   plugin_platform_interface: any
-
 
 flutter_launcher_icons:
   android: true
@@ -132,3 +133,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+dart_define:
+  # REQUIRED: The variables to add to the generated config files
+  variables:
+    - name: WIREDASH_SECRET
+      description: we need the secret from your wiredash.io login
+      required: true

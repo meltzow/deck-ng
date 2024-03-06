@@ -37,7 +37,8 @@ Future<void> main() async {
 
   /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
   Catcher2(
-      rootWidget: const MyApp(debugShowCheckedModeBanner: kDebugMode ? true : false),
+      rootWidget:
+          const MyApp(debugShowCheckedModeBanner: kDebugMode ? true : false),
       debugConfig: debugOptions,
       releaseConfig: releaseOptions);
 }
