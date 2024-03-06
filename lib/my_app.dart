@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     return Wiredash(
         projectId: 'deck-ng-te1kmcw',
         secret: DartDefine.wiredashSecret,
+        collectMetaData: (metaData) => metaData..custom['serverUrl'] = 'foobar',
         child: GetMaterialApp(
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           navigatorKey: Catcher2.navigatorKey,
