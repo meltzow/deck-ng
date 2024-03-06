@@ -8,8 +8,8 @@ import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/service/guard.dart';
+import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -33,8 +33,7 @@ class MyApp extends StatelessWidget {
           // localizationsDelegates: AppLocalizations.localizationsDelegates,
           // supportedLocales: AppLocalizations.supportedLocales,
           title: 'deck NG',
-          theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),
+          theme: myTheme,
           initialRoute: initialRoute ?? '/',
           getPages: [
             GetPage(

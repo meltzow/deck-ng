@@ -63,6 +63,8 @@ class DashboardScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    Icon(controller.dashboardData[index].icon,
+                                        size: 24.0),
                                     Text(
                                       controller.dashboardData[index].count
                                           .toString(),
@@ -76,8 +78,7 @@ class DashboardScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                      padding: const EdgeInsets.all(0),
                                       child: Text(
                                         controller
                                             .dashboardData[index].valueName,
@@ -132,7 +133,7 @@ class DashboardScreen extends StatelessWidget {
                         ? Center(child: Text('loading'.tr))
                         : GridView.builder(
                             shrinkWrap: true,
-                            itemCount: controller.boardDataCount,
+                            itemCount: controller.boardData.length,
                             itemBuilder: (context, index) {
                               return BoardItemWidget(
                                   board: controller.boardData[index]);

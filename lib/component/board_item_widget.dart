@@ -16,15 +16,13 @@ class BoardItemWidget extends StatelessWidget {
             ),
         child: Column(children: [
           Card(
-            color: board.color1,
             child: ListTile(
               title: Text(
                 board.title,
               ),
+              leading: CircleAvatar(backgroundColor: board.color1),
             ),
           ),
-          CircleAvatar(
-              foregroundColor: Color(int.parse(board.color!, radix: 16)))
         ]));
   }
 }
