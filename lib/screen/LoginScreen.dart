@@ -1,6 +1,7 @@
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController controller =
@@ -181,6 +182,28 @@ class LoginScreen extends StatelessWidget {
                           minWidth: 140,
                           child: Text(
                             "Login".tr,
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: MaterialButton(
+                          onPressed: () {
+                            Wiredash.of(context)
+                                .show(inheritMaterialTheme: true);
+                          },
+                          color: Theme.of(context).colorScheme.primary,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          textColor: const Color(0xffffffff),
+                          height: 40,
+                          minWidth: 140,
+                          child: Text(
+                            "feedback".tr,
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
