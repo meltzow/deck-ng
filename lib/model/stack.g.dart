@@ -12,8 +12,9 @@ Stack _$StackFromJson(Map<String, dynamic> json) => Stack(
       deletedAt: _$JsonConverterFromJson<int, DateTime>(
           json['deletedAt'], const EpochDateTimeConverter().fromJson),
       cards: (json['cards'] as List<dynamic>?)
-          ?.map((e) => Card.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => Card.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int,
     )
       ..lastModified = _$JsonConverterFromJson<int, DateTime>(

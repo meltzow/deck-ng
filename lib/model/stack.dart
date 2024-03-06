@@ -12,7 +12,8 @@ class Stack {
   late DateTime? deletedAt;
   @EpochDateTimeConverter()
   late DateTime? lastModified;
-  List<Card>? cards;
+  @JsonKey(defaultValue: [])
+  List<Card>? cards = [];
   final int id;
   late int? order;
   late String? ETag;
