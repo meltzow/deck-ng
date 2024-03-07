@@ -3,6 +3,7 @@ import 'package:deck_ng/model/models.dart' as NC;
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
+import 'package:deck_ng/service/Inotification_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,11 +30,15 @@ class BoardDetailsController extends GetxController {
   final IBoardService _boardService = Get.find<IBoardService>();
   final IStackService _stackService = Get.find<IStackService>();
   final ICardService _cardService = Get.find<ICardService>();
+  final INotificationService _notificationService = Get.find<INotificationService>();
 
   NC.Board? get boardData => _boardsData.value;
 
   @visibleForTesting
   set boardId(int value) => _boardId = value;
+
+  @visibleForTesting
+  set stackData(List<NC.Stack> stacks) => _stackData.value = stacks;
 
   List<NC.Stack> get stackData => _stackData.value;
 
@@ -87,12 +92,12 @@ class BoardDetailsController extends GetxController {
   //   _cardService.createCard(boardId, _selectedStackId.value!, title);
   // }
 
-  void reorder(int selectedStackId, int oldIndex, int newIndex) async {
-    var oldCard = _stackData.value[selectedStackId].cards[newIndex];
+  void reorder(int selectedStackIndex, int oldIndex, int newIndex) async {
+    var oldCard = _stackData.value[selectedStackIndex].cards[newIndex];
 
     NC.Card currentDraggedCard =
-        _stackData.value[selectedStackId].cards.removeAt(oldIndex);
-    _stackData.value[selectedStackId].cards
+        _stackData.value[selectedStackIndex].cards.removeAt(oldIndex);
+    _stackData.value[selectedStackIndex].cards
         .insert(newIndex, currentDraggedCard);
 
     var newOrderValue = 0;
@@ -103,8 +108,8 @@ class BoardDetailsController extends GetxController {
     }
     currentDraggedCard.order = newOrderValue;
 
-    var card1 = await _cardService.updateCard(_boardId, selectedStackId,
-        oldCard.id, currentDraggedCard);
+    var card1 = await _cardService.updateCard(_boardId, currentDraggedCard.stackId,
+        currentDraggedCard.id, currentDraggedCard);
     cardSuccessMsg();
   }
 
@@ -130,13 +135,6 @@ class BoardDetailsController extends GetxController {
   }
 
   void cardSuccessMsg() {
-    Get.showSnackbar(
-      const GetSnackBar(
-        title: 'Card',
-        message: 'Card Updated Successfully',
-        icon: Icon(Icons.update),
-        duration: Duration(seconds: 3),
-      ),
-    );
+    _notificationService.successMsg('Card', 'Card Updated Successfully');
   }
 }
