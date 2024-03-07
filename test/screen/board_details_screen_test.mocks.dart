@@ -222,10 +222,11 @@ class MockICardService extends _i1.Mock implements _i8.ICardService {
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<List<dynamic>> reorderCard(
+  _i5.Future<_i3.Card> reorderCard(
     int? boardId,
     int? oldStackId,
     int? cardId,
+    _i3.Card? card,
     int? newOrder,
     int? newStackId,
   ) =>
@@ -236,12 +237,26 @@ class MockICardService extends _i1.Mock implements _i8.ICardService {
             boardId,
             oldStackId,
             cardId,
+            card,
             newOrder,
             newStackId,
           ],
         ),
-        returnValue: _i5.Future<List<dynamic>>.value(<dynamic>[]),
-      ) as _i5.Future<List<dynamic>>);
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_1(
+          this,
+          Invocation.method(
+            #reorderCard,
+            [
+              boardId,
+              oldStackId,
+              cardId,
+              card,
+              newOrder,
+              newStackId,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
 
   @override
   _i5.Future<void> assignLabel2Card(

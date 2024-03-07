@@ -32,13 +32,6 @@ class BoardDetailsController extends GetxController {
 
   NC.Board? get boardData => _boardsData.value;
 
-  // int? get selectedStackId => _selectedStackId.value;
-
-  // NC.Stack? get selectedStackData => _stackData.value.isNotEmpty
-  //     ? _stackData.value
-  //         .firstWhere((element) => element.id == _selectedStackId.value)
-  //     : null;
-
   @visibleForTesting
   set boardId(int value) => _boardId = value;
 
@@ -70,7 +63,7 @@ class BoardDetailsController extends GetxController {
         debugPrint('Move $groupId:$fromIndex to $groupId:$toIndex');
       },
       onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
-        cardReorderHandler(fromIndex, toIndex, fromGroupId, toGroupId);
+        cardReorderHandler(fromIndex, toIndex, int.parse(fromGroupId) - 1, int.parse(toGroupId) -1 );
         debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
       },
     );
@@ -89,19 +82,6 @@ class BoardDetailsController extends GetxController {
     }
     isLoading.value = false;
   }
-
-  // Future<void> selectStack(int stackId) async {
-  //   _selectedStackId.value = stackId;
-  // }
-
-  // swipeToStack({direction = const {'left': 'right'}}) {
-  //   var idx = _stackData.value
-  //       .indexWhere((element) => element.id == _selectedStackId.value);
-  //   var newIdx = direction == 'left' ? idx - 1 : idx + 1;
-  //   if (_stackData.value.asMap().containsKey(newIdx)) {
-  //     _selectedStackId.value = _stackData.value[newIdx].id;
-  //   }
-  // }
 
   // addCard(String title) {
   //   _cardService.createCard(boardId, _selectedStackId.value!, title);
@@ -123,15 +103,15 @@ class BoardDetailsController extends GetxController {
     }
     currentDraggedCard.order = newOrderValue;
 
-    var card1 = await _cardService.reorderCard(_boardId, selectedStackId,
-        oldCard.id, oldCard, newOrderValue, selectedStackId);
+    var card1 = await _cardService.updateCard(_boardId, selectedStackId,
+        oldCard.id, currentDraggedCard);
     cardSuccessMsg();
   }
 
-  cardReorderHandler(int oldCardIndex, int newCardIndex, String oldListIndex,
-      String newListIndex) async {
+  cardReorderHandler(int oldCardIndex, int newCardIndex, int oldListIndex,
+      int newListIndex) async {
     // find card at old index and old list/stack
-    var card = _stackData.value[int.parse(oldListIndex)].cards[oldCardIndex];
+    var card = _stackData.value[oldListIndex].cards[oldCardIndex];
     var orderMustIncreased = (oldCardIndex < newCardIndex) ? true : false;
     // var neighborCard = _stackData.value[newListIndex].cards[newListIndex]
     // if (orderMustIncreased)
@@ -140,11 +120,11 @@ class BoardDetailsController extends GetxController {
     //save card
     var group = await _cardService.reorderCard(
         _boardId,
-        _stackData.value[int.parse(oldListIndex)].id,
+        _stackData.value[oldListIndex].id,
         card.id,
         card,
         card.order,
-        _stackData.value[int.parse(newListIndex)].id);
+        _stackData.value[newListIndex].id);
 
     cardSuccessMsg();
   }

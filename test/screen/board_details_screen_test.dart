@@ -27,9 +27,9 @@ void main() {
   testWidgets('display board details', (WidgetTester tester) async {
     var resp = Board(title: 'foo', id: 1);
     var stacks = [
-      Stack(title: "todo", cards: [Card(title: "issue 1", id: 1)], id: 1),
+      Stack(title: "todo", cards: [Card(title: "issue 1", id: 1, stackId: 1)], id: 1, boardId: resp.id),
       Stack(
-          title: "in progress", cards: [Card(title: "issue 2", id: 2)], id: 2),
+          title: "in progress", cards: [Card(title: "issue 2", id: 2, stackId: 2)], id: 2, boardId: resp.id),
     ];
     when(boardServiceMock.getAllBoards()).thenAnswer((_) async => [resp]);
     when(boardServiceMock.getBoard(1)).thenAnswer((_) async => resp);

@@ -14,7 +14,7 @@ import 'board_details_controller_test.mocks.dart';
 
 @GenerateMocks([IBoardService, IStackService, ICardService])
 void main() {
-  test('select first available stack successfully', () async {
+  test('reorder must save old card with new order', () async {
     IBoardService boardRepositoryImplMock =
         Get.put<IBoardService>(MockIBoardService());
     var stackServiceMock = Get.put<IStackService>(MockIStackService());
@@ -26,44 +26,23 @@ void main() {
     expect(controller.boardId, 1);
     expect(controller.stackData, []);
 
-    var resp = Board(title: 'foo', id: 1);
+    var board = Board(title: 'foo', id: 1);
     var stack =
-        Stack(title: "offen", cards: [Card(title: "issue1", id: 1)], id: 1);
+        Stack(title: "offen", id: 1, boardId: board.id);
+    var card1 = Card(title: "issue1", id: 1, stackId: 1);
+    var card2 = Card(title: "issue2", id: 2, stackId: 1);
+    stack.cards = [card1, card2];
     var respStack = [stack];
-    when(boardRepositoryImplMock.getBoard(1)).thenAnswer((_) async => resp);
-    when(stackServiceMock.getAll(1)).thenAnswer((_) async => respStack);
 
-    expect(controller.selectedStackId, null);
 
-    await controller.refreshData();
+    when(cardServiceMock.updateCard(board.id, stack.id, card1.id, card1)).thenAnswer((_) async => card1);
 
-    expect(controller.selectedStackData, stack);
-    expect(controller.selectedStackId, 1);
+    controller.reorder(stack.id, 0, 1);
+
+   // expect(controller.selectedStackData, stack);
+   // expect(controller.selectedStackId, 1);
   });
 
-  test('non stack is selected if there are no stackes', () async {
-    IBoardService boardRepositoryImplMock =
-        Get.put<IBoardService>(MockIBoardService());
-    var stackServiceMock = Get.put<IStackService>(MockIStackService());
-    var cardServiceMock = Get.put<ICardService>(MockICardService());
-    final controller = Get.put(BoardDetailsController());
-
-    controller.boardId = 1;
-    expect(controller.boardId, 1);
-    expect(controller.stackData, []);
-
-    var resp = Board(title: 'foo', id: 1);
-    var respStack = <Stack>[];
-    when(boardRepositoryImplMock.getBoard(1)).thenAnswer((_) async => resp);
-    when(stackServiceMock.getAll(1)).thenAnswer((_) async => respStack);
-
-    expect(controller.selectedStackId, null);
-
-    await controller.refreshData();
-
-    expect(controller.selectedStackData, null);
-    expect(controller.selectedStackId, null);
-  });
 
   tearDown(() {
     Get.delete<BoardDetailsController>();

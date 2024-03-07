@@ -5,14 +5,15 @@ import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 
 class CardDetailsController extends GetxController {
   final RxBool isLoading = RxBool(true);
-  final RxnInt _boardId = RxnInt();
-  final RxnInt _stackId = RxnInt();
+  late RxInt _boardId;
+  late RxInt _stackId;
 
-  final RxnInt _cardId = RxnInt();
+  late RxInt _cardId;
 
   RxBool isDescriptionEditing = RxBool(false);
   RxBool isTitleEditing = RxBool(false);
@@ -22,15 +23,22 @@ class CardDetailsController extends GetxController {
   late RxString descriptionControllerText = ''.obs;
   late RxString titleControllerText = ''.obs;
 
-  late final Rxn<card.Card> _cardData = Rxn<card.Card>();
+  late Rx<card.Card> _cardData;
   final Rxn<Board> _boardData = Rxn<Board>();
 
   final ICardService _cardService = Get.find<ICardService>();
   final IBoardService _boardService = Get.find<IBoardService>();
 
-  card.Card? get cardData => _cardData.value;
+  card.Card get cardData => _cardData.value;
 
   DateTime? get dueDate => _cardData.value?.duedate;
+  String get dueDatePreview {
+    if (_cardData.value.duedate != null) {
+      return DateFormat.MMMMEEEEd(Get.locale.toString())
+          .format(_cardData.value.duedate!);
+    }
+    return '';
+  }
 
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;
@@ -81,7 +89,7 @@ class CardDetailsController extends GetxController {
   set cardId(int cardId) => _cardId.value = cardId;
 
   @visibleForTesting
-  set cardData(card.Card? card) => _cardData.value = card;
+  set cardData(card.Card card) => _cardData.value = card;
 
   @override
   void onClose() {
@@ -105,16 +113,16 @@ class CardDetailsController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    _boardId.value = Get.arguments['boardId'] as int;
-    _stackId.value = Get.arguments['stackId'] as int;
-    _cardId.value = Get.arguments['cardId'] as int;
+    _boardId = RxInt(Get.arguments['boardId'] as int);
+    _stackId = RxInt(Get.arguments['stackId'] as int);
+    _cardId = RxInt(Get.arguments['cardId'] as int);
     await refreshData();
   }
 
   Future<void> refreshData() async {
     isLoading.value = true;
-    _cardData.value = await _cardService.getCard(
-        _boardId.value!, _stackId.value!, _cardId.value!);
+    _cardData = (await _cardService.getCard(
+        _boardId.value!, _stackId.value!, _cardId.value!)).obs;
     _boardData.value = await _boardService.getBoard(_boardId.value!);
     titleControllerText.value = _cardData.value!.title;
     descriptionControllerText.value = _cardData.value!.description ?? '';

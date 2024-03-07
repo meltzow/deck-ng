@@ -27,7 +27,7 @@ void main() {
       var labelId = 1;
       var label = Label(title: 'wip', id: labelId);
       var mockResp =
-          (Card(title: 'foo', id: cardId)..labels = [label]).toJson();
+          (Card(title: 'foo', id: cardId, stackId: stackId)..labels = [label]).toJson();
 
       when(httpServiceMock.put(
               "/boards/{boardId}/stacks/{stackId}/cards/{cardId}/assignLabel",

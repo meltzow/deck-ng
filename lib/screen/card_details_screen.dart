@@ -19,9 +19,8 @@ class CardDetailsScreen extends StatelessWidget {
           title: Text("Card details".tr),
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.refresh,
-                color: Theme.of(context).colorScheme.primary,
                 size: 22,
               ),
               onPressed: () {
@@ -29,9 +28,8 @@ class CardDetailsScreen extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.save,
-                color: Theme.of(context).colorScheme.primary,
                 size: 22,
               ),
               onPressed: () {
@@ -241,8 +239,7 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
-                                    title: Text(DateFormat.MMMMEEEEd()
-                                        .format(controller.dueDate!)),
+                                    title: Text(controller.dueDatePreview),
                                     leading: const Icon(Icons.calendar_month,
                                         size: 24),
                                     onTap: () async {

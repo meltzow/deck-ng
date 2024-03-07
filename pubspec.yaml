@@ -45,6 +45,7 @@ dependencies:
   wiredash: ^2.0.0
   flutter_gen: any
   appflowy_board: ^0.1.1
+  intl: any
 
 
 dev_dependencies:
