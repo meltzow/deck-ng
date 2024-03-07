@@ -13,7 +13,8 @@ Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
       json['lastModified'] as int?,
       json['createdAt'] as int?,
       json['createdBy'] as String,
-      json['deletedAt'] as int?,
+      _$JsonConverterFromJson<int, DateTime>(
+          json['deletedAt'], const EpochDateTimeConverter().fromJson),
       ExtendedData.fromJson(json['extendedData'] as Map<String, dynamic>),
       json['id'] as int,
     );
@@ -26,10 +27,23 @@ Map<String, dynamic> _$AttachmentToJson(Attachment instance) =>
       'lastModified': instance.lastModified,
       'createdAt': instance.createdAt,
       'createdBy': instance.createdBy,
-      'deletedAt': instance.deletedAt,
+      'deletedAt': _$JsonConverterToJson<int, DateTime>(
+          instance.deletedAt, const EpochDateTimeConverter().toJson),
       'extendedData': instance.extendedData.toJson(),
       'id': instance.id,
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
 
 ExtendedData _$ExtendedDataFromJson(Map<String, dynamic> json) => ExtendedData(
       json['filesize'] as int?,

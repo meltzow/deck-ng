@@ -8,11 +8,26 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'board.g.dart';
 
+@JsonSerializable()
+class Setting {
+  @JsonKey(name: 'notify-due')
+  late String notifyDue;
+  late bool calendar;
+
+  factory Setting.fromJson(Map<String, dynamic> json) =>
+      _$SettingFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SettingToJson(this);
+
+  Setting();
+}
+
 @JsonSerializable(explicitToJson: true)
 class Board {
   final String title;
   final String? color;
-  final bool? archived;
+  @JsonKey(defaultValue: false)
+  late bool? archived = false;
   final int id;
   late List? acl;
   final int? shared;
@@ -20,8 +35,12 @@ class Board {
   final DateTime? deletedAt;
   @EpochDateTimeConverter()
   final DateTime? lastModified;
-  late List<Label> labels;
+  @JsonKey(defaultValue: [])
+  late List<Label> labels = [];
   late List<User> users;
+  late User owner;
+  late Map<String, bool>? permission;
+  // late Setting? settings;
 
   Board(
       {required this.title,

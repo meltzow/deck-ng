@@ -9,13 +9,13 @@ part of 'card.dart';
 Card _$CardFromJson(Map<String, dynamic> json) => Card(
       title: json['title'] as String,
       description: json['description'] as String?,
-      id: json['id'] as int?,
+      id: json['id'] as int,
       type: json['type'] as String? ?? 'text',
       owner: json['owner'] == null
           ? null
           : User.fromJson(json['owner'] as Map<String, dynamic>),
       order: json['order'] as int?,
-      stackId: json['stackId'] as int?,
+      stackId: json['stackId'] as int,
     )
       ..ETag = json['ETag'] as String?
       ..archived = json['archived'] as bool?
@@ -28,8 +28,10 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
           .toList()
       ..commentsCount = json['commentsCount'] as int?
       ..commentsUnread = json['commentsUnread'] as int?
-      ..createdAt = json['createdAt'] as int?
-      ..deletedAt = json['deletedAt'] as int?
+      ..createdAt = _$JsonConverterFromJson<int, DateTime>(
+          json['createdAt'], const EpochDateTimeConverter().fromJson)
+      ..deletedAt = _$JsonConverterFromJson<int, DateTime>(
+          json['deletedAt'], const EpochDateTimeConverter().fromJson)
       ..duedate = json['duedate'] == null
           ? null
           : DateTime.parse(json['duedate'] as String)
@@ -37,7 +39,8 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
           .map((e) => Label.fromJson(e as Map<String, dynamic>))
           .toList()
       ..lastEditor = json['lastEditor'] as String?
-      ..lastModified = json['lastModified'] as int?
+      ..lastModified = _$JsonConverterFromJson<int, DateTime>(
+          json['lastModified'], const EpochDateTimeConverter().fromJson)
       ..overdue = json['overdue'] as int?
       ..done =
           json['done'] == null ? null : DateTime.parse(json['done'] as String)
@@ -60,14 +63,17 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'attachments': instance.attachments?.map((e) => e.toJson()).toList(),
       'commentsCount': instance.commentsCount,
       'commentsUnread': instance.commentsUnread,
-      'createdAt': instance.createdAt,
-      'deletedAt': instance.deletedAt,
+      'createdAt': _$JsonConverterToJson<int, DateTime>(
+          instance.createdAt, const EpochDateTimeConverter().toJson),
+      'deletedAt': _$JsonConverterToJson<int, DateTime>(
+          instance.deletedAt, const EpochDateTimeConverter().toJson),
       'description': instance.description,
       'duedate': instance.duedate?.toIso8601String(),
       'id': instance.id,
       'labels': instance.labels.map((e) => e.toJson()).toList(),
       'lastEditor': instance.lastEditor,
-      'lastModified': instance.lastModified,
+      'lastModified': _$JsonConverterToJson<int, DateTime>(
+          instance.lastModified, const EpochDateTimeConverter().toJson),
       'order': instance.order,
       'overdue': instance.overdue,
       'owner': instance.owner?.toJson(),
@@ -80,3 +86,15 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
       'relatedStack': instance.relatedStack?.toJson(),
       'relatedBoard': instance.relatedBoard?.toJson(),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

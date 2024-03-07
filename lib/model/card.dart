@@ -18,19 +18,22 @@ class Card {
   List<Attachment>? attachments;
   int? commentsCount;
   int? commentsUnread;
-  int? createdAt;
-  int? deletedAt;
+  @EpochDateTimeConverter()
+  DateTime? createdAt;
+  @EpochDateTimeConverter()
+  DateTime? deletedAt;
   String? description;
   DateTime? duedate;
-  final int? id;
+  final int id;
   List<Label> labels = [];
   String? lastEditor;
-  int? lastModified;
+  @EpochDateTimeConverter()
+  DateTime? lastModified;
   int? order;
   int? overdue;
   late User? owner;
-  int? stackId;
-  String title;
+  late int stackId;
+  late String title = 'plain';
   String type;
   DateTime? done;
   bool? notified;
@@ -45,7 +48,7 @@ class Card {
       this.type = 'text',
       this.owner,
       this.order,
-      this.stackId});
+      required this.stackId});
 
   factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
 

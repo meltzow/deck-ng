@@ -7,22 +7,22 @@ part 'stack.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Stack {
   final String title;
-  final int? boardId;
+  final int boardId;
   @EpochDateTimeConverter()
   late DateTime? deletedAt;
   @EpochDateTimeConverter()
   late DateTime? lastModified;
-  @JsonKey(defaultValue: [])
-  List<Card>? cards = [];
-  final int id;
+  @JsonKey(defaultValue: <Card>[])
+  late List<Card> cards;
+  late int id;
   late int? order;
-  late String? ETag;
+  late String ETag;
 
   Stack(
       {required this.title,
-      this.boardId,
+      required this.boardId,
       this.deletedAt,
-      required this.cards,
+      this.cards = const <Card>[],
       required this.id});
 
   factory Stack.fromJson(Map<String, dynamic> json) => _$StackFromJson(json);
