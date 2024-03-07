@@ -57,6 +57,18 @@ class BoardDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+
+  }
+
+  Future<void> refreshData() async {
+    isLoading.value = true;
+    _boardsData.value = await _boardService.getBoard(_boardId);
+    _stackData.value = (await _stackService.getAll(_boardId))!
+      ..sort((a, b) => a.order!.compareTo(b.order!));
+    // _selectedStackId.value =
+    //     _stackData.value.isNotEmpty ? _stackData.value[0].id : null;
+
     boardController = AppFlowyBoardController(
       onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
         debugPrint('Move item from $fromIndex to $toIndex');
@@ -68,32 +80,15 @@ class BoardDetailsController extends GetxController {
         debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
       },
     );
-    final group1 = AppFlowyGroupData(id: "To Do", items: [
-      TextItem("Card 1"),
-      TextItem("Card 2"),
-    ], name: 'To Do', );
-    group1.draggable = false;
-    final group2 = AppFlowyGroupData(id: "In Progress", items: [
-      TextItem("Card 3"),
-      TextItem("Card 4"),
-    ],       name: "In Progress");
-    group2.draggable = false;
-    final group3 = AppFlowyGroupData(id: "Done", items: [], name: 'Done');
-    group3.draggable = false;
-
-    boardController.addGroup(group1);
-    boardController.addGroup(group2);
-    boardController.addGroup(group3);
-
-  }
-
-  Future<void> refreshData() async {
-    isLoading.value = true;
-    _boardsData.value = await _boardService.getBoard(_boardId);
-    _stackData.value = (await _stackService.getAll(_boardId))!
-      ..sort((a, b) => a.order!.compareTo(b.order!));
-    // _selectedStackId.value =
-    //     _stackData.value.isNotEmpty ? _stackData.value[0].id : null;
+    for (var stack in _stackData.value) {
+      List<AppFlowyGroupItem> items = [];
+      for (var card in stack.cards) {
+        items.add(TextItem(card.title));
+      }
+      final group1 = AppFlowyGroupData(id: stack.id.toString(), items: items, name: stack.title,);
+      group1.draggable = false;
+      boardController.addGroup(group1);
+    }
     isLoading.value = false;
   }
 
