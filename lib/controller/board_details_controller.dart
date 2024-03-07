@@ -1,17 +1,16 @@
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BoardDetailsController extends GetxController {
   final Rxn<Board> _boardsData = Rxn<Board>();
   final Rx<List<NC.Stack>> _stackData = Rx<List<NC.Stack>>([]);
   late final int _boardId;
-  final Rxn<int> _selectedStackId = Rxn();
+  // final Rxn<int> _selectedStackId = Rxn();
   final RxBool isLoading = RxBool(true);
 
   int get boardId => _boardId;
@@ -30,12 +29,12 @@ class BoardDetailsController extends GetxController {
 
   Board? get boardData => _boardsData.value;
 
-  int? get selectedStackId => _selectedStackId.value;
+  // int? get selectedStackId => _selectedStackId.value;
 
-  NC.Stack? get selectedStackData => _stackData.value.isNotEmpty
-      ? _stackData.value
-          .firstWhere((element) => element.id == _selectedStackId.value)
-      : null;
+  // NC.Stack? get selectedStackData => _stackData.value.isNotEmpty
+  //     ? _stackData.value
+  //         .firstWhere((element) => element.id == _selectedStackId.value)
+  //     : null;
 
   @visibleForTesting
   set boardId(int value) => _boardId = value;
@@ -52,39 +51,66 @@ class BoardDetailsController extends GetxController {
   Future<void> refreshData() async {
     isLoading.value = true;
     _boardsData.value = await _boardService.getBoard(_boardId);
-    _stackData.value = (await _stackService.getAll(_boardId))!;
-    _selectedStackId.value =
-        _stackData.value.isNotEmpty ? _stackData.value[0].id : null;
+    _stackData.value = (await _stackService.getAll(_boardId))!
+      ..sort((a, b) => a.order!.compareTo(b.order!));
+    // _selectedStackId.value =
+    //     _stackData.value.isNotEmpty ? _stackData.value[0].id : null;
     isLoading.value = false;
   }
 
-  Future<void> selectStack(int stackId) async {
-    _selectedStackId.value = stackId;
+  // Future<void> selectStack(int stackId) async {
+  //   _selectedStackId.value = stackId;
+  // }
+
+  // swipeToStack({direction = const {'left': 'right'}}) {
+  //   var idx = _stackData.value
+  //       .indexWhere((element) => element.id == _selectedStackId.value);
+  //   var newIdx = direction == 'left' ? idx - 1 : idx + 1;
+  //   if (_stackData.value.asMap().containsKey(newIdx)) {
+  //     _selectedStackId.value = _stackData.value[newIdx].id;
+  //   }
+  // }
+
+  // addCard(String title) {
+  //   _cardService.createCard(boardId, _selectedStackId.value!, title);
+  // }
+
+  // void reorder(int oldIndex, int newIndex) async {
+  //   if (oldIndex < newIndex) {
+  //     newIndex -= 1;
+  //   }
+  //   var orderFromOldIndex = selectedStackData?.cards[newIndex].order;
+  //   final Card item = selectedStackData!.cards.removeAt(oldIndex);
+  //
+  //   selectedStackData!.cards.insert(newIndex, item);
+  //   item.order = orderFromOldIndex! + 1;
+  //   var card = await _cardService.updateCard(
+  //       _boardId, _selectedStackId.value!, item.id, item);
+  // }
+
+  cardReorderHandler(int? oldCardIndex, int? newCardIndex, int? oldListIndex,
+      int? newListIndex) async {
+    // find card at old index and old list/stack
+    var card = _stackData.value[oldListIndex!].cards[oldCardIndex!];
+    var orderMustIncreased = (oldCardIndex < newCardIndex!) ? true : false;
+    // var neighborCard = _stackData.value[newListIndex].cards[newListIndex]
+    // if (orderMustIncreased)
+    // set at card new index and new stack
+    // card.stackId = _stackData.value[newListIndex!].id;
+    //save card
+    await _cardService.reorderCard(_boardId, _stackData.value[oldListIndex].id,
+        card.id, 0, _stackData.value[newListIndex!].id);
+    cardSuccessMsg();
   }
 
-  swipeToStack({direction = const {'left': 'right'}}) {
-    var idx = _stackData.value
-        .indexWhere((element) => element.id == _selectedStackId.value);
-    var newIdx = direction == 'left' ? idx - 1 : idx + 1;
-    if (_stackData.value.asMap().containsKey(newIdx)) {
-      _selectedStackId.value = _stackData.value[newIdx].id;
-    }
-  }
-
-  addCard(String title) {
-    _cardService.createCard(boardId, _selectedStackId.value!, title);
-  }
-
-  void reorder(int oldIndex, int newIndex) async {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
-    var orderFromOldIndex = selectedStackData?.cards?[newIndex].order;
-    final Card item = selectedStackData!.cards!.removeAt(oldIndex);
-
-    selectedStackData!.cards?.insert(newIndex, item);
-    item.order = orderFromOldIndex! + 1;
-    var card = await _cardService.updateCard(
-        _boardId, _selectedStackId.value!, item.id!, item);
+  void cardSuccessMsg() {
+    Get.showSnackbar(
+      const GetSnackBar(
+        title: 'Card',
+        message: 'Card Updated Successfully',
+        icon: Icon(Icons.update),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 }

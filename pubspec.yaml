@@ -40,12 +40,11 @@ dependencies:
   json_annotation: ^4.8.1
   url_launcher: ^6.1.11
   flutter_launcher_icons: ^0.13.1
-  kanban_board:
-    path: ./FlutterKanbanBoard
   catcher_2: ^1.0.7
   multi_dropdown: ^2.1.4
   wiredash: ^2.0.0
   flutter_gen: any
+  appflowy_board: ^0.1.1
 
 
 dev_dependencies:
@@ -68,7 +67,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
   json_serializable: any
-  devtools_extensions: ^0.0.9
+  devtools_extensions: ^0.0.10
   analyzer: ^6.2.0
   path_provider_platform_interface: any
   plugin_platform_interface: any

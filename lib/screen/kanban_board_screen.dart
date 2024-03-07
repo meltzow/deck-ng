@@ -1,4 +1,3 @@
-import 'package:deck_ng/component/add_task_widget.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/list_view_card_item_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
@@ -20,33 +19,31 @@ class KanbanBoardScreen extends StatelessWidget {
           title: Text("Boards details".tr),
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.refresh,
-                color: Theme.of(context).colorScheme.primary,
-                size: 22,
               ),
               onPressed: () {
                 controller.refreshData();
               },
             ),
-            IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SingleChildScrollView(
-                          child: Container(
-                              padding: EdgeInsets.only(
-                                  bottom:
-                                      MediaQuery.of(context).viewInsets.bottom),
-                              child: AddTaskScreen(
-                                onAddTaskClicked: (title) =>
-                                    controller.addCard(title),
-                              )),
-                        ));
-              },
-              icon: const Icon(Icons.add),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     showModalBottomSheet(
+            //         context: context,
+            //         isScrollControlled: true,
+            //         builder: (context) => SingleChildScrollView(
+            //               child: Container(
+            //                   padding: EdgeInsets.only(
+            //                       bottom:
+            //                           MediaQuery.of(context).viewInsets.bottom),
+            //                   child: AddTaskScreen(
+            //                     onAddTaskClicked: (title) =>
+            //                         controller.addCard(title),
+            //                   )),
+            //             ));
+            //   },
+            //   icon: const Icon(Icons.add),
+            // ),
           ],
         ),
         body: RefreshIndicator(
@@ -62,25 +59,44 @@ class KanbanBoardScreen extends StatelessWidget {
                 child: Obx(() => controller.isLoading.value
                     ? const Center(child: Text('loading'))
                     : KanbanBoard(
+                        onItemReorder: (oldCardIndex, newCardIndex,
+                                oldListIndex, newListIndex) =>
+                            controller.cardReorderHandler(oldCardIndex,
+                                newCardIndex, oldListIndex, newListIndex),
                         List.generate(
                           controller.stackData.length,
                           (stackIndex) => BoardListsData(
-                              // header: Container(),
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              header: Container(
+                                width: 250,
+                                padding: const EdgeInsets.only(
+                                    left: 0, bottom: 12, top: 12),
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      controller.stackData[stackIndex].title ??
+                                          '',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               footer: Container(),
-                              title: controller.stackData[stackIndex].title,
                               items: List.generate(
-                                controller.stackData[stackIndex].cards!.length,
+                                controller.stackData[stackIndex].cards.length,
                                 (cardIndex) => Container(
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(4),
-                                      border: Border.all(
-                                        color: Colors.grey.shade200,
-                                      )),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
                                   padding: const EdgeInsets.all(8.0),
                                   child: ListViewCardItem(
                                       data: controller.stackData[stackIndex]
-                                          .cards?[cardIndex],
+                                          .cards[cardIndex],
                                       index: cardIndex,
                                       boardId: controller.boardId),
                                   //
@@ -94,13 +110,16 @@ class KanbanBoardScreen extends StatelessWidget {
                                 ),
                               )),
                         ),
-                        backgroundColor: Colors.white,
                         displacementY: 400,
                         displacementX: 400,
                         textStyle: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500),
-                      )))));
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                        listDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                                width: 1,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .background)))))));
   }
 }

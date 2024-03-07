@@ -10,6 +10,9 @@ abstract class ICardService {
 
   Future<void> deleteCard(int boardId, int stackId, int cardId);
 
+  Future<void> reorderCard(
+      int boardId, int oldStackId, int cardId, int newOrder, int newStackId);
+
   Future<void> assignLabel2Card(
       int boardId, int stackId, int cardId, int labelId);
 

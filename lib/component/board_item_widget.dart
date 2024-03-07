@@ -21,6 +21,8 @@ class BoardItemWidget extends StatelessWidget {
                 board.title,
               ),
               leading: CircleAvatar(backgroundColor: board.color1),
+              subtitle: Text(
+                  "${board.users.length} users, ${board.lastModified} lastmodified"),
             ),
           ),
         ]));

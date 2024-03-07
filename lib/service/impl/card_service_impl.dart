@@ -85,4 +85,12 @@ class CardServiceImpl extends GetxService implements ICardService {
 
     return Assignment.fromJson(responseData);
   }
+
+  @override
+  Future<void> reorderCard(int boardId, int oldStackId, int cardId,
+      int newOrder, int newStackId) async {
+    var responseData = await httpService.put(
+        '/index.php/apps/deck/api/v1/boards/$boardId/stacks/$oldStackId/cards/$cardId/reorder',
+        json.encode({'order': newOrder, 'stackId': newStackId}));
+  }
 }

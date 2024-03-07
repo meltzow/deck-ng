@@ -30,7 +30,6 @@ class ListViewCardItem extends StatelessWidget {
         // navigate to a named route and
         // provide the arguments as an optional
         // parameter.
-        print("tab on ${data!.title}");
         Get.toNamed(
           '/cards/details',
           arguments: {
