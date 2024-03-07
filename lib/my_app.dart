@@ -3,10 +3,11 @@ import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/dart_define.gen.dart';
-import 'package:deck_ng/screen/LoginScreen.dart';
+import 'package:deck_ng/l10n/translation.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
+import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/service/guard.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:wiredash/wiredash.dart';
 class MyApp extends StatelessWidget {
   final String? initialRoute;
   final bool debugShowCheckedModeBanner;
+  final locale = const Locale('en', 'US');
 
   const MyApp(
       {super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
@@ -30,8 +32,12 @@ class MyApp extends StatelessWidget {
         child: GetMaterialApp(
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           navigatorKey: Catcher2.navigatorKey,
-          // localizationsDelegates: AppLocalizations.localizationsDelegates,
-          // supportedLocales: AppLocalizations.supportedLocales,
+          translations: Translation(),
+          locale: locale,
+          fallbackLocale: const Locale('en', 'US'),
+          supportedLocales: Translation.appLanguages
+              .map((e) => e['locale'] as Locale)
+              .toList(),
           title: 'deck NG',
           theme: myTheme,
           initialRoute: initialRoute ?? '/',

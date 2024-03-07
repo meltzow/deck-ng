@@ -1,4 +1,4 @@
-# deck_ng
+_# deck_ng
 
 A new Flutter project.
 
@@ -22,8 +22,14 @@ samples, guidance on mobile development, and a full API reference.
 
 * dart run build_runner watch --delete-conflicting-outputs
 
-## documentation:
+# development
+* start the dockerservices in docker-compose.yml ("nextcloud" and "database")
+
+## apis:
 * https://github.com/nextcloud/deck/blob/master/docs/API.md
 * https://github.com/nextcloud/deck/blob/master/docs/API-Nextcloud.md
 * https://docs.nextcloud.com/server/latest/developer_manual/client_apis/LoginFlow/index.html
 * https://docs.nextcloud.com/server/latest/developer_manual/digging_deeper/rest_apis.html
+
+## others 
+* https://m3.material.io/styles/icons/overview
