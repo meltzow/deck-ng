@@ -14,7 +14,7 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
       owner: json['owner'] == null
           ? null
           : User.fromJson(json['owner'] as Map<String, dynamic>),
-      order: json['order'] as int?,
+      order: json['order'] as int? ?? 0,
       stackId: json['stackId'] as int,
     )
       ..ETag = json['ETag'] as String?

@@ -29,7 +29,8 @@ class Card {
   String? lastEditor;
   @EpochDateTimeConverter()
   DateTime? lastModified;
-  int? order;
+  @JsonKey(defaultValue: 0)
+  late int order;
   int? overdue;
   late User? owner;
   late int stackId;
@@ -47,7 +48,7 @@ class Card {
       required this.id,
       this.type = 'text',
       this.owner,
-      this.order,
+      this.order = 0,
       required this.stackId});
 
   factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);

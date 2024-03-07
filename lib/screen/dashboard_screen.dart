@@ -1,5 +1,6 @@
 import 'package:deck_ng/component/board_item_widget.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   child: Obx(
                     () => controller.isLoading.value
-                        ? const Center(child: Text('loading'))
+                        ? const LoadingIndicator()
                         : GridView.builder(
                             shrinkWrap: true,
                             itemCount: controller.dashboardData.length,
@@ -132,7 +133,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   child: Obx(
                     () => controller.isLoading.value
-                        ? Center(child: Text('loading'.tr))
+                        ? const LoadingIndicator()
                         : GridView.builder(
                             shrinkWrap: true,
                             itemCount: controller.boardData.length,

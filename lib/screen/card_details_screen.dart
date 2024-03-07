@@ -1,4 +1,5 @@
 import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -56,7 +57,7 @@ class CardDetailsScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 25),
                     child: Obx(
                       () => controller.isLoading.value
-                          ? Center(child: Text('loading'.tr))
+                          ? const LoadingIndicator()
                           : Padding(
                               padding: const EdgeInsets.all(16),
                               child: SingleChildScrollView(

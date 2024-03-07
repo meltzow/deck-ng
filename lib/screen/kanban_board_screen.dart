@@ -1,15 +1,18 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/list_view_card_item_widget.dart';
+import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
+import 'package:deck_ng/model/models.dart' as NC;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TextItem extends AppFlowyGroupItem {
-  final String s;
-  TextItem(this.s);
+class CardItem extends AppFlowyGroupItem {
+  final NC.Card card;
+  CardItem(this.card);
 
   @override
-  String get id => s;
+  String get id => card.id.toString();
 }
 
 class KanbanBoardScreen extends StatelessWidget {
@@ -68,7 +71,7 @@ class KanbanBoardScreen extends StatelessWidget {
                         topRight: Radius.circular(30))),
                 margin: const EdgeInsets.only(top: 25),
                 child: Obx(() => controller.isLoading.value
-                    ? const Center(child: Text('loading'))
+                    ? const LoadingIndicator()
                     : AppFlowyBoard(
                         config: config,
                         controller: controller.boardController,
@@ -76,20 +79,26 @@ class KanbanBoardScreen extends StatelessWidget {
                           return AppFlowyGroupHeader(
                             title: SizedBox(
                                 width: 60,
-                                child: Text(columnData.headerData.groupName)),
+                                child: Text(
+                                  columnData.headerData.groupName,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                )),
                             height: 50,
                             margin: config.groupPadding,
                           );
                         },
                         cardBuilder: (context, group, groupItem) {
-                          final textItem = groupItem as TextItem;
+                          final textItem = groupItem as CardItem;
                           return Align(
                             key: Key(groupItem.id),
                             alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 30),
-                              child: Text(textItem.s),
+                                  horizontal: 0, vertical: 0),
+                              child: ListViewCardItem(
+                                  data: textItem.card,
+                                  boardId: controller.boardId),
                             ),
                           );
                         },
