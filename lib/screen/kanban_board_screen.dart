@@ -1,13 +1,25 @@
+import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/list_view_card_item_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kanban_board/custom/board.dart';
-import 'package:kanban_board/models/inputs.dart';
+
+class TextItem extends AppFlowyGroupItem {
+  final String s;
+  TextItem(this.s);
+
+  @override
+  String get id => s;
+
+}
 
 class KanbanBoardScreen extends StatelessWidget {
   final controller = Get.find<BoardDetailsController>();
+  final config = AppFlowyBoardConfig(
+    groupBackgroundColor: HexColor.fromHex('#F7F8FC'),
+    stretchGroupHeight: false,
+  );
 
   KanbanBoardScreen({super.key});
 
@@ -58,68 +70,39 @@ class KanbanBoardScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 25),
                 child: Obx(() => controller.isLoading.value
                     ? const Center(child: Text('loading'))
-                    : KanbanBoard(
-                        onItemReorder: (oldCardIndex, newCardIndex,
-                                oldListIndex, newListIndex) =>
-                            controller.cardReorderHandler(oldCardIndex,
-                                newCardIndex, oldListIndex, newListIndex),
-                        List.generate(
-                          controller.stackData.length,
-                          (stackIndex) => BoardListsData(
-                              backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
-                              header: Container(
-                                width: 250,
-                                padding: const EdgeInsets.only(
-                                    left: 0, bottom: 12, top: 12),
-                                alignment: Alignment.centerLeft,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      controller.stackData[stackIndex].title ??
-                                          '',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              footer: Container(),
-                              items: List.generate(
-                                controller.stackData[stackIndex].cards.length,
-                                (cardIndex) => Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ListViewCardItem(
-                                      data: controller.stackData[stackIndex]
-                                          .cards[cardIndex],
-                                      index: cardIndex,
-                                      boardId: controller.boardId),
-                                  //
-                                  // Text(
-                                  //     controller.stackData[stackIndex]
-                                  //         .cards[cardIndex].title,
-                                  //     style: const TextStyle(
-                                  //         fontSize: 16,
-                                  //         color: Colors.black,
-                                  //         fontWeight: FontWeight.w500)),
-                                ),
-                              )),
+                    : AppFlowyBoard(
+                    controller: controller.boardController,
+                    headerBuilder: (context, columnData) {
+                      return AppFlowyGroupHeader(
+                        title: SizedBox(
+                          width: 60,
+                          child: Text(columnData.headerData.groupName)
                         ),
-                        displacementY: 400,
-                        displacementX: 400,
-                        textStyle: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                        listDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                                width: 1,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .background)))))));
+                        height: 50,
+                        margin: config.groupPadding,
+                      );
+                    },
+                    cardBuilder: (context, group, groupItem) {
+                      final textItem = groupItem as TextItem;
+                      return Align(
+                        key: Key(groupItem.id),
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                          child: Text(textItem.s),
+                        ),
+                      );
+                    },
+                    groupConstraints: const BoxConstraints.tightFor(width: 240),
+)))));
+  }
+}
+
+extension HexColor on Color {
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
   }
 }

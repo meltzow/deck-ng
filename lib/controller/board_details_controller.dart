@@ -1,5 +1,7 @@
+import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
+import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
@@ -7,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BoardDetailsController extends GetxController {
+  late AppFlowyBoardController boardController;
+
   final Rxn<Board> _boardsData = Rxn<Board>();
   final Rx<List<NC.Stack>> _stackData = Rx<List<NC.Stack>>([]);
   late final int _boardId;
@@ -41,11 +45,46 @@ class BoardDetailsController extends GetxController {
 
   List<NC.Stack> get stackData => _stackData.value;
 
+  AppFlowyBoardController get boardCtl => boardController;
+
   @override
   void onReady() async {
     super.onReady();
     _boardId = Get.arguments['boardId'] as int;
     await refreshData();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    boardController = AppFlowyBoardController(
+      onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
+        debugPrint('Move item from $fromIndex to $toIndex');
+      },
+      onMoveGroupItem: (groupId, fromIndex, toIndex) {
+        debugPrint('Move $groupId:$fromIndex to $groupId:$toIndex');
+      },
+      onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
+        debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
+      },
+    );
+    final group1 = AppFlowyGroupData(id: "To Do", items: [
+      TextItem("Card 1"),
+      TextItem("Card 2"),
+    ], name: 'To Do', );
+    group1.draggable = false;
+    final group2 = AppFlowyGroupData(id: "In Progress", items: [
+      TextItem("Card 3"),
+      TextItem("Card 4"),
+    ],       name: "In Progress");
+    group2.draggable = false;
+    final group3 = AppFlowyGroupData(id: "Done", items: [], name: 'Done');
+    group3.draggable = false;
+
+    boardController.addGroup(group1);
+    boardController.addGroup(group2);
+    boardController.addGroup(group3);
+
   }
 
   Future<void> refreshData() async {

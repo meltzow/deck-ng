@@ -21,9 +21,9 @@ class DrawerWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: myTheme.primaryColor,
               ),
-              child: Text('Boards'.tr),
+              child: Text('dashboard'.tr),
             ),
-            onTap: () => Get.toNamed('/boards'),
+            onTap: () => Get.toNamed('/'),
           ),
           ListTile(
             leading: const Icon(Icons.note_add),
