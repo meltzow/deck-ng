@@ -1,4 +1,5 @@
 import 'package:deck_ng/component/board_item_widget.dart';
+import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: const DrawerWidget(),
         appBar: AppBar(
           title: Text("Dashboard".tr),
           actions: [

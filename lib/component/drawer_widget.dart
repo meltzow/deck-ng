@@ -1,3 +1,4 @@
+import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,11 +16,11 @@ class DrawerWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           GestureDetector(
-            child: const DrawerHeader(
+            child: DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: myTheme.primaryColor,
               ),
-              child: Text('Boards'),
+              child: Text('Boards'.tr),
             ),
             onTap: () => Get.toNamed('/boards'),
           ),
