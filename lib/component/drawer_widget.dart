@@ -1,6 +1,7 @@
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -25,6 +26,7 @@ class DrawerWidget extends StatelessWidget {
             onTap: () => Get.toNamed('/boards'),
           ),
           ListTile(
+            leading: const Icon(Icons.note_add),
             title: const Text('Board 1'),
             onTap: () {
               // Update the state of the app
@@ -34,9 +36,33 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
+            title: const Text('language'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+            },
+          ),
+          ListTile(
+            title: const Text('settings'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+            },
+          ),
+          ListTile(
             title: const Text('Login'),
             onTap: () {
               Get.toNamed('/auth/login');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.rate_review_outlined),
+            title: const Text('feedback'),
+            onTap: () {
+              Navigator.pop(context);
+              Wiredash.of(context).show(inheritMaterialTheme: true);
             },
           ),
         ],
