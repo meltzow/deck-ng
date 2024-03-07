@@ -1,6 +1,5 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
-import 'package:deck_ng/component/list_view_card_item_widget.dart';
 import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,20 +10,20 @@ class TextItem extends AppFlowyGroupItem {
 
   @override
   String get id => s;
-
 }
 
 class KanbanBoardScreen extends StatelessWidget {
   final controller = Get.find<BoardDetailsController>();
-  final config = AppFlowyBoardConfig(
-    groupBackgroundColor: HexColor.fromHex('#F7F8FC'),
-    stretchGroupHeight: false,
-  );
 
   KanbanBoardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final config = AppFlowyBoardConfig(
+      groupBackgroundColor: Theme.of(context).colorScheme.background,
+      stretchGroupHeight: true,
+    );
+
     return Scaffold(
         drawer: const DrawerWidget(),
         appBar: AppBar(
@@ -71,30 +70,32 @@ class KanbanBoardScreen extends StatelessWidget {
                 child: Obx(() => controller.isLoading.value
                     ? const Center(child: Text('loading'))
                     : AppFlowyBoard(
-                    controller: controller.boardController,
-                    headerBuilder: (context, columnData) {
-                      return AppFlowyGroupHeader(
-                        title: SizedBox(
-                          width: 60,
-                          child: Text(columnData.headerData.groupName)
-                        ),
-                        height: 50,
-                        margin: config.groupPadding,
-                      );
-                    },
-                    cardBuilder: (context, group, groupItem) {
-                      final textItem = groupItem as TextItem;
-                      return Align(
-                        key: Key(groupItem.id),
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                          child: Text(textItem.s),
-                        ),
-                      );
-                    },
-                    groupConstraints: const BoxConstraints.tightFor(width: 240),
-)))));
+                        config: config,
+                        controller: controller.boardController,
+                        headerBuilder: (context, columnData) {
+                          return AppFlowyGroupHeader(
+                            title: SizedBox(
+                                width: 60,
+                                child: Text(columnData.headerData.groupName)),
+                            height: 50,
+                            margin: config.groupPadding,
+                          );
+                        },
+                        cardBuilder: (context, group, groupItem) {
+                          final textItem = groupItem as TextItem;
+                          return Align(
+                            key: Key(groupItem.id),
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 30),
+                              child: Text(textItem.s),
+                            ),
+                          );
+                        },
+                        groupConstraints:
+                            const BoxConstraints.tightFor(width: 240),
+                      )))));
   }
 }
 

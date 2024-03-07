@@ -1,5 +1,6 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/stack.dart' as NC;
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
@@ -77,6 +78,7 @@ class BoardDetailsController extends GetxController {
         debugPrint('Move $groupId:$fromIndex to $groupId:$toIndex');
       },
       onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
+        cardReorderHandler(fromIndex, toIndex, fromGroupId, toGroupId);
         debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
       },
     );
@@ -109,31 +111,42 @@ class BoardDetailsController extends GetxController {
   //   _cardService.createCard(boardId, _selectedStackId.value!, title);
   // }
 
-  // void reorder(int oldIndex, int newIndex) async {
-  //   if (oldIndex < newIndex) {
-  //     newIndex -= 1;
-  //   }
-  //   var orderFromOldIndex = selectedStackData?.cards[newIndex].order;
-  //   final Card item = selectedStackData!.cards.removeAt(oldIndex);
-  //
-  //   selectedStackData!.cards.insert(newIndex, item);
-  //   item.order = orderFromOldIndex! + 1;
-  //   var card = await _cardService.updateCard(
-  //       _boardId, _selectedStackId.value!, item.id, item);
-  // }
+  void reorder(int selectedStackId, int oldIndex, int newIndex) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
 
-  cardReorderHandler(int? oldCardIndex, int? newCardIndex, int? oldListIndex,
-      int? newListIndex) async {
+    var card = _stackData.value[selectedStackId].cards[newIndex];
+    var orderFromOldIndex = card.order;
+    final Card item =
+        _stackData.value[selectedStackId].cards.removeAt(oldIndex);
+
+    _stackData.value[selectedStackId].cards.insert(newIndex, item);
+    item.order = orderFromOldIndex! + 1;
+    var card = await _cardService.reorderCard(
+        _boardId,
+        _stackData.value[oldIndex].id,
+        card.id,
+        0,
+        _stackData.value[newIndex].id);
+  }
+
+  cardReorderHandler(int oldCardIndex, int newCardIndex, String oldListIndex,
+      String newListIndex) async {
     // find card at old index and old list/stack
-    var card = _stackData.value[oldListIndex!].cards[oldCardIndex!];
+    var card = _stackData.value[int.parse(oldListIndex!)].cards[oldCardIndex!];
     var orderMustIncreased = (oldCardIndex < newCardIndex!) ? true : false;
     // var neighborCard = _stackData.value[newListIndex].cards[newListIndex]
     // if (orderMustIncreased)
     // set at card new index and new stack
     // card.stackId = _stackData.value[newListIndex!].id;
     //save card
-    await _cardService.reorderCard(_boardId, _stackData.value[oldListIndex].id,
-        card.id, 0, _stackData.value[newListIndex!].id);
+    await _cardService.reorderCard(
+        _boardId,
+        _stackData.value[int.parse(oldListIndex)].id,
+        card.id,
+        0,
+        _stackData.value[int.parse(newListIndex!)].id);
     cardSuccessMsg();
   }
 
