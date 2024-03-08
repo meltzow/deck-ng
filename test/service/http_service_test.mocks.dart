@@ -21,6 +21,16 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeCapabilities_0 extends _i1.SmartFake implements _i2.Capabilities {
+  _FakeCapabilities_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [IAuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -46,6 +56,22 @@ class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
         ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<_i2.Capabilities> checkServer(String? serverUrl) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #checkServer,
+          [serverUrl],
+        ),
+        returnValue: _i3.Future<_i2.Capabilities>.value(_FakeCapabilities_0(
+          this,
+          Invocation.method(
+            #checkServer,
+            [serverUrl],
+          ),
+        )),
+      ) as _i3.Future<_i2.Capabilities>);
 
   @override
   bool isAuth() => (super.noSuchMethod(

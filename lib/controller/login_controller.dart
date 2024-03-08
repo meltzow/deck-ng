@@ -8,7 +8,7 @@ class LoginController extends GetxController {
   var credService = Get.find<IStorageService>();
   var authService = Get.find<IAuthService>();
 
-  final RxBool isLoading = RxBool(true);
+  final RxBool isLoading = RxBool(false);
   RxString nameControllerText = ''.obs;
   var nameController = TextEditingController();
   RxString passwordControllerText = ''.obs;
@@ -16,6 +16,15 @@ class LoginController extends GetxController {
   RxString urlControllerText = ''.obs;
   var urlController = TextEditingController();
   final FocusNode focusNode = FocusNode();
+  final RxString _serverVersion = 'not found'.obs;
+  // final RxString _deckVersion = 'nothing found'.obs;
+
+  String get serverVersion => _serverVersion.value;
+  // String get deckVersion => _deckVersion.value;
+  bool get serverIsValid {
+    //TODO check not by String. capability ENtity must be used
+    return _serverVersion.value != 'not found';
+  }
 
   @override
   void onInit() {
@@ -32,7 +41,9 @@ class LoginController extends GetxController {
     });
 
     focusNode.addListener(() {
-      //FIXME: if focus lost => check server url for validation
+      if (!focusNode.hasFocus) {
+        checkCapabilties();
+      }
     });
 
     super.onInit();
@@ -96,5 +107,19 @@ class LoginController extends GetxController {
         ),
       );
     }
+  }
+
+  void checkCapabilties() async {
+    isLoading.value = true;
+    try {
+      Capabilities resp =
+          await authService.checkServer(urlControllerText.value);
+      _serverVersion.value = resp.ocs.data.version.string;
+      // _deckVersion.value = resp.ocs.data.version.string;
+    } on DioException {
+      _serverVersion.value = 'not found';
+      // _deckVersion.value = 'not found';
+    }
+    isLoading.value = false;
   }
 }

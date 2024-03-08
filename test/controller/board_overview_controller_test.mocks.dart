@@ -5,8 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:deck_ng/model/board.dart' as _i2;
-import 'package:deck_ng/service/Iauth_service.dart' as _i3;
+import 'package:deck_ng/model/board.dart' as _i3;
+import 'package:deck_ng/service/Iauth_service.dart' as _i2;
 import 'package:deck_ng/service/Iboard_service.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -23,8 +23,18 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
-  _FakeBoard_0(
+class _FakeCapabilities_0 extends _i1.SmartFake implements _i2.Capabilities {
+  _FakeCapabilities_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeBoard_1 extends _i1.SmartFake implements _i3.Board {
+  _FakeBoard_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -36,7 +46,7 @@ class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
 /// A class which mocks [IAuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
+class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
   MockIAuthService() {
     _i1.throwOnMissingStub(this);
   }
@@ -60,6 +70,22 @@ class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
       ) as _i4.Future<bool>);
 
   @override
+  _i4.Future<_i2.Capabilities> checkServer(String? serverUrl) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #checkServer,
+          [serverUrl],
+        ),
+        returnValue: _i4.Future<_i2.Capabilities>.value(_FakeCapabilities_0(
+          this,
+          Invocation.method(
+            #checkServer,
+            [serverUrl],
+          ),
+        )),
+      ) as _i4.Future<_i2.Capabilities>);
+
+  @override
   bool isAuth() => (super.noSuchMethod(
         Invocation.method(
           #isAuth,
@@ -78,26 +104,26 @@ class MockIBoardService extends _i1.Mock implements _i5.IBoardService {
   }
 
   @override
-  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
+  _i4.Future<List<_i3.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
           #getAllBoards,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
-      ) as _i4.Future<List<_i2.Board>>);
+        returnValue: _i4.Future<List<_i3.Board>>.value(<_i3.Board>[]),
+      ) as _i4.Future<List<_i3.Board>>);
 
   @override
-  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
+  _i4.Future<_i3.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getBoard,
           [boardId],
         ),
-        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_0(
+        returnValue: _i4.Future<_i3.Board>.value(_FakeBoard_1(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-      ) as _i4.Future<_i2.Board>);
+      ) as _i4.Future<_i3.Board>);
 }

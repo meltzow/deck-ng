@@ -1,4 +1,5 @@
 import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,6 +61,9 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextFormField(
+                    validator: (value) {
+                      return 'ffffl';
+                    },
                     focusNode: controller.focusNode,
                     controller: controller.urlController,
                     obscureText: false,
@@ -89,10 +93,33 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                Obx(
+                  () => controller.isLoading.value
+                      ? const LoadingIndicator()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: ListTile(
+                                title: const Text("Nextcloud server"),
+                                subtitle: Text(controller.serverVersion),
+                                // )),
+                                // Expanded(
+                                //     child: ListTile(
+                                //   title: const Text("deck version"),
+                                //   subtitle: Text(controller.serverVersion),
+                                trailing: controller.serverIsValid
+                                    ? const Icon(Icons.verified_outlined)
+                                    : const Icon(Icons.error_outline),
+                              ))
+                            ],
+                          )),
+                ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-                  child: TextField(
+                  child: TextFormField(
                     controller: controller.nameController,
                     obscureText: false,
                     textAlign: TextAlign.start,
@@ -125,37 +152,41 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                TextField(
-                  controller: controller.passwordController,
-                  obscureText: true,
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16,
-                  ),
-                  decoration: InputDecoration(
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    labelText: "Password".tr,
-                    labelStyle: const TextStyle(
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                  child: TextFormField(
+                    controller: controller.passwordController,
+                    obscureText: true,
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 16,
                     ),
-                    isDense: false,
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    prefixIcon:
-                        const Icon(Icons.admin_panel_settings, size: 24),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      labelText: "Password".tr,
+                      labelStyle: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16,
+                      ),
+                      isDense: false,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
+                      prefixIcon:
+                          const Icon(Icons.admin_panel_settings, size: 24),
+                    ),
                   ),
                 ),
                 Padding(

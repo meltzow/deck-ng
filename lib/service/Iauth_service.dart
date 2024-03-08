@@ -5,7 +5,7 @@ part 'Iauth_service.g.dart';
 
 @JsonSerializable()
 class AppPassword {
-  late Ocs ocs;
+  late AppPasswordOcs ocs;
 
   AppPassword(
     this.ocs,
@@ -17,29 +17,111 @@ class AppPassword {
 }
 
 @JsonSerializable()
-class Ocs {
-  late Meta meta;
-  late Data data;
+class Capabilities {
+  late CapabilitiesOcs ocs;
 
-  Ocs({
+  Capabilities(
+    this.ocs,
+  );
+
+  factory Capabilities.fromJson(Map<String, dynamic> json) =>
+      _$CapabilitiesFromJson(json);
+  Map<String, dynamic> toJson() => _$CapabilitiesToJson(this);
+}
+
+@JsonSerializable()
+class CapabilitiesOcs {
+  late Meta meta;
+  late CapabilitiesData data;
+
+  CapabilitiesOcs({
     required this.meta,
     required this.data,
   });
 
-  factory Ocs.fromJson(Map<String, dynamic> json) => _$OcsFromJson(json);
-  Map<String, dynamic> toJson() => _$OcsToJson(this);
+  factory CapabilitiesOcs.fromJson(Map<String, dynamic> json) =>
+      _$CapabilitiesOcsFromJson(json);
+  Map<String, dynamic> toJson() => _$CapabilitiesOcsToJson(this);
 }
 
 @JsonSerializable()
-class Data {
+class AppPasswordOcs {
+  late Meta meta;
+  late AppPasswordData data;
+
+  AppPasswordOcs({
+    required this.meta,
+    required this.data,
+  });
+
+  factory AppPasswordOcs.fromJson(Map<String, dynamic> json) =>
+      _$AppPasswordOcsFromJson(json);
+  Map<String, dynamic> toJson() => _$AppPasswordOcsToJson(this);
+}
+
+@JsonSerializable()
+class Version {
+  late int major;
+  late int minor;
+  late int micro;
+  late String string;
+  late String edition;
+  late bool extendedSupport;
+
+  Version(this.major, this.minor, this.micro, this.string, this.edition,
+      this.extendedSupport);
+
+  factory Version.fromJson(Map<String, dynamic> json) =>
+      _$VersionFromJson(json);
+  Map<String, dynamic> toJson() => _$VersionToJson(this);
+}
+
+@JsonSerializable()
+class Deck {
+  late String version;
+  late bool canCreateBoards;
+  late List<String> apiVersions;
+
+  Deck(this.version, this.canCreateBoards, this.apiVersions);
+
+  factory Deck.fromJson(Map<String, dynamic> json) => _$DeckFromJson(json);
+  Map<String, dynamic> toJson() => _$DeckToJson(this);
+}
+
+@JsonSerializable()
+class Capability {
+  late Deck deck;
+
+  Capability(this.deck);
+
+  factory Capability.fromJson(Map<String, dynamic> json) =>
+      _$CapabilityFromJson(json);
+  Map<String, dynamic> toJson() => _$CapabilityToJson(this);
+}
+
+@JsonSerializable()
+class CapabilitiesData {
+  late Version version;
+  late dynamic capabilities;
+
+  CapabilitiesData(this.version, this.capabilities);
+
+  factory CapabilitiesData.fromJson(Map<String, dynamic> json) =>
+      _$CapabilitiesDataFromJson(json);
+  Map<String, dynamic> toJson() => _$CapabilitiesDataToJson(this);
+}
+
+@JsonSerializable()
+class AppPasswordData {
   late String apppassword;
 
-  Data(
+  AppPasswordData(
     this.apppassword,
   );
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  factory AppPasswordData.fromJson(Map<String, dynamic> json) =>
+      _$AppPasswordDataFromJson(json);
+  Map<String, dynamic> toJson() => _$AppPasswordDataToJson(this);
 }
 
 @JsonSerializable()
@@ -60,6 +142,8 @@ class Meta {
 
 abstract class IAuthService {
   Future<bool> login(String serverUrl, String username, String password);
+
+  Future<Capabilities> checkServer(String serverUrl);
 
   bool isAuth();
 
