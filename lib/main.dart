@@ -29,7 +29,7 @@ Future<void> main() async {
   /// STEP 1. Create catcher configuration.
   /// Debug configuration with dialog report mode and console handler. It will show dialog and once user accepts it, error will be shown   /// in console.
   Catcher2Options debugOptions =
-      Catcher2Options(DialogReportMode(), [ConsoleHandler(), snackHandler]);
+      Catcher2Options(SilentReportMode(), [ConsoleHandler(), snackHandler]);
 
   /// Release configuration. Same as above, but once user accepts dialog, user will be prompted to send email with crash to support.
   Catcher2Options releaseOptions =

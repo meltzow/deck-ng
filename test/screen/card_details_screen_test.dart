@@ -1,31 +1,41 @@
 import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/my_app.dart';
+import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/Istack_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../controller/board_details_controller_test.mocks.dart';
-import '../service/auth_service_test.mocks.dart';
+import 'card_details_screen_test.mocks.dart';
 
-@GenerateMocks([ICardService, IStorageService])
+@GenerateMocks(
+    [IBoardService, ICardService, IStorageService, IAuthService, IStackService])
 void main() {
   late ICardService cardServiceMock;
   late IStorageService credentialServiceMock;
+  late IAuthService authServiceMock;
+  late IBoardService boardServiceMock;
+  late IStackService stackServiceMock;
 
   setUp(() {
     cardServiceMock = Get.put<ICardService>(MockICardService());
+    stackServiceMock = Get.put<IStackService>(MockIStackService());
     credentialServiceMock = Get.put<IStorageService>(MockIStorageService());
+    authServiceMock = Get.put<IAuthService>(MockIAuthService());
+    boardServiceMock = Get.put<IBoardService>(MockIBoardService());
   });
 
   testWidgets('show a simple card', (tester) async {
     var resp =
         Account('admin', 'password', 'authData', 'http://localhost', true);
     when(credentialServiceMock.getAccount()).thenReturn(resp);
+    when(authServiceMock.isAuth()).thenReturn(true);
 
     Environment.init();
 

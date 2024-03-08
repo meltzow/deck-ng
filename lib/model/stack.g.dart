@@ -8,18 +8,19 @@ part of 'stack.dart';
 
 Stack _$StackFromJson(Map<String, dynamic> json) => Stack(
       title: json['title'] as String,
-      boardId: json['boardId'] as int?,
+      boardId: json['boardId'] as int,
       deletedAt: _$JsonConverterFromJson<int, DateTime>(
           json['deletedAt'], const EpochDateTimeConverter().fromJson),
       cards: (json['cards'] as List<dynamic>?)
-          ?.map((e) => Card.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => Card.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       id: json['id'] as int,
     )
       ..lastModified = _$JsonConverterFromJson<int, DateTime>(
           json['lastModified'], const EpochDateTimeConverter().fromJson)
       ..order = json['order'] as int?
-      ..ETag = json['ETag'] as String?;
+      ..ETag = json['ETag'] as String;
 
 Map<String, dynamic> _$StackToJson(Stack instance) => <String, dynamic>{
       'title': instance.title,
@@ -28,7 +29,7 @@ Map<String, dynamic> _$StackToJson(Stack instance) => <String, dynamic>{
           instance.deletedAt, const EpochDateTimeConverter().toJson),
       'lastModified': _$JsonConverterToJson<int, DateTime>(
           instance.lastModified, const EpochDateTimeConverter().toJson),
-      'cards': instance.cards?.map((e) => e.toJson()).toList(),
+      'cards': instance.cards.map((e) => e.toJson()).toList(),
       'id': instance.id,
       'order': instance.order,
       'ETag': instance.ETag,

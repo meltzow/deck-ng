@@ -85,4 +85,19 @@ class CardServiceImpl extends GetxService implements ICardService {
 
     return Assignment.fromJson(responseData);
   }
+
+  @override
+  Future<Card> reorderCard(int boardId, int oldStackId, int cardId, Card card,
+      int newOrder, int newStackId) async {
+    card.order = newOrder;
+    card.stackId = newStackId;
+    return updateCard(boardId, oldStackId, cardId, card);
+
+    //TODO: its service answers with httpStatus 403
+    // var responseData = await httpService.put(
+    //     '/index.php/apps/deck/api/v1/boards/$boardId/stacks/$oldStackId/cards/$cardId/reorder',
+    //     json.encode({'order': newOrder}));
+    // List<dynamic> mediaList = (responseData as List);
+    // return mediaList;
+  }
 }

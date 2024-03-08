@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/retry.dart';
 import 'package:dio/dio.dart' as dio;
@@ -17,7 +16,7 @@ import 'package:mockito/mockito.dart';
 import 'http_matcher.dart';
 import 'http_service_test.mocks.dart';
 
-@GenerateMocks([IAuthService, IStorageService])
+@GenerateMocks([IAuthService])
 void main() {
   late dio.Dio dioClient;
   late DioAdapter dioAdapter;
@@ -25,6 +24,7 @@ void main() {
   group('httpServiceGroup', () {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
+      Get.testMode = true;
     });
 
     setUp(() {
@@ -91,7 +91,7 @@ void main() {
       expect(resp3.statusCode, 200);
 
       final authServiceMock = Get.put<IAuthService>(MockIAuthService());
-      Get.put<IStorageService>(MockIStorageService());
+
       final HttpService service = Get.put(HttpService());
       dio.Response response;
       try {
@@ -108,8 +108,7 @@ void main() {
     });
 
     test('test simple GET Request by getting all boards', () async {
-      final credServiceMock =
-          Get.put<IStorageService>(MockIStorageService());
+      final authServiceMock = Get.put<IAuthService>(MockIAuthService());
       final HttpService service = Get.put(HttpService());
 
       dioAdapter.onGet(
@@ -120,12 +119,9 @@ void main() {
                 delay: const Duration(milliseconds: 10),
               ));
 
-      when(credServiceMock.getAccount()).thenReturn(Account(
-              'username',
-               'foobar',
-               'authData',
-               'http://url.foo',
-               true));
+      when(authServiceMock.getAccount()).thenReturn(
+          Account('username', 'foobar', 'authData', 'http://url.foo', true));
+      when(authServiceMock.isAuth()).thenReturn(true);
 
       var response = await service.get('/index.php/apps/deck/api/v1/boards');
       expect(response, isA<Map<String, dynamic>>());

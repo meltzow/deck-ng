@@ -1,3 +1,5 @@
+import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,13 +14,13 @@ class CardDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: const DrawerWidget(),
         appBar: AppBar(
           title: Text("Card details".tr),
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.refresh,
-                color: Theme.of(context).colorScheme.primary,
                 size: 22,
               ),
               onPressed: () {
@@ -26,9 +28,8 @@ class CardDetailsScreen extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.save,
-                color: Theme.of(context).colorScheme.primary,
                 size: 22,
               ),
               onPressed: () {
@@ -54,7 +55,7 @@ class CardDetailsScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 25),
                     child: Obx(
                       () => controller.isLoading.value
-                          ? Center(child: Text('loading'.tr))
+                          ? const LoadingIndicator()
                           : Padding(
                               padding: const EdgeInsets.all(16),
                               child: SingleChildScrollView(
@@ -238,8 +239,7 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
-                                    title: Text(DateFormat.MMMMEEEEd()
-                                        .format(controller.dueDate!)),
+                                    title: Text(controller.dueDatePreview),
                                     leading: const Icon(Icons.calendar_month,
                                         size: 24),
                                     onTap: () async {

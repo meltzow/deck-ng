@@ -6,11 +6,13 @@ import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/Inotification_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
 import 'package:deck_ng/service/impl/board_service_impl.dart';
 import 'package:deck_ng/service/impl/card_service_impl.dart';
 import 'package:deck_ng/service/impl/http_service.dart';
+import 'package:deck_ng/service/impl/notification_service_impl.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:dio/dio.dart';
@@ -44,5 +46,6 @@ class Environment {
     Get.lazyPut<IBoardService>(() => BoardServiceImpl());
     Get.lazyPut<IStackService>(() => StackRepositoryImpl());
     Get.lazyPut<ICardService>(() => CardServiceImpl());
+    Get.lazyPut<INotificationService>(() => NotificationService());
   }
 }

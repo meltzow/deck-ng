@@ -61,6 +61,16 @@ class AuthServiceImpl extends GetxService implements IAuthService {
   }
 
   @override
+  Future<Capabilities> checkServer(String serverUrl) async {
+    var url = '/ocs/v1.php/cloud/capabilities';
+
+    var resp = await dioClient.get(serverUrl + url,
+        options: Options(headers: _getHeaders(url)));
+
+    return Capabilities.fromJson(resp.data);
+  }
+
+  @override
   bool isAuth() {
     var auth = credService.getAccount();
     return auth != null && auth.isAuthenticated;

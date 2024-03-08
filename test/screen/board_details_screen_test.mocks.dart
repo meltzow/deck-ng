@@ -5,12 +5,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
 
-import 'package:deck_ng/model/assignment.dart' as _i4;
 import 'package:deck_ng/model/board.dart' as _i2;
-import 'package:deck_ng/model/card.dart' as _i3;
+import 'package:deck_ng/model/models.dart' as _i3;
 import 'package:deck_ng/model/stack.dart' as _i8;
+import 'package:deck_ng/service/Iauth_service.dart' as _i4;
 import 'package:deck_ng/service/Iboard_service.dart' as _i5;
 import 'package:deck_ng/service/Icard_service.dart' as _i9;
+import 'package:deck_ng/service/Inotification_service.dart' as _i10;
 import 'package:deck_ng/service/Istack_service.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -47,8 +48,18 @@ class _FakeCard_1 extends _i1.SmartFake implements _i3.Card {
         );
 }
 
-class _FakeAssignment_2 extends _i1.SmartFake implements _i4.Assignment {
+class _FakeAssignment_2 extends _i1.SmartFake implements _i3.Assignment {
   _FakeAssignment_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCapabilities_3 extends _i1.SmartFake implements _i4.Capabilities {
+  _FakeCapabilities_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -223,6 +234,43 @@ class MockICardService extends _i1.Mock implements _i9.ICardService {
       ) as _i6.Future<void>);
 
   @override
+  _i6.Future<_i3.Card> reorderCard(
+    int? boardId,
+    int? oldStackId,
+    int? cardId,
+    _i3.Card? card,
+    int? newOrder,
+    int? newStackId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #reorderCard,
+          [
+            boardId,
+            oldStackId,
+            cardId,
+            card,
+            newOrder,
+            newStackId,
+          ],
+        ),
+        returnValue: _i6.Future<_i3.Card>.value(_FakeCard_1(
+          this,
+          Invocation.method(
+            #reorderCard,
+            [
+              boardId,
+              oldStackId,
+              cardId,
+              card,
+              newOrder,
+              newStackId,
+            ],
+          ),
+        )),
+      ) as _i6.Future<_i3.Card>);
+
+  @override
   _i6.Future<void> assignLabel2Card(
     int? boardId,
     int? stackId,
@@ -265,7 +313,7 @@ class MockICardService extends _i1.Mock implements _i9.ICardService {
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<_i4.Assignment> assignUser2Card(
+  _i6.Future<_i3.Assignment> assignUser2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -281,7 +329,7 @@ class MockICardService extends _i1.Mock implements _i9.ICardService {
             userId,
           ],
         ),
-        returnValue: _i6.Future<_i4.Assignment>.value(_FakeAssignment_2(
+        returnValue: _i6.Future<_i3.Assignment>.value(_FakeAssignment_2(
           this,
           Invocation.method(
             #assignUser2Card,
@@ -293,10 +341,10 @@ class MockICardService extends _i1.Mock implements _i9.ICardService {
             ],
           ),
         )),
-      ) as _i6.Future<_i4.Assignment>);
+      ) as _i6.Future<_i3.Assignment>);
 
   @override
-  _i6.Future<_i4.Assignment> unassignUser2Card(
+  _i6.Future<_i3.Assignment> unassignUser2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -312,7 +360,7 @@ class MockICardService extends _i1.Mock implements _i9.ICardService {
             userId,
           ],
         ),
-        returnValue: _i6.Future<_i4.Assignment>.value(_FakeAssignment_2(
+        returnValue: _i6.Future<_i3.Assignment>.value(_FakeAssignment_2(
           this,
           Invocation.method(
             #unassignUser2Card,
@@ -324,5 +372,80 @@ class MockICardService extends _i1.Mock implements _i9.ICardService {
             ],
           ),
         )),
-      ) as _i6.Future<_i4.Assignment>);
+      ) as _i6.Future<_i3.Assignment>);
+}
+
+/// A class which mocks [IAuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockIAuthService extends _i1.Mock implements _i4.IAuthService {
+  MockIAuthService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<bool> login(
+    String? serverUrl,
+    String? username,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [
+            serverUrl,
+            username,
+            password,
+          ],
+        ),
+        returnValue: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
+
+  @override
+  _i6.Future<_i4.Capabilities> checkServer(String? serverUrl) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #checkServer,
+          [serverUrl],
+        ),
+        returnValue: _i6.Future<_i4.Capabilities>.value(_FakeCapabilities_3(
+          this,
+          Invocation.method(
+            #checkServer,
+            [serverUrl],
+          ),
+        )),
+      ) as _i6.Future<_i4.Capabilities>);
+
+  @override
+  bool isAuth() => (super.noSuchMethod(
+        Invocation.method(
+          #isAuth,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+}
+
+/// A class which mocks [INotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockINotificationService extends _i1.Mock
+    implements _i10.INotificationService {
+  MockINotificationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic successMsg(
+    String? title,
+    String? message,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #successMsg,
+        [
+          title,
+          message,
+        ],
+      ));
 }

@@ -3,15 +3,9 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i2;
-
-import 'package:deck_ng/model/account.dart' as _i8;
-import 'package:deck_ng/service/Icredential_service.dart' as _i7;
-import 'package:deck_ng/service/Ihttp_service.dart' as _i4;
-import 'package:deck_ng/service/impl/retry.dart' as _i6;
-import 'package:dio/dio.dart' as _i3;
+import 'package:deck_ng/model/account.dart' as _i3;
+import 'package:deck_ng/service/Icredential_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -26,141 +20,10 @@ import 'package:mockito/src/dummies.dart' as _i5;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeFuture_0<T1> extends _i1.SmartFake implements _i2.Future<T1> {
-  _FakeFuture_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeResponse_1<T1> extends _i1.SmartFake implements _i3.Response<T1> {
-  _FakeResponse_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-/// A class which mocks [IHttpService].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockIHttpService extends _i1.Mock implements _i4.IHttpService {
-  MockIHttpService() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i2.Future<Map<String, dynamic>> get(String? path) => (super.noSuchMethod(
-        Invocation.method(
-          #get,
-          [path],
-        ),
-        returnValue:
-            _i2.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i2.Future<Map<String, dynamic>>);
-
-  @override
-  _i2.Future<List<dynamic>> getListResponse(String? path) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getListResponse,
-          [path],
-        ),
-        returnValue: _i2.Future<List<dynamic>>.value(<dynamic>[]),
-      ) as _i2.Future<List<dynamic>>);
-
-  @override
-  _i2.Future<Map<String, dynamic>> post(
-    String? path, [
-    dynamic body,
-    bool? useAccount,
-  ]) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #post,
-          [
-            path,
-            body,
-            useAccount,
-          ],
-        ),
-        returnValue:
-            _i2.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i2.Future<Map<String, dynamic>>);
-
-  @override
-  _i2.Future<T> put<T>(
-    String? path,
-    dynamic body,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #put,
-          [
-            path,
-            body,
-          ],
-        ),
-        returnValue: _i5.ifNotNull(
-              _i5.dummyValueOrNull<T>(
-                this,
-                Invocation.method(
-                  #put,
-                  [
-                    path,
-                    body,
-                  ],
-                ),
-              ),
-              (T v) => _i2.Future<T>.value(v),
-            ) ??
-            _FakeFuture_0<T>(
-              this,
-              Invocation.method(
-                #put,
-                [
-                  path,
-                  body,
-                ],
-              ),
-            ),
-      ) as _i2.Future<T>);
-
-  @override
-  _i2.Future<_i3.Response<T>> retry<T>(
-    _i3.RequestOptions? ops, [
-    _i6.RetryOptions? retryOptions,
-  ]) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #retry,
-          [
-            ops,
-            retryOptions,
-          ],
-        ),
-        returnValue: _i2.Future<_i3.Response<T>>.value(_FakeResponse_1<T>(
-          this,
-          Invocation.method(
-            #retry,
-            [
-              ops,
-              retryOptions,
-            ],
-          ),
-        )),
-      ) as _i2.Future<_i3.Response<T>>);
-}
-
 /// A class which mocks [IStorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIStorageService extends _i1.Mock implements _i7.IStorageService {
+class MockIStorageService extends _i1.Mock implements _i2.IStorageService {
   MockIStorageService() {
     _i1.throwOnMissingStub(this);
   }
@@ -175,7 +38,7 @@ class MockIStorageService extends _i1.Mock implements _i7.IStorageService {
       ) as bool);
 
   @override
-  dynamic saveAccount(_i8.Account? account) =>
+  dynamic saveAccount(_i3.Account? account) =>
       super.noSuchMethod(Invocation.method(
         #saveAccount,
         [account],

@@ -1,5 +1,4 @@
-import 'package:deck_ng/model/assignment.dart';
-import 'package:deck_ng/model/card.dart';
+import 'package:deck_ng/model/models.dart';
 
 abstract class ICardService {
   Future<Card> createCard(int boardId, int stackId, String title);
@@ -9,6 +8,9 @@ abstract class ICardService {
   Future<Card> getCard(int boardId, int stackId, int cardId);
 
   Future<void> deleteCard(int boardId, int stackId, int cardId);
+
+  Future<Card> reorderCard(int boardId, int oldStackId, int cardId, Card card,
+      int newOrder, int newStackId);
 
   Future<void> assignLabel2Card(
       int boardId, int stackId, int cardId, int labelId);

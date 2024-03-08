@@ -3,10 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:deck_ng/model/board.dart' as _i2;
-import 'package:deck_ng/service/Iboard_service.dart' as _i3;
+import 'package:deck_ng/model/stack.dart' as _i7;
+import 'package:deck_ng/service/Iauth_service.dart' as _i3;
+import 'package:deck_ng/service/Iboard_service.dart' as _i4;
+import 'package:deck_ng/service/Istack_service.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -32,35 +35,115 @@ class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
         );
 }
 
+class _FakeCapabilities_1 extends _i1.SmartFake implements _i3.Capabilities {
+  _FakeCapabilities_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [IBoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIBoardService extends _i1.Mock implements _i3.IBoardService {
+class MockIBoardService extends _i1.Mock implements _i4.IBoardService {
   MockIBoardService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
+  _i5.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
           #getAllBoards,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
-      ) as _i4.Future<List<_i2.Board>>);
+        returnValue: _i5.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+      ) as _i5.Future<List<_i2.Board>>);
 
   @override
-  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
+  _i5.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getBoard,
           [boardId],
         ),
-        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_0(
+        returnValue: _i5.Future<_i2.Board>.value(_FakeBoard_0(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-      ) as _i4.Future<_i2.Board>);
+      ) as _i5.Future<_i2.Board>);
+}
+
+/// A class which mocks [IAuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockIAuthService extends _i1.Mock implements _i3.IAuthService {
+  MockIAuthService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<bool> login(
+    String? serverUrl,
+    String? username,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [
+            serverUrl,
+            username,
+            password,
+          ],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
+
+  @override
+  _i5.Future<_i3.Capabilities> checkServer(String? serverUrl) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #checkServer,
+          [serverUrl],
+        ),
+        returnValue: _i5.Future<_i3.Capabilities>.value(_FakeCapabilities_1(
+          this,
+          Invocation.method(
+            #checkServer,
+            [serverUrl],
+          ),
+        )),
+      ) as _i5.Future<_i3.Capabilities>);
+
+  @override
+  bool isAuth() => (super.noSuchMethod(
+        Invocation.method(
+          #isAuth,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+}
+
+/// A class which mocks [IStackService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockIStackService extends _i1.Mock implements _i6.IStackService {
+  MockIStackService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<List<_i7.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getAll,
+          [boardId],
+        ),
+        returnValue: _i5.Future<List<_i7.Stack>?>.value(),
+      ) as _i5.Future<List<_i7.Stack>?>);
 }

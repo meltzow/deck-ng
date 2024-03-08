@@ -21,11 +21,12 @@ void main() {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
       Environment.init();
-    });
-
-    setUp(() {
       PathProviderPlatform.instance = FakePathProviderPlatform();
     });
+
+    // setUp(() {
+    //
+    // });
 
     test('simple save test', () async {
       await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());

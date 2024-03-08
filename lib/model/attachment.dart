@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:deck_ng/model/converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'attachment.g.dart';
@@ -12,7 +13,8 @@ class Attachment {
   late int? lastModified;
   late int? createdAt;
   late String createdBy;
-  int? deletedAt;
+  @EpochDateTimeConverter()
+  DateTime? deletedAt;
   late ExtendedData extendedData;
   late int id;
 

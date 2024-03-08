@@ -29,10 +29,10 @@ void main() {
 
     var stackList = [
       Stack(title: 'todo', id: 1, cards: [
-        Card(title: 'issue 1', id: 1),
-        Card(title: 'issue 2', id: 1)
-      ]),
-      Stack(title: 'in progress', id: 2, cards: [])
+        Card(title: 'issue 1', id: 1, stackId: 1),
+        Card(title: 'issue 2', id: 1, stackId: 1)
+      ], boardId: 1),
+      Stack(title: 'in progress', id: 2, cards: [], boardId: 1)
     ].map((e) => e.toJson()).toList();
     when(httpServiceMock
             .getListResponse('/index.php/apps/deck/api/v1/boards/1/stacks'))

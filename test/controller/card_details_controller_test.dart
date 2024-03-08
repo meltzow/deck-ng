@@ -26,10 +26,11 @@ void main() {
     var boardId = 1;
     var stackId = 3;
 
-    var card = Card(title: 'foocard', id: cardId);
-    var board = Board(title: 'foo', id: boardId);
 
-    var stack = Stack(title: "offen", cards: [card], id: 1);
+    var board = Board(title: 'foo', id: boardId);
+    var card = Card(title: 'foocard', id: cardId, stackId: stackId);
+    var stack = Stack(title: "offen", cards: [card], id: 1, boardId: boardId);
+
     var labels = [Label(title: 'first', id: 1), Label(title: 'second', id: 2)];
 
     controller.cardId = cardId;
