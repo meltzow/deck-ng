@@ -8,6 +8,7 @@ import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
+import 'package:deck_ng/screen/oss_licenses_screen.dart';
 import 'package:deck_ng/service/guard.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,10 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/auth/login',
               page: () => LoginScreen(),
+            ),
+            GetPage(
+              name: '/licenses',
+              page: () => const OssLicensesPage(),
             ),
           ],
         ));

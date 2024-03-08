@@ -59,10 +59,17 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.rate_review_outlined),
-            title: const Text('feedback'),
+            title: Text('feedback'.tr),
             onTap: () {
               Navigator.pop(context);
               Wiredash.of(context).show(inheritMaterialTheme: true);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.local_police_outlined),
+            title: Text('licenses'.tr),
+            onTap: () {
+              Get.toNamed('/licenses');
             },
           ),
         ],
