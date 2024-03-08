@@ -11,6 +11,7 @@ import 'package:deck_ng/model/stack.dart' as _i7;
 import 'package:deck_ng/service/Iauth_service.dart' as _i9;
 import 'package:deck_ng/service/Iboard_service.dart' as _i4;
 import 'package:deck_ng/service/Icard_service.dart' as _i8;
+import 'package:deck_ng/service/Inotification_service.dart' as _i10;
 import 'package:deck_ng/service/Istack_service.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -398,4 +399,27 @@ class MockIAuthService extends _i1.Mock implements _i9.IAuthService {
         ),
         returnValue: false,
       ) as bool);
+}
+
+/// A class which mocks [INotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockINotificationService extends _i1.Mock
+    implements _i10.INotificationService {
+  MockINotificationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic successMsg(
+    String? title,
+    String? message,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #successMsg,
+        [
+          title,
+          message,
+        ],
+      ));
 }

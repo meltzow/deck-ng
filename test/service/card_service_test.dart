@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/service/Icard_service.dart';
@@ -7,14 +9,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 
 import 'board_service_test.mocks.dart';
+import 'fake_provider.dart';
 
 @GenerateMocks([IHttpService])
 void main() {
   group('cardGroup', () {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
+      PathProviderPlatform.instance = FakePathProviderPlatform();
     });
 
     test('add label to card successfully', () async {
@@ -26,13 +31,13 @@ void main() {
       var cardId = 1;
       var labelId = 1;
       var label = Label(title: 'wip', id: labelId);
-      var mockResp =
-          (Card(title: 'foo', id: cardId, stackId: stackId)..labels = [label]).toJson();
+      var mockResp = (Card(title: 'foo', id: cardId, stackId: stackId)
+            ..labels = [label])
+          .toJson();
 
       when(httpServiceMock.put(
-              "/boards/{boardId}/stacks/{stackId}/cards/{cardId}/assignLabel",
-              labelId))
-          .thenAnswer((_) async => mockResp);
+          "/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId/assignLabel",
+          json.encode({"labelId": labelId}))).thenAnswer((_) async => mockResp);
 
       var cardResp =
           await cardService.assignLabel2Card(boardId, stackId, cardId, labelId);

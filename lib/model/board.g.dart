@@ -38,8 +38,9 @@ Board _$BoardFromJson(Map<String, dynamic> json) => Board(
               .toList() ??
           [],
     )..permission = (json['permission'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as bool),
-      );
+          (k, e) => MapEntry(k, e as bool),
+        ) ??
+        {};
 
 Map<String, dynamic> _$BoardToJson(Board instance) => <String, dynamic>{
       'title': instance.title,

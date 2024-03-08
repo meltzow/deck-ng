@@ -5,9 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:deck_ng/model/account.dart' as _i5;
 import 'package:deck_ng/service/Iauth_service.dart' as _i2;
-import 'package:deck_ng/service/Icredential_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -57,29 +55,4 @@ class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
         ),
         returnValue: false,
       ) as bool);
-}
-
-/// A class which mocks [IStorageService].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockIStorageService extends _i1.Mock implements _i4.IStorageService {
-  MockIStorageService() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  bool hasAccount() => (super.noSuchMethod(
-        Invocation.method(
-          #hasAccount,
-          [],
-        ),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  dynamic saveAccount(_i5.Account? account) =>
-      super.noSuchMethod(Invocation.method(
-        #saveAccount,
-        [account],
-      ));
 }

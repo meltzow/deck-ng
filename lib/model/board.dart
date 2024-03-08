@@ -39,7 +39,8 @@ class Board {
   @JsonKey(defaultValue: [])
   late List<User> users = [];
   late User owner;
-  late Map<String, bool>? permission;
+  @JsonKey(defaultValue: {})
+  late Map<String, bool>? permission = {};
   // late Setting? settings;
 
   Board(

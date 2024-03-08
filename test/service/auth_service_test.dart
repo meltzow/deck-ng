@@ -1,27 +1,40 @@
+import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/impl/auth_service_impl.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mockito/annotations.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 
 import 'auth_service_test.mocks.dart';
 import 'fake_provider.dart';
+import 'http_matcher.dart';
 
-@GenerateMocks([IHttpService, IStorageService])
+@GenerateMocks([IStorageService])
 void main() {
-  late IHttpService httpService;
   late IStorageService credServiceMock;
+  late dio.Dio dioClient;
+  late DioAdapter dioAdapter;
 
   group('authServiceGroup', () {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
+      PathProviderPlatform.instance = FakePathProviderPlatform();
     });
 
     setUp(() {
       credServiceMock = Get.put<IStorageService>(MockIStorageService());
-      httpService = Get.put(MockIHttpService());
-      PathProviderPlatform.instance = FakePathProviderPlatform();
+      dioClient = Get.put(dio.Dio());
+      dioAdapter = DioAdapter(
+        dio: dioClient,
+        matcher: const FullHttpRequestDataMatcher(),
+      );
+    });
+
+    test('trivial test of getAccount', () async {
+      final IAuthService authService = Get.put<IAuthService>(AuthServiceImpl());
     });
 
     // test('returns login successfully - all request successfully', () async {

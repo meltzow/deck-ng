@@ -6,8 +6,10 @@
 import 'dart:async' as _i4;
 
 import 'package:deck_ng/model/board.dart' as _i2;
+import 'package:deck_ng/model/stack.dart' as _i7;
 import 'package:deck_ng/service/Iauth_service.dart' as _i5;
 import 'package:deck_ng/service/Iboard_service.dart' as _i3;
+import 'package:deck_ng/service/Istack_service.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -100,4 +102,22 @@ class MockIAuthService extends _i1.Mock implements _i5.IAuthService {
         ),
         returnValue: false,
       ) as bool);
+}
+
+/// A class which mocks [IStackService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockIStackService extends _i1.Mock implements _i6.IStackService {
+  MockIStackService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<List<_i7.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getAll,
+          [boardId],
+        ),
+        returnValue: _i4.Future<List<_i7.Stack>?>.value(),
+      ) as _i4.Future<List<_i7.Stack>?>);
 }
