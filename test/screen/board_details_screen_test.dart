@@ -2,6 +2,7 @@ import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/stack.dart';
 import 'package:deck_ng/my_app.dart';
+import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
@@ -12,7 +13,7 @@ import 'package:mockito/mockito.dart';
 
 import '../controller/board_details_controller_test.mocks.dart';
 
-@GenerateMocks([IBoardService, IStackService, ICardService])
+@GenerateMocks([IBoardService, IStackService, ICardService, IAuthService])
 void main() {
   late IBoardService boardServiceMock;
   late IStackService stackServiceMock;
@@ -27,9 +28,16 @@ void main() {
   testWidgets('display board details', (WidgetTester tester) async {
     var resp = Board(title: 'foo', id: 1);
     var stacks = [
-      Stack(title: "todo", cards: [Card(title: "issue 1", id: 1, stackId: 1)], id: 1, boardId: resp.id),
       Stack(
-          title: "in progress", cards: [Card(title: "issue 2", id: 2, stackId: 2)], id: 2, boardId: resp.id),
+          title: "todo",
+          cards: [Card(title: "issue 1", id: 1, stackId: 1)],
+          id: 1,
+          boardId: resp.id),
+      Stack(
+          title: "in progress",
+          cards: [Card(title: "issue 2", id: 2, stackId: 2)],
+          id: 2,
+          boardId: resp.id),
     ];
     when(boardServiceMock.getAllBoards()).thenAnswer((_) async => [resp]);
     when(boardServiceMock.getBoard(1)).thenAnswer((_) async => resp);

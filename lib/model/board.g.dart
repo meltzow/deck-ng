@@ -26,16 +26,18 @@ Board _$BoardFromJson(Map<String, dynamic> json) => Board(
       lastModified: _$JsonConverterFromJson<int, DateTime>(
           json['lastModified'], const EpochDateTimeConverter().fromJson),
       id: json['id'] as int,
+      users: (json['users'] as List<dynamic>?)
+              ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      owner: json['owner'] == null
+          ? const User()
+          : User.fromJson(json['owner'] as Map<String, dynamic>),
       labels: (json['labels'] as List<dynamic>?)
               ?.map((e) => Label.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-    )
-      ..users = (json['users'] as List<dynamic>)
-          .map((e) => User.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..owner = User.fromJson(json['owner'] as Map<String, dynamic>)
-      ..permission = (json['permission'] as Map<String, dynamic>?)?.map(
+    )..permission = (json['permission'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as bool),
       );
 

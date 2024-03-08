@@ -1,6 +1,7 @@
 import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/my_app.dart';
+import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,17 +10,18 @@ import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../controller/board_details_controller_test.mocks.dart';
-import '../service/auth_service_test.mocks.dart';
+import 'card_details_screen_test.mocks.dart';
 
-@GenerateMocks([ICardService, IStorageService])
+@GenerateMocks([ICardService, IStorageService, IAuthService])
 void main() {
   late ICardService cardServiceMock;
   late IStorageService credentialServiceMock;
+  late IAuthService authServiceMock;
 
   setUp(() {
     cardServiceMock = Get.put<ICardService>(MockICardService());
     credentialServiceMock = Get.put<IStorageService>(MockIStorageService());
+    authServiceMock = Get.put<IAuthService>(MockIAuthService());
   });
 
   testWidgets('show a simple card', (tester) async {

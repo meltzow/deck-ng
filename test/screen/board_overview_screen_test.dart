@@ -7,6 +7,7 @@
 
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/my_app.dart';
+import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ import 'package:mockito/mockito.dart';
 
 import 'board_overview_screen_test.mocks.dart';
 
-@GenerateMocks([IBoardService])
+@GenerateMocks([IBoardService, IAuthService])
 void main() {
   late IBoardService boardServiceMock;
 

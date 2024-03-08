@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:deck_ng/model/converter.dart';
-import 'package:deck_ng/model/label.dart';
-import 'package:deck_ng/model/user.dart';
+import 'package:deck_ng/model/models.dart';
 import 'package:get/get.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -37,7 +36,8 @@ class Board {
   final DateTime? lastModified;
   @JsonKey(defaultValue: [])
   late List<Label> labels = [];
-  late List<User> users;
+  @JsonKey(defaultValue: [])
+  late List<User> users = [];
   late User owner;
   late Map<String, bool>? permission;
   // late Setting? settings;
@@ -51,6 +51,8 @@ class Board {
       this.deletedAt,
       this.lastModified,
       required this.id,
+      this.users = const [],
+      this.owner = const User(),
       List<Label>? labels})
       : labels = labels ?? [];
 

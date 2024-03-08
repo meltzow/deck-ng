@@ -6,6 +6,7 @@
 import 'dart:async' as _i4;
 
 import 'package:deck_ng/model/board.dart' as _i2;
+import 'package:deck_ng/service/Iauth_service.dart' as _i5;
 import 'package:deck_ng/service/Iboard_service.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -63,4 +64,40 @@ class MockIBoardService extends _i1.Mock implements _i3.IBoardService {
           ),
         )),
       ) as _i4.Future<_i2.Board>);
+}
+
+/// A class which mocks [IAuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockIAuthService extends _i1.Mock implements _i5.IAuthService {
+  MockIAuthService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<bool> login(
+    String? serverUrl,
+    String? username,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [
+            serverUrl,
+            username,
+            password,
+          ],
+        ),
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
+
+  @override
+  bool isAuth() => (super.noSuchMethod(
+        Invocation.method(
+          #isAuth,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
 }
