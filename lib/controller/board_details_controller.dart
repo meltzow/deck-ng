@@ -30,7 +30,8 @@ class BoardDetailsController extends GetxController {
   final IBoardService _boardService = Get.find<IBoardService>();
   final IStackService _stackService = Get.find<IStackService>();
   final ICardService _cardService = Get.find<ICardService>();
-  final INotificationService _notificationService = Get.find<INotificationService>();
+  final INotificationService _notificationService =
+      Get.find<INotificationService>();
 
   NC.Board? get boardData => _boardsData.value;
 
@@ -68,7 +69,8 @@ class BoardDetailsController extends GetxController {
         debugPrint('Move $groupId:$fromIndex to $groupId:$toIndex');
       },
       onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
-        cardReorderHandler(fromIndex, toIndex, int.parse(fromGroupId) - 1, int.parse(toGroupId) -1 );
+        cardReorderHandler(fromIndex, toIndex, int.parse(fromGroupId) - 1,
+            int.parse(toGroupId) - 1);
         debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
       },
     );
@@ -108,27 +110,37 @@ class BoardDetailsController extends GetxController {
     }
     currentDraggedCard.order = newOrderValue;
 
-    var card1 = await _cardService.updateCard(_boardId, currentDraggedCard.stackId,
-        currentDraggedCard.id, currentDraggedCard);
+    var card1 = await _cardService.updateCard(_boardId,
+        currentDraggedCard.stackId, currentDraggedCard.id, currentDraggedCard);
     cardSuccessMsg();
   }
 
   cardReorderHandler(int oldCardIndex, int newCardIndex, int oldListIndex,
       int newListIndex) async {
     // find card at old index and old list/stack
-    var card = _stackData.value[oldListIndex].cards[oldCardIndex];
-    var orderMustIncreased = (oldCardIndex < newCardIndex) ? true : false;
-    // var neighborCard = _stackData.value[newListIndex].cards[newListIndex]
-    // if (orderMustIncreased)
+    var draggedCard = _stackData.value[oldListIndex].cards[oldCardIndex];
+    var cardAtNewPosition =
+        _stackData.value[newListIndex].cards.elementAtOrNull(newCardIndex);
+    if (cardAtNewPosition != null) {
+      draggedCard.order = cardAtNewPosition.order - 1;
+    } else {
+      var cardAtNewPositionMinus1 = _stackData.value[newListIndex].cards
+          .elementAtOrNull(newCardIndex - 1);
+      if (cardAtNewPositionMinus1 != null) {
+        draggedCard.order = cardAtNewPositionMinus1.order + 1;
+      } else {
+        draggedCard.order = 0;
+      }
+    }
     // set at card new index and new stack
     // card.stackId = _stackData.value[newListIndex!].id;
     //save card
     var group = await _cardService.reorderCard(
         _boardId,
         _stackData.value[oldListIndex].id,
-        card.id,
-        card,
-        card.order,
+        draggedCard.id,
+        draggedCard,
+        draggedCard.order,
         _stackData.value[newListIndex].id);
 
     cardSuccessMsg();
