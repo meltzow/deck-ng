@@ -3,7 +3,6 @@ import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class CardDetailsScreen extends StatelessWidget {
@@ -103,17 +102,9 @@ class CardDetailsScreen extends StatelessWidget {
                                     padding:
                                         const EdgeInsets.fromLTRB(0, 30, 0, 0),
                                     child: ListTile(
-                                      tileColor: const Color(0x00ffffff),
                                       title: TextField(
                                         controller: controller.titleController,
                                         decoration: InputDecoration(
-                                          disabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                            borderSide: const BorderSide(
-                                                color: Color(0xff9e9e9e),
-                                                width: 1),
-                                          ),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(4.0),
@@ -133,10 +124,8 @@ class CardDetailsScreen extends StatelessWidget {
                                             fontWeight: FontWeight.w400,
                                             fontStyle: FontStyle.normal,
                                             fontSize: 16,
-                                            color: Color(0xff9e9e9e),
                                           ),
                                           filled: true,
-                                          fillColor: const Color(0xffffffff),
                                           isDense: false,
                                           contentPadding:
                                               const EdgeInsets.symmetric(
@@ -146,25 +135,27 @@ class CardDetailsScreen extends StatelessWidget {
                                           fontWeight: FontWeight.w400,
                                           fontStyle: FontStyle.normal,
                                           fontSize: 14,
-                                          color: Color(0xff424141),
                                         ),
                                         textAlign: TextAlign.start,
                                       ),
                                       dense: true,
                                       contentPadding: const EdgeInsets.all(0),
                                       selected: false,
-                                      selectedTileColor:
-                                          const Color(0x42000000),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.zero,
                                       ),
-                                      leading:
-                                          const Icon(Icons.title, size: 24),
+                                      leading: Icon(
+                                        Icons.title,
+                                        size: 24,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
                                     ),
                                   ),
                                   const Divider(
                                     color: Color(0xffdddddd),
-                                    height: 30,
+                                    height: 15,
                                     thickness: 0,
                                     indent: 50,
                                     endIndent: 0,
@@ -174,13 +165,6 @@ class CardDetailsScreen extends StatelessWidget {
                                       controller: controller
                                           .descriptionEditingController,
                                       decoration: InputDecoration(
-                                        disabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xff9e9e9e),
-                                              width: 1),
-                                        ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(4.0),
@@ -203,7 +187,6 @@ class CardDetailsScreen extends StatelessWidget {
                                           color: Color(0xff9e9e9e),
                                         ),
                                         filled: true,
-                                        fillColor: const Color(0xffffffff),
                                         isDense: false,
                                         contentPadding:
                                             const EdgeInsets.symmetric(
@@ -213,14 +196,12 @@ class CardDetailsScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w400,
                                         fontStyle: FontStyle.normal,
                                         fontSize: 14,
-                                        color: Color(0xff000000),
                                       ),
                                       textAlign: TextAlign.start,
                                     ),
                                     dense: true,
                                     contentPadding: const EdgeInsets.all(0),
                                     selected: false,
-                                    selectedTileColor: const Color(0x42000000),
                                     shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.zero,
                                     ),
@@ -232,7 +213,7 @@ class CardDetailsScreen extends StatelessWidget {
                                   ),
                                   const Divider(
                                     color: Color(0xffdddddd),
-                                    height: 20,
+                                    height: 15,
                                     thickness: 0,
                                     indent: 50,
                                     endIndent: 0,
@@ -240,8 +221,11 @@ class CardDetailsScreen extends StatelessWidget {
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
                                     title: Text(controller.dueDatePreview),
-                                    leading: const Icon(Icons.calendar_month,
-                                        size: 24),
+                                    leading: Icon(Icons.calendar_month,
+                                        size: 24,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary),
                                     onTap: () async {
                                       var result = await showDatePicker(
                                         context: context,
@@ -275,7 +259,13 @@ class CardDetailsScreen extends StatelessWidget {
                                       selectedOptions:
                                           controller.selectedLabelValueItems,
                                     ),
-                                    leading: const Icon(Icons.label, size: 24),
+                                    leading: Icon(
+                                      Icons.label,
+                                      size: 24,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
                                   ),
                                   const Divider(
                                     color: Color(0xffdddddd),
@@ -300,7 +290,11 @@ class CardDetailsScreen extends StatelessWidget {
                                       selectedOptions: controller
                                           .selectedAssigneesValueItems,
                                     ),
-                                    leading: const Icon(Icons.person, size: 24),
+                                    leading: Icon(Icons.person,
+                                        size: 24,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary),
                                   ),
                                 ],
                               )),

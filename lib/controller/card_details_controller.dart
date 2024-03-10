@@ -3,6 +3,7 @@ import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart' as card;
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
+import 'package:deck_ng/service/Inotification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -22,23 +23,20 @@ class CardDetailsController extends GetxController {
   final TextEditingController _titleEditingController = TextEditingController();
   late RxString descriptionControllerText = ''.obs;
   late RxString titleControllerText = ''.obs;
+  late RxString _dueDatePreview = ''.obs;
 
   late Rx<card.Card> _cardData;
   final Rxn<Board> _boardData = Rxn<Board>();
 
   final ICardService _cardService = Get.find<ICardService>();
   final IBoardService _boardService = Get.find<IBoardService>();
+  final INotificationService _notificationService =
+      Get.find<INotificationService>();
 
   card.Card get cardData => _cardData.value;
 
-  DateTime? get dueDate => _cardData.value?.duedate;
-  String get dueDatePreview {
-    if (_cardData.value.duedate != null) {
-      return DateFormat.MMMMEEEEd(Get.locale.toString())
-          .format(_cardData.value.duedate!);
-    }
-    return '';
-  }
+  DateTime? get dueDate => _cardData.value.duedate;
+  String get dueDatePreview => _dueDatePreview.value;
 
   TextEditingController? get descriptionEditingController =>
       _descriptionEditingController;
@@ -122,12 +120,20 @@ class CardDetailsController extends GetxController {
   Future<void> refreshData() async {
     isLoading.value = true;
     _cardData = (await _cardService.getCard(
-        _boardId.value!, _stackId.value!, _cardId.value!)).obs;
+            _boardId.value!, _stackId.value!, _cardId.value!))
+        .obs;
     _boardData.value = await _boardService.getBoard(_boardId.value!);
     titleControllerText.value = _cardData.value!.title;
     descriptionControllerText.value = _cardData.value!.description ?? '';
     _titleEditingController.text = titleControllerText.value;
     _descriptionEditingController.text = descriptionControllerText.value;
+    if (_cardData.value.duedate != null) {
+      _dueDatePreview.value = DateFormat.MMMMEEEEd(Get.locale.toString())
+          .format(_cardData.value.duedate!);
+    } else {
+      _dueDatePreview.value = '';
+    }
+
     isLoading.value = false;
   }
 
@@ -141,14 +147,7 @@ class CardDetailsController extends GetxController {
   }
 
   void successMsg() {
-    Get.showSnackbar(
-      const GetSnackBar(
-        title: 'Card',
-        message: 'Card Updated Successfully',
-        icon: Icon(Icons.update),
-        duration: Duration(seconds: 3),
-      ),
-    );
+    _notificationService.successMsg("Card", "Card updated successfully");
   }
 
   saveLabels(List<ValueItem<int>> selectedLabels) async {
@@ -232,7 +231,9 @@ class CardDetailsController extends GetxController {
 
   void setDueDate(DateTime? result) {
     if (result != null) {
-      _cardData.value!.duedate = result;
+      _cardData.value.duedate = result;
+      _dueDatePreview.value =
+          DateFormat.MMMMEEEEd(Get.locale.toString()).format(result);
     }
   }
 }

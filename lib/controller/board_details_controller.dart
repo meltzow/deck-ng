@@ -61,17 +61,15 @@ class BoardDetailsController extends GetxController {
     //     _stackData.value.isNotEmpty ? _stackData.value[0].id : null;
 
     boardController = AppFlowyBoardController(
-      onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
-        debugPrint('Move item from $fromIndex to $toIndex');
-      },
+      // onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
+      //   debugPrint('Move item from $fromIndex to $toIndex');
+      // },
       onMoveGroupItem: (groupId, fromIndex, toIndex) {
         reorder(int.parse(groupId) - 1, fromIndex, toIndex);
-        debugPrint('Move $groupId:$fromIndex to $groupId:$toIndex');
       },
       onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
         cardReorderHandler(fromIndex, toIndex, int.parse(fromGroupId) - 1,
             int.parse(toGroupId) - 1);
-        debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
       },
     );
     for (var stack in _stackData.value) {
