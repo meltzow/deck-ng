@@ -14,5 +14,16 @@ class NotificationService implements INotificationService {
       ),
     );
   }
-  
+
+  @override
+  errorMsg(String title, String msg) {
+    Get.showSnackbar(
+      GetSnackBar(
+        title: title,
+        message: msg,
+        icon: const Icon(Icons.update),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/Inotification_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   var credService = Get.find<IStorageService>();
   var authService = Get.find<IAuthService>();
+  var notificationService = Get.find<INotificationService>();
 
   final RxBool isLoading = RxBool(false);
   RxString nameControllerText = ''.obs;
@@ -79,33 +81,14 @@ class LoginController extends GetxController {
           nameControllerText.value, passwordControllerText.value);
       if (successful) {
         Get.toNamed('/boards');
-        Get.showSnackbar(
-          const GetSnackBar(
-            title: 'Login',
-            message: 'Login Successful',
-            icon: Icon(Icons.login),
-            duration: Duration(seconds: 3),
-          ),
-        );
+        notificationService.successMsg("Login", "Login Successful");
       } else {
-        Get.showSnackbar(
-          const GetSnackBar(
-            title: 'Login',
-            message: 'Login not Successful',
-            icon: Icon(Icons.update),
-            duration: Duration(seconds: 3),
-          ),
-        );
+        notificationService.errorMsg("Login",
+            "Login not Successful. Please check username and password");
       }
-    } on DioException {
-      Get.showSnackbar(
-        const GetSnackBar(
-          title: 'Login',
-          message: 'Login not Successful',
-          icon: Icon(Icons.update),
-          duration: Duration(seconds: 3),
-        ),
-      );
+    } on DioException catch (e) {
+      notificationService.errorMsg(
+          "Login", "Login not Successful. ${e.message}");
     }
   }
 
