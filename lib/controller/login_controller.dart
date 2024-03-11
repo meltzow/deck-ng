@@ -13,8 +13,11 @@ class LoginController extends GetxController {
   final RxBool isLoading = RxBool(false);
   RxString nameControllerText = ''.obs;
   var nameController = TextEditingController();
+
   RxString passwordControllerText = ''.obs;
   var passwordController = TextEditingController();
+  RxBool isObscure = true.obs;
+
   RxString urlControllerText = ''.obs;
   var urlController = TextEditingController();
   final FocusNode focusNode = FocusNode();

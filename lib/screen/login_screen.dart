@@ -152,43 +152,51 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-                  child: TextFormField(
-                    controller: controller.passwordController,
-                    obscureText: true,
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 16,
-                    ),
-                    decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
+                Obx(() => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 0),
+                      child: TextFormField(
+                        controller: controller.passwordController,
+                        obscureText: controller.isObscure.value,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 16,
+                        ),
+                        decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          labelText: "Password".tr,
+                          labelStyle: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                          ),
+                          isDense: false,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 12),
+                          prefixIcon:
+                              const Icon(Icons.admin_panel_settings, size: 24),
+                          suffixIcon: IconButton(
+                              icon: Icon(controller.isObscure.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                controller.isObscure.value =
+                                    !controller.isObscure.value;
+                              }),
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      labelText: "Password".tr,
-                      labelStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 16,
-                      ),
-                      isDense: false,
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
-                      prefixIcon:
-                          const Icon(Icons.admin_panel_settings, size: 24),
-                    ),
-                  ),
-                ),
+                    )),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 16),
                   child: Row(
