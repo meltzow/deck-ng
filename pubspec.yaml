@@ -46,6 +46,7 @@ dependencies:
   flutter_gen: any
   appflowy_board: ^0.1.1
   intl: any
+  convenient_test: ^1.3.4
 
 
 dev_dependencies:
@@ -73,6 +74,7 @@ dev_dependencies:
   path_provider_platform_interface: any
   plugin_platform_interface: any
   flutter_oss_licenses: ^2.0.1
+  convenient_test_dev: ^1.3.4
 
 flutter_launcher_icons:
   android: true

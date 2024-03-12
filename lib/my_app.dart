@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   final String? initialRoute;
   final bool debugShowCheckedModeBanner;
   final storageService = Get.find<IStorageService>();
+  static final navigatorKey = GlobalKey<NavigatorState>();
 
   MyApp({super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
 
