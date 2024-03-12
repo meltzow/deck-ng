@@ -48,7 +48,7 @@ void main() {
     controller.saveLabels(
         labels.map((e) => ValueItem(label: e.title, value: e.id)).toList());
 
-    expect(controller.cardData?.labels.length, labels.length);
+    expect(controller.cardData.labels.length, labels.length);
   });
 
   tearDown(() {

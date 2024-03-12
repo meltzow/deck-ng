@@ -51,7 +51,7 @@ class DashboardController extends GetxController {
       var stacks = await _stackService.getAll(board.id);
       for (var stack in stacks!) {
         stackCount++;
-        for (var card in stack.cards!) {
+        for (var card in stack.cards) {
           taskCount++;
         }
       }

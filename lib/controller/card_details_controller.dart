@@ -23,7 +23,7 @@ class CardDetailsController extends GetxController {
   final TextEditingController _titleEditingController = TextEditingController();
   late RxString descriptionControllerText = ''.obs;
   late RxString titleControllerText = ''.obs;
-  late RxString _dueDatePreview = ''.obs;
+  late final RxString _dueDatePreview = ''.obs;
 
   late Rx<card.Card> _cardData;
   final Rxn<Board> _boardData = Rxn<Board>();
@@ -52,7 +52,7 @@ class CardDetailsController extends GetxController {
 
   List<ValueItem<int>> get selectedLabelValueItems {
     var items = <ValueItem<int>>[];
-    for (var label in _cardData.value!.labels) {
+    for (var label in _cardData.value.labels) {
       items.add(ValueItem(label: label.title, value: label.id));
     }
     return items;
@@ -68,10 +68,10 @@ class CardDetailsController extends GetxController {
 
   List<ValueItem<String>> get selectedAssigneesValueItems {
     var items = <ValueItem<String>>[];
-    if (_cardData.value!.assignedUsers == null) {
+    if (_cardData.value.assignedUsers == null) {
       return items;
     }
-    for (var user in _cardData.value!.assignedUsers!) {
+    for (var user in _cardData.value.assignedUsers!) {
       items.add(ValueItem(
           label: user.participant.displayname, value: user.participant.uid));
     }
@@ -120,11 +120,11 @@ class CardDetailsController extends GetxController {
   Future<void> refreshData() async {
     isLoading.value = true;
     _cardData = (await _cardService.getCard(
-            _boardId.value!, _stackId.value!, _cardId.value!))
+            _boardId.value, _stackId.value, _cardId.value))
         .obs;
-    _boardData.value = await _boardService.getBoard(_boardId.value!);
-    titleControllerText.value = _cardData.value!.title;
-    descriptionControllerText.value = _cardData.value!.description ?? '';
+    _boardData.value = await _boardService.getBoard(_boardId.value);
+    titleControllerText.value = _cardData.value.title;
+    descriptionControllerText.value = _cardData.value.description ?? '';
     _titleEditingController.text = titleControllerText.value;
     _descriptionEditingController.text = descriptionControllerText.value;
     if (_cardData.value.duedate != null) {
@@ -138,11 +138,11 @@ class CardDetailsController extends GetxController {
   }
 
   saveCard() {
-    _cardData.value!.title = titleControllerText.value;
-    _cardData.value!.description = descriptionControllerText.value;
+    _cardData.value.title = titleControllerText.value;
+    _cardData.value.description = descriptionControllerText.value;
 
     _cardService.updateCard(
-        _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value!);
+        _boardId.value, _stackId.value, _cardId.value, _cardData.value);
     successMsg();
   }
 
@@ -152,7 +152,7 @@ class CardDetailsController extends GetxController {
 
   saveLabels(List<ValueItem<int>> selectedLabels) async {
     Set<int?> currentLabelIds =
-        (_cardData.value!.labels.map((e) => e.id)).toSet();
+        (_cardData.value.labels.map((e) => e.id)).toSet();
     Set<int?> newLabels =
         selectedLabels.map((e) => e.value).toSet().difference(currentLabelIds);
 
@@ -170,8 +170,8 @@ class CardDetailsController extends GetxController {
   _addLabels(Set<int?> selectedLabel) async {
     for (var item in selectedLabel) {
       await _cardService.assignLabel2Card(
-          _boardId.value!, _stackId.value!, _cardId.value!, item!);
-      _cardData.value?.labels.add(
+          _boardId.value, _stackId.value, _cardId.value, item!);
+      _cardData.value.labels.add(
           _boardData.value!.labels.firstWhere((element) => element.id == item));
     }
   }
@@ -179,15 +179,15 @@ class CardDetailsController extends GetxController {
   _addUsers(Set<String?> selectedUsers) async {
     for (var userId in selectedUsers) {
       var assignment = await _cardService.assignUser2Card(
-          _boardId.value!, _stackId.value!, _cardId.value!, userId!);
-      _cardData.value?.assignedUsers?.add(assignment);
+          _boardId.value, _stackId.value, _cardId.value, userId!);
+      _cardData.value.assignedUsers?.add(assignment);
     }
   }
 
   removeLabelByInt(int? selectedLabel) async {
     await _cardService.removeLabel2Card(
-        _boardId.value!, _stackId.value!, _cardId.value!, selectedLabel!);
-    _cardData.value?.labels
+        _boardId.value, _stackId.value, _cardId.value, selectedLabel!);
+    _cardData.value.labels
         .remove(_boardData.value!.findLabelById(selectedLabel));
   }
 
@@ -197,7 +197,7 @@ class CardDetailsController extends GetxController {
 
   void saveUsers(List<ValueItem<String>> selectedUsers) {
     Set<Assignment?> currentAssigneeIds =
-        _cardData.value!.assignedUsers!.toSet();
+        _cardData.value.assignedUsers!.toSet();
 
     Set<String?> newUsers = selectedUsers
         .map((e) => e.value)
@@ -224,8 +224,8 @@ class CardDetailsController extends GetxController {
       return;
     }
     await _cardService.unassignUser2Card(
-        _boardId.value!, _stackId.value!, _cardId.value!, userId);
-    _cardData.value?.assignedUsers!
+        _boardId.value, _stackId.value, _cardId.value, userId);
+    _cardData.value.assignedUsers!
         .removeWhere((element) => element.participant.uid == userId);
   }
 

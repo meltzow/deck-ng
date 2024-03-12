@@ -11,36 +11,36 @@ class SettingScreen extends StatelessWidget {
         elevation: 4,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
         title: Text(
           "Settings".tr,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.normal,
             fontSize: 20,
           ),
         ),
-        leading: Icon(
+        leading: const Icon(
           Icons.arrow_back_ios,
           size: 22,
         ),
       ),
       body: ListView(
         scrollDirection: Axis.vertical,
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         shrinkWrap: false,
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: Text(
                     "Avatar",
@@ -54,12 +54,12 @@ class SettingScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                   child: Container(
                     height: 30,
                     width: 30,
                     clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: Image.network(
@@ -67,21 +67,21 @@ class SettingScreen extends StatelessWidget {
                         fit: BoxFit.cover),
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   size: 18,
                 ),
               ],
             ),
           ),
-          Divider(
+          const Divider(
             color: Color(0x4d9e9e9e),
             height: 16,
             thickness: 1,
             indent: 0,
             endIndent: 0,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -124,14 +124,14 @@ class SettingScreen extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
+          const Divider(
             color: Color(0x4d9e9e9e),
             height: 16,
             thickness: 1,
             indent: 0,
             endIndent: 0,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -174,14 +174,14 @@ class SettingScreen extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
+          const Divider(
             color: Color(0x4d9e9e9e),
             height: 16,
             thickness: 1,
             indent: 0,
             endIndent: 0,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

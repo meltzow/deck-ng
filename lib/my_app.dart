@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return Wiredash(
         projectId: 'deck-ng-te1kmcw',
         secret: DartDefine.wiredashSecret,
-        psOptions: PsOptions(
+        psOptions: const PsOptions(
           // collectMetaData: (metaData) async =>
           // metaData..userEmail = 'dash@wiredash.io',
           // frequency: Duration(days: 90), // default
