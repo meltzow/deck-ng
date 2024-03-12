@@ -8,17 +8,17 @@ import 'package:json_annotation/json_annotation.dart';
 part 'board.g.dart';
 
 @JsonSerializable()
-class Setting {
+class BoardSetting {
   @JsonKey(name: 'notify-due')
   late String notifyDue;
   late bool calendar;
 
-  factory Setting.fromJson(Map<String, dynamic> json) =>
-      _$SettingFromJson(json);
+  factory BoardSetting.fromJson(Map<String, dynamic> json) =>
+      _$BoardSettingFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SettingToJson(this);
+  Map<String, dynamic> toJson() => _$BoardSettingToJson(this);
 
-  Setting();
+  BoardSetting();
 }
 
 @JsonSerializable(explicitToJson: true)

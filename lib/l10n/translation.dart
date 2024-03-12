@@ -8,13 +8,13 @@ class Translation extends Translations {
   Locale locale = const Locale('en', 'US');
 
   static final List appLanguages = [
-    {'name': 'English', 'locale': const Locale('en', 'US')},
-    {'name': 'Deutsch', 'locale': const Locale('de', 'DE')},
+    {'name': 'English', 'locale': const Locale('en')},
+    {'name': 'Deutsch', 'locale': const Locale('de')},
   ];
 
   @override
   Map<String, Map<String, String>> get keys => {
-        'en_US': EnUs().messages,
-        'de_DE': DeDe().messages,
+        'en': EnUs().messages,
+        'de': DeDe().messages,
       };
 }

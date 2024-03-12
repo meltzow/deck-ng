@@ -4,5 +4,6 @@ export 'attachment.dart';
 export 'board.dart';
 export 'card.dart';
 export 'label.dart';
+export 'setting.dart';
 export 'stack.dart';
 export 'user.dart';

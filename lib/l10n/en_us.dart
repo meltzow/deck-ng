@@ -1,5 +1,6 @@
 class EnUs {
   Map<String, String> get messages => {
+        'Language': 'Language',
         'title1': 'Organize your todos',
         'title2': 'User-friendly design',
         'title3': 'Contact us',

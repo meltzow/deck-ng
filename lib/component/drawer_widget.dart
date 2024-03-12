@@ -36,14 +36,6 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('language'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-            },
-          ),
-          ListTile(
             title: const Text('settings'),
             leading: const Icon(Icons.settings_outlined),
             onTap: () {
@@ -52,6 +44,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Login'),
+            leading: const Icon(Icons.login_outlined),
             onTap: () {
               Get.toNamed('/auth/login');
             },

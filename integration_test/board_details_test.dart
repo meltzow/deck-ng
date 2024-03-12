@@ -28,10 +28,14 @@ void main() {
         .thenAnswer((_) async => resp);
 
     var stackList = [
-      Stack(title: 'todo', id: 1, cards: [
-        Card(title: 'issue 1', id: 1, stackId: 1),
-        Card(title: 'issue 2', id: 1, stackId: 1)
-      ], boardId: 1),
+      Stack(
+          title: 'todo',
+          id: 1,
+          cards: [
+            Card(title: 'issue 1', id: 1, stackId: 1),
+            Card(title: 'issue 2', id: 1, stackId: 1)
+          ],
+          boardId: 1),
       Stack(title: 'in progress', id: 2, cards: [], boardId: 1)
     ].map((e) => e.toJson()).toList();
     when(httpServiceMock
@@ -40,7 +44,7 @@ void main() {
   });
 
   testWidgets('display board details', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
     Get.toNamed('/boards/details', arguments: {'boardId': 1});
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();

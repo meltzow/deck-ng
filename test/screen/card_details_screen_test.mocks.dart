@@ -379,6 +379,22 @@ class MockIStorageService extends _i1.Mock implements _i8.IStorageService {
         #saveAccount,
         [account],
       ));
+
+  @override
+  bool hasSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #hasSettings,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  dynamic saveSetting(_i3.Setting? setting) =>
+      super.noSuchMethod(Invocation.method(
+        #saveSetting,
+        [setting],
+      ));
 }
 
 /// A class which mocks [IAuthService].

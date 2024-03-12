@@ -10,6 +10,7 @@ import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/screen/oss_licenses_screen.dart';
 import 'package:deck_ng/screen/settings_screen.dart';
+import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:deck_ng/service/guard.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +20,9 @@ import 'package:wiredash/wiredash.dart';
 class MyApp extends StatelessWidget {
   final String? initialRoute;
   final bool debugShowCheckedModeBanner;
-  final locale = const Locale('en', 'US');
+  final storageService = Get.find<IStorageService>();
 
-  const MyApp(
-      {super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
+  MyApp({super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
 
   // This widget is the root of your application.
   @override
@@ -39,13 +39,15 @@ class MyApp extends StatelessWidget {
           // minimumAppStarts: 3, // default
           minimumAppStarts: 0, // disable minimum app starts
         ),
-        collectMetaData: (metaData) => metaData..custom['serverUrl'] = 'foobar',
+        collectMetaData: (metaData) => metaData..custom['language'] = 'de',
         child: GetMaterialApp(
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           navigatorKey: Catcher2.navigatorKey,
           translations: Translation(),
-          locale: locale,
-          fallbackLocale: const Locale('en', 'US'),
+          locale: storageService.hasSettings()
+              ? Locale(storageService.getSetting()!.language)
+              : Get.deviceLocale,
+          fallbackLocale: const Locale('en'),
           supportedLocales: Translation.appLanguages
               .map((e) => e['locale'] as Locale)
               .toList(),
@@ -94,7 +96,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/settings',
-              page: () => const SettingScreen(),
+              page: () => SettingScreen(),
             ),
           ],
         ));

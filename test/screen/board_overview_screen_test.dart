@@ -34,7 +34,7 @@ void main() {
     when(boardServiceMock.getAllBoards()).thenAnswer((_) async => resp);
     when(authServiceMock.isAuth()).thenReturn(true);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(
+    await tester.pumpWidget(MyApp(
       initialRoute: '/boards',
     ));
 

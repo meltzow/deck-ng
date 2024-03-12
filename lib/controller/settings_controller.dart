@@ -1,16 +1,13 @@
-import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/Inotification_service.dart';
 import 'package:deck_ng/service/Istorage_service.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController {
+class SettingsController extends GetxController {
   var storageService = Get.find<IStorageService>();
-  var authService = Get.find<IAuthService>();
   var notificationService = Get.find<INotificationService>();
 
-  final RxBool isLoading = RxBool(false);
   RxString nameControllerText = ''.obs;
   var nameController = TextEditingController();
 
@@ -20,7 +17,6 @@ class LoginController extends GetxController {
 
   RxString urlControllerText = ''.obs;
   var urlController = TextEditingController();
-  final FocusNode focusNode = FocusNode();
   final RxString _serverVersion = 'not found'.obs;
   // final RxString _deckVersion = 'nothing found'.obs;
 
@@ -48,35 +44,8 @@ class LoginController extends GetxController {
     passwordController.text = passwordControllerText.value;
   }
 
-  login() async {
-    var successful = false;
-    try {
-      successful = await authService.login(urlControllerText.value,
-          nameControllerText.value, passwordControllerText.value);
-      if (successful) {
-        Get.toNamed('/boards');
-        notificationService.successMsg("Login", "Login Successful");
-      } else {
-        notificationService.errorMsg("Login",
-            "Login not Successful. Please check username and password");
-      }
-    } on DioException catch (e) {
-      notificationService.errorMsg(
-          "Login", "Login not Successful. ${e.message}");
-    }
-  }
-
-  void checkCapabilties() async {
-    isLoading.value = true;
-    try {
-      Capabilities resp =
-          await authService.checkServer(urlControllerText.value);
-      _serverVersion.value = resp.ocs.data.version.string;
-      // _deckVersion.value = resp.ocs.data.version.string;
-    } on DioException {
-      _serverVersion.value = 'not found';
-      // _deckVersion.value = 'not found';
-    }
-    isLoading.value = false;
+  changeLanguage(String v) {
+    Get.updateLocale(Locale(v));
+    storageService.saveSetting(Setting(v));
   }
 }

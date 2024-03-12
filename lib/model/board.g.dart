@@ -6,11 +6,12 @@ part of 'board.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Setting _$SettingFromJson(Map<String, dynamic> json) => Setting()
+BoardSetting _$BoardSettingFromJson(Map<String, dynamic> json) => BoardSetting()
   ..notifyDue = json['notify-due'] as String
   ..calendar = json['calendar'] as bool;
 
-Map<String, dynamic> _$SettingToJson(Setting instance) => <String, dynamic>{
+Map<String, dynamic> _$BoardSettingToJson(BoardSetting instance) =>
+    <String, dynamic>{
       'notify-due': instance.notifyDue,
       'calendar': instance.calendar,
     };

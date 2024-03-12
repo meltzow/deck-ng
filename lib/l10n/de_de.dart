@@ -1,5 +1,6 @@
 class DeDe {
   Map<String, String> get messages => {
+        'Language': 'Sprache',
         'title1': 'Organisiere deine Aufgaben',
         'title2': 'Benutzerfreundliches Design',
         'title3': 'Kontaktiere uns',

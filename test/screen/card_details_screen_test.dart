@@ -39,7 +39,7 @@ void main() {
 
     Environment.init();
 
-    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
     //Get.toNamed('/cards/details');
     //await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();

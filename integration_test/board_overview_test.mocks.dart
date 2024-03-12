@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i2;
 
-import 'package:deck_ng/model/account.dart' as _i8;
+import 'package:deck_ng/model/models.dart' as _i8;
 import 'package:deck_ng/service/Ihttp_service.dart' as _i4;
 import 'package:deck_ng/service/impl/retry.dart' as _i6;
 import 'package:deck_ng/service/Istorage_service.dart' as _i7;
@@ -179,5 +179,21 @@ class MockIStorageService extends _i1.Mock implements _i7.IStorageService {
       super.noSuchMethod(Invocation.method(
         #saveAccount,
         [account],
+      ));
+
+  @override
+  bool hasSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #hasSettings,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  dynamic saveSetting(_i8.Setting? setting) =>
+      super.noSuchMethod(Invocation.method(
+        #saveSetting,
+        [setting],
       ));
 }

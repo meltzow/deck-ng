@@ -56,7 +56,7 @@ void main() {
     when(stackServiceMock.getAll(1)).thenAnswer((_) async => stacks);
     when(authServiceMock.isAuth()).thenReturn(true);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(
+    await tester.pumpWidget(MyApp(
       initialRoute: '/',
     ));
 

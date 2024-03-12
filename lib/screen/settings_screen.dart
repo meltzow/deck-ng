@@ -1,31 +1,18 @@
+import 'package:deck_ng/controller/settings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+  final SettingsController controller =
+      Get.put<SettingsController>(SettingsController());
+
+  SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 4,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-        ),
-        title: Text(
-          "Settings".tr,
-          style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            fontStyle: FontStyle.normal,
-            fontSize: 20,
-          ),
-        ),
-        leading: const Icon(
-          Icons.arrow_back_ios,
-          size: 22,
-        ),
+        title: Text("Settings".tr),
       ),
       body: ListView(
         scrollDirection: Axis.vertical,
@@ -54,7 +41,8 @@ class SettingScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                   child: Container(
                     height: 30,
                     width: 30,
@@ -181,8 +169,8 @@ class SettingScreen extends StatelessWidget {
             indent: 0,
             endIndent: 0,
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,10 +179,10 @@ class SettingScreen extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "Email",
+                    "Language".tr,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.clip,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 16,
@@ -202,24 +190,18 @@ class SettingScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                  child: Text(
-                    "philipramirez@gmail.com",
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 12,
-                      color: Color(0xff9e9e9e),
-                    ),
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Color(0xff000000),
-                  size: 18,
-                ),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                    child: DropdownButton(
+                      onChanged: (v) => controller.changeLanguage(v!),
+                      value: Get.locale
+                          .toString(), // change this line with your way to get current locale to select it as default in dropdown
+                      items: const [
+                        DropdownMenuItem(
+                            child: Text('English'), value: 'en_US'),
+                        DropdownMenuItem(child: Text('German'), value: 'de_DE'),
+                      ],
+                    )),
               ],
             ),
           ),

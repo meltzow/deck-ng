@@ -27,7 +27,7 @@ void main() {
   });
 
   testWidgets('display login screen', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
     //FIXME
