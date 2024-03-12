@@ -6,9 +6,9 @@
 import 'dart:async' as _i2;
 
 import 'package:deck_ng/model/account.dart' as _i8;
-import 'package:deck_ng/service/Icredential_service.dart' as _i7;
 import 'package:deck_ng/service/Ihttp_service.dart' as _i4;
 import 'package:deck_ng/service/impl/retry.dart' as _i6;
+import 'package:deck_ng/service/Istorage_service.dart' as _i7;
 import 'package:dio/dio.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i5;

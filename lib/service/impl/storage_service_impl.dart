@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 

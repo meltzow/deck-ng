@@ -1,12 +1,12 @@
 import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
 import 'package:deck_ng/service/Inotification_service.dart';
+import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  var credService = Get.find<IStorageService>();
+  var storageService = Get.find<IStorageService>();
   var authService = Get.find<IAuthService>();
   var notificationService = Get.find<INotificationService>();
 
@@ -38,7 +38,7 @@ class LoginController extends GetxController {
   }
 
   readAccountData() async {
-    var account = credService.getAccount();
+    var account = storageService.getAccount();
 
     urlControllerText.value = account != null ? account.url : '';
     urlController.text = urlControllerText.value;

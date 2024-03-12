@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           // minimumAppStarts: 3, // default
           minimumAppStarts: 0, // disable minimum app starts
         ),
-        // collectMetaData: (metaData) => metaData..custom['serverUrl'] = 'foobar',
+        collectMetaData: (metaData) => metaData..custom['serverUrl'] = 'foobar',
         child: GetMaterialApp(
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           navigatorKey: Catcher2.navigatorKey,

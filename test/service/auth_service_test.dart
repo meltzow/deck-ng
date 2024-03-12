@@ -1,5 +1,5 @@
 import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter_test/flutter_test.dart';

@@ -1,6 +1,6 @@
 import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
