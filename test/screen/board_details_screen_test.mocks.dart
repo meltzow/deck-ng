@@ -448,4 +448,17 @@ class MockINotificationService extends _i1.Mock
           message,
         ],
       ));
+
+  @override
+  dynamic errorMsg(
+    String? s,
+    String? t,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #errorMsg,
+        [
+          s,
+          t,
+        ],
+      ));
 }

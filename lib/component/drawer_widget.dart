@@ -45,10 +45,9 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             title: const Text('settings'),
+            leading: const Icon(Icons.settings_outlined),
             onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
+              Get.toNamed('/settings');
             },
           ),
           ListTile(

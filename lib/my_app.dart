@@ -9,6 +9,7 @@ import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/screen/oss_licenses_screen.dart';
+import 'package:deck_ng/screen/settings_screen.dart';
 import 'package:deck_ng/service/guard.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,16 @@ class MyApp extends StatelessWidget {
     return Wiredash(
         projectId: 'deck-ng-te1kmcw',
         secret: DartDefine.wiredashSecret,
-        collectMetaData: (metaData) => metaData..custom['serverUrl'] = 'foobar',
+        psOptions: PsOptions(
+          // collectMetaData: (metaData) async =>
+          // metaData..userEmail = 'dash@wiredash.io',
+          // frequency: Duration(days: 90), // default
+          // initialDelay: Duration(days: 7), // default
+          initialDelay: Duration.zero, // disable initial delay
+          // minimumAppStarts: 3, // default
+          minimumAppStarts: 0, // disable minimum app starts
+        ),
+        // collectMetaData: (metaData) => metaData..custom['serverUrl'] = 'foobar',
         child: GetMaterialApp(
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           navigatorKey: Catcher2.navigatorKey,
@@ -81,6 +91,10 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/licenses',
               page: () => const OssLicensesPage(),
+            ),
+            GetPage(
+              name: '/settings',
+              page: () => const SettingScreen(),
             ),
           ],
         ));

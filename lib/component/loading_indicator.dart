@@ -9,12 +9,10 @@ class LoadingIndicator extends StatelessWidget {
     return const Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-// The loading indicator
         CircularProgressIndicator(),
         SizedBox(
           height: 15,
         ),
-// Some text
         Text('Loading...')
       ],
     );
