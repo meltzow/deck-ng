@@ -1,36 +1,78 @@
+import 'dart:convert';
+
+import 'package:convenient_test_dev/convenient_test_dev.dart';
 import 'package:deck_ng/env.dart';
-import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/model/models.dart';
+import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/service/Inotification_service.dart';
+import 'package:deck_ng/service/Istorage_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../test/service/board_service_test.mocks.dart';
+import 'login_test.mocks.dart';
+import 'main_test.dart';
 
-@GenerateMocks([IHttpService])
+@GenerateMocks([IAuthService, IStorageService, INotificationService])
 void main() {
-  late IHttpService httpServiceMock;
-  final IntegrationTestWidgetsFlutterBinding binding =
-      IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  convenientTestMain(MyConvenientTestSlot(), () {
+    group('simple test group', () {
+      late IntegrationTestWidgetsFlutterBinding binding;
+      setUp(() async {
+        late IAuthService authServiceMock;
+        binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() async {
-    Environment.init();
-    Get.replace<IHttpService>(MockIHttpService());
-    httpServiceMock = Get.find<IHttpService>();
+        Get.replace<IAuthService>(MockIAuthService());
+        authServiceMock = Get.find<IAuthService>();
 
-    var resp = [Board(title: 'garden', id: 1)].map((e) => e.toJson()).toList();
-    when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
-        .thenAnswer((_) async => resp);
-  });
+        Get.replace<IStorageService>(MockIStorageService());
+        var storageServiceMock = Get.find<IStorageService>();
 
-  testWidgets('display login screen', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
-    await Future.delayed(const Duration(seconds: 1), () {});
-    await tester.pumpAndSettle();
-    //FIXME
-    // await screenshot(binding, tester, lo.localeName, 'login', silent: false);
+        when(storageServiceMock.getAccount()).thenReturn(null);
+        when(storageServiceMock.hasAccount()).thenReturn(false);
+        when(storageServiceMock.saveAccount(Account(
+                "admin",
+                "admin",
+                'Basic ${base64.encode(utf8.encode('admin:admin'))}',
+                "http://192.168.178.81:8080",
+                false)))
+            .thenReturn(null);
+
+        when(storageServiceMock.hasSettings()).thenReturn(false);
+
+        Environment.init();
+
+        var resp = Capabilities(CapabilitiesOcs(
+            meta: Meta('success', 200, 'success'),
+            data:
+                CapabilitiesData(Version(0, 0, 26, "26.0.0", '', false), {})));
+        when(authServiceMock.checkServer('https://my.next.cloud'))
+            .thenAnswer((_) async => resp);
+        when(authServiceMock.isAuth()).thenReturn(false);
+      });
+
+      tTestWidgets('display login screen', (ConvenientTest tester) async {
+        // await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+        await Future.delayed(const Duration(seconds: 1), () {});
+        await tester.pumpAndSettle();
+        await find.text('sign in').should(findsOneWidget);
+
+        await find
+            .byKey(const Key('serverUrl'))
+            .replaceText('https://my.next.cloud');
+        await find.byKey(const Key('username')).replaceText('deckNG');
+        await find.byKey(const Key('password')).replaceText('secret');
+        await tester.pumpAndSettle();
+        await find.text('Login').should(findsOneWidget);
+
+        // then you want to log and snapshot
+        final log =
+            tester.log('HELLO', 'Just a demonstration of custom logging');
+        await log.snapshot();
+      });
+    });
   });
 }
