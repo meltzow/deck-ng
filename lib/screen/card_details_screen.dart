@@ -157,7 +157,6 @@ class CardDetailsScreen extends StatelessWidget {
                                     color: Color(0xffdddddd),
                                     height: 15,
                                     thickness: 0,
-                                    indent: 50,
                                     endIndent: 0,
                                   ),
                                   ListTile(
@@ -215,38 +214,70 @@ class CardDetailsScreen extends StatelessWidget {
                                     color: Color(0xffdddddd),
                                     height: 15,
                                     thickness: 0,
-                                    indent: 50,
                                     endIndent: 0,
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
-                                    title: Text(controller.dueDatePreview),
+                                    title: TextField(
+                                        onTap: () async {
+                                          var result = await showDatePicker(
+                                            context: context,
+                                            initialDate: controller.dueDate,
+                                            firstDate: DateTime(2017, 1),
+                                            lastDate: DateTime(2027, 7),
+                                            helpText: 'Select a date',
+                                          );
+                                          controller.setDueDate(result);
+                                        },
+                                        decoration: InputDecoration(
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xff9e9e9e),
+                                                width: 1),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                            borderSide: const BorderSide(
+                                                color: Color(0xff9e9e9e),
+                                                width: 1),
+                                          ),
+                                          labelText: "due date".tr,
+                                          labelStyle: const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 16,
+                                            color: Color(0xff9e9e9e),
+                                          ),
+                                          filled: true,
+                                          isDense: false,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 8, horizontal: 12),
+                                        ),
+                                        readOnly: true,
+                                        // enabled: false,
+                                        controller:
+                                            controller.dueDateController),
                                     leading: Icon(Icons.calendar_month,
                                         size: 24,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .secondary),
-                                    onTap: () async {
-                                      var result = await showDatePicker(
-                                        context: context,
-                                        initialDate: controller.dueDate,
-                                        firstDate: DateTime(2017, 1),
-                                        lastDate: DateTime(2027, 7),
-                                        helpText: 'Select a date',
-                                      );
-                                      controller.setDueDate(result);
-                                    },
+                                    onTap: () async {},
                                   ),
                                   const Divider(
                                     color: Color(0xffdddddd),
                                     height: 20,
                                     thickness: 0,
-                                    indent: 50,
                                     endIndent: 0,
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
                                     title: MultiSelectDropDown<int>(
+                                      hint: 'select labels'.tr,
                                       dropdownMargin: 0.0,
                                       clearIcon: null,
                                       onOptionSelected:
@@ -271,12 +302,12 @@ class CardDetailsScreen extends StatelessWidget {
                                     color: Color(0xffdddddd),
                                     height: 20,
                                     thickness: 0,
-                                    indent: 50,
                                     endIndent: 0,
                                   ),
                                   ListTile(
                                     contentPadding: const EdgeInsets.all(0),
                                     title: MultiSelectDropDown<String>(
+                                      hint: 'select assignees'.tr,
                                       clearIcon: null,
                                       onOptionSelected:
                                           (List<ValueItem<String>> assignees) {

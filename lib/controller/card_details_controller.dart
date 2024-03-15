@@ -23,7 +23,8 @@ class CardDetailsController extends GetxController {
   final TextEditingController _titleEditingController = TextEditingController();
   late RxString descriptionControllerText = ''.obs;
   late RxString titleControllerText = ''.obs;
-  late final RxString _dueDatePreview = ''.obs;
+  late final RxString _dueDatePreview = 'due date'.obs;
+  late TextEditingController dueDateController = TextEditingController();
 
   late Rx<card.Card> _cardData;
   final Rxn<Board> _boardData = Rxn<Board>();
@@ -105,6 +106,10 @@ class CardDetailsController extends GetxController {
       descriptionControllerText.value = _descriptionEditingController.text;
     });
 
+    dueDateController.addListener(() {
+      _dueDatePreview.value = dueDateController.text;
+    });
+
     super.onInit();
   }
 
@@ -131,7 +136,7 @@ class CardDetailsController extends GetxController {
       _dueDatePreview.value = DateFormat.MMMMEEEEd(Get.locale.toString())
           .format(_cardData.value.duedate!);
     } else {
-      _dueDatePreview.value = '';
+      _dueDatePreview.value = 'due date'.tr;
     }
 
     isLoading.value = false;
@@ -234,6 +239,7 @@ class CardDetailsController extends GetxController {
       _cardData.value.duedate = result;
       _dueDatePreview.value =
           DateFormat.MMMMEEEEd(Get.locale.toString()).format(result);
+      dueDateController.text = _dueDatePreview.value;
     }
   }
 }

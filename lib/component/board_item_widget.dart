@@ -15,6 +15,12 @@ class BoardItemWidget extends StatelessWidget {
         arguments: {'boardId': board.id},
       ),
       child: ListTile(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 1,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        ),
         title: Text(
           board.title,
         ),
