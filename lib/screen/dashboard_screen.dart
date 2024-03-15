@@ -58,8 +58,7 @@ class DashboardScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                      color: const Color(0x4d9e9e9e), width: 1),
+                                  border: Border.all(width: 1),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -134,13 +133,17 @@ class DashboardScreen extends StatelessWidget {
                   child: Obx(
                     () => controller.isLoading.value
                         ? const LoadingIndicator()
-                        : ListView.builder(
+                        : ListView.separated(
                             shrinkWrap: true,
                             padding: const EdgeInsets.all(8),
                             itemCount: controller.boardData.length,
                             itemBuilder: (context, index) {
                               return BoardItemWidget(
                                   board: controller.boardData[index]);
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(height: 3);
                             },
                           ),
                   ),
