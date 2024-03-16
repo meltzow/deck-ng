@@ -1,10 +1,14 @@
+import 'package:deck_ng/controller/drawer_controller.dart' as deck;
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
+  DrawerWidget({super.key});
+
+  final deck.DrawerController controller =
+      Get.put<deck.DrawerController>(deck.DrawerController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +46,17 @@ class DrawerWidget extends StatelessWidget {
               Get.toNamed('/settings');
             },
           ),
-          ListTile(
-            title: const Text('Login'),
-            leading: const Icon(Icons.login_outlined),
-            onTap: () {
-              Get.toNamed('/auth/login');
-            },
+          Obx(
+            () => ListTile(
+              title: controller.isAuth.value
+                  ? const Text('Logout')
+                  : const Text('Login'),
+              leading: const Icon(Icons.login_outlined),
+              onTap: () {
+                controller.logout();
+                Get.toNamed('/auth/login');
+              },
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.rate_review_outlined),

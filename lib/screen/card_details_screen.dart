@@ -13,7 +13,7 @@ class CardDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const DrawerWidget(),
+        drawer: DrawerWidget(),
         appBar: AppBar(
           title: Text("Card details".tr),
           actions: [

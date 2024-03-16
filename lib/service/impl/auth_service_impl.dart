@@ -11,16 +11,15 @@ class AuthServiceImpl extends GetxService implements IAuthService {
   final Dio dioClient = Get.find<Dio>();
   final credService = Get.find<IStorageService>();
 
-  final url = '/ocs/v2.php/core/getapppassword';
-
-  String computeAuth(username, password) {
+  String _computeAuth(username, password) {
     return 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
   }
 
   Map<String, String> _getHeaders(String path,
       [Account? account, Object? body]) {
     var headers = <String, String>{
-      HttpHeaders.acceptHeader: "application/json"
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.userAgentHeader: 'deckNG client',
     };
     if (account?.authData != null) {
       headers[HttpHeaders.authorizationHeader] = account!.authData;
@@ -43,13 +42,13 @@ class AuthServiceImpl extends GetxService implements IAuthService {
     var a = Account(
         username,
         password,
-        computeAuth(username, password),
+        _computeAuth(username, password),
         serverUrl.endsWith('/')
             ? serverUrl.substring(0, serverUrl.length - 1)
             : serverUrl,
         false);
     await credService.saveAccount(a);
-
+    const url = '/ocs/v2.php/core/getapppassword';
     var resp = await dioClient.get(serverUrl + url,
         options: Options(headers: _getHeaders(url, a)));
     var apppassword = AppPassword.fromJson(resp.data);
@@ -79,5 +78,16 @@ class AuthServiceImpl extends GetxService implements IAuthService {
   @override
   Account? getAccount() {
     return credService.getAccount();
+  }
+
+  @override
+  logout() {
+    if (credService.hasAccount()) {
+      var acc = credService.getAccount()!;
+      acc.isAuthenticated = false;
+      acc.password = '';
+      acc.authData = '';
+      credService.saveAccount(acc);
+    }
   }
 }

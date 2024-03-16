@@ -28,7 +28,7 @@ class KanbanBoardScreen extends StatelessWidget {
     );
 
     return Scaffold(
-        drawer: const DrawerWidget(),
+        drawer: DrawerWidget(),
         appBar: AppBar(
           title: Text("Boards details".tr),
           actions: [

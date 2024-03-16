@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerWidget(),
+      drawer: DrawerWidget(),
       appBar: AppBar(),
       body: Align(
         alignment: Alignment.center,
@@ -104,11 +104,6 @@ class LoginScreen extends StatelessWidget {
                                   child: ListTile(
                                 title: const Text("Nextcloud server"),
                                 subtitle: Text(controller.serverVersion),
-                                // )),
-                                // Expanded(
-                                //     child: ListTile(
-                                //   title: const Text("deck version"),
-                                //   subtitle: Text(controller.serverVersion),
                                 trailing: controller.serverIsValid
                                     ? const Icon(Icons.verified_outlined)
                                     : const Icon(Icons.error_outline),
@@ -139,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
                       ),
-                      labelText: "username",
+                      labelText: "username".tr,
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
@@ -154,7 +149,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Obx(() => Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 0),
+                          vertical: 5, horizontal: 0),
                       child: TextFormField(
                         controller: controller.passwordController,
                         obscureText: controller.isObscure.value,
@@ -175,7 +170,7 @@ class LoginScreen extends StatelessWidget {
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4.0),
                           ),
-                          labelText: "Password".tr,
+                          labelText: "password".tr,
                           labelStyle: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
@@ -197,6 +192,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     )),
+                const Text(
+                    'I will not saved this password, because I create my own AppPassword'),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 16),
                   child: Row(
@@ -216,7 +213,6 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           padding: const EdgeInsets.all(16),
-                          textColor: const Color(0xffffffff),
                           height: 40,
                           minWidth: 140,
                           child: Text(
