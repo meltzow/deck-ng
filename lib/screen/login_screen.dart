@@ -104,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                               Expanded(
                                   child: ListTile(
                                 title: const Text("Nextcloud server"),
-                                subtitle: Text(controller.serverVersion),
+                                subtitle: Text(controller.serverVersion.value),
                                 trailing: controller.serverIsValid
                                     ? const Icon(Icons.verified_outlined)
                                     : const Icon(Icons.error_outline),
@@ -117,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
                   child: TextFormField(
                     key: const Key('username'),
-                    controller: controller.nameController,
+                    controller: controller.usernameController,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,

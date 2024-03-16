@@ -11,8 +11,8 @@ class LoginController extends GetxController {
   var notificationService = Get.find<INotificationService>();
 
   final RxBool isLoading = RxBool(false);
-  RxString nameControllerText = ''.obs;
-  var nameController = TextEditingController();
+  RxString usernameControllerText = ''.obs;
+  var usernameController = TextEditingController();
 
   RxString passwordControllerText = ''.obs;
   var passwordController = TextEditingController();
@@ -21,14 +21,13 @@ class LoginController extends GetxController {
   RxString urlControllerText = ''.obs;
   var urlController = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  final RxString _serverVersion = 'not found'.obs;
-  // final RxString _deckVersion = 'nothing found'.obs;
+  final RxString serverVersion = 'not found'.obs;
 
-  String get serverVersion => _serverVersion.value;
-  // String get deckVersion => _deckVersion.value;
+  Rxn<Version> nextcloudVersion = Rxn();
+
   bool get serverIsValid {
     //TODO check not by String. capability ENtity must be used
-    return _serverVersion.value != 'not found';
+    return serverVersion.value != 'not found';
   }
 
   @override
@@ -37,8 +36,8 @@ class LoginController extends GetxController {
       urlControllerText.value = urlController.text;
     });
 
-    nameController.addListener(() {
-      nameControllerText.value = nameController.text;
+    usernameController.addListener(() {
+      usernameControllerText.value = usernameController.text;
     });
 
     passwordController.addListener(() {
@@ -71,8 +70,8 @@ class LoginController extends GetxController {
 
     urlControllerText.value = account != null ? account.url : '';
     urlController.text = urlControllerText.value;
-    nameControllerText.value = account != null ? account.username : '';
-    nameController.text = nameControllerText.value;
+    usernameControllerText.value = account != null ? account.username : '';
+    usernameController.text = usernameControllerText.value;
     passwordControllerText.value = account != null ? account.password : '';
     passwordController.text = passwordControllerText.value;
   }
@@ -81,7 +80,7 @@ class LoginController extends GetxController {
     var successful = false;
     try {
       successful = await authService.login(urlControllerText.value,
-          nameControllerText.value, passwordControllerText.value);
+          usernameControllerText.value, passwordControllerText.value);
       if (successful) {
         Get.toNamed('/boards');
         notificationService.successMsg("Login", "Login Successful");
@@ -100,10 +99,10 @@ class LoginController extends GetxController {
     try {
       Capabilities resp =
           await authService.checkServer(urlControllerText.value);
-      _serverVersion.value = resp.ocs.data.version.string;
+      serverVersion.value = resp.ocs.data.version.string;
       // _deckVersion.value = resp.ocs.data.version.string;
     } on DioException {
-      _serverVersion.value = 'not found';
+      serverVersion.value = 'not found';
       // _deckVersion.value = 'not found';
     }
     isLoading.value = false;

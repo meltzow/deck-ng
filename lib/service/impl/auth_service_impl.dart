@@ -61,7 +61,7 @@ class AuthServiceImpl extends GetxService implements IAuthService {
 
   @override
   Future<Capabilities> checkServer(String serverUrl) async {
-    var url = '/ocs/v1.php/cloud/capabilities';
+    var url = '/ocs/v2.php/cloud/capabilities';
 
     var resp = await dioClient.get(serverUrl + url,
         options: Options(headers: _getHeaders(url)));
