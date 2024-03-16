@@ -3,16 +3,17 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i8;
+import 'dart:ui' as _i10;
 
-import 'package:deck_ng/model/board.dart' as _i2;
-import 'package:deck_ng/model/models.dart' as _i3;
-import 'package:deck_ng/service/Iauth_service.dart' as _i4;
-import 'package:deck_ng/service/Iboard_service.dart' as _i5;
-import 'package:deck_ng/service/Icard_service.dart' as _i7;
-import 'package:deck_ng/service/Istack_service.dart' as _i9;
-import 'package:deck_ng/service/Istorage_service.dart' as _i8;
+import 'package:deck_ng/controller/card_details_controller.dart' as _i5;
+import 'package:deck_ng/model/card.dart' as _i3;
+import 'package:flutter/material.dart' as _i4;
+import 'package:get/get.dart' as _i2;
+import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i6;
+import 'package:multi_dropdown/models/value_item.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -27,8 +28,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
-  _FakeBoard_0(
+class _FakeRxBool_0 extends _i1.SmartFake implements _i2.RxBool {
+  _FakeRxBool_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -37,8 +38,8 @@ class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
         );
 }
 
-class _FakeCard_1 extends _i1.SmartFake implements _i3.Card {
-  _FakeCard_1(
+class _FakeRxString_1 extends _i1.SmartFake implements _i2.RxString {
+  _FakeRxString_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -47,8 +48,8 @@ class _FakeCard_1 extends _i1.SmartFake implements _i3.Card {
         );
 }
 
-class _FakeAssignment_2 extends _i1.SmartFake implements _i3.Assignment {
-  _FakeAssignment_2(
+class _FakeCard_2 extends _i1.SmartFake implements _i3.Card {
+  _FakeCard_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -57,8 +58,9 @@ class _FakeAssignment_2 extends _i1.SmartFake implements _i3.Assignment {
         );
 }
 
-class _FakeCapabilities_3 extends _i1.SmartFake implements _i4.Capabilities {
-  _FakeCapabilities_3(
+class _FakeTextEditingController_3 extends _i1.SmartFake
+    implements _i4.TextEditingController {
+  _FakeTextEditingController_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -67,402 +69,443 @@ class _FakeCapabilities_3 extends _i1.SmartFake implements _i4.Capabilities {
         );
 }
 
-/// A class which mocks [IBoardService].
+class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
+    implements _i2.InternalFinalCallback<T> {
+  _FakeInternalFinalCallback_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [CardDetailsController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIBoardService extends _i1.Mock implements _i5.IBoardService {
-  MockIBoardService() {
+class MockCardDetailsController extends _i1.Mock
+    implements _i5.CardDetailsController {
+  MockCardDetailsController() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i6.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
-        Invocation.method(
-          #getAllBoards,
-          [],
-        ),
-        returnValue: _i6.Future<List<_i2.Board>>.value(<_i2.Board>[]),
-      ) as _i6.Future<List<_i2.Board>>);
-
-  @override
-  _i6.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
-        Invocation.method(
-          #getBoard,
-          [boardId],
-        ),
-        returnValue: _i6.Future<_i2.Board>.value(_FakeBoard_0(
+  _i2.RxBool get isLoading => (super.noSuchMethod(
+        Invocation.getter(#isLoading),
+        returnValue: _FakeRxBool_0(
           this,
-          Invocation.method(
-            #getBoard,
-            [boardId],
-          ),
-        )),
-      ) as _i6.Future<_i2.Board>);
-}
-
-/// A class which mocks [ICardService].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockICardService extends _i1.Mock implements _i7.ICardService {
-  MockICardService() {
-    _i1.throwOnMissingStub(this);
-  }
+          Invocation.getter(#isLoading),
+        ),
+      ) as _i2.RxBool);
 
   @override
-  _i6.Future<_i3.Card> createCard(
-    int? boardId,
-    int? stackId,
-    String? title,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #createCard,
-          [
-            boardId,
-            stackId,
-            title,
-          ],
-        ),
-        returnValue: _i6.Future<_i3.Card>.value(_FakeCard_1(
+  _i2.RxBool get isDescriptionEditing => (super.noSuchMethod(
+        Invocation.getter(#isDescriptionEditing),
+        returnValue: _FakeRxBool_0(
           this,
-          Invocation.method(
-            #createCard,
-            [
-              boardId,
-              stackId,
-              title,
-            ],
-          ),
-        )),
-      ) as _i6.Future<_i3.Card>);
+          Invocation.getter(#isDescriptionEditing),
+        ),
+      ) as _i2.RxBool);
 
   @override
-  _i6.Future<_i3.Card> updateCard(
-    int? boardId,
-    int? stackId,
-    int? cardId,
-    _i3.Card? card,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #updateCard,
-          [
-            boardId,
-            stackId,
-            cardId,
-            card,
-          ],
+  set isDescriptionEditing(_i2.RxBool? _isDescriptionEditing) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #isDescriptionEditing,
+          _isDescriptionEditing,
         ),
-        returnValue: _i6.Future<_i3.Card>.value(_FakeCard_1(
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i2.RxBool get isTitleEditing => (super.noSuchMethod(
+        Invocation.getter(#isTitleEditing),
+        returnValue: _FakeRxBool_0(
           this,
-          Invocation.method(
-            #updateCard,
-            [
-              boardId,
-              stackId,
-              cardId,
-              card,
-            ],
-          ),
-        )),
-      ) as _i6.Future<_i3.Card>);
+          Invocation.getter(#isTitleEditing),
+        ),
+      ) as _i2.RxBool);
 
   @override
-  _i6.Future<_i3.Card> getCard(
-    int? boardId,
-    int? stackId,
-    int? cardId,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getCard,
-          [
-            boardId,
-            stackId,
-            cardId,
-          ],
+  set isTitleEditing(_i2.RxBool? _isTitleEditing) => super.noSuchMethod(
+        Invocation.setter(
+          #isTitleEditing,
+          _isTitleEditing,
         ),
-        returnValue: _i6.Future<_i3.Card>.value(_FakeCard_1(
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i2.RxString get descriptionControllerText => (super.noSuchMethod(
+        Invocation.getter(#descriptionControllerText),
+        returnValue: _FakeRxString_1(
           this,
-          Invocation.method(
-            #getCard,
-            [
-              boardId,
-              stackId,
-              cardId,
-            ],
-          ),
-        )),
-      ) as _i6.Future<_i3.Card>);
+          Invocation.getter(#descriptionControllerText),
+        ),
+      ) as _i2.RxString);
 
   @override
-  _i6.Future<void> deleteCard(
-    int? boardId,
-    int? stackId,
-    int? cardId,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #deleteCard,
-          [
-            boardId,
-            stackId,
-            cardId,
-          ],
+  set descriptionControllerText(_i2.RxString? _descriptionControllerText) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #descriptionControllerText,
+          _descriptionControllerText,
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValueForMissingStub: null,
+      );
 
   @override
-  _i6.Future<_i3.Card> reorderCard(
-    int? boardId,
-    int? oldStackId,
-    int? cardId,
-    _i3.Card? card,
-    int? newOrder,
-    int? newStackId,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #reorderCard,
-          [
-            boardId,
-            oldStackId,
-            cardId,
-            card,
-            newOrder,
-            newStackId,
-          ],
-        ),
-        returnValue: _i6.Future<_i3.Card>.value(_FakeCard_1(
+  _i2.RxString get titleControllerText => (super.noSuchMethod(
+        Invocation.getter(#titleControllerText),
+        returnValue: _FakeRxString_1(
           this,
-          Invocation.method(
-            #reorderCard,
-            [
-              boardId,
-              oldStackId,
-              cardId,
-              card,
-              newOrder,
-              newStackId,
-            ],
-          ),
-        )),
-      ) as _i6.Future<_i3.Card>);
+          Invocation.getter(#titleControllerText),
+        ),
+      ) as _i2.RxString);
 
   @override
-  _i6.Future<void> assignLabel2Card(
-    int? boardId,
-    int? stackId,
-    int? cardId,
-    int? labelId,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #assignLabel2Card,
-          [
-            boardId,
-            stackId,
-            cardId,
-            labelId,
-          ],
+  set titleControllerText(_i2.RxString? _titleControllerText) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #titleControllerText,
+          _titleControllerText,
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValueForMissingStub: null,
+      );
 
   @override
-  _i6.Future<void> removeLabel2Card(
-    int? boardId,
-    int? stackId,
-    int? cardId,
-    int? labelId,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #removeLabel2Card,
-          [
-            boardId,
-            stackId,
-            cardId,
-            labelId,
-          ],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-
-  @override
-  _i6.Future<_i3.Assignment> assignUser2Card(
-    int? boardId,
-    int? stackId,
-    int? cardId,
-    String? userId,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #assignUser2Card,
-          [
-            boardId,
-            stackId,
-            cardId,
-            userId,
-          ],
-        ),
-        returnValue: _i6.Future<_i3.Assignment>.value(_FakeAssignment_2(
+  _i3.Card get cardData => (super.noSuchMethod(
+        Invocation.getter(#cardData),
+        returnValue: _FakeCard_2(
           this,
-          Invocation.method(
-            #assignUser2Card,
-            [
-              boardId,
-              stackId,
-              cardId,
-              userId,
-            ],
-          ),
-        )),
-      ) as _i6.Future<_i3.Assignment>);
+          Invocation.getter(#cardData),
+        ),
+      ) as _i3.Card);
 
   @override
-  _i6.Future<_i3.Assignment> unassignUser2Card(
-    int? boardId,
-    int? stackId,
-    int? cardId,
-    String? userId,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #unassignUser2Card,
-          [
-            boardId,
-            stackId,
-            cardId,
-            userId,
-          ],
-        ),
-        returnValue: _i6.Future<_i3.Assignment>.value(_FakeAssignment_2(
+  String get dueDatePreview => (super.noSuchMethod(
+        Invocation.getter(#dueDatePreview),
+        returnValue: _i6.dummyValue<String>(
           this,
-          Invocation.method(
-            #unassignUser2Card,
-            [
-              boardId,
-              stackId,
-              cardId,
-              userId,
-            ],
-          ),
-        )),
-      ) as _i6.Future<_i3.Assignment>);
-}
-
-/// A class which mocks [IStorageService].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockIStorageService extends _i1.Mock implements _i8.IStorageService {
-  MockIStorageService() {
-    _i1.throwOnMissingStub(this);
-  }
+          Invocation.getter(#dueDatePreview),
+        ),
+      ) as String);
 
   @override
-  bool hasAccount() => (super.noSuchMethod(
-        Invocation.method(
-          #hasAccount,
-          [],
+  _i4.TextEditingController get titleController => (super.noSuchMethod(
+        Invocation.getter(#titleController),
+        returnValue: _FakeTextEditingController_3(
+          this,
+          Invocation.getter(#titleController),
         ),
+      ) as _i4.TextEditingController);
+
+  @override
+  List<_i7.ValueItem<int>> get allLabelValueItems => (super.noSuchMethod(
+        Invocation.getter(#allLabelValueItems),
+        returnValue: <_i7.ValueItem<int>>[],
+      ) as List<_i7.ValueItem<int>>);
+
+  @override
+  List<_i7.ValueItem<int>> get selectedLabelValueItems => (super.noSuchMethod(
+        Invocation.getter(#selectedLabelValueItems),
+        returnValue: <_i7.ValueItem<int>>[],
+      ) as List<_i7.ValueItem<int>>);
+
+  @override
+  List<_i7.ValueItem<String>> get allUsersValueItems => (super.noSuchMethod(
+        Invocation.getter(#allUsersValueItems),
+        returnValue: <_i7.ValueItem<String>>[],
+      ) as List<_i7.ValueItem<String>>);
+
+  @override
+  List<_i7.ValueItem<String>> get selectedAssigneesValueItems =>
+      (super.noSuchMethod(
+        Invocation.getter(#selectedAssigneesValueItems),
+        returnValue: <_i7.ValueItem<String>>[],
+      ) as List<_i7.ValueItem<String>>);
+
+  @override
+  set boardId(int? boardId) => super.noSuchMethod(
+        Invocation.setter(
+          #boardId,
+          boardId,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set stackId(int? stackId) => super.noSuchMethod(
+        Invocation.setter(
+          #stackId,
+          stackId,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set cardId(int? cardId) => super.noSuchMethod(
+        Invocation.setter(
+          #cardId,
+          cardId,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set cardData(_i3.Card? card) => super.noSuchMethod(
+        Invocation.setter(
+          #cardData,
+          card,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
+        Invocation.getter(#onStart),
+        returnValue: _FakeInternalFinalCallback_4<void>(
+          this,
+          Invocation.getter(#onStart),
+        ),
+      ) as _i2.InternalFinalCallback<void>);
+
+  @override
+  _i2.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
+        Invocation.getter(#onDelete),
+        returnValue: _FakeInternalFinalCallback_4<void>(
+          this,
+          Invocation.getter(#onDelete),
+        ),
+      ) as _i2.InternalFinalCallback<void>);
+
+  @override
+  bool get initialized => (super.noSuchMethod(
+        Invocation.getter(#initialized),
         returnValue: false,
       ) as bool);
 
   @override
-  dynamic saveAccount(_i3.Account? account) =>
+  bool get isClosed => (super.noSuchMethod(
+        Invocation.getter(#isClosed),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  int get listeners => (super.noSuchMethod(
+        Invocation.getter(#listeners),
+        returnValue: 0,
+      ) as int);
+
+  @override
+  void onClose() => super.noSuchMethod(
+        Invocation.method(
+          #onClose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onInit() => super.noSuchMethod(
+        Invocation.method(
+          #onInit,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onReady() => super.noSuchMethod(
+        Invocation.method(
+          #onReady,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i8.Future<void> refreshData() => (super.noSuchMethod(
+        Invocation.method(
+          #refreshData,
+          [],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  void successMsg() => super.noSuchMethod(
+        Invocation.method(
+          #successMsg,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  dynamic saveLabels(List<_i7.ValueItem<int>>? selectedLabels) =>
       super.noSuchMethod(Invocation.method(
-        #saveAccount,
-        [account],
+        #saveLabels,
+        [selectedLabels],
       ));
 
   @override
-  bool hasSettings() => (super.noSuchMethod(
+  dynamic removeLabel(_i7.ValueItem<int>? selectedLabel) =>
+      super.noSuchMethod(Invocation.method(
+        #removeLabel,
+        [selectedLabel],
+      ));
+
+  @override
+  void saveUsers(List<_i7.ValueItem<String>>? selectedUsers) =>
+      super.noSuchMethod(
         Invocation.method(
-          #hasSettings,
+          #saveUsers,
+          [selectedUsers],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  dynamic removeAssignee(_i7.ValueItem<String>? selectedAssignee) =>
+      super.noSuchMethod(Invocation.method(
+        #removeAssignee,
+        [selectedAssignee],
+      ));
+
+  @override
+  void setDueDate(DateTime? result) => super.noSuchMethod(
+        Invocation.method(
+          #setDueDate,
+          [result],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void update([
+    List<Object>? ids,
+    bool? condition = true,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #update,
+          [
+            ids,
+            condition,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void $configureLifeCycle() => super.noSuchMethod(
+        Invocation.method(
+          #$configureLifeCycle,
           [],
         ),
-        returnValue: false,
-      ) as bool);
+        returnValueForMissingStub: null,
+      );
 
   @override
-  dynamic saveSetting(_i3.Setting? setting) =>
-      super.noSuchMethod(Invocation.method(
-        #saveSetting,
-        [setting],
-      ));
-}
-
-/// A class which mocks [IAuthService].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockIAuthService extends _i1.Mock implements _i4.IAuthService {
-  MockIAuthService() {
-    _i1.throwOnMissingStub(this);
-  }
+  _i9.Disposer addListener(_i9.GetStateUpdate? listener) => (super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValue: () {},
+      ) as _i9.Disposer);
 
   @override
-  _i6.Future<bool> login(
-    String? serverUrl,
-    String? username,
-    String? password,
+  void removeListener(_i10.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void refresh() => super.noSuchMethod(
+        Invocation.method(
+          #refresh,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void refreshGroup(Object? id) => super.noSuchMethod(
+        Invocation.method(
+          #refreshGroup,
+          [id],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyChildrens() => super.noSuchMethod(
+        Invocation.method(
+          #notifyChildrens,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListenerId(
+    Object? id,
+    _i10.VoidCallback? listener,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #removeListenerId,
+          [
+            id,
+            listener,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i9.Disposer addListenerId(
+    Object? key,
+    _i9.GetStateUpdate? listener,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #login,
+          #addListenerId,
           [
-            serverUrl,
-            username,
-            password,
+            key,
+            listener,
           ],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: () {},
+      ) as _i9.Disposer);
 
   @override
-  _i6.Future<_i4.Capabilities> checkServer(String? serverUrl) =>
-      (super.noSuchMethod(
+  void disposeId(Object? id) => super.noSuchMethod(
         Invocation.method(
-          #checkServer,
-          [serverUrl],
+          #disposeId,
+          [id],
         ),
-        returnValue: _i6.Future<_i4.Capabilities>.value(_FakeCapabilities_3(
-          this,
-          Invocation.method(
-            #checkServer,
-            [serverUrl],
-          ),
-        )),
-      ) as _i6.Future<_i4.Capabilities>);
-
-  @override
-  bool isAuth() => (super.noSuchMethod(
-        Invocation.method(
-          #isAuth,
-          [],
-        ),
-        returnValue: false,
-      ) as bool);
-}
-
-/// A class which mocks [IStackService].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockIStackService extends _i1.Mock implements _i9.IStackService {
-  MockIStackService() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i6.Future<List<_i3.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
-        Invocation.method(
-          #getAll,
-          [boardId],
-        ),
-        returnValue: _i6.Future<List<_i3.Stack>?>.value(),
-      ) as _i6.Future<List<_i3.Stack>?>);
+        returnValueForMissingStub: null,
+      );
 }

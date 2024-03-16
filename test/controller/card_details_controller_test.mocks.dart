@@ -6,7 +6,9 @@
 import 'dart:async' as _i4;
 
 import 'package:deck_ng/model/models.dart' as _i2;
+import 'package:deck_ng/service/Iboard_service.dart' as _i6;
 import 'package:deck_ng/service/Icard_service.dart' as _i3;
+import 'package:deck_ng/service/Inotification_service.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -34,6 +36,16 @@ class _FakeCard_0 extends _i1.SmartFake implements _i2.Card {
 
 class _FakeAssignment_1 extends _i1.SmartFake implements _i2.Assignment {
   _FakeAssignment_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeBoard_2 extends _i1.SmartFake implements _i2.Board {
+  _FakeBoard_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -296,4 +308,73 @@ class MockICardService extends _i1.Mock implements _i3.ICardService {
           ),
         )),
       ) as _i4.Future<_i2.Assignment>);
+}
+
+/// A class which mocks [INotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockINotificationService extends _i1.Mock
+    implements _i5.INotificationService {
+  MockINotificationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic successMsg(
+    String? title,
+    String? message,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #successMsg,
+        [
+          title,
+          message,
+        ],
+      ));
+
+  @override
+  dynamic errorMsg(
+    String? s,
+    String? t,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #errorMsg,
+        [
+          s,
+          t,
+        ],
+      ));
+}
+
+/// A class which mocks [IBoardService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockIBoardService extends _i1.Mock implements _i6.IBoardService {
+  MockIBoardService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllBoards,
+          [],
+        ),
+        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+      ) as _i4.Future<List<_i2.Board>>);
+
+  @override
+  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getBoard,
+          [boardId],
+        ),
+        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_2(
+          this,
+          Invocation.method(
+            #getBoard,
+            [boardId],
+          ),
+        )),
+      ) as _i4.Future<_i2.Board>);
 }

@@ -2,20 +2,23 @@ import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
+import 'package:deck_ng/service/Istack_service.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'board_details_controller_test.mocks.dart';
+import 'board_overview_controller_test.mocks.dart';
 
-@GenerateMocks([IAuthService, IBoardService])
+@GenerateMocks([IAuthService, IBoardService, IStackService])
 void main() {
   test(
       '''Test the state of the reactive variable "boardDataCount" across all of its lifecycles''',
       () async {
     IBoardService boardRepositoryImplMock =
         Get.put<IBoardService>(MockIBoardService());
+    IStackService stackServiceMock =
+        Get.put<IStackService>(MockIStackService());
     final controller = Get.put(DashboardController());
     expect(controller.boardData.length, 0);
 

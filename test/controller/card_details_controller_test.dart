@@ -5,27 +5,29 @@ import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/model/stack.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
+import 'package:deck_ng/service/Inotification_service.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:multi_dropdown/models/value_item.dart';
 import 'package:test/test.dart';
 
-import 'board_details_controller_test.mocks.dart';
+import 'card_details_controller_test.mocks.dart';
 
-@GenerateMocks([ICardService])
+@GenerateMocks([ICardService, INotificationService, IBoardService])
 void main() {
   test('select first available stack successfully', () async {
     IBoardService boardServiceMock =
         Get.put<IBoardService>(MockIBoardService());
     var cardServiceMock = Get.put<ICardService>(MockICardService());
+    var notficatioNServiceMock =
+        Get.put<INotificationService>(MockINotificationService());
 
     final controller = Get.put(CardDetailsController());
 
     var cardId = 2;
     var boardId = 1;
     var stackId = 3;
-
 
     var board = Board(title: 'foo', id: boardId);
     var card = Card(title: 'foocard', id: cardId, stackId: stackId);
