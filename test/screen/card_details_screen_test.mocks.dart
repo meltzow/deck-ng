@@ -7,8 +7,8 @@ import 'dart:async' as _i8;
 import 'dart:ui' as _i10;
 
 import 'package:deck_ng/controller/card_details_controller.dart' as _i5;
-import 'package:deck_ng/model/card.dart' as _i3;
-import 'package:flutter/material.dart' as _i4;
+import 'package:deck_ng/model/card.dart' as _i4;
+import 'package:flutter/material.dart' as _i3;
 import 'package:get/get.dart' as _i2;
 import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
@@ -48,8 +48,9 @@ class _FakeRxString_1 extends _i1.SmartFake implements _i2.RxString {
         );
 }
 
-class _FakeCard_2 extends _i1.SmartFake implements _i3.Card {
-  _FakeCard_2(
+class _FakeTextEditingController_2 extends _i1.SmartFake
+    implements _i3.TextEditingController {
+  _FakeTextEditingController_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -58,9 +59,8 @@ class _FakeCard_2 extends _i1.SmartFake implements _i3.Card {
         );
 }
 
-class _FakeTextEditingController_3 extends _i1.SmartFake
-    implements _i4.TextEditingController {
-  _FakeTextEditingController_3(
+class _FakeCard_3 extends _i1.SmartFake implements _i4.Card {
+  _FakeCard_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -174,13 +174,32 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  _i3.Card get cardData => (super.noSuchMethod(
+  _i3.TextEditingController get dueDateController => (super.noSuchMethod(
+        Invocation.getter(#dueDateController),
+        returnValue: _FakeTextEditingController_2(
+          this,
+          Invocation.getter(#dueDateController),
+        ),
+      ) as _i3.TextEditingController);
+
+  @override
+  set dueDateController(_i3.TextEditingController? _dueDateController) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #dueDateController,
+          _dueDateController,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i4.Card get cardData => (super.noSuchMethod(
         Invocation.getter(#cardData),
-        returnValue: _FakeCard_2(
+        returnValue: _FakeCard_3(
           this,
           Invocation.getter(#cardData),
         ),
-      ) as _i3.Card);
+      ) as _i4.Card);
 
   @override
   String get dueDatePreview => (super.noSuchMethod(
@@ -192,13 +211,13 @@ class MockCardDetailsController extends _i1.Mock
       ) as String);
 
   @override
-  _i4.TextEditingController get titleController => (super.noSuchMethod(
+  _i3.TextEditingController get titleController => (super.noSuchMethod(
         Invocation.getter(#titleController),
-        returnValue: _FakeTextEditingController_3(
+        returnValue: _FakeTextEditingController_2(
           this,
           Invocation.getter(#titleController),
         ),
-      ) as _i4.TextEditingController);
+      ) as _i3.TextEditingController);
 
   @override
   List<_i7.ValueItem<int>> get allLabelValueItems => (super.noSuchMethod(
@@ -253,7 +272,7 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  set cardData(_i3.Card? card) => super.noSuchMethod(
+  set cardData(_i4.Card? card) => super.noSuchMethod(
         Invocation.setter(
           #cardData,
           card,

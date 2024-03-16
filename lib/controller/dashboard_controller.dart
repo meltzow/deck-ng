@@ -20,14 +20,12 @@ class DashboardData {
 class DashboardController extends GetxController {
   final RxBool isLoading = RxBool(true);
   final Rx<List<Board>> _boardsData = Rx<List<Board>>([]);
-  final Rx<List<Stack>> _stacksData = Rx<List<Stack>>([]);
   final Rx<List<DashboardData>> _dashboardData = Rx<List<DashboardData>>([]);
 
   final IBoardService _boardService = Get.find<IBoardService>();
   final IStackService _stackService = Get.find<IStackService>();
 
   List<Board> get boardData => _boardsData.value;
-  List<Stack> get stackData => _stacksData.value;
 
   List<DashboardData> get dashboardData => _dashboardData.value;
 
@@ -49,7 +47,8 @@ class DashboardController extends GetxController {
     var taskCount = 0;
     for (var board in _boardsData.value) {
       var stacks = await _stackService.getAll(board.id);
-      for (var stack in stacks!) {
+      board.stacks = stacks!;
+      for (var stack in stacks) {
         stackCount++;
         for (var card in stack.cards) {
           taskCount++;

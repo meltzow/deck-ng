@@ -15,7 +15,7 @@ class BoardItemWidget extends StatelessWidget {
         arguments: {'boardId': board.id},
       ),
       child: ListTile(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           side: BorderSide(
             width: 1,
           ),
@@ -26,7 +26,7 @@ class BoardItemWidget extends StatelessWidget {
         ),
         leading: CircleAvatar(backgroundColor: board.color1),
         subtitle: Text(
-            "${board.users.length} users, ${board.lastModified} lastmodified"),
+            "${board.stacks.length} stacks, ${board.lastModified} lastmodified"),
       ),
     );
   }

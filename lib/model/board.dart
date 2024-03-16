@@ -41,7 +41,9 @@ class Board {
   late User owner;
   @JsonKey(defaultValue: {})
   late Map<String, bool>? permission = {};
-  // late Setting? settings;
+  // late BoardSetting? settings;
+  @JsonKey(defaultValue: [])
+  late List<Stack> stacks = [];
 
   Board(
       {required this.title,

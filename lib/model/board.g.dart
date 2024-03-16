@@ -38,10 +38,15 @@ Board _$BoardFromJson(Map<String, dynamic> json) => Board(
               ?.map((e) => Label.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-    )..permission = (json['permission'] as Map<String, dynamic>?)?.map(
-          (k, e) => MapEntry(k, e as bool),
-        ) ??
-        {};
+    )
+      ..permission = (json['permission'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(k, e as bool),
+          ) ??
+          {}
+      ..stacks = (json['stacks'] as List<dynamic>?)
+              ?.map((e) => Stack.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [];
 
 Map<String, dynamic> _$BoardToJson(Board instance) => <String, dynamic>{
       'title': instance.title,
@@ -58,6 +63,7 @@ Map<String, dynamic> _$BoardToJson(Board instance) => <String, dynamic>{
       'users': instance.users.map((e) => e.toJson()).toList(),
       'owner': instance.owner.toJson(),
       'permission': instance.permission,
+      'stacks': instance.stacks.map((e) => e.toJson()).toList(),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(
