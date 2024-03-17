@@ -1,8 +1,8 @@
 import 'package:convenient_test_dev/convenient_test_dev.dart';
+import 'package:deck_ng/main.dart' as app;
 import 'package:deck_ng/my_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deck_ng/main.dart' as app;
 
 void main() {
   convenientTestMain(MyConvenientTestSlot(), () {
@@ -36,7 +36,7 @@ void main() {
         final shouldFailThisTime = !_deliberatelyFlakyTestHasRun;
         _deliberatelyFlakyTestHasRun = true;
 
-      //  await t.get(HomePageMark.fetchFruits).tap();
+        //  await t.get(HomePageMark.fetchFruits).tap();
 
         if (shouldFailThisTime) {
           await find.text('NotExistString').should(findsOneWidget);
@@ -63,9 +63,11 @@ void main() {
       });
 
       tTestWidgets('golden test', (t) async {
-        await find.text('HomePage').should(findsOneWidget);
+        await find.text('Boards').should(findsOneWidget);
 
-        await find.byType(MaterialApp).should(matchesGoldenFile('goldens/sample_golden.png'));
+        await find
+            .byType(MaterialApp)
+            .should(matchesGoldenFile('sample_golden.png'));
       });
 
       tTestWidgets('deliberately failed golden test', (t) async {
@@ -196,9 +198,9 @@ class MyConvenientTestSlot extends ConvenientTestSlot {
   Future<void> appMain(AppMainExecuteMode mode) async => app.main();
 
   @override
-  BuildContext? getNavContext(ConvenientTest t) => MyApp.navigatorKey.currentContext;
+  BuildContext? getNavContext(ConvenientTest t) =>
+      MyApp.navigatorKey.currentContext;
 }
-
 
 extension on ConvenientTest {
   Future<void> myCustomCommand() async {
