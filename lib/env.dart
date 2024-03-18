@@ -36,11 +36,11 @@ class Environment {
             'Basic ${base64.encode(utf8.encode('admin:admin'))}',
             "http://192.168.178.81:8080",
             false);
-//FIXME
+        //FIXME
         //        await service.saveAccount(a);
       }
     }
-    await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
+    // await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
     Get.lazyPut<Dio>(() => Dio());
     Get.lazyPut<IAuthService>(() => AuthServiceImpl());
     Get.lazyPut<IHttpService>(() => HttpService());

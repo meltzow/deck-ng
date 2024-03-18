@@ -46,8 +46,6 @@ dependencies:
   flutter_gen: any
   appflowy_board: ^0.1.1
   intl: any
-  convenient_test: ^1.3.4
-
 
 dev_dependencies:
   flutter_test:
@@ -59,10 +57,9 @@ dev_dependencies:
   build_runner: ^2.4.8
   flutter_driver:
     sdk: flutter
-#  screenshots:
-#    git:
-#      url: https://github.com/meltzow/screenshots.git
-#      ref: master
+  screenshots:
+    path: /tmp/screenshots
+
   http_mock_adapter: ^0.6.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,7 +73,6 @@ dev_dependencies:
   path_provider_platform_interface: any
   plugin_platform_interface: any
   flutter_oss_licenses: ^2.0.1
-  convenient_test_dev: ^1.3.4
 
 flutter_launcher_icons:
   android: true
@@ -141,3 +137,24 @@ dart_define:
     - name: WIREDASH_SECRET
       description: we need the secret from your wiredash.io login
       required: true
+
+auto_screenshot:
+  bundle_id:
+    android: net.meltzow.deckng
+#    ios: com.example.myapp
+  devices:
+#    - iPhone 8 Plus
+#    - iPhone 13 Pro Max
+#    - iPad Pro (12.9-inch) (2nd generation)
+#    - iPad Pro (12.9-inch) (5th generation)
+    - Pixel_3a_API_33_arm64-v8a
+    - Pixel_5_API_33
+  base_url:
+    android: http://flutterbooksample.com
+    ios: customschema://flutterbooksample.com
+  screenshot:
+    - home
+    - projects
+    - projects/1
+    - about
+    - about/demo
