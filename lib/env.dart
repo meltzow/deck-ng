@@ -36,7 +36,8 @@ class Environment {
             'Basic ${base64.encode(utf8.encode('admin:admin'))}',
             "http://192.168.178.81:8080",
             false);
-        await service.saveAccount(a);
+//FIXME
+        //        await service.saveAccount(a);
       }
     }
     await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());

@@ -61,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextFormField(
-                    key: const Key('serverUrl'),
+                    key: const ValueKey('serverUrl'),
                     validator: (value) {
                       return 'ffffl';
                     },
@@ -116,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
                   child: TextFormField(
-                    key: const Key('username'),
+                    key: const ValueKey('username'),
                     controller: controller.usernameController,
                     obscureText: false,
                     textAlign: TextAlign.start,
@@ -153,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 0),
                       child: TextFormField(
-                        key: const Key('password'),
+                        key: const ValueKey('password'),
                         controller: controller.passwordController,
                         obscureText: controller.isObscure.value,
                         textAlign: TextAlign.start,

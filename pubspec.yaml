@@ -57,6 +57,8 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.4
   build_runner: ^2.4.8
+  flutter_driver:
+    sdk: flutter
 #  screenshots:
 #    git:
 #      url: https://github.com/meltzow/screenshots.git

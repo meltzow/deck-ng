@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 Future<void> main() async {
   await Environment.init();
+  WidgetsFlutterBinding.ensureInitialized();
 
   var snackHandler = SnackbarHandler(
     const Duration(seconds: 5),
