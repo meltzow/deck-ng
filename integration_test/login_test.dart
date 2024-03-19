@@ -59,9 +59,9 @@ void main() {
     await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
 
     await tester.enterText(
-        find.byKey(const ValueKey('serverUrl')), 'https://my.next.cloud');
-    await tester.enterText(find.byKey(const ValueKey('username')), 'deckNG');
-    await tester.enterText(find.byKey(const ValueKey('password')), 'secret');
+        find.byKey(const Key('serverUrl')), 'https://my.next.cloud');
+    await tester.enterText(find.byKey(const Key('username')), 'deckNG');
+    await tester.enterText(find.byKey(const Key('password')), 'secret');
     await tester.pumpAndSettle();
     expect(find.text('Login'), findsOneWidget);
     await tester.pumpAndSettle();

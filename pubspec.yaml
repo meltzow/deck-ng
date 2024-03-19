@@ -58,7 +58,8 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   screenshots:
-    path: /tmp/screenshots
+    git:
+      url: https://github.com/meltzow/screenshots
 
   http_mock_adapter: ^0.6.1
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -137,24 +138,3 @@ dart_define:
     - name: WIREDASH_SECRET
       description: we need the secret from your wiredash.io login
       required: true
-
-auto_screenshot:
-  bundle_id:
-    android: net.meltzow.deckng
-#    ios: com.example.myapp
-  devices:
-#    - iPhone 8 Plus
-#    - iPhone 13 Pro Max
-#    - iPad Pro (12.9-inch) (2nd generation)
-#    - iPad Pro (12.9-inch) (5th generation)
-    - Pixel_3a_API_33_arm64-v8a
-    - Pixel_5_API_33
-  base_url:
-    android: http://flutterbooksample.com
-    ios: customschema://flutterbooksample.com
-  screenshot:
-    - home
-    - projects
-    - projects/1
-    - about
-    - about/demo

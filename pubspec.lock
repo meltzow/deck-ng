@@ -847,9 +847,11 @@ packages:
   screenshots:
     dependency: "direct dev"
     description:
-      path: "/tmp/screenshots"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "9ec5e743fbc11f8556f44ceb339567d789d204e3"
+      url: "https://github.com/meltzow/screenshots"
+    source: git
     version: "3.1.1"
   sentry:
     dependency: transitive
@@ -1099,16 +1101,20 @@ packages:
   tool_base:
     dependency: transitive
     description:
-      path: "../../../../tmp/tool_base"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: dc680c4bcc7aa655feace50e4c5a8b120e1bd65e
+      url: "https://github.com/meltzow/tool_base.git"
+    source: git
     version: "2.0.0"
   tool_mobile:
     dependency: transitive
     description:
-      path: "../../../../tmp/tool_mobile"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: a7e07fea0b118a2c92d2d74dc02bbf74797495ed
+      url: "https://github.com/meltzow/tool_mobile.git"
+    source: git
     version: "3.0.0"
   typed_data:
     dependency: transitive

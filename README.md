@@ -40,3 +40,6 @@ samples, guidance on mobile development, and a full API reference.
 * https://fonts.google.com/icons
 * https://wiredash.com/
 * https://flutterviz.io/
+
+### automatic screenshots
+* dart pub global activate --source git https://github.com/meltzow/screenshots
