@@ -13,13 +13,13 @@ import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 
 @GenerateMocks([
-  BoardDetailsController,
+  KanbanBoardController,
 ])
 void main() {
-  late BoardDetailsController controllerMock;
+  late KanbanBoardController controllerMock;
 
   setUp(() {
-    controllerMock = Get.put<BoardDetailsController>(BoardDetailsController());
+    controllerMock = Get.put<KanbanBoardController>(KanbanBoardController());
   });
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

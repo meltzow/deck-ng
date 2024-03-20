@@ -1,7 +1,7 @@
 import 'package:catcher_2/catcher_2.dart';
-import 'package:deck_ng/controller/board_details_controller.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
+import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:deck_ng/controller/settings_controller.dart';
 import 'package:deck_ng/dart_define.gen.dart';
@@ -93,8 +93,8 @@ class MyApp extends StatelessWidget {
                 Get.lazyPut<IBoardService>(() => BoardServiceImpl());
                 Get.lazyPut<IStackService>(() => StackRepositoryImpl());
                 Get.lazyPut<ICardService>(() => CardServiceImpl());
-                Get.lazyPut<BoardDetailsController>(
-                    () => BoardDetailsController());
+                Get.lazyPut<KanbanBoardController>(
+                    () => KanbanBoardController());
               }),
             ),
             GetPage(

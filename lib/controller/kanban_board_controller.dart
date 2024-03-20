@@ -8,7 +8,7 @@ import 'package:deck_ng/service/Istack_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BoardDetailsController extends GetxController {
+class KanbanBoardController extends GetxController {
   late AppFlowyBoardController boardController;
 
   final Rxn<NC.Board> _boardsData = Rxn<NC.Board>();

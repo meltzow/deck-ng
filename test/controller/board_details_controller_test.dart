@@ -22,7 +22,7 @@ void main() {
     var notifyServiceMock =
         Get.put<INotificationService>(MockINotificationService());
 
-    final controller = Get.put(BoardDetailsController());
+    final controller = Get.put(KanbanBoardController());
 
     controller.boardId = 1;
     expect(controller.boardId, 1);
@@ -55,7 +55,7 @@ void main() {
     var notifyServiceMock =
         Get.put<INotificationService>(MockINotificationService());
 
-    final controller = Get.put(BoardDetailsController());
+    final controller = Get.put(KanbanBoardController());
 
     controller.boardId = 1;
     expect(controller.boardId, 1);
@@ -89,6 +89,6 @@ void main() {
   });
 
   tearDown(() {
-    Get.delete<BoardDetailsController>();
+    Get.delete<KanbanBoardController>();
   });
 }

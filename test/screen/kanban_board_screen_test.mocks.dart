@@ -63,7 +63,7 @@ class _FakeInternalFinalCallback_2<T> extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockBoardDetailsController extends _i1.Mock
-    implements _i4.BoardDetailsController {
+    implements _i4.KanbanBoardController {
   MockBoardDetailsController() {
     _i1.throwOnMissingStub(this);
   }
