@@ -36,10 +36,15 @@ import 'package:wiredash/wiredash.dart';
 
 class MyApp extends StatelessWidget {
   final String? initialRoute;
+  List<GetPage>? initialPages;
   final bool debugShowCheckedModeBanner;
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  MyApp({super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
+  MyApp(
+      {super.key,
+      this.initialRoute,
+      this.debugShowCheckedModeBanner = true,
+      this.initialPages});
 
   // This widget is the root of your application.
   @override
@@ -70,69 +75,73 @@ class MyApp extends StatelessWidget {
           theme: myTheme,
           initialRoute: initialRoute ?? AppRoutes.home,
           initialBinding: InitialBinding(),
-          getPages: [
-            GetPage(
-                name: AppRoutes.home,
-                page: () => DashboardScreen(),
-                middlewares: [
-                  Guard(), // Add the middleware here
-                ],
-                binding: BindingsBuilder(() {
-                  Get.lazyPut<IHttpService>(() => HttpService());
-                  Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                  Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-                  Get.lazyPut<DashboardController>(() => DashboardController());
-                })),
-            GetPage(
-              name: AppRoutes.kanbanBoard,
-              page: () => KanbanBoardScreen(),
-              middlewares: [
-                Guard(), // Add the middleware here
+          getPages: initialPages ??
+              [
+                GetPage(
+                    name: AppRoutes.home,
+                    page: () => DashboardScreen(),
+                    middlewares: [
+                      Guard(), // Add the middleware here
+                    ],
+                    binding: BindingsBuilder(() {
+                      Get.lazyPut<IHttpService>(() => HttpService());
+                      Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+                      Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+                      Get.lazyPut<DashboardController>(
+                          () => DashboardController());
+                    })),
+                GetPage(
+                  parameters: const {'boardId': '22'},
+                  name: AppRoutes.kanbanBoard,
+                  page: () => KanbanBoardScreen(),
+                  middlewares: [
+                    Guard(), // Add the middleware here
+                  ],
+                  binding: BindingsBuilder(() {
+                    Get.lazyPut<IHttpService>(() => HttpService());
+                    Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+                    Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+                    Get.lazyPut<ICardService>(() => CardServiceImpl());
+                    Get.lazyPut<KanbanBoardController>(
+                        () => KanbanBoardController());
+                  }),
+                ),
+                GetPage(
+                  name: AppRoutes.cardDetails,
+                  page: () => CardDetailsScreen(),
+                  middlewares: [
+                    Guard(), // Add the middleware here
+                  ],
+                  binding: BindingsBuilder(() {
+                    Get.lazyPut<IHttpService>(() => HttpService());
+                    Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+                    Get.lazyPut<ICardService>(() => CardServiceImpl());
+                    Get.lazyPut<CardDetailsController>(
+                        () => CardDetailsController());
+                  }),
+                ),
+                GetPage(
+                    name: AppRoutes.login,
+                    page: () => LoginScreen(),
+                    binding: BindingsBuilder(() {
+                      Get.lazyPut<INotificationService>(
+                          () => NotificationService());
+                      Get.lazyPut<LoginController>(() => LoginController());
+                    })),
+                GetPage(
+                  name: AppRoutes.licenses,
+                  page: () => const OssLicensesPage(),
+                ),
+                GetPage(
+                    name: AppRoutes.settings,
+                    page: () => SettingScreen(),
+                    binding: BindingsBuilder(() {
+                      Get.lazyPut<INotificationService>(
+                          () => NotificationService());
+                      Get.lazyPut<SettingsController>(
+                          () => SettingsController());
+                    })),
               ],
-              binding: BindingsBuilder(() {
-                Get.lazyPut<IHttpService>(() => HttpService());
-                Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-                Get.lazyPut<ICardService>(() => CardServiceImpl());
-                Get.lazyPut<KanbanBoardController>(
-                    () => KanbanBoardController());
-              }),
-            ),
-            GetPage(
-              name: AppRoutes.cardDetails,
-              page: () => CardDetailsScreen(),
-              middlewares: [
-                Guard(), // Add the middleware here
-              ],
-              binding: BindingsBuilder(() {
-                Get.lazyPut<IHttpService>(() => HttpService());
-                Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                Get.lazyPut<ICardService>(() => CardServiceImpl());
-                Get.lazyPut<CardDetailsController>(
-                    () => CardDetailsController());
-              }),
-            ),
-            GetPage(
-                name: AppRoutes.login,
-                page: () => LoginScreen(),
-                binding: BindingsBuilder(() {
-                  Get.lazyPut<INotificationService>(
-                      () => NotificationService());
-                  Get.lazyPut<LoginController>(() => LoginController());
-                })),
-            GetPage(
-              name: AppRoutes.licenses,
-              page: () => const OssLicensesPage(),
-            ),
-            GetPage(
-                name: AppRoutes.settings,
-                page: () => SettingScreen(),
-                binding: BindingsBuilder(() {
-                  Get.lazyPut<INotificationService>(
-                      () => NotificationService());
-                  Get.lazyPut<SettingsController>(() => SettingsController());
-                })),
-          ],
         ));
   }
 }

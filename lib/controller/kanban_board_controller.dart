@@ -48,7 +48,7 @@ class KanbanBoardController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    _boardId = Get.arguments['boardId'] as int;
+    _boardId = int.parse(Get.parameters['boardId']!);
     await refreshData();
   }
 

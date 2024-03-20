@@ -13,7 +13,7 @@ class BoardItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => Get.toNamed(
         AppRoutes.kanbanBoard,
-        arguments: {'boardId': board.id},
+        parameters: {'boardId': board.id.toString()},
       ),
       child: ListTile(
         shape: const RoundedRectangleBorder(
