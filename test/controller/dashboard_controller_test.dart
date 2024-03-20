@@ -1,5 +1,6 @@
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/model/board.dart';
+import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Istack_service.dart';
@@ -8,7 +9,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'board_overview_controller_test.mocks.dart';
+import 'dashboard_controller_test.mocks.dart';
 
 @GenerateMocks([IAuthService, IBoardService, IStackService])
 void main() {
@@ -29,6 +30,7 @@ void main() {
 
     var resp = [Board(title: 'foo', id: 1)];
     when(boardRepositoryImplMock.getAllBoards()).thenAnswer((_) async => resp);
+    when(stackServiceMock.getAll(1)).thenAnswer((_) async => [Stack(title: 'title', boardId: 1, id: 1)]);
     controller.onReady();
 
     /// Test your functions

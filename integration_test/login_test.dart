@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
@@ -44,8 +43,6 @@ void main() {
         .thenReturn(null);
 
     when(storageServiceMock.hasSettings()).thenReturn(false);
-
-    Environment.init();
 
     var resp = Capabilities(CapabilitiesOcs(
         meta: Meta('success', 200, 'success'),

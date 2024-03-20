@@ -193,11 +193,11 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  _i4.Card get cardData => (super.noSuchMethod(
-        Invocation.getter(#cardData),
+  _i4.Card get cardData1 => (super.noSuchMethod(
+        Invocation.getter(#cardData1),
         returnValue: _FakeCard_3(
           this,
-          Invocation.getter(#cardData),
+          Invocation.getter(#cardData1),
         ),
       ) as _i4.Card);
 
@@ -245,7 +245,7 @@ class MockCardDetailsController extends _i1.Mock
       ) as List<_i7.ValueItem<String>>);
 
   @override
-  set boardId(int? boardId) => super.noSuchMethod(
+  set boardId(_i2.RxInt? boardId) => super.noSuchMethod(
         Invocation.setter(
           #boardId,
           boardId,
@@ -254,7 +254,7 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  set stackId(int? stackId) => super.noSuchMethod(
+  set stackId(_i2.RxInt? stackId) => super.noSuchMethod(
         Invocation.setter(
           #stackId,
           stackId,
@@ -263,7 +263,7 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  set cardId(int? cardId) => super.noSuchMethod(
+  set cardId(_i2.RxInt? cardId) => super.noSuchMethod(
         Invocation.setter(
           #cardId,
           cardId,
@@ -272,7 +272,7 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  set cardData(_i4.Card? card) => super.noSuchMethod(
+  set cardData(_i2.Rx<_i4.Card>? card) => super.noSuchMethod(
         Invocation.setter(
           #cardData,
           card,

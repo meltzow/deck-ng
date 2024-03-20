@@ -13,7 +13,6 @@ class CardDetailsController extends GetxController {
   final RxBool isLoading = RxBool(true);
   late RxInt _boardId;
   late RxInt _stackId;
-
   late RxInt _cardId;
 
   RxBool isDescriptionEditing = RxBool(false);
@@ -34,7 +33,7 @@ class CardDetailsController extends GetxController {
   final INotificationService _notificationService =
       Get.find<INotificationService>();
 
-  card.Card get cardData => _cardData.value;
+  card.Card get cardData1 => _cardData.value;
 
   DateTime? get dueDate => _cardData.value.duedate;
   String get dueDatePreview => _dueDatePreview.value;
@@ -80,15 +79,14 @@ class CardDetailsController extends GetxController {
   }
 
   @visibleForTesting
-  set boardId(int boardId) => _boardId.value = boardId;
+  set boardId(RxInt boardId) => _boardId = boardId;
   @visibleForTesting
-  set stackId(int stackId) => _stackId.value = stackId;
+  set stackId(RxInt stackId) => _stackId = stackId;
+  @visibleForTesting
+  set cardId(RxInt cardId) => _cardId = cardId;
 
   @visibleForTesting
-  set cardId(int cardId) => _cardId.value = cardId;
-
-  @visibleForTesting
-  set cardData(card.Card card) => _cardData.value = card;
+  set cardData(Rx<card.Card> card) => _cardData = card;
 
   @override
   void onClose() {
@@ -125,9 +123,9 @@ class CardDetailsController extends GetxController {
   Future<void> refreshData() async {
     isLoading.value = true;
     _cardData = (await _cardService.getCard(
-            _boardId.value, _stackId.value, _cardId.value))
+            _boardId.value!, _stackId.value!, _cardId.value!))
         .obs;
-    _boardData.value = await _boardService.getBoard(_boardId.value);
+    _boardData.value = await _boardService.getBoard(_boardId.value!);
     titleControllerText.value = _cardData.value.title;
     descriptionControllerText.value = _cardData.value.description ?? '';
     _titleEditingController.text = titleControllerText.value;
@@ -147,7 +145,7 @@ class CardDetailsController extends GetxController {
     _cardData.value.description = descriptionControllerText.value;
 
     _cardService.updateCard(
-        _boardId.value, _stackId.value, _cardId.value, _cardData.value);
+      _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value);
     successMsg();
   }
 
@@ -184,14 +182,14 @@ class CardDetailsController extends GetxController {
   _addUsers(Set<String?> selectedUsers) async {
     for (var userId in selectedUsers) {
       var assignment = await _cardService.assignUser2Card(
-          _boardId.value, _stackId.value, _cardId.value, userId!);
+          _boardId.value!, _stackId.value!, _cardId.value!, userId!);
       _cardData.value.assignedUsers?.add(assignment);
     }
   }
 
   removeLabelByInt(int? selectedLabel) async {
     await _cardService.removeLabel2Card(
-        _boardId.value, _stackId.value, _cardId.value, selectedLabel!);
+        _boardId.value!, _stackId.value!, _cardId.value!, selectedLabel!);
     _cardData.value.labels
         .remove(_boardData.value!.findLabelById(selectedLabel));
   }

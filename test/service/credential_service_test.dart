@@ -1,9 +1,9 @@
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 
 import 'fake_provider.dart';
@@ -20,7 +20,6 @@ void main() {
   group('credentialServiceGroup', () {
     setUpAll(() async {
       TestWidgetsFlutterBinding.ensureInitialized();
-      Environment.init();
       PathProviderPlatform.instance = FakePathProviderPlatform();
     });
 
@@ -29,21 +28,20 @@ void main() {
     // });
 
     test('simple save test', () async {
-      await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
-      final IStorageService credentialService = Get.find<IStorageService>();
+      await GetStorage.init();
 
-      // await credentialService.saveAccount(
-      //     'http://localhost:1234/login', 'username', 'password', true);
+      var service = StorageServiceImpl();
 
-      var account = Account('username', 'password', '', '', false);
+      var account = Account('username', 'password', '', 'http://localhost:1234/login', false);
+      await service.saveAccount(account);
 
-      var savedAccount = credentialService.getAccount();
+      var savedAccount = service.getAccount();
       expect(savedAccount?.password, account.password);
       expect(savedAccount?.url, 'http://localhost:1234/login');
     });
 
     test('remove last "/"  if url ends with it', () async {
-      await Get.putAsync<IStorageService>(() => StorageServiceImpl().init());
+      Get.put<IStorageService>(StorageServiceImpl());
       final IStorageService credentialService = Get.find<IStorageService>();
 
       // await credentialService.saveAccount(
