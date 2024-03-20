@@ -1,4 +1,5 @@
 import 'package:catcher_2/catcher_2.dart';
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/controller/kanban_board_controller.dart';
@@ -67,11 +68,11 @@ class MyApp extends StatelessWidget {
               .toList(),
           title: 'deck NG',
           theme: myTheme,
-          initialRoute: initialRoute ?? '/',
+          initialRoute: initialRoute ?? AppRoutes.home,
           initialBinding: InitialBinding(),
           getPages: [
             GetPage(
-                name: '/',
+                name: AppRoutes.home,
                 page: () => DashboardScreen(),
                 middlewares: [
                   Guard(), // Add the middleware here
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
                   Get.lazyPut<DashboardController>(() => DashboardController());
                 })),
             GetPage(
-              name: '/boards/details',
+              name: AppRoutes.kanbanBoard,
               page: () => KanbanBoardScreen(),
               middlewares: [
                 Guard(), // Add the middleware here
@@ -98,7 +99,7 @@ class MyApp extends StatelessWidget {
               }),
             ),
             GetPage(
-              name: '/cards/details',
+              name: AppRoutes.cardDetails,
               page: () => CardDetailsScreen(),
               middlewares: [
                 Guard(), // Add the middleware here
@@ -112,7 +113,7 @@ class MyApp extends StatelessWidget {
               }),
             ),
             GetPage(
-                name: '/auth/login',
+                name: AppRoutes.login,
                 page: () => LoginScreen(),
                 binding: BindingsBuilder(() {
                   Get.lazyPut<INotificationService>(
@@ -120,11 +121,11 @@ class MyApp extends StatelessWidget {
                   Get.lazyPut<LoginController>(() => LoginController());
                 })),
             GetPage(
-              name: '/licenses',
+              name: AppRoutes.licenses,
               page: () => const OssLicensesPage(),
             ),
             GetPage(
-                name: '/settings',
+                name: AppRoutes.settings,
                 page: () => SettingScreen(),
                 binding: BindingsBuilder(() {
                   Get.lazyPut<INotificationService>(

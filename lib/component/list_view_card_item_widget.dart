@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/model/card.dart' as NC;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class ListViewCardItem extends StatelessWidget {
         // provide the arguments as an optional
         // parameter.
         Get.toNamed(
-          '/cards/details',
+          AppRoutes.cardDetails,
           arguments: {
             'boardId': boardId,
             'stackId': data!.stackId,

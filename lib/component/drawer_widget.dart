@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/drawer_controller.dart' as deck;
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class DrawerWidget extends StatelessWidget {
               ),
               child: Text('dashboard'.tr),
             ),
-            onTap: () => Get.toNamed('/'),
+            onTap: () => Get.toNamed(AppRoutes.home),
           ),
           ListTile(
             leading: const Icon(Icons.note_add),
@@ -43,7 +44,7 @@ class DrawerWidget extends StatelessWidget {
             title: const Text('settings'),
             leading: const Icon(Icons.settings_outlined),
             onTap: () {
-              Get.toNamed('/settings');
+              Get.toNamed(AppRoutes.settings);
             },
           ),
           Obx(
@@ -54,7 +55,7 @@ class DrawerWidget extends StatelessWidget {
               leading: const Icon(Icons.login_outlined),
               onTap: () {
                 controller.logout();
-                Get.toNamed('/auth/login');
+                Get.toNamed(AppRoutes.login);
               },
             ),
           ),
@@ -70,7 +71,7 @@ class DrawerWidget extends StatelessWidget {
             leading: const Icon(Icons.local_police_outlined),
             title: Text('licenses'.tr),
             onTap: () {
-              Get.toNamed('/licenses');
+              Get.toNamed(AppRoutes.licenses);
             },
           ),
         ],

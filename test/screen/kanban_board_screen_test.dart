@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/my_app.dart';
@@ -21,7 +22,7 @@ void main() {
     // when(authServiceMock.isAuth()).thenReturn(true);
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp(
-      initialRoute: '/boards/details',
+      initialRoute: AppRoutes.kanbanBoard,
     ));
 
     // Verify that our counter starts at 0.

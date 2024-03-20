@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/stack.dart';
@@ -42,7 +43,7 @@ void main() {
 
   testWidgets('display board details', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
-    Get.toNamed('/boards/details', arguments: {'boardId': 1});
+    Get.toNamed(AppRoutes.kanbanBoard, arguments: {'boardId': 1});
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
 
