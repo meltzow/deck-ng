@@ -13,6 +13,7 @@ import 'package:mockito/mockito.dart';
 
 import 'kanban_board_test.mocks.dart';
 
+
 @GenerateNiceMocks([
   MockSpec<IStorageService>(),
   MockSpec<IBoardService>(),
@@ -21,7 +22,6 @@ import 'kanban_board_test.mocks.dart';
   MockSpec<INotificationService>(),
 ])
 void main() {
-  late KanbanBoardController controller;
   late IStorageService credentialServiceMock;
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -34,13 +34,13 @@ void main() {
     Get.replace<IStackService>(MockIStackService());
     Get.replace<ICardService>(MockICardService());
     Get.replace<INotificationService>(MockINotificationService());
-    controller = KanbanBoardController();
+    Get.lazyPut(()=>KanbanBoardController());
 
     var resp = [Board(title: 'garden', id: 1), Board(title: 'home', id: 2)]
         .map((e) => e.toJson())
         .toList();
-    // when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
-    //     .thenAnswer((_) async => resp);
+     //when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
+     //    .thenAnswer((_) async => resp);
   });
 
   testWidgets('display kanban board', (WidgetTester tester) async {
@@ -48,7 +48,7 @@ void main() {
     when(credentialServiceMock.getAccount())
         .thenReturn(Account('foo', 'ddd', 'authData', 'url', true));
 
-    Get.lazyReplace<KanbanBoardController>(() => controller);
+
 
     await tester.pumpWidget(MyApp(
         debugShowCheckedModeBanner: false,
