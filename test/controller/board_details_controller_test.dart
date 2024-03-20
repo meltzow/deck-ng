@@ -1,4 +1,4 @@
-import 'package:deck_ng/controller/board_details_controller.dart';
+import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/model/models.dart' as NC;
 import 'package:deck_ng/service/Iboard_service.dart';
 import 'package:deck_ng/service/Icard_service.dart';
