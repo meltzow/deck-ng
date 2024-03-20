@@ -65,11 +65,11 @@ class KanbanBoardController extends GetxController {
       //   debugPrint('Move item from $fromIndex to $toIndex');
       // },
       onMoveGroupItem: (groupId, fromIndex, toIndex) {
-        reorder(int.parse(groupId) - 1, fromIndex, toIndex);
+        reorder(int.parse(groupId), fromIndex, toIndex);
       },
       onMoveGroupItemToGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
-        cardReorderHandler(fromIndex, toIndex, int.parse(fromGroupId) - 1,
-            int.parse(toGroupId) - 1);
+        cardReorderHandler(
+            fromIndex, toIndex, int.parse(fromGroupId), int.parse(toGroupId));
       },
     );
     for (var stack in _stackData.value) {
@@ -92,13 +92,17 @@ class KanbanBoardController extends GetxController {
   //   _cardService.createCard(boardId, _selectedStackId.value!, title);
   // }
 
-  void reorder(int selectedStackIndex, int oldIndex, int newIndex) async {
-    var oldCard = _stackData.value[selectedStackIndex].cards[newIndex];
+  NC.Stack? _findStackById(int stackId) {
+    return _stackData.value
+        .firstWhereOrNull((element) => element.id == stackId);
+  }
 
-    NC.Card currentDraggedCard =
-        _stackData.value[selectedStackIndex].cards.removeAt(oldIndex);
-    _stackData.value[selectedStackIndex].cards
-        .insert(newIndex, currentDraggedCard);
+  void reorder(int selectedStackIndex, int oldIndex, int newIndex) async {
+    var stack = _findStackById(selectedStackIndex)!;
+    var oldCard = stack.cards[newIndex];
+
+    NC.Card currentDraggedCard = stack.cards.removeAt(oldIndex);
+    stack.cards.insert(newIndex, currentDraggedCard);
 
     var newOrderValue = 0;
     if (newIndex > oldIndex) {
@@ -113,17 +117,18 @@ class KanbanBoardController extends GetxController {
     cardSuccessMsg();
   }
 
-  cardReorderHandler(int oldCardIndex, int newCardIndex, int oldListIndex,
-      int newListIndex) async {
-    // find card at old index and old list/stack
-    var draggedCard = _stackData.value[oldListIndex].cards[oldCardIndex];
-    var cardAtNewPosition =
-        _stackData.value[newListIndex].cards.elementAtOrNull(newCardIndex);
+  cardReorderHandler(
+      int oldCardIndex, int newCardIndex, int oldListId, int newListId) async {
+    var oldStack = _findStackById(oldListId)!;
+    var newStack = _findStackById(newListId)!;
+
+    var draggedCard = oldStack.cards[oldCardIndex];
+    var cardAtNewPosition = newStack.cards.elementAtOrNull(newCardIndex);
     if (cardAtNewPosition != null) {
       draggedCard.order = cardAtNewPosition.order - 1;
     } else {
-      var cardAtNewPositionMinus1 = _stackData.value[newListIndex].cards
-          .elementAtOrNull(newCardIndex - 1);
+      var cardAtNewPositionMinus1 =
+          newStack.cards.elementAtOrNull(newCardIndex - 1);
       if (cardAtNewPositionMinus1 != null) {
         draggedCard.order = cardAtNewPositionMinus1.order + 1;
       } else {
@@ -133,13 +138,8 @@ class KanbanBoardController extends GetxController {
     // set at card new index and new stack
     // card.stackId = _stackData.value[newListIndex!].id;
     //save card
-    var group = await _cardService.reorderCard(
-        _boardId,
-        _stackData.value[oldListIndex].id,
-        draggedCard.id,
-        draggedCard,
-        draggedCard.order,
-        _stackData.value[newListIndex].id);
+    var group = await _cardService.reorderCard(_boardId, oldStack.id,
+        draggedCard.id, draggedCard, draggedCard.order, newStack.id);
 
     cardSuccessMsg();
   }

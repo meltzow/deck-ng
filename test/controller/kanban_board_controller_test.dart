@@ -14,14 +14,16 @@ import 'kanban_board_controller_test.mocks.dart';
 @GenerateMocks(
     [IBoardService, IStackService, ICardService, INotificationService])
 void main() {
-  test('reordering in same stack must save old card with new order', () async {
-    IBoardService boardRepositoryImplMock =
-        Get.put<IBoardService>(MockIBoardService());
-    var stackServiceMock = Get.put<IStackService>(MockIStackService());
-    var cardServiceMock = Get.put<ICardService>(MockICardService());
-    var notifyServiceMock =
-        Get.put<INotificationService>(MockINotificationService());
+  var boardRepositoryImplMock = Get.put<IBoardService>(MockIBoardService());
+  var stackServiceMock = Get.put<IStackService>(MockIStackService());
+  var cardServiceMock = Get.put<ICardService>(MockICardService());
+  var notifyServiceMock =
+      Get.put<INotificationService>(MockINotificationService());
+  setUp(() {
+    Get.testMode = true;
+  });
 
+  test('reordering in same stack must save old card with new order', () async {
     final controller = Get.put(KanbanBoardController());
 
     controller.boardId = 1;
@@ -29,32 +31,30 @@ void main() {
     expect(controller.stackData, []);
 
     var board = NC.Board(title: 'foo', id: 1);
-    var stack = NC.Stack(title: "offen", id: 1, boardId: board.id);
-    var card1 = NC.Card(title: "issue1", id: 1, stackId: 1);
-    var card2 = NC.Card(title: "issue2", id: 2, stackId: 1);
-    stack.cards = [card1, card2];
+    var stack = NC.Stack(title: "offen", id: 17, boardId: board.id);
+    var card1 = NC.Card(title: "issue1", id: 1, stackId: stack.id);
+    var draggedCard = NC.Card(title: "issue2", id: 2, stackId: stack.id);
+    stack.cards = [card1, draggedCard];
     var respStack = [stack];
 
-    when(cardServiceMock.updateCard(board.id, stack.id, card1.id, card1))
+    when(cardServiceMock.updateCard(
+            board.id, stack.id, draggedCard.id, draggedCard))
         .thenAnswer((_) async => card1);
     when(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
         .thenReturn(null);
     controller.stackData = respStack;
 
-    controller.reorder(0, 0, 1);
+    controller.reorder(stack.id, 1, 0);
 
-    // expect(controller.selectedStackData, stack);
-    // expect(controller.selectedStackId, 1);
+    verify(cardServiceMock.updateCard(
+            board.id, stack.id, draggedCard.id, draggedCard))
+        .called(1);
+
+    // verify(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
+    //     .called(1);
   });
 
   test('reordering in different stack at first position', () async {
-    IBoardService boardRepositoryImplMock =
-        Get.put<IBoardService>(MockIBoardService());
-    var stackServiceMock = Get.put<IStackService>(MockIStackService());
-    var cardServiceMock = Get.put<ICardService>(MockICardService());
-    var notifyServiceMock =
-        Get.put<INotificationService>(MockINotificationService());
-
     final controller = Get.put(KanbanBoardController());
 
     controller.boardId = 1;
@@ -63,29 +63,37 @@ void main() {
 
     var oldCardIndex = 1;
     var newCardIndex = 0;
-    var oldListIndex = 0;
-    var newListIndex = 1;
 
     var board = NC.Board(title: 'foo', id: 1);
-    var stack1 = NC.Stack(title: "backlog", id: 1, boardId: board.id);
-    var stack2 = NC.Stack(title: "in progress", id: 2, boardId: board.id);
-    var card1 = NC.Card(title: "issue1", id: 1, stackId: stack1.id);
-    var card2 = NC.Card(title: "issue2", id: 2, stackId: stack1.id);
-    var card3 = NC.Card(title: "issue2", id: 3, stackId: stack2.id);
-    stack1.cards = [card1, card2];
-    stack2.cards = [card3];
+    var draggedFromStack =
+        NC.Stack(title: "backlog", id: 18, boardId: board.id);
+    var draggedToStack =
+        NC.Stack(title: "in progress", id: 20, boardId: board.id);
+    var draggedCard =
+        NC.Card(title: "issue1", id: 1, stackId: draggedFromStack.id);
+    var card2 = NC.Card(title: "issue2", id: 2, stackId: draggedFromStack.id);
+    var card3 = NC.Card(title: "issue2", id: 3, stackId: draggedToStack.id);
+    draggedFromStack.cards = [card2, draggedCard];
+    expect(draggedFromStack.cards[oldCardIndex].id, draggedCard.id);
 
-    // when(cardServiceMock.updateCard(board.id, stack.id, card1.id, card1))
-    //     .thenAnswer((_) async => card1);
+    draggedToStack.cards = [card3];
+
+    when(cardServiceMock.reorderCard(board.id, draggedFromStack.id,
+            draggedCard.id, draggedCard, -1, draggedToStack.id))
+        .thenAnswer((_) async => draggedCard);
     when(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
         .thenReturn(null);
-    controller.stackData = [stack1, stack2];
+    controller.stackData = [draggedFromStack, draggedToStack];
 
     controller.cardReorderHandler(
-        oldCardIndex, newCardIndex, oldListIndex, newListIndex);
+        oldCardIndex, newCardIndex, draggedFromStack.id, draggedToStack.id);
 
-    // expect(controller.selectedStackData, stack);
-    // expect(controller.selectedStackId, 1);
+    verify(cardServiceMock.reorderCard(board.id, draggedFromStack.id,
+            draggedCard.id, draggedCard, -1, draggedToStack.id))
+        .called(1);
+
+    // verify(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
+    //     .called(1);
   });
 
   tearDown(() {
