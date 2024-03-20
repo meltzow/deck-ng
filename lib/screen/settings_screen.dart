@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingScreen extends StatelessWidget {
-  final SettingsController controller =
-      Get.put<SettingsController>(SettingsController());
+  final SettingsController controller = Get.find<SettingsController>();
 
   SettingScreen({super.key});
 

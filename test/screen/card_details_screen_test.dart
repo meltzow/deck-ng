@@ -1,5 +1,4 @@
 import 'package:deck_ng/controller/card_details_controller.dart';
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
@@ -29,8 +28,6 @@ void main() {
         Account('admin', 'password', 'authData', 'http://localhost', true);
     // when(credentialServiceMock.getAccount()).thenReturn(resp);
     // when(authServiceMock.isAuth()).thenReturn(true);
-
-    Environment.init();
 
     await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
     //Get.toNamed('/cards/details');

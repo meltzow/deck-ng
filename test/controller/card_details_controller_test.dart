@@ -35,10 +35,10 @@ void main() {
 
     var labels = [Label(title: 'first', id: 1), Label(title: 'second', id: 2)];
 
-    controller.cardId = cardId;
-    controller.boardId = boardId;
-    controller.stackId = stackId;
-    controller.cardData = card;
+    controller.cardId = RxInt(cardId);
+    controller.boardId = RxInt(boardId);
+    controller.stackId = RxInt(stackId);
+    controller.cardData = Rx<Card>(card);
 
     Card resp1 = card..labels.add(labels.first);
     Card resp2 = card..labels.add(labels[1]);
@@ -50,7 +50,7 @@ void main() {
     controller.saveLabels(
         labels.map((e) => ValueItem(label: e.title, value: e.id)).toList());
 
-    expect(controller.cardData.labels.length, labels.length);
+    expect(controller.cardData1.labels.length, labels.length);
   });
 
   tearDown(() {

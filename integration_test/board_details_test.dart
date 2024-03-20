@@ -1,4 +1,3 @@
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/stack.dart';
@@ -18,8 +17,6 @@ void main() {
   final IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   setUp(() async {
-    Environment.init();
-
     Get.replace<IHttpService>(MockIHttpService());
     httpServiceMock = Get.find<IHttpService>();
 

@@ -1,11 +1,12 @@
 import 'package:catcher_2/catcher_2.dart';
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/my_app.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
-  await Environment.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
 
   var snackHandler = SnackbarHandler(
     const Duration(seconds: 5),

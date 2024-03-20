@@ -1,4 +1,3 @@
-import 'package:deck_ng/env.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
@@ -16,11 +15,9 @@ void main() {
   late IHttpService httpServiceMock;
   late IStorageService credentialServiceMock;
 
-  final IntegrationTestWidgetsFlutterBinding binding =
-      IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    Environment.init();
     Get.replace<IStorageService>(MockIStorageService());
     credentialServiceMock = Get.find<IStorageService>();
 
@@ -39,6 +36,9 @@ void main() {
     Get.toNamed('/boards');
     await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
+    await binding.convertFlutterSurfaceToImage();
+    await tester.pumpAndSettle();
+    await binding.takeScreenshot('test-screenshot');
     //FIXME
     // await screenshot(binding, tester, lo.localeName, 'board-overview',
     //     silent: false);

@@ -2,7 +2,7 @@ import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/list_view_card_item_widget.dart';
 import 'package:deck_ng/component/loading_indicator.dart';
-import 'package:deck_ng/controller/board_details_controller.dart';
+import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/model/models.dart' as NC;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +16,7 @@ class CardItem extends AppFlowyGroupItem {
 }
 
 class KanbanBoardScreen extends StatelessWidget {
-  final controller = Get.find<BoardDetailsController>();
+  final controller = Get.find<KanbanBoardController>();
 
   KanbanBoardScreen({super.key});
 

@@ -7,7 +7,7 @@ import 'dart:async' as _i7;
 import 'dart:ui' as _i9;
 
 import 'package:appflowy_board/appflowy_board.dart' as _i2;
-import 'package:deck_ng/controller/board_details_controller.dart' as _i4;
+import 'package:deck_ng/controller/kanban_board_controller.dart' as _i4;
 import 'package:deck_ng/model/models.dart' as _i6;
 import 'package:flutter/material.dart' as _i5;
 import 'package:get/get.dart' as _i3;
@@ -59,12 +59,12 @@ class _FakeInternalFinalCallback_2<T> extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [BoardDetailsController].
+/// A class which mocks [KanbanBoardController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockBoardDetailsController extends _i1.Mock
-    implements _i4.BoardDetailsController {
-  MockBoardDetailsController() {
+class MockKanbanBoardController extends _i1.Mock
+    implements _i4.KanbanBoardController {
+  MockKanbanBoardController() {
     _i1.throwOnMissingStub(this);
   }
 

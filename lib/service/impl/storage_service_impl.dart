@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/setting.dart';
@@ -9,12 +10,15 @@ import 'package:get_storage/get_storage.dart';
 class StorageServiceImpl extends GetxService implements IStorageService {
   final String keyUser = 'user';
   final String keySetting = 'setting';
-  late final GetStorage _box;
+  final GetStorage _box = GetStorage();
 
-  Future<IStorageService> init() async {
-    await GetStorage.init();
-    _box = GetStorage();
-    return this;
+  @override
+  void onInit() {
+    super.onInit();
+
+    if (hasSettings()) {
+      Get.updateLocale(Locale(Get.find<IStorageService>().getSetting()!.language));
+    }
   }
 
   @override

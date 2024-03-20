@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
-  final DashboardController controller =
-      Get.put<DashboardController>(DashboardController());
+  final DashboardController controller = Get.find<DashboardController>();
 
   DashboardScreen({super.key});
 
