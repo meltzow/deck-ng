@@ -9,7 +9,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'board_details_controller_test.mocks.dart';
+import 'kanban_board_controller_test.mocks.dart';
 
 @GenerateMocks(
     [IBoardService, IStackService, ICardService, INotificationService])
