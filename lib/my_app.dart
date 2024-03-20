@@ -112,34 +112,31 @@ class MyApp extends StatelessWidget {
               }),
             ),
             GetPage(
-              name: '/auth/login',
-              page: () => LoginScreen(),
-              binding: BindingsBuilder(() {
-                Get.lazyPut<INotificationService>(() => NotificationService());
-                Get.lazyPut<LoginController>(
-                        () => LoginController());
-              })
-            ),
+                name: '/auth/login',
+                page: () => LoginScreen(),
+                binding: BindingsBuilder(() {
+                  Get.lazyPut<INotificationService>(
+                      () => NotificationService());
+                  Get.lazyPut<LoginController>(() => LoginController());
+                })),
             GetPage(
               name: '/licenses',
               page: () => const OssLicensesPage(),
             ),
             GetPage(
-              name: '/settings',
-              page: () => SettingScreen(),
-              binding:  BindingsBuilder(() {
-                Get.lazyPut<INotificationService>(() => NotificationService());
-                Get.lazyPut<SettingsController>(
-                        () => SettingsController());
-              })
-            ),
+                name: '/settings',
+                page: () => SettingScreen(),
+                binding: BindingsBuilder(() {
+                  Get.lazyPut<INotificationService>(
+                      () => NotificationService());
+                  Get.lazyPut<SettingsController>(() => SettingsController());
+                })),
           ],
         ));
   }
 }
 
 class InitialBinding implements Bindings {
-
   @override
   void dependencies() {
     Get.put<Dio>(Dio());
