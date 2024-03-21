@@ -25,10 +25,10 @@ class ListViewCardItem extends StatelessWidget {
         // parameter.
         Get.toNamed(
           AppRoutes.cardDetails,
-          arguments: {
-            'boardId': boardId,
-            'stackId': data!.stackId,
-            'cardId': data!.id
+          parameters: {
+            'boardId': boardId.toString(),
+            'stackId': data!.stackId.toString(),
+            'cardId': data!.id.toString()
           },
         );
       },

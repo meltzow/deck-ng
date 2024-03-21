@@ -193,12 +193,12 @@ class SettingScreen extends StatelessWidget {
                         const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                     child: DropdownButton(
                       onChanged: (v) => controller.changeLanguage(v!),
-                      value: Get.locale
-                          .toString(), // change this line with your way to get current locale to select it as default in dropdown
+                      value:
+                          'en_GB', // change this line with your way to get current locale to select it as default in dropdown
                       items: const [
                         DropdownMenuItem(
-                            child: Text('English'), value: 'en_US'),
-                        DropdownMenuItem(child: Text('German'), value: 'de_DE'),
+                            value: 'en_GB', child: Text('English')),
+                        DropdownMenuItem(value: 'de_DE', child: Text('German')),
                       ],
                     )),
               ],

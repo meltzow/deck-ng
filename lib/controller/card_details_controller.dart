@@ -114,9 +114,9 @@ class CardDetailsController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    _boardId = RxInt(Get.arguments['boardId'] as int);
-    _stackId = RxInt(Get.arguments['stackId'] as int);
-    _cardId = RxInt(Get.arguments['cardId'] as int);
+    _boardId = RxInt(int.parse(Get.parameters['boardId']!));
+    _stackId = RxInt(int.parse(Get.parameters['stackId']!));
+    _cardId = RxInt(int.parse(Get.parameters['cardId']!));
     await refreshData();
   }
 
@@ -145,7 +145,7 @@ class CardDetailsController extends GetxController {
     _cardData.value.description = descriptionControllerText.value;
 
     _cardService.updateCard(
-      _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value);
+        _boardId.value!, _stackId.value!, _cardId.value!, _cardData.value);
     successMsg();
   }
 

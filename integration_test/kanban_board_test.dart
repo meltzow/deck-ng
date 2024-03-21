@@ -35,8 +35,8 @@ void main() {
     Get.replace<IBoardService>(MockIBoardService());
     boardServiceMock = Get.find<IBoardService>();
     Get.replace<IStackService>(MockIStackService());
-    stackServiceMock = Get.find<IStackService>();
     Get.replace<ICardService>(MockICardService());
+    stackServiceMock = Get.find<IStackService>();
     Get.replace<INotificationService>(MockINotificationService());
     controller = KanbanBoardController();
   });

@@ -17,7 +17,6 @@ import 'dashboard_test.mocks.dart';
   MockSpec<IStorageService>(),
   MockSpec<IBoardService>(),
   MockSpec<IStackService>(),
-  MockSpec<ICardService>(),
   MockSpec<INotificationService>(),
 ])
 void main() {

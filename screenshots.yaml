@@ -5,6 +5,8 @@ tests:
   - integration_test/login_test.dart
   - integration_test/kanban_board_test.dart
   - integration_test/dashboard_test.dart
+  - integration_test/card_details_test.dart
+  - integration_test/settings_test.dart
 
 # Interim location of screenshots from tests before processing
 staging: /tmp/screenshots/staging
