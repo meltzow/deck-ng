@@ -4,13 +4,14 @@ driver: test_driver/screenshot_driver.dart
 tests:
   - integration_test/login_test.dart
   - integration_test/kanban_board_test.dart
+  - integration_test/dashboard_test.dart
 
 # Interim location of screenshots from tests before processing
 staging: /tmp/screenshots/staging
 
 # A list of locales supported in app
 locales:
-  - en-US
+  - en-GB
   - de-DE
 
 # A list of devices to run tests on
@@ -22,6 +23,10 @@ devices:
 #      orientation: LandscapeRight
   android:
     Nexus 9:
+      orientation:
+        - LandscapeRight
+        - Portrait
+    Pixel 4:
       orientation:
         - LandscapeRight
         - Portrait

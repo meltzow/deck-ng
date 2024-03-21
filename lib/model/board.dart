@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:deck_ng/model/converter.dart';
@@ -24,7 +25,7 @@ class BoardSetting {
 @JsonSerializable(explicitToJson: true)
 class Board {
   final String title;
-  final String? color;
+  final String color;
   @JsonKey(defaultValue: false)
   late bool? archived = false;
   final int id;
@@ -47,7 +48,7 @@ class Board {
 
   Board(
       {required this.title,
-      this.color,
+      String? color,
       this.archived,
       this.acl,
       this.shared,
@@ -56,8 +57,8 @@ class Board {
       required this.id,
       this.users = const [],
       this.owner = const User(),
-      List<Label>? labels})
-      : labels = labels ?? [];
+      List<Label>? labels = const []})
+      : color = color ?? (Random().nextDouble() * 0xFFFFFF).toInt().toString();
 
   factory Board.fromJson(Map<String, dynamic> json) => _$BoardFromJson(json);
 
