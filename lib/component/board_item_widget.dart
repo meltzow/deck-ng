@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,8 +12,8 @@ class BoardItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.toNamed(
-        '/boards/details',
-        arguments: {'boardId': board.id},
+        AppRoutes.kanbanBoard,
+        parameters: {'boardId': board.id.toString()},
       ),
       child: ListTile(
         shape: const RoundedRectangleBorder(

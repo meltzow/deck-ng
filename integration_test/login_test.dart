@@ -61,7 +61,8 @@ void main() {
     await tester.enterText(find.byKey(const Key('password')), 'secret');
     await tester.pumpAndSettle();
     expect(find.text('Login'), findsOneWidget);
+    await tester.tapAt(const Offset(10, 10));
     await tester.pumpAndSettle();
-    await screenshot(binding, tester, '1');
+    await screenshot(binding, tester, 'login_screen');
   });
 }

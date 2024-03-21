@@ -224,16 +224,16 @@ class MockKanbanBoardController extends _i1.Mock
   dynamic cardReorderHandler(
     int? oldCardIndex,
     int? newCardIndex,
-    int? oldListIndex,
-    int? newListIndex,
+    int? oldListId,
+    int? newListId,
   ) =>
       super.noSuchMethod(Invocation.method(
         #cardReorderHandler,
         [
           oldCardIndex,
           newCardIndex,
-          oldListIndex,
-          newListIndex,
+          oldListId,
+          newListId,
         ],
       ));
 

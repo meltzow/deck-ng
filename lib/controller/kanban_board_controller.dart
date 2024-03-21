@@ -48,7 +48,7 @@ class KanbanBoardController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    _boardId = Get.arguments['boardId'] as int;
+    _boardId = int.parse(Get.parameters['boardId']!);
     await refreshData();
   }
 
@@ -56,7 +56,7 @@ class KanbanBoardController extends GetxController {
     isLoading.value = true;
     _boardsData.value = await _boardService.getBoard(_boardId);
     _stackData.value = (await _stackService.getAll(_boardId))!
-      ..sort((a, b) => a.order!.compareTo(b.order!));
+      ..sort((a, b) => a.order.compareTo(b.order));
     // _selectedStackId.value =
     //     _stackData.value.isNotEmpty ? _stackData.value[0].id : null;
 

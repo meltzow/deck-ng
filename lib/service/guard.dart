@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +12,6 @@ class Guard extends GetMiddleware {
     return (storageService.hasAccount() &&
             storageService.getAccount()!.isAuthenticated)
         ? null
-        : const RouteSettings(name: '/auth/login');
+        : const RouteSettings(name: AppRoutes.login);
   }
 }

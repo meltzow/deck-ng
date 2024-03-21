@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/my_app.dart';
@@ -30,7 +31,7 @@ void main() {
     // when(authServiceMock.isAuth()).thenReturn(true);
 
     await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
-    //Get.toNamed('/cards/details');
+    Get.toNamed(AppRoutes.cardDetails);
     //await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();
 

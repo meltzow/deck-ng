@@ -1,4 +1,5 @@
 import 'package:catcher_2/catcher_2.dart';
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/controller/kanban_board_controller.dart';
@@ -35,10 +36,15 @@ import 'package:wiredash/wiredash.dart';
 
 class MyApp extends StatelessWidget {
   final String? initialRoute;
+  List<GetPage>? initialPages;
   final bool debugShowCheckedModeBanner;
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  MyApp({super.key, this.initialRoute, this.debugShowCheckedModeBanner = true});
+  MyApp(
+      {super.key,
+      this.initialRoute,
+      this.debugShowCheckedModeBanner = true,
+      this.initialPages});
 
   // This widget is the root of your application.
   @override
@@ -61,77 +67,78 @@ class MyApp extends StatelessWidget {
           navigatorKey: Catcher2.navigatorKey,
           translations: Translation(),
           locale: Get.deviceLocale,
-          fallbackLocale: const Locale('en'),
-          supportedLocales: Translation.appLanguages
-              .map((e) => e['locale'] as Locale)
-              .toList(),
+          fallbackLocale: const Locale('en', 'GB'),
           title: 'deck NG',
           theme: myTheme,
-          initialRoute: initialRoute ?? '/',
+          initialRoute: initialRoute ?? AppRoutes.home,
           initialBinding: InitialBinding(),
-          getPages: [
-            GetPage(
-                name: '/',
-                page: () => DashboardScreen(),
-                middlewares: [
-                  Guard(), // Add the middleware here
-                ],
-                binding: BindingsBuilder(() {
-                  Get.lazyPut<IHttpService>(() => HttpService());
-                  Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                  Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-                  Get.lazyPut<DashboardController>(() => DashboardController());
-                })),
-            GetPage(
-              name: '/boards/details',
-              page: () => KanbanBoardScreen(),
-              middlewares: [
-                Guard(), // Add the middleware here
+          getPages: initialPages ??
+              [
+                GetPage(
+                    name: AppRoutes.home,
+                    page: () => DashboardScreen(),
+                    middlewares: [
+                      Guard(), // Add the middleware here
+                    ],
+                    binding: BindingsBuilder(() {
+                      Get.lazyPut<IHttpService>(() => HttpService());
+                      Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+                      Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+                      Get.lazyPut<DashboardController>(
+                          () => DashboardController());
+                    })),
+                GetPage(
+                  parameters: const {'boardId': '22'},
+                  name: AppRoutes.kanbanBoard,
+                  page: () => KanbanBoardScreen(),
+                  middlewares: [
+                    Guard(), // Add the middleware here
+                  ],
+                  binding: BindingsBuilder(() {
+                    Get.lazyPut<IHttpService>(() => HttpService());
+                    Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+                    Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+                    Get.lazyPut<ICardService>(() => CardServiceImpl());
+                    Get.lazyPut<KanbanBoardController>(
+                        () => KanbanBoardController());
+                  }),
+                ),
+                GetPage(
+                  name: AppRoutes.cardDetails,
+                  page: () => CardDetailsScreen(),
+                  middlewares: [
+                    Guard(), // Add the middleware here
+                  ],
+                  binding: BindingsBuilder(() {
+                    Get.lazyPut<IHttpService>(() => HttpService());
+                    Get.lazyPut<IBoardService>(() => BoardServiceImpl());
+                    Get.lazyPut<ICardService>(() => CardServiceImpl());
+                    Get.lazyPut<CardDetailsController>(
+                        () => CardDetailsController());
+                  }),
+                ),
+                GetPage(
+                    name: AppRoutes.login,
+                    page: () => LoginScreen(),
+                    binding: BindingsBuilder(() {
+                      Get.lazyPut<INotificationService>(
+                          () => NotificationService());
+                      Get.lazyPut<LoginController>(() => LoginController());
+                    })),
+                GetPage(
+                  name: AppRoutes.licenses,
+                  page: () => const OssLicensesPage(),
+                ),
+                GetPage(
+                    name: AppRoutes.settings,
+                    page: () => SettingScreen(),
+                    binding: BindingsBuilder(() {
+                      Get.lazyPut<INotificationService>(
+                          () => NotificationService());
+                      Get.lazyPut<SettingsController>(
+                          () => SettingsController());
+                    })),
               ],
-              binding: BindingsBuilder(() {
-                Get.lazyPut<IHttpService>(() => HttpService());
-                Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-                Get.lazyPut<ICardService>(() => CardServiceImpl());
-                Get.lazyPut<KanbanBoardController>(
-                    () => KanbanBoardController());
-              }),
-            ),
-            GetPage(
-              name: '/cards/details',
-              page: () => CardDetailsScreen(),
-              middlewares: [
-                Guard(), // Add the middleware here
-              ],
-              binding: BindingsBuilder(() {
-                Get.lazyPut<IHttpService>(() => HttpService());
-                Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                Get.lazyPut<ICardService>(() => CardServiceImpl());
-                Get.lazyPut<CardDetailsController>(
-                    () => CardDetailsController());
-              }),
-            ),
-            GetPage(
-                name: '/auth/login',
-                page: () => LoginScreen(),
-                binding: BindingsBuilder(() {
-                  Get.lazyPut<INotificationService>(
-                      () => NotificationService());
-                  Get.lazyPut<LoginController>(() => LoginController());
-                })),
-            GetPage(
-              name: '/licenses',
-              page: () => const OssLicensesPage(),
-            ),
-            GetPage(
-                name: '/settings',
-                page: () => SettingScreen(),
-                binding: BindingsBuilder(() {
-                  Get.lazyPut<INotificationService>(
-                      () => NotificationService());
-                  Get.lazyPut<SettingsController>(() => SettingsController());
-                })),
-          ],
         ));
   }
 }

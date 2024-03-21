@@ -3,14 +3,18 @@
 driver: test_driver/screenshot_driver.dart
 tests:
   - integration_test/login_test.dart
+  - integration_test/kanban_board_test.dart
+  - integration_test/dashboard_test.dart
+  - integration_test/card_details_test.dart
+  - integration_test/settings_test.dart
 
 # Interim location of screenshots from tests before processing
-staging: /tmp/screenshots-images
+staging: /tmp/screenshots/staging
 
 # A list of locales supported in app
 locales:
-  - en-US
-#  - fr-CA
+  - en-GB
+  - de-DE
 
 # A list of devices to run tests on
 devices:
@@ -24,16 +28,21 @@ devices:
       orientation:
         - LandscapeRight
         - Portrait
+    Pixel 4:
+      orientation:
+        - LandscapeRight
+        - Portrait
+
 
 # Frame screenshots
-frame: true
+frame: false
 
 # Run mode can be one of 'normal' (default), 'recording', 'comparison' or 'archive'.
 
 # If run mode is 'recording' or 'comparison', a directory is required for recorded images.
-recording: /tmp/screenshots_record
+recording: /tmp/screenshots/record
 
 # If not intending to upload screenshots, images can be stored in an archive dir.
 # This over-rides output to fastlane dirs.
 # If run mode is 'archive', a directory is required for archived images.
-archive: /tmp/screenshots_archive
+archive: /tmp/screenshots/archive

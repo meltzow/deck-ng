@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/service/Iauth_service.dart';
 import 'package:deck_ng/service/Ihttp_service.dart';
@@ -112,7 +113,7 @@ class CustomInterceptor extends Interceptor {
     if (kDebugMode) {
       print("onError: ${err.response?.statusCode}");
     }
-    getX.Get.toNamed('/auth/login');
+    getX.Get.toNamed(AppRoutes.login);
     return handler.next(err);
   }
 }
