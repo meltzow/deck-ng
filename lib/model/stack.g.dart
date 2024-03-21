@@ -16,10 +16,10 @@ Stack _$StackFromJson(Map<String, dynamic> json) => Stack(
               .toList() ??
           [],
       id: json['id'] as int,
+      order: json['order'] as int? ?? 0,
     )
       ..lastModified = _$JsonConverterFromJson<int, DateTime>(
           json['lastModified'], const EpochDateTimeConverter().fromJson)
-      ..order = json['order'] as int?
       ..ETag = json['ETag'] as String;
 
 Map<String, dynamic> _$StackToJson(Stack instance) => <String, dynamic>{

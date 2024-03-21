@@ -67,10 +67,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: Catcher2.navigatorKey,
           translations: Translation(),
           locale: Get.deviceLocale,
-          fallbackLocale: const Locale('en'),
-          supportedLocales: Translation.appLanguages
-              .map((e) => e['locale'] as Locale)
-              .toList(),
+          fallbackLocale: const Locale('en', 'GB'),
           title: 'deck NG',
           theme: myTheme,
           initialRoute: initialRoute ?? AppRoutes.home,
