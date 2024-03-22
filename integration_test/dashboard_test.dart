@@ -21,7 +21,7 @@ import 'dashboard_test.mocks.dart';
 ])
 void main() {
   late DashboardController controller;
-  late IStorageService credentialServiceMock;
+  late IStorageService storageServiceMock;
   late IStackService stackServiceMock;
   late IBoardService boardServiceMock;
 
@@ -30,7 +30,7 @@ void main() {
   setUp(() async {
     Get.testMode = true;
     Get.replace<IStorageService>(MockIStorageService());
-    credentialServiceMock = Get.find<IStorageService>();
+    storageServiceMock = Get.find<IStorageService>();
     Get.replace<IBoardService>(MockIBoardService());
     boardServiceMock = Get.find<IBoardService>();
     Get.replace<IStackService>(MockIStackService());
@@ -39,8 +39,8 @@ void main() {
   });
 
   testWidgets('display dashboard', (WidgetTester tester) async {
-    when(credentialServiceMock.hasAccount()).thenReturn(true);
-    when(credentialServiceMock.getAccount())
+    when(storageServiceMock.hasAccount()).thenReturn(true);
+    when(storageServiceMock.getAccount())
         .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
 
     var board1 = nc.Board(title: 'garden', id: 1);
