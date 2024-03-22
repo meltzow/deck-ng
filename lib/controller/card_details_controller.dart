@@ -1,9 +1,7 @@
 import 'package:deck_ng/model/assignment.dart';
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart' as card;
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Icard_service.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -28,10 +26,10 @@ class CardDetailsController extends GetxController {
   late Rx<card.Card> _cardData;
   final Rxn<Board> _boardData = Rxn<Board>();
 
-  final ICardService _cardService = Get.find<ICardService>();
-  final IBoardService _boardService = Get.find<IBoardService>();
-  final INotificationService _notificationService =
-      Get.find<INotificationService>();
+  final CardService _cardService = Get.find<CardService>();
+  final BoardService _boardService = Get.find<BoardService>();
+  final NotificationService _notificationService =
+      Get.find<NotificationService>();
 
   card.Card get cardData1 => _cardData.value;
 
@@ -42,13 +40,7 @@ class CardDetailsController extends GetxController {
       _descriptionEditingController;
   TextEditingController get titleController => _titleEditingController;
 
-  List<ValueItem<int>> get allLabelValueItems {
-    var items = <ValueItem<int>>[];
-    for (var label in _boardData.value!.labels) {
-      items.add(ValueItem(label: label.title, value: label.id));
-    }
-    return items;
-  }
+  final allLabelValueItems = RxList<ValueItem<int>>();
 
   List<ValueItem<int>> get selectedLabelValueItems {
     var items = <ValueItem<int>>[];
@@ -130,6 +122,12 @@ class CardDetailsController extends GetxController {
     descriptionControllerText.value = _cardData.value.description ?? '';
     _titleEditingController.text = titleControllerText.value;
     _descriptionEditingController.text = descriptionControllerText.value;
+
+    allLabelValueItems.clear();
+    for (var label in _boardData.value!.labels) {
+      allLabelValueItems.add(ValueItem(label: label.title, value: label.id));
+    }
+
     if (_cardData.value.duedate != null) {
       _dueDatePreview.value = DateFormat.MMMMEEEEd(Get.locale.toString())
           .format(_cardData.value.duedate!);

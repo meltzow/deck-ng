@@ -1,6 +1,6 @@
 import 'package:deck_ng/model/models.dart';
 
-abstract class ICardService {
+abstract class CardService {
   Future<Card> createCard(int boardId, int stackId, String title);
 
   Future<Card> updateCard(int boardId, int stackId, int cardId, Card card);

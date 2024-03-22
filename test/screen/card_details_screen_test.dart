@@ -2,10 +2,7 @@ import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Istack_service.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -14,10 +11,10 @@ import 'package:mockito/annotations.dart';
 @GenerateMocks([CardDetailsController])
 void main() {
   late CardDetailsController cardDetailsControllerMock;
-  late IStorageService credentialServiceMock;
-  late IAuthService authServiceMock;
-  late IBoardService boardServiceMock;
-  late IStackService stackServiceMock;
+  late StorageService credentialServiceMock;
+  late AuthService authServiceMock;
+  late BoardService boardServiceMock;
+  late StackService stackServiceMock;
 
   setUp(() {
     cardDetailsControllerMock =

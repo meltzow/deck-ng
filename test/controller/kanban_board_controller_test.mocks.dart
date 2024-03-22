@@ -8,10 +8,10 @@ import 'dart:async' as _i5;
 import 'package:deck_ng/model/board.dart' as _i2;
 import 'package:deck_ng/model/models.dart' as _i3;
 import 'package:deck_ng/model/stack.dart' as _i7;
-import 'package:deck_ng/service/Iboard_service.dart' as _i4;
-import 'package:deck_ng/service/Icard_service.dart' as _i8;
-import 'package:deck_ng/service/Inotification_service.dart' as _i9;
-import 'package:deck_ng/service/Istack_service.dart' as _i6;
+import 'package:deck_ng/service/board_service.dart' as _i4;
+import 'package:deck_ng/service/card_service.dart' as _i8;
+import 'package:deck_ng/service/notification_service.dart' as _i9;
+import 'package:deck_ng/service/stack_service.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -57,11 +57,11 @@ class _FakeAssignment_2 extends _i1.SmartFake implements _i3.Assignment {
         );
 }
 
-/// A class which mocks [IBoardService].
+/// A class which mocks [BoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIBoardService extends _i1.Mock implements _i4.IBoardService {
-  MockIBoardService() {
+class MockBoardService extends _i1.Mock implements _i4.BoardService {
+  MockBoardService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -90,11 +90,11 @@ class MockIBoardService extends _i1.Mock implements _i4.IBoardService {
       ) as _i5.Future<_i2.Board>);
 }
 
-/// A class which mocks [IStackService].
+/// A class which mocks [StackService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIStackService extends _i1.Mock implements _i6.IStackService {
-  MockIStackService() {
+class MockStackService extends _i1.Mock implements _i6.StackService {
+  MockStackService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -108,11 +108,11 @@ class MockIStackService extends _i1.Mock implements _i6.IStackService {
       ) as _i5.Future<List<_i7.Stack>?>);
 }
 
-/// A class which mocks [ICardService].
+/// A class which mocks [CardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockICardService extends _i1.Mock implements _i8.ICardService {
-  MockICardService() {
+class MockCardService extends _i1.Mock implements _i8.CardService {
+  MockCardService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -364,12 +364,12 @@ class MockICardService extends _i1.Mock implements _i8.ICardService {
       ) as _i5.Future<_i3.Assignment>);
 }
 
-/// A class which mocks [INotificationService].
+/// A class which mocks [NotificationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockINotificationService extends _i1.Mock
-    implements _i9.INotificationService {
-  MockINotificationService() {
+class MockNotificationService extends _i1.Mock
+    implements _i9.NotificationService {
+  MockNotificationService() {
     _i1.throwOnMissingStub(this);
   }
 

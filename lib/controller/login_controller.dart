@@ -1,14 +1,12 @@
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  var credService = Get.find<IStorageService>();
-  var authService = Get.find<IAuthService>();
-  var notificationService = Get.find<INotificationService>();
+  var credService = Get.find<StorageService>();
+  var authService = Get.find<AuthService>();
+  var notificationService = Get.find<NotificationService>();
 
   final RxBool isLoading = RxBool(false);
   RxString usernameControllerText = ''.obs;

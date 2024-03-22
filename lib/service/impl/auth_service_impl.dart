@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
+import 'package:deck_ng/service/auth_service.dart';
+import 'package:deck_ng/service/storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
-class AuthServiceImpl extends GetxService implements IAuthService {
+class AuthServiceImpl extends GetxService implements AuthService {
   final Dio dioClient = Get.find<Dio>();
-  final credService = Get.find<IStorageService>();
+  final credService = Get.find<StorageService>();
 
   String _computeAuth(username, password) {
     return 'Basic ${base64.encode(utf8.encode('$username:$password'))}';

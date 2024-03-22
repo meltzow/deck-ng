@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:deck_ng/model/assignment.dart';
 import 'package:deck_ng/model/card.dart';
-import 'package:deck_ng/service/Icard_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/card_service.dart';
+import 'package:deck_ng/service/http_service.dart';
 import 'package:get/get.dart';
 
-class CardServiceImpl extends GetxService implements ICardService {
-  final httpService = Get.find<IHttpService>();
+class CardServiceImpl extends GetxService implements CardService {
+  final httpService = Get.find<HttpService>();
 
   @override
   Future<Card> createCard(int boardId, int stackId, String title) async {

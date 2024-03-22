@@ -14,30 +14,30 @@ import 'package:screenshots/src/capture_screen.dart';
 import 'kanban_board_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<IStorageService>(),
-  MockSpec<IBoardService>(),
-  MockSpec<IStackService>(),
-  MockSpec<ICardService>(),
-  MockSpec<INotificationService>(),
+  MockSpec<StorageService>(),
+  MockSpec<BoardService>(),
+  MockSpec<StackService>(),
+  MockSpec<CardService>(),
+  MockSpec<NotificationService>(),
 ])
 void main() {
   late KanbanBoardController controller;
-  late IStorageService storageServiceMock;
-  late IStackService stackServiceMock;
-  late IBoardService boardServiceMock;
+  late StorageService storageServiceMock;
+  late StackService stackServiceMock;
+  late BoardService boardServiceMock;
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
     Get.testMode = true;
-    Get.replace<IStorageService>(MockIStorageService());
-    storageServiceMock = Get.find<IStorageService>();
-    Get.replace<IBoardService>(MockIBoardService());
-    boardServiceMock = Get.find<IBoardService>();
-    Get.replace<IStackService>(MockIStackService());
-    Get.replace<ICardService>(MockICardService());
-    stackServiceMock = Get.find<IStackService>();
-    Get.replace<INotificationService>(MockINotificationService());
+    Get.replace<StorageService>(MockStorageService());
+    storageServiceMock = Get.find<StorageService>();
+    Get.replace<BoardService>(MockBoardService());
+    boardServiceMock = Get.find<BoardService>();
+    Get.replace<StackService>(MockStackService());
+    Get.replace<CardService>(MockCardService());
+    stackServiceMock = Get.find<StackService>();
+    Get.replace<NotificationService>(MockNotificationService());
     controller = KanbanBoardController();
   });
 

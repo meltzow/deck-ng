@@ -1,9 +1,6 @@
 import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/model/models.dart' as NC;
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Icard_service.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
-import 'package:deck_ng/service/Istack_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -11,14 +8,13 @@ import 'package:test/test.dart';
 
 import 'kanban_board_controller_test.mocks.dart';
 
-@GenerateMocks(
-    [IBoardService, IStackService, ICardService, INotificationService])
+@GenerateMocks([BoardService, StackService, CardService, NotificationService])
 void main() {
-  var boardRepositoryImplMock = Get.put<IBoardService>(MockIBoardService());
-  var stackServiceMock = Get.put<IStackService>(MockIStackService());
-  var cardServiceMock = Get.put<ICardService>(MockICardService());
+  var boardRepositoryImplMock = Get.put<BoardService>(MockBoardService());
+  var stackServiceMock = Get.put<StackService>(MockStackService());
+  var cardServiceMock = Get.put<CardService>(MockCardService());
   var notifyServiceMock =
-      Get.put<INotificationService>(MockINotificationService());
+      Get.put<NotificationService>(MockNotificationService());
   setUp(() {
     Get.testMode = true;
   });

@@ -4,8 +4,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:deck_ng/model/models.dart' as _i3;
-import 'package:deck_ng/service/Inotification_service.dart' as _i4;
-import 'package:deck_ng/service/Istorage_service.dart' as _i2;
+import 'package:deck_ng/service/notification_service.dart' as _i4;
+import 'package:deck_ng/service/storage_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -21,10 +21,10 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [IStorageService].
+/// A class which mocks [StorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIStorageService extends _i1.Mock implements _i2.IStorageService {
+class MockStorageService extends _i1.Mock implements _i2.StorageService {
   @override
   bool hasAccount() => (super.noSuchMethod(
         Invocation.method(
@@ -64,11 +64,11 @@ class MockIStorageService extends _i1.Mock implements _i2.IStorageService {
       );
 }
 
-/// A class which mocks [INotificationService].
+/// A class which mocks [NotificationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockINotificationService extends _i1.Mock
-    implements _i4.INotificationService {
+class MockNotificationService extends _i1.Mock
+    implements _i4.NotificationService {
   @override
   dynamic successMsg(
     String? title,

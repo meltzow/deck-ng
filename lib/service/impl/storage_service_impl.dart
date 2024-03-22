@@ -1,13 +1,13 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/setting.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
+import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/storage_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class StorageServiceImpl extends GetxService implements IStorageService {
+class StorageServiceImpl extends GetxService implements StorageService {
   final String keyUser = 'user';
   final String keySetting = 'setting';
   final GetStorage _box = GetStorage();
@@ -17,7 +17,8 @@ class StorageServiceImpl extends GetxService implements IStorageService {
     super.onInit();
 
     if (hasSettings()) {
-      Get.updateLocale(Locale(Get.find<IStorageService>().getSetting()!.language));
+      Get.updateLocale(
+          Locale(Get.find<StorageService>().getSetting()!.language));
     }
   }
 

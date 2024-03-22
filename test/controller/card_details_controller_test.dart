@@ -3,9 +3,7 @@ import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/label.dart';
 import 'package:deck_ng/model/stack.dart';
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Icard_service.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -14,14 +12,13 @@ import 'package:test/test.dart';
 
 import 'card_details_controller_test.mocks.dart';
 
-@GenerateMocks([ICardService, INotificationService, IBoardService])
+@GenerateMocks([CardService, NotificationService, BoardService])
 void main() {
   test('select first available stack successfully', () async {
-    IBoardService boardServiceMock =
-        Get.put<IBoardService>(MockIBoardService());
-    var cardServiceMock = Get.put<ICardService>(MockICardService());
-    var notficatioNServiceMock =
-        Get.put<INotificationService>(MockINotificationService());
+    BoardService boardServiceMock = Get.put<BoardService>(MockBoardService());
+    var cardServiceMock = Get.put<CardService>(MockCardService());
+    var notifyServiceMock =
+        Get.put<NotificationService>(MockNotificationService());
 
     final controller = Get.put(CardDetailsController());
 
@@ -46,6 +43,9 @@ void main() {
         .thenAnswer((_) async {});
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 2))
         .thenAnswer((_) async => resp2);
+
+    when(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
+        .thenReturn(null);
 
     controller.saveLabels(
         labels.map((e) => ValueItem(label: e.title, value: e.id)).toList());

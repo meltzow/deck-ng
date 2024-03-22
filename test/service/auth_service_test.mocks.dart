@@ -4,7 +4,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:deck_ng/model/models.dart' as _i3;
-import 'package:deck_ng/service/Istorage_service.dart' as _i2;
+import 'package:deck_ng/service/storage_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -20,11 +20,11 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [IStorageService].
+/// A class which mocks [StorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIStorageService extends _i1.Mock implements _i2.IStorageService {
-  MockIStorageService() {
+class MockStorageService extends _i1.Mock implements _i2.StorageService {
+  MockStorageService() {
     _i1.throwOnMissingStub(this);
   }
 

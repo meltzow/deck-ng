@@ -1,12 +1,11 @@
 import 'package:deck_ng/model/models.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingsController extends GetxController {
-  var storageService = Get.find<IStorageService>();
-  var notificationService = Get.find<INotificationService>();
+  var storageService = Get.find<StorageService>();
+  var notificationService = Get.find<NotificationService>();
 
   RxString nameControllerText = ''.obs;
   var nameController = TextEditingController();

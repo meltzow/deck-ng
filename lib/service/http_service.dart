@@ -1,7 +1,7 @@
 import 'package:deck_ng/service/impl/retry.dart';
 import 'package:dio/dio.dart';
 
-abstract class IHttpService {
+abstract class HttpService {
   Future<Map<String, dynamic>> get(String path);
   Future<List<dynamic>> getListResponse(String path);
 

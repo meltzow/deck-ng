@@ -1,6 +1,5 @@
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -12,9 +11,9 @@ import 'auth_service_test.mocks.dart';
 import 'fake_provider.dart';
 import 'http_matcher.dart';
 
-@GenerateMocks([IStorageService])
+@GenerateMocks([StorageService])
 void main() {
-  late IStorageService credServiceMock;
+  late StorageService credServiceMock;
   late dio.Dio dioClient;
   late DioAdapter dioAdapter;
 
@@ -25,7 +24,7 @@ void main() {
     });
 
     setUp(() {
-      credServiceMock = Get.put<IStorageService>(MockIStorageService());
+      credServiceMock = Get.put<StorageService>(MockStorageService());
       dioClient = Get.put(dio.Dio());
       dioAdapter = DioAdapter(
         dio: dioClient,
@@ -34,7 +33,7 @@ void main() {
     });
 
     test('trivial test of getAccount', () async {
-      final IAuthService authService = Get.put<IAuthService>(AuthServiceImpl());
+      final AuthService authService = Get.put<AuthService>(AuthServiceImpl());
     });
 
     // test('returns login successfully - all request successfully', () async {

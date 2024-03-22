@@ -1,7 +1,7 @@
 import 'package:deck_ng/model/account.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'Iauth_service.g.dart';
+part 'auth_service.g.dart';
 
 @JsonSerializable()
 class AppPassword {
@@ -140,7 +140,7 @@ class Meta {
   Map<String, dynamic> toJson() => _$MetaToJson(this);
 }
 
-abstract class IAuthService {
+abstract class AuthService {
   Future<bool> login(String serverUrl, String username, String password);
 
   logout();

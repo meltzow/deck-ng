@@ -1,6 +1,6 @@
 import 'package:deck_ng/model/models.dart';
 
-abstract class IStorageService {
+abstract class StorageService {
   Account? getAccount();
   bool hasAccount();
 

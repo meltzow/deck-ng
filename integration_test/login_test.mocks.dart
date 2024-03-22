@@ -7,9 +7,9 @@ import 'dart:async' as _i3;
 
 import 'package:deck_ng/model/account.dart' as _i5;
 import 'package:deck_ng/model/models.dart' as _i6;
-import 'package:deck_ng/service/Iauth_service.dart' as _i2;
-import 'package:deck_ng/service/Inotification_service.dart' as _i7;
-import 'package:deck_ng/service/Istorage_service.dart' as _i4;
+import 'package:deck_ng/service/auth_service.dart' as _i2;
+import 'package:deck_ng/service/notification_service.dart' as _i7;
+import 'package:deck_ng/service/storage_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -35,11 +35,11 @@ class _FakeCapabilities_0 extends _i1.SmartFake implements _i2.Capabilities {
         );
 }
 
-/// A class which mocks [IAuthService].
+/// A class which mocks [AuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
-  MockIAuthService() {
+class MockAuthService extends _i1.Mock implements _i2.AuthService {
+  MockAuthService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -87,11 +87,11 @@ class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
       ) as bool);
 }
 
-/// A class which mocks [IStorageService].
+/// A class which mocks [StorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIStorageService extends _i1.Mock implements _i4.IStorageService {
-  MockIStorageService() {
+class MockStorageService extends _i1.Mock implements _i4.StorageService {
+  MockStorageService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -128,12 +128,12 @@ class MockIStorageService extends _i1.Mock implements _i4.IStorageService {
       ));
 }
 
-/// A class which mocks [INotificationService].
+/// A class which mocks [NotificationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockINotificationService extends _i1.Mock
-    implements _i7.INotificationService {
-  MockINotificationService() {
+class MockNotificationService extends _i1.Mock
+    implements _i7.NotificationService {
+  MockNotificationService() {
     _i1.throwOnMissingStub(this);
   }
 

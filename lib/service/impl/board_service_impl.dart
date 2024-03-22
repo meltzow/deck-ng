@@ -1,10 +1,10 @@
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/board_service.dart';
+import 'package:deck_ng/service/http_service.dart';
 import 'package:get/get.dart';
 
-class BoardServiceImpl extends GetxService implements IBoardService {
-  final httpService = Get.find<IHttpService>();
+class BoardServiceImpl extends GetxService implements BoardService {
+  final httpService = Get.find<HttpService>();
 
   @override
   Future<List<Board>> getAllBoards() async {

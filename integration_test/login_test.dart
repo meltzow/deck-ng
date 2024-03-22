@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -15,21 +13,21 @@ import 'package:screenshots/src/capture_screen.dart';
 
 import 'login_test.mocks.dart';
 
-@GenerateMocks([IAuthService, IStorageService, INotificationService])
+@GenerateMocks([AuthService, StorageService, NotificationService])
 void main() {
   IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    late IAuthService authServiceMock;
+    late AuthService authServiceMock;
 
-    Get.replace<IAuthService>(MockIAuthService());
-    authServiceMock = Get.find<IAuthService>();
+    Get.replace<AuthService>(MockAuthService());
+    authServiceMock = Get.find<AuthService>();
 
-    Get.replace<IStorageService>(MockIStorageService());
-    var storageServiceMock = Get.find<IStorageService>();
+    Get.replace<StorageService>(MockStorageService());
+    var storageServiceMock = Get.find<StorageService>();
 
-    Get.replace<INotificationService>(MockINotificationService());
+    Get.replace<NotificationService>(MockNotificationService());
     //var storageServiceMock = Get.find<IStorageService>();
 
     when(storageServiceMock.getAccount()).thenReturn(null);

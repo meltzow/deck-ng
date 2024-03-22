@@ -14,28 +14,28 @@ import 'package:screenshots/src/capture_screen.dart';
 import 'card_details_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<IStorageService>(),
-  MockSpec<IBoardService>(),
-  MockSpec<ICardService>(),
-  MockSpec<INotificationService>(),
+  MockSpec<StorageService>(),
+  MockSpec<BoardService>(),
+  MockSpec<CardService>(),
+  MockSpec<NotificationService>(),
 ])
 void main() {
   late CardDetailsController controller;
-  late IStorageService storageServiceMock;
-  late IBoardService boardServiceMock;
-  late ICardService cardServiceMock;
+  late StorageService storageServiceMock;
+  late BoardService boardServiceMock;
+  late CardService cardServiceMock;
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
     Get.testMode = true;
-    Get.replace<IStorageService>(MockIStorageService());
-    storageServiceMock = Get.find<IStorageService>();
-    Get.replace<IBoardService>(MockIBoardService());
-    boardServiceMock = Get.find<IBoardService>();
-    Get.replace<ICardService>(MockICardService());
-    cardServiceMock = Get.find<ICardService>();
-    Get.replace<INotificationService>(MockINotificationService());
+    Get.replace<StorageService>(MockStorageService());
+    storageServiceMock = Get.find<StorageService>();
+    Get.replace<BoardService>(MockBoardService());
+    boardServiceMock = Get.find<BoardService>();
+    Get.replace<CardService>(MockCardService());
+    cardServiceMock = Get.find<CardService>();
+    Get.replace<NotificationService>(MockNotificationService());
 
     controller = CardDetailsController();
   });

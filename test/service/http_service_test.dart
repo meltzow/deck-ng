@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
+import 'package:deck_ng/service/auth_service.dart';
 import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/retry.dart';
 import 'package:dio/dio.dart' as dio;
@@ -16,7 +16,7 @@ import 'package:mockito/mockito.dart';
 import 'http_matcher.dart';
 import 'http_service_test.mocks.dart';
 
-@GenerateMocks([IAuthService])
+@GenerateMocks([AuthService])
 void main() {
   late dio.Dio dioClient;
   late DioAdapter dioAdapter;
@@ -90,9 +90,9 @@ void main() {
           options: dio.Options(headers: {RetryOptions.retryHeader: 3}));
       expect(resp3.statusCode, 200);
 
-      final authServiceMock = Get.put<IAuthService>(MockIAuthService());
+      final authServiceMock = Get.put<AuthService>(MockAuthService());
 
-      final HttpService service = Get.put(HttpService());
+      final HttpServiceImpl service = Get.put(HttpServiceImpl());
       dio.Response response;
       try {
         var ops =
@@ -108,8 +108,8 @@ void main() {
     });
 
     test('test simple GET Request by getting all boards', () async {
-      final authServiceMock = Get.put<IAuthService>(MockIAuthService());
-      final HttpService service = Get.put(HttpService());
+      final authServiceMock = Get.put<AuthService>(MockAuthService());
+      final HttpServiceImpl service = Get.put(HttpServiceImpl());
 
       dioAdapter.onGet(
           'http://url.foo/index.php/apps/deck/api/v1/boards',
@@ -130,9 +130,9 @@ void main() {
 
     test('test retrying after waiting until third successfully request',
         () async {
-      Get.put<IAuthService>(MockIAuthService());
+      Get.put<AuthService>(MockAuthService());
 
-      final HttpService service = Get.put(HttpService());
+      final HttpServiceImpl service = Get.put(HttpServiceImpl());
       dioAdapter.onPost('http://url.foo/index.php/apps/deck/api/v1/boards',
           (server) {
         return server.reply(
@@ -166,9 +166,9 @@ void main() {
     test(
         'test retrying but without successfully request, max attempts are reached',
         () async {
-      Get.put<IAuthService>(MockIAuthService());
+      Get.put<AuthService>(MockAuthService());
 
-      final HttpService service = Get.put(HttpService());
+      final HttpServiceImpl service = Get.put(HttpServiceImpl());
       dioAdapter.onPost('http://url.foo/index.php/apps/deck/api/v1/boards',
           (server) {
         return server.reply(

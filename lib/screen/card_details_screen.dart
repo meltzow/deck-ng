@@ -287,8 +287,8 @@ class CardDetailsScreen extends StatelessWidget {
                                       onOptionRemoved: (index, selectedLabel) =>
                                           controller.removeLabel(selectedLabel),
                                       options: controller.allLabelValueItems,
-                                      selectedOptions:
-                                          controller.selectedLabelValueItems,
+                                      // selectedOptions:
+                                      //     controller.selectedLabelValueItems,
                                     ),
                                     leading: Icon(
                                       Icons.label,

@@ -1,6 +1,5 @@
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Istack_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +21,8 @@ class DashboardController extends GetxController {
   final Rx<List<Board>> _boardsData = Rx<List<Board>>([]);
   final Rx<List<DashboardData>> _dashboardData = Rx<List<DashboardData>>([]);
 
-  final IBoardService _boardService = Get.find<IBoardService>();
-  final IStackService _stackService = Get.find<IStackService>();
+  final BoardService _boardService = Get.find<BoardService>();
+  final StackService _stackService = Get.find<StackService>();
 
   List<Board> get boardData => _boardsData.value;
 

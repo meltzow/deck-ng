@@ -12,8 +12,8 @@ import 'package:flutter/material.dart' as _i3;
 import 'package:get/get.dart' as _i2;
 import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i6;
-import 'package:multi_dropdown/models/value_item.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:multi_dropdown/models/value_item.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -59,8 +59,8 @@ class _FakeTextEditingController_2 extends _i1.SmartFake
         );
 }
 
-class _FakeCard_3 extends _i1.SmartFake implements _i4.Card {
-  _FakeCard_3(
+class _FakeRxList_3<E> extends _i1.SmartFake implements _i2.RxList<E> {
+  _FakeRxList_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -69,9 +69,19 @@ class _FakeCard_3 extends _i1.SmartFake implements _i4.Card {
         );
 }
 
-class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
+class _FakeCard_4 extends _i1.SmartFake implements _i4.Card {
+  _FakeCard_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeInternalFinalCallback_5<T> extends _i1.SmartFake
     implements _i2.InternalFinalCallback<T> {
-  _FakeInternalFinalCallback_4(
+  _FakeInternalFinalCallback_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -193,9 +203,18 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
+  _i2.RxList<_i6.ValueItem<int>> get allLabelValueItems => (super.noSuchMethod(
+        Invocation.getter(#allLabelValueItems),
+        returnValue: _FakeRxList_3<_i6.ValueItem<int>>(
+          this,
+          Invocation.getter(#allLabelValueItems),
+        ),
+      ) as _i2.RxList<_i6.ValueItem<int>>);
+
+  @override
   _i4.Card get cardData1 => (super.noSuchMethod(
         Invocation.getter(#cardData1),
-        returnValue: _FakeCard_3(
+        returnValue: _FakeCard_4(
           this,
           Invocation.getter(#cardData1),
         ),
@@ -204,7 +223,7 @@ class MockCardDetailsController extends _i1.Mock
   @override
   String get dueDatePreview => (super.noSuchMethod(
         Invocation.getter(#dueDatePreview),
-        returnValue: _i6.dummyValue<String>(
+        returnValue: _i7.dummyValue<String>(
           this,
           Invocation.getter(#dueDatePreview),
         ),
@@ -220,29 +239,23 @@ class MockCardDetailsController extends _i1.Mock
       ) as _i3.TextEditingController);
 
   @override
-  List<_i7.ValueItem<int>> get allLabelValueItems => (super.noSuchMethod(
-        Invocation.getter(#allLabelValueItems),
-        returnValue: <_i7.ValueItem<int>>[],
-      ) as List<_i7.ValueItem<int>>);
-
-  @override
-  List<_i7.ValueItem<int>> get selectedLabelValueItems => (super.noSuchMethod(
+  List<_i6.ValueItem<int>> get selectedLabelValueItems => (super.noSuchMethod(
         Invocation.getter(#selectedLabelValueItems),
-        returnValue: <_i7.ValueItem<int>>[],
-      ) as List<_i7.ValueItem<int>>);
+        returnValue: <_i6.ValueItem<int>>[],
+      ) as List<_i6.ValueItem<int>>);
 
   @override
-  List<_i7.ValueItem<String>> get allUsersValueItems => (super.noSuchMethod(
+  List<_i6.ValueItem<String>> get allUsersValueItems => (super.noSuchMethod(
         Invocation.getter(#allUsersValueItems),
-        returnValue: <_i7.ValueItem<String>>[],
-      ) as List<_i7.ValueItem<String>>);
+        returnValue: <_i6.ValueItem<String>>[],
+      ) as List<_i6.ValueItem<String>>);
 
   @override
-  List<_i7.ValueItem<String>> get selectedAssigneesValueItems =>
+  List<_i6.ValueItem<String>> get selectedAssigneesValueItems =>
       (super.noSuchMethod(
         Invocation.getter(#selectedAssigneesValueItems),
-        returnValue: <_i7.ValueItem<String>>[],
-      ) as List<_i7.ValueItem<String>>);
+        returnValue: <_i6.ValueItem<String>>[],
+      ) as List<_i6.ValueItem<String>>);
 
   @override
   set boardId(_i2.RxInt? boardId) => super.noSuchMethod(
@@ -283,7 +296,7 @@ class MockCardDetailsController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
         Invocation.getter(#onStart),
-        returnValue: _FakeInternalFinalCallback_4<void>(
+        returnValue: _FakeInternalFinalCallback_5<void>(
           this,
           Invocation.getter(#onStart),
         ),
@@ -292,7 +305,7 @@ class MockCardDetailsController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
         Invocation.getter(#onDelete),
-        returnValue: _FakeInternalFinalCallback_4<void>(
+        returnValue: _FakeInternalFinalCallback_5<void>(
           this,
           Invocation.getter(#onDelete),
         ),
@@ -369,21 +382,21 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  dynamic saveLabels(List<_i7.ValueItem<int>>? selectedLabels) =>
+  dynamic saveLabels(List<_i6.ValueItem<int>>? selectedLabels) =>
       super.noSuchMethod(Invocation.method(
         #saveLabels,
         [selectedLabels],
       ));
 
   @override
-  dynamic removeLabel(_i7.ValueItem<int>? selectedLabel) =>
+  dynamic removeLabel(_i6.ValueItem<int>? selectedLabel) =>
       super.noSuchMethod(Invocation.method(
         #removeLabel,
         [selectedLabel],
       ));
 
   @override
-  void saveUsers(List<_i7.ValueItem<String>>? selectedUsers) =>
+  void saveUsers(List<_i6.ValueItem<String>>? selectedUsers) =>
       super.noSuchMethod(
         Invocation.method(
           #saveUsers,
@@ -393,7 +406,7 @@ class MockCardDetailsController extends _i1.Mock
       );
 
   @override
-  dynamic removeAssignee(_i7.ValueItem<String>? selectedAssignee) =>
+  dynamic removeAssignee(_i6.ValueItem<String>? selectedAssignee) =>
       super.noSuchMethod(Invocation.method(
         #removeAssignee,
         [selectedAssignee],

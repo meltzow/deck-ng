@@ -26,36 +26,36 @@ import 'package:screenshots/src/capture_screen.dart';
 import 'screenshots_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<IStorageService>(),
-  MockSpec<IBoardService>(),
-  MockSpec<IStackService>(),
-  MockSpec<ICardService>(),
-  MockSpec<INotificationService>(),
-  MockSpec<IAuthService>(),
+  MockSpec<StorageService>(),
+  MockSpec<BoardService>(),
+  MockSpec<StackService>(),
+  MockSpec<CardService>(),
+  MockSpec<NotificationService>(),
+  MockSpec<AuthService>(),
 ])
 void main() {
-  late IStorageService storageServiceMock;
-  late IBoardService boardServiceMock;
-  late IStackService stackServiceMock;
-  late ICardService cardServiceMock;
-  late IAuthService authServiceMock;
+  late StorageService storageServiceMock;
+  late BoardService boardServiceMock;
+  late StackService stackServiceMock;
+  late CardService cardServiceMock;
+  late AuthService authServiceMock;
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
     Get.testMode = true;
-    Get.replace<IStorageService>(MockIStorageService());
-    storageServiceMock = Get.find<IStorageService>();
-    Get.replace<IBoardService>(MockIBoardService());
-    boardServiceMock = Get.find<IBoardService>();
-    Get.replace<ICardService>(MockICardService());
-    cardServiceMock = Get.find<ICardService>();
-    Get.replace<IStackService>(MockIStackService());
-    stackServiceMock = Get.find<IStackService>();
-    Get.replace<IAuthService>(MockIAuthService());
-    authServiceMock = Get.find<IAuthService>();
+    Get.replace<StorageService>(MockStorageService());
+    storageServiceMock = Get.find<StorageService>();
+    Get.replace<BoardService>(MockBoardService());
+    boardServiceMock = Get.find<BoardService>();
+    Get.replace<CardService>(MockCardService());
+    cardServiceMock = Get.find<CardService>();
+    Get.replace<StackService>(MockStackService());
+    stackServiceMock = Get.find<StackService>();
+    Get.replace<AuthService>(MockAuthService());
+    authServiceMock = Get.find<AuthService>();
 
-    Get.replace<INotificationService>(MockINotificationService());
+    Get.replace<NotificationService>(MockNotificationService());
   });
 
   tearDown(() {

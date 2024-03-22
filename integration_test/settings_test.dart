@@ -14,20 +14,20 @@ import 'package:screenshots/src/capture_screen.dart';
 import 'settings_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<IStorageService>(),
-  MockSpec<INotificationService>(),
+  MockSpec<StorageService>(),
+  MockSpec<NotificationService>(),
 ])
 void main() {
   late SettingsController controller;
-  late IStorageService storageServiceMock;
+  late StorageService storageServiceMock;
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
     Get.testMode = true;
-    Get.replace<IStorageService>(MockIStorageService());
-    storageServiceMock = Get.find<IStorageService>();
-    Get.replace<INotificationService>(MockINotificationService());
+    Get.replace<StorageService>(MockStorageService());
+    storageServiceMock = Get.find<StorageService>();
+    Get.replace<NotificationService>(MockNotificationService());
 
     controller = SettingsController();
   });

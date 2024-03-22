@@ -14,27 +14,27 @@ import 'package:screenshots/src/capture_screen.dart';
 import 'dashboard_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<IStorageService>(),
-  MockSpec<IBoardService>(),
-  MockSpec<IStackService>(),
-  MockSpec<INotificationService>(),
+  MockSpec<StorageService>(),
+  MockSpec<BoardService>(),
+  MockSpec<StackService>(),
+  MockSpec<NotificationService>(),
 ])
 void main() {
   late DashboardController controller;
-  late IStorageService storageServiceMock;
-  late IStackService stackServiceMock;
-  late IBoardService boardServiceMock;
+  late StorageService storageServiceMock;
+  late StackService stackServiceMock;
+  late BoardService boardServiceMock;
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
     Get.testMode = true;
-    Get.replace<IStorageService>(MockIStorageService());
-    storageServiceMock = Get.find<IStorageService>();
-    Get.replace<IBoardService>(MockIBoardService());
-    boardServiceMock = Get.find<IBoardService>();
-    Get.replace<IStackService>(MockIStackService());
-    stackServiceMock = Get.find<IStackService>();
+    Get.replace<StorageService>(MockStorageService());
+    storageServiceMock = Get.find<StorageService>();
+    Get.replace<BoardService>(MockBoardService());
+    boardServiceMock = Get.find<BoardService>();
+    Get.replace<StackService>(MockStackService());
+    stackServiceMock = Get.find<StackService>();
     controller = DashboardController();
   });
 

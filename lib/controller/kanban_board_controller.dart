@@ -1,10 +1,7 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/model/models.dart' as NC;
 import 'package:deck_ng/screen/kanban_board_screen.dart';
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Icard_service.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
-import 'package:deck_ng/service/Istack_service.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,11 +24,11 @@ class KanbanBoardController extends GetxController {
     return m;
   }
 
-  final IBoardService _boardService = Get.find<IBoardService>();
-  final IStackService _stackService = Get.find<IStackService>();
-  final ICardService _cardService = Get.find<ICardService>();
-  final INotificationService _notificationService =
-      Get.find<INotificationService>();
+  final BoardService _boardService = Get.find<BoardService>();
+  final StackService _stackService = Get.find<StackService>();
+  final CardService _cardService = Get.find<CardService>();
+  final NotificationService _notificationService =
+      Get.find<NotificationService>();
 
   NC.Board? get boardData => _boardsData.value;
 

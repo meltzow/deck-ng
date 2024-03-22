@@ -6,6 +6,7 @@ import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:deck_ng/controller/settings_controller.dart';
 import 'package:deck_ng/dart_define.gen.dart';
+import 'package:deck_ng/guard.dart';
 import 'package:deck_ng/l10n/translation.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/dashboard_screen.dart';
@@ -13,14 +14,6 @@ import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/screen/oss_licenses_screen.dart';
 import 'package:deck_ng/screen/settings_screen.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Iboard_service.dart';
-import 'package:deck_ng/service/Icard_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
-import 'package:deck_ng/service/Inotification_service.dart';
-import 'package:deck_ng/service/Istack_service.dart';
-import 'package:deck_ng/service/Istorage_service.dart';
-import 'package:deck_ng/service/guard.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
 import 'package:deck_ng/service/impl/board_service_impl.dart';
 import 'package:deck_ng/service/impl/card_service_impl.dart';
@@ -28,6 +21,7 @@ import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/notification_service_impl.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -81,24 +75,25 @@ class MyApp extends StatelessWidget {
                       Guard(), // Add the middleware here
                     ],
                     binding: BindingsBuilder(() {
-                      Get.lazyPut<IHttpService>(() => HttpService());
-                      Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                      Get.lazyPut<IStackService>(() => StackRepositoryImpl());
+                      Get.lazyPut<HttpService>(() => HttpServiceImpl());
+                      Get.lazyPut<BoardService>(() => BoardServiceImpl());
+                      Get.lazyPut<StackService>(() => StackRepositoryImpl());
                       Get.lazyPut<DashboardController>(
                           () => DashboardController());
                     })),
                 GetPage(
-                  parameters: const {'boardId': '22'},
                   name: AppRoutes.kanbanBoard,
                   page: () => KanbanBoardScreen(),
                   middlewares: [
                     Guard(), // Add the middleware here
                   ],
                   binding: BindingsBuilder(() {
-                    Get.lazyPut<IHttpService>(() => HttpService());
-                    Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                    Get.lazyPut<IStackService>(() => StackRepositoryImpl());
-                    Get.lazyPut<ICardService>(() => CardServiceImpl());
+                    Get.lazyPut<HttpService>(() => HttpServiceImpl());
+                    Get.lazyPut<BoardService>(() => BoardServiceImpl());
+                    Get.lazyPut<StackService>(() => StackRepositoryImpl());
+                    Get.lazyPut<CardService>(() => CardServiceImpl());
+                    Get.lazyPut<NotificationService>(
+                        () => NotificationServiceImpl());
                     Get.lazyPut<KanbanBoardController>(
                         () => KanbanBoardController());
                   }),
@@ -110,9 +105,11 @@ class MyApp extends StatelessWidget {
                     Guard(), // Add the middleware here
                   ],
                   binding: BindingsBuilder(() {
-                    Get.lazyPut<IHttpService>(() => HttpService());
-                    Get.lazyPut<IBoardService>(() => BoardServiceImpl());
-                    Get.lazyPut<ICardService>(() => CardServiceImpl());
+                    Get.lazyPut<HttpService>(() => HttpServiceImpl());
+                    Get.lazyPut<BoardService>(() => BoardServiceImpl());
+                    Get.lazyPut<CardService>(() => CardServiceImpl());
+                    Get.lazyPut<NotificationService>(
+                        () => NotificationServiceImpl());
                     Get.lazyPut<CardDetailsController>(
                         () => CardDetailsController());
                   }),
@@ -121,8 +118,8 @@ class MyApp extends StatelessWidget {
                     name: AppRoutes.login,
                     page: () => LoginScreen(),
                     binding: BindingsBuilder(() {
-                      Get.lazyPut<INotificationService>(
-                          () => NotificationService());
+                      Get.lazyPut<NotificationService>(
+                          () => NotificationServiceImpl());
                       Get.lazyPut<LoginController>(() => LoginController());
                     })),
                 GetPage(
@@ -133,8 +130,8 @@ class MyApp extends StatelessWidget {
                     name: AppRoutes.settings,
                     page: () => SettingScreen(),
                     binding: BindingsBuilder(() {
-                      Get.lazyPut<INotificationService>(
-                          () => NotificationService());
+                      Get.lazyPut<NotificationService>(
+                          () => NotificationServiceImpl());
                       Get.lazyPut<SettingsController>(
                           () => SettingsController());
                     })),
@@ -147,7 +144,7 @@ class InitialBinding implements Bindings {
   @override
   void dependencies() {
     Get.put<Dio>(Dio());
-    Get.put<IAuthService>(AuthServiceImpl());
-    Get.put<IStorageService>(StorageServiceImpl());
+    Get.put<AuthService>(AuthServiceImpl());
+    Get.put<StorageService>(StorageServiceImpl());
   }
 }

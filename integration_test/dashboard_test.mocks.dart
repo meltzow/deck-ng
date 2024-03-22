@@ -6,10 +6,10 @@
 import 'dart:async' as _i5;
 
 import 'package:deck_ng/model/models.dart' as _i2;
-import 'package:deck_ng/service/Iboard_service.dart' as _i4;
-import 'package:deck_ng/service/Inotification_service.dart' as _i7;
-import 'package:deck_ng/service/Istack_service.dart' as _i6;
-import 'package:deck_ng/service/Istorage_service.dart' as _i3;
+import 'package:deck_ng/service/board_service.dart' as _i4;
+import 'package:deck_ng/service/notification_service.dart' as _i7;
+import 'package:deck_ng/service/stack_service.dart' as _i6;
+import 'package:deck_ng/service/storage_service.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -35,10 +35,10 @@ class _FakeBoard_0 extends _i1.SmartFake implements _i2.Board {
         );
 }
 
-/// A class which mocks [IStorageService].
+/// A class which mocks [StorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIStorageService extends _i1.Mock implements _i3.IStorageService {
+class MockStorageService extends _i1.Mock implements _i3.StorageService {
   @override
   bool hasAccount() => (super.noSuchMethod(
         Invocation.method(
@@ -78,10 +78,10 @@ class MockIStorageService extends _i1.Mock implements _i3.IStorageService {
       );
 }
 
-/// A class which mocks [IBoardService].
+/// A class which mocks [BoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIBoardService extends _i1.Mock implements _i4.IBoardService {
+class MockBoardService extends _i1.Mock implements _i4.BoardService {
   @override
   _i5.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
@@ -116,10 +116,10 @@ class MockIBoardService extends _i1.Mock implements _i4.IBoardService {
       ) as _i5.Future<_i2.Board>);
 }
 
-/// A class which mocks [IStackService].
+/// A class which mocks [StackService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIStackService extends _i1.Mock implements _i6.IStackService {
+class MockStackService extends _i1.Mock implements _i6.StackService {
   @override
   _i5.Future<List<_i2.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
         Invocation.method(
@@ -131,11 +131,11 @@ class MockIStackService extends _i1.Mock implements _i6.IStackService {
       ) as _i5.Future<List<_i2.Stack>?>);
 }
 
-/// A class which mocks [INotificationService].
+/// A class which mocks [NotificationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockINotificationService extends _i1.Mock
-    implements _i7.INotificationService {
+class MockNotificationService extends _i1.Mock
+    implements _i7.NotificationService {
   @override
   dynamic successMsg(
     String? title,

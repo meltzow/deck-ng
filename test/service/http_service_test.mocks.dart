@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:deck_ng/service/Iauth_service.dart' as _i2;
+import 'package:deck_ng/service/auth_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -31,11 +31,11 @@ class _FakeCapabilities_0 extends _i1.SmartFake implements _i2.Capabilities {
         );
 }
 
-/// A class which mocks [IAuthService].
+/// A class which mocks [AuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIAuthService extends _i1.Mock implements _i2.IAuthService {
-  MockIAuthService() {
+class MockAuthService extends _i1.Mock implements _i2.AuthService {
+  MockAuthService() {
     _i1.throwOnMissingStub(this);
   }
 

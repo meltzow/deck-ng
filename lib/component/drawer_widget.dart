@@ -14,9 +14,6 @@ class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // Add a ListView to the drawer. This ensures the user can scroll
-      // through the options in the drawer if there isn't enough vertical
-      // space to fit everything.
       child: ListView(
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
@@ -30,23 +27,23 @@ class DrawerWidget extends StatelessWidget {
             ),
             onTap: () => Get.toNamed(AppRoutes.home),
           ),
-          ListTile(
-            leading: const Icon(Icons.note_add),
-            title: const Text('Board 1'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Get.toNamed('/boards');
-            },
-          ),
-          ListTile(
-            title: const Text('settings'),
-            leading: const Icon(Icons.settings_outlined),
-            onTap: () {
-              Get.toNamed(AppRoutes.settings);
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.note_add),
+          //   title: const Text('Board 1'),
+          //   onTap: () {
+          //     // Update the state of the app
+          //     // ...
+          //     // Then close the drawer
+          //     Get.toNamed('/boards');
+          //   },
+          // ),
+          // ListTile(
+          //   title: const Text('settings'),
+          //   leading: const Icon(Icons.settings_outlined),
+          //   onTap: () {
+          //     Get.toNamed(AppRoutes.settings);
+          //   },
+          // ),
           Obx(
             () => ListTile(
               title: controller.isAuth.value
