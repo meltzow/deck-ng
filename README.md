@@ -38,6 +38,7 @@ samples, guidance on mobile development, and a full API reference.
 * https://flutterviz.io/
 
 ### automatic screenshots
+* dart pub global activate flutter_scripts
 * dart pub global activate -s git https://github.com/meltzow/screenshots.git
 * export PATH="$PATH":"$HOME/.pub-cache/bin"
-* screenshots --config=<screenshots.yaml>
+* flutter_scripts run
