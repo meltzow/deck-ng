@@ -38,12 +38,15 @@ platform :android do
       ensure_git_branch(branch: 'main')
       #sh "cd .. && ionic cap sync android --prod"
 
+      sh "echo Your password is #{password}"
       if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
         previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
         previous_build_number_prod = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "production")[0]
-      else
+      elsif ENV['GOOGLE_PLAY_JSON_KEY_FILE']
         previous_build_number_beta = google_play_track_version_codes(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "beta")[0]
         previous_build_number_prod = google_play_track_version_codes(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], track: "production")[0]
+      else
+        sh "echo you must set GOOGLE_PLAY_JSON_KEY_DATA or GOOGLE_PLAY_JSON_KEY_FILE in your environment"
       end
 
       previous_build_number = [previous_build_number_beta, previous_build_number_prod].max

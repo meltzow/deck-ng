@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.0
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: '>=3.3.3 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -138,6 +138,13 @@ dart_define:
     - name: WIREDASH_SECRET
       description: we need the secret from your wiredash.io login
       required: true
+  flavors:
+    - name: production
+      description: The production flavor
+    - name: staging
+      description: The staging flavor
+    - name: development
+      description: The development flavor
 
 
 scripts:

@@ -21,6 +21,9 @@ devices:
       orientation: LandscapeRight
       frame: false
 
+# Frame screenshots
+frame: false
+
 # Run mode can be one of 'normal' (default), 'recording', 'comparison' or 'archive'.
 
 # If run mode is 'recording' or 'comparison', a directory is required for recorded images.

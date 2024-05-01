@@ -14,11 +14,6 @@ locales:
 
 # A list of devices to run tests on
 devices:
-#  ios:
-#    iPhone XS Max:
-#      frame: false
-#    iPad Pro (12.9-inch) (2nd generation):
-#      orientation: LandscapeRight
   android:
     Nexus 9:
       orientation:
