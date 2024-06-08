@@ -1,241 +1,119 @@
-import 'package:deck_ng/component/drawer_widget.dart';
-import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  final LoginController controller = Get.find<LoginController>();
-
-  LoginScreen({super.key});
+  final LoginController _controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Scaffold(
-          drawer: DrawerWidget(),
-          appBar: AppBar(),
-          body: Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const Image(
-                      image: AssetImage("assets/images/icon.png"),
-                      height: 90,
-                      width: 90,
-                      fit: BoxFit.cover,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 8, 0, 15),
-                      child: Text(
-                        "deck NG",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 20,
-                          color: Color(0xff3a57e8),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'sign in'.tr,
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 24,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                      child: TextFormField(
-                        key: const Key('serverUrl'),
-                        validator: (value) {
-                          return 'ffffl';
-                        },
-                        focusNode: controller.focusNode,
-                        controller: controller.urlController,
-                        obscureText: false,
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          hintText: "enter nextcloud server url".tr,
-                          labelText: "Nextcloud server url".tr,
-                          hintStyle: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14,
-                          ),
-                          isDense: false,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 12),
-                          prefixIcon: const Icon(Icons.insert_link, size: 24),
-                        ),
-                      ),
-                    ),
-                    Obx(
-                      () => controller.isLoading.value
-                          ? const LoadingIndicator()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: ListTile(
-                                    title: const Text("Nextcloud server"),
-                                    subtitle:
-                                        Text(controller.serverVersion.value),
-                                    trailing: controller.serverIsValid
-                                        ? const Icon(Icons.verified_outlined)
-                                        : const Icon(Icons.error_outline),
-                                  ))
-                                ],
-                              )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 0),
-                      child: TextFormField(
-                        key: const Key('username'),
-                        controller: controller.usernameController,
-                        obscureText: false,
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 16,
-                        ),
-                        decoration: InputDecoration(
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          labelText: "username".tr,
-                          labelStyle: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 16,
-                          ),
-                          isDense: false,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 12),
-                          prefixIcon: const Icon(Icons.person, size: 24),
-                        ),
-                      ),
-                    ),
-                    Obx(() => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 0),
-                          child: TextFormField(
-                            key: const Key('password'),
-                            controller: controller.passwordController,
-                            obscureText: controller.isObscure.value,
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16,
-                            ),
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(
+                'Welcome Back!',
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20.0),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Obx(() => TextField(
+                            controller: TextEditingController(
+                                text: _controller.url.value),
+                            onChanged: (value) {
+                              _controller.url.value = value;
+                              _controller.validateUrl(value);
+                            },
                             decoration: InputDecoration(
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4.0),
+                              labelText: 'URL or IP Address',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                              labelText: "password".tr,
-                              labelStyle: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16,
-                              ),
-                              isDense: false,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              prefixIcon: const Icon(Icons.admin_panel_settings,
-                                  size: 24),
-                              suffixIcon: IconButton(
-                                  icon: Icon(controller.isObscure.value
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: () {
-                                    controller.isObscure.value =
-                                        !controller.isObscure.value;
-                                  }),
+                              prefixIcon: Icon(Icons.link),
                             ),
-                          ),
-                        )),
-                    const Text(
-                        'I will not saved this password, because I create my own AppPassword'),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: MaterialButton(
-                              key: const Key('login'),
-                              onPressed: () {
-                                controller.login();
-                              },
-                              color: Theme.of(context).colorScheme.primary,
-                              elevation: 0,
+                          )),
+                      Obx(() => Text(
+                            _controller.isUrlValid.value
+                                ? _controller.serverInfo.value
+                                : 'Invalid URL or IP Address',
+                            style: TextStyle(
+                              color: _controller.isUrlValid.value
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          )),
+                      SizedBox(height: 10.0),
+                      Obx(() => TextField(
+                            controller: TextEditingController(
+                                text: _controller.username.value),
+                            onChanged: (value) =>
+                                _controller.username.value = value,
+                            decoration: InputDecoration(
+                              labelText: 'Username',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              prefixIcon: Icon(Icons.person),
+                            ),
+                          )),
+                      SizedBox(height: 10.0),
+                      Obx(() => TextField(
+                            controller: TextEditingController(
+                                text: _controller.password.value),
+                            onChanged: (value) =>
+                                _controller.password.value = value,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              prefixIcon: Icon(Icons.lock),
+                            ),
+                          )),
+                      SizedBox(height: 20.0),
+                      Obx(() => ElevatedButton(
+                            onPressed: _controller.isLoading.value
+                                ? null
+                                : _controller.login,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Colors.blueAccent, // Updated parameter
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
-                              padding: const EdgeInsets.all(16),
-                              height: 40,
-                              minWidth: 140,
-                              child: Text(
-                                "Login".tr,
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium,
-                              ),
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                            child: _controller.isLoading.value
+                                ? CircularProgressIndicator(color: Colors.white)
+                                : Text('Login'),
+                          )),
+                    ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

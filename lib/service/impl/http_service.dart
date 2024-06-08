@@ -111,7 +111,7 @@ class CustomInterceptor extends Interceptor {
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
     if (kDebugMode) {
-      print("onError: ${err.response?.statusCode}");
+      print("onError: ${err.message}");
     }
     getX.Get.toNamed(AppRoutes.login);
     return handler.next(err);

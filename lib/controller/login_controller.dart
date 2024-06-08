@@ -8,47 +8,26 @@ class LoginController extends GetxController {
   var authService = Get.find<AuthService>();
   var notificationService = Get.find<NotificationService>();
 
-  final RxBool isLoading = RxBool(false);
-  RxString usernameControllerText = ''.obs;
-  var usernameController = TextEditingController();
+  var isLoading = false.obs;
+  var username = ''.obs;
+  var password = ''.obs;
+  var url = ''.obs;
+  var isUrlValid = false.obs;
+  var serverInfo = ''.obs;
 
-  RxString passwordControllerText = ''.obs;
-  var passwordController = TextEditingController();
   RxBool isObscure = true.obs;
 
-  RxString urlControllerText = ''.obs;
-  var urlController = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  final RxString serverVersion = 'not found'.obs;
 
   Rxn<Version> nextcloudVersion = Rxn();
 
-  bool get serverIsValid {
-    //TODO check not by String. capability ENtity must be used
-    return serverVersion.value != 'not found';
-  }
-
-  @override
-  void onInit() {
-    urlController.addListener(() {
-      urlControllerText.value = urlController.text;
-    });
-
-    usernameController.addListener(() {
-      usernameControllerText.value = usernameController.text;
-    });
-
-    passwordController.addListener(() {
-      passwordControllerText.value = passwordController.text;
-    });
-
-    focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
-        checkCapabilties();
-      }
-    });
-
-    super.onInit();
+  void validateUrl(String value) {
+    // Regex pattern to match HTTP/HTTPS URLs and IP addresses
+    const urlPattern =
+        r'^(https?:\/\/)?(([\da-z\.-]+)\.([a-z\.]{2,6})|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))(:\d+)?([\/\w \.-]*)*\/?$';
+    final result = RegExp(urlPattern).hasMatch(value);
+    checkCapabilties();
+    isUrlValid.value = result;
   }
 
   @override
@@ -60,25 +39,23 @@ class LoginController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
+    username.value = 'dddd';
     await readAccountData();
   }
 
   readAccountData() async {
     var account = credService.getAccount();
 
-    urlControllerText.value = account != null ? account.url : '';
-    urlController.text = urlControllerText.value;
-    usernameControllerText.value = account != null ? account.username : '';
-    usernameController.text = usernameControllerText.value;
-    passwordControllerText.value = account != null ? account.password : '';
-    passwordController.text = passwordControllerText.value;
+    url.value = account != null ? account.url : '';
+    username.value = account != null ? account.username : '';
+    password.value = account != null ? account.password : '';
   }
 
   login() async {
     var successful = false;
     try {
-      successful = await authService.login(urlControllerText.value,
-          usernameControllerText.value, passwordControllerText.value);
+      successful =
+          await authService.login(url.value, username.value, password.value);
       if (successful) {
         Get.toNamed('/boards');
         notificationService.successMsg("Login", "Login Successful");
@@ -95,12 +72,11 @@ class LoginController extends GetxController {
   void checkCapabilties() async {
     isLoading.value = true;
     try {
-      Capabilities resp =
-          await authService.checkServer(urlControllerText.value);
-      serverVersion.value = resp.ocs.data.version.string;
+      Capabilities resp = await authService.checkServer(url.value);
+      serverInfo.value = resp.ocs.data.version.string;
       // _deckVersion.value = resp.ocs.data.version.string;
     } on DioException {
-      serverVersion.value = 'not found';
+      serverInfo.value = 'not found';
       // _deckVersion.value = 'not found';
     }
     isLoading.value = false;

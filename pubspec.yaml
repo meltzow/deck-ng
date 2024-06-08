@@ -46,6 +46,7 @@ dependencies:
   flutter_gen: any
   appflowy_board: ^0.1.1
   intl: any
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:

@@ -85,7 +85,7 @@ class KanbanBoardScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                 )),
                             height: 50,
-                            margin: config.groupPadding,
+                            margin: config.groupMargin,
                           );
                         },
                         cardBuilder: (context, group, groupItem) {
