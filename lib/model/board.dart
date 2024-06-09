@@ -68,5 +68,5 @@ class Board {
     return labels.firstWhereOrNull((element) => element.id == id);
   }
 
-  Color get color1 => Color(int.parse('0xFF$color'));
+  Color get boardColor => Color(int.parse('0xFF$color'));
 }

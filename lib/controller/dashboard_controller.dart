@@ -17,34 +17,46 @@ class DashboardData {
 }
 
 class DashboardController extends GetxController {
+  var boardCount = 0.obs;
+  var stackCount = 0.obs;
+  var taskCount = 0.obs;
+
   final RxBool isLoading = RxBool(true);
-  final Rx<List<Board>> _boardsData = Rx<List<Board>>([]);
+  var boards = <Board>[].obs;
   final Rx<List<DashboardData>> _dashboardData = Rx<List<DashboardData>>([]);
 
   final BoardService _boardService = Get.find<BoardService>();
   final StackService _stackService = Get.find<StackService>();
 
-  List<Board> get boardData => _boardsData.value;
-
   List<DashboardData> get dashboardData => _dashboardData.value;
 
   @override
   void onReady() async {
-    refreshData();
+    fetchData();
     return super.onReady();
   }
 
-  Future<void> refreshData() async {
+  Future<void> fetchData() async {
     isLoading.value = true;
-    _boardsData.value = (await _boardService.getAllBoards()).obs;
+    boards.value = (await _boardService.getAllBoards()).obs;
     _dashboardData.value = (await _computeDashboard()).obs;
+
+    boardCount.value = boards.length;
+    stackCount.value =
+        boards.fold(0, (sum, board) => sum + board.stacks.length);
+    taskCount.value = boards.fold(
+        0,
+        (sum, board) =>
+            sum +
+            board.stacks.fold(0, (sum, stack) => sum + stack.cards.length));
+
     isLoading.value = false;
   }
 
   Future<List<DashboardData>> _computeDashboard() async {
     var stackCount = 0;
     var taskCount = 0;
-    for (var board in _boardsData.value) {
+    for (var board in boards.value) {
       var stacks = await _stackService.getAll(board.id);
       board.stacks = stacks!;
       for (var stack in stacks) {
@@ -58,7 +70,7 @@ class DashboardController extends GetxController {
     return [
       DashboardData(
           valueName: '# Boards',
-          count: _boardsData.value.length,
+          count: boards.value.length,
           icon: Icons.view_timeline_outlined),
       DashboardData(
           valueName: '# stack',

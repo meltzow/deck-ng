@@ -15,7 +15,7 @@ class LoginController extends GetxController {
   var isUrlValid = false.obs;
   var serverInfo = ''.obs;
 
-  RxBool isObscure = true.obs;
+  var isPasswordVisible = false.obs;
 
   final FocusNode focusNode = FocusNode();
 
@@ -28,6 +28,10 @@ class LoginController extends GetxController {
     final result = RegExp(urlPattern).hasMatch(value);
     checkCapabilties();
     isUrlValid.value = result;
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
   }
 
   @override

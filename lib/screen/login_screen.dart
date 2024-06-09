@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text(
+              const Text(
                 'Welcome Back!',
                 style: TextStyle(
                   fontSize: 32.0,
@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                                   : Colors.red,
                             ),
                           )),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       Obx(() => TextField(
                             controller: TextEditingController(
                                 text: _controller.username.value),
@@ -74,37 +74,46 @@ class LoginScreen extends StatelessWidget {
                               prefixIcon: Icon(Icons.person),
                             ),
                           )),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       Obx(() => TextField(
                             controller: TextEditingController(
                                 text: _controller.password.value),
                             onChanged: (value) =>
                                 _controller.password.value = value,
-                            obscureText: true,
+                            obscureText: !_controller.isPasswordVisible.value,
                             decoration: InputDecoration(
                               labelText: 'Password',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _controller.isPasswordVisible.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: _controller.togglePasswordVisibility,
+                              ),
                             ),
                           )),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Obx(() => ElevatedButton(
                             onPressed: _controller.isLoading.value
                                 ? null
                                 : _controller.login,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Colors.blueAccent, // Updated parameter
+                              backgroundColor: Colors.blueAccent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 15.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
                             ),
                             child: _controller.isLoading.value
-                                ? CircularProgressIndicator(color: Colors.white)
-                                : Text('Login'),
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white)
+                                : const Text('Login'),
                           )),
                     ],
                   ),
