@@ -1,3 +1,4 @@
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class DashboardScreen extends StatelessWidget {
                 )),
             const SizedBox(height: 20),
             const Text(
-              'Boards Preview',
+              'Boards',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -62,7 +63,10 @@ class DashboardScreen extends StatelessWidget {
                         title: Text(board.title),
                         subtitle: Text('ID: ${board.id}'),
                         onTap: () {
-                          // Navigate to board details or handle tap
+                          Get.toNamed(
+                            AppRoutes.kanbanBoard,
+                            parameters: {'boardId': board.id.toString()},
+                          );
                         },
                       ),
                     );

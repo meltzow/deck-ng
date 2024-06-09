@@ -17,12 +17,12 @@ void main() {
         Get.put<BoardService>(MockBoardService());
     StackService stackServiceMock = Get.put<StackService>(MockStackService());
     final controller = Get.put(DashboardController());
-    expect(controller.boardData.length, 0);
+    expect(controller.boardCount, 0);
 
     /// If you are using it, you can test everything,
     /// including the state of the application after each lifecycle.
     Get.put(controller); // onInit was called
-    expect(controller.boardData.length, 0);
+    expect(controller.boardCount, 0);
 
     var resp = [Board(title: 'foo', id: 1)];
     when(boardRepositoryImplMock.getAllBoards()).thenAnswer((_) async => resp);
@@ -31,12 +31,12 @@ void main() {
     controller.onReady();
 
     /// Test your functions
-    await controller.refreshData();
-    expect(controller.boardData.length, 1);
+    await controller.fetchData();
+    expect(controller.boardCount, 1);
 
     /// onClose was called
     Get.delete<DashboardController>();
 
-    expect(controller.boardData.length, 1);
+    expect(controller.boardCount, 1);
   });
 }
