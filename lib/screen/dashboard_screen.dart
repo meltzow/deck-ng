@@ -1,14 +1,19 @@
 import 'package:deck_ng/app_routes.dart';
+import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
-  final DashboardController _controller = Get.put(DashboardController());
+  final DashboardController _controller = Get.find<DashboardController>();
+
+  DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerWidget(),
       appBar: AppBar(
         title: const Text('Dashboard'),
         backgroundColor: Colors.blueAccent,
@@ -24,14 +29,21 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(() => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _metricCard('Boards', _controller.boardCount.value),
-                    _metricCard('Stacks', _controller.stackCount.value),
-                    _metricCard('Tasks', _controller.taskCount.value),
-                  ],
-                )),
+            Obx(() {
+              if (_controller.isLoading.value) {
+                return const Center(
+                  child: LoadingIndicator(),
+                );
+              }
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _metricCard('Boards', _controller.boardCount.value),
+                  _metricCard('Stacks', _controller.stackCount.value),
+                  _metricCard('Tasks', _controller.taskCount.value),
+                ],
+              );
+            }),
             const SizedBox(height: 20),
             const Text(
               'Boards',
@@ -41,7 +53,7 @@ class DashboardScreen extends StatelessWidget {
             Obx(() {
               if (_controller.isLoading.value) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: LoadingIndicator(),
                 );
               }
               return Expanded(

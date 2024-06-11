@@ -11,13 +11,13 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
   var username = ''.obs;
   var password = ''.obs;
+  var passwordController = TextEditingController();
+
   var url = ''.obs;
   var isUrlValid = false.obs;
   var serverInfo = ''.obs;
 
   var isPasswordVisible = false.obs;
-
-  final FocusNode focusNode = FocusNode();
 
   Rxn<Version> nextcloudVersion = Rxn();
 
@@ -32,12 +32,6 @@ class LoginController extends GetxController {
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
-  }
-
-  @override
-  onClose() {
-    focusNode.dispose();
-    super.onClose();
   }
 
   @override

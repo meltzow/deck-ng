@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  final LoginController _controller = Get.put(LoginController());
+  final LoginController _controller = Get.find<LoginController>();
+
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +78,7 @@ class LoginScreen extends StatelessWidget {
                           )),
                       const SizedBox(height: 10.0),
                       Obx(() => TextField(
-                            controller: TextEditingController(
-                                text: _controller.password.value),
+                            controller: _controller.passwordController,
                             onChanged: (value) =>
                                 _controller.password.value = value,
                             obscureText: !_controller.isPasswordVisible.value,
