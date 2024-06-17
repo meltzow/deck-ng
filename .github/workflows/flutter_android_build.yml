@@ -28,6 +28,7 @@ jobs:
         run: |
           cd android
           sudo gem install bundler
+          bundle config set path 'vendor/bundle'
           bundle install
 
       - name: Build APK
