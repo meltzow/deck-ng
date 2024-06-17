@@ -23,33 +23,39 @@ class DrawerWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: myTheme.primaryColor,
               ),
-              child: Text('dashboard'.tr),
+              child: Text('deck NG'.tr,
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             onTap: () => Get.toNamed(AppRoutes.home),
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.note_add),
-          //   title: const Text('Board 1'),
-          //   onTap: () {
-          //     // Update the state of the app
-          //     // ...
-          //     // Then close the drawer
-          //     Get.toNamed('/boards');
-          //   },
-          // ),
-          // ListTile(
-          //   title: const Text('settings'),
-          //   leading: const Icon(Icons.settings_outlined),
-          //   onTap: () {
-          //     Get.toNamed(AppRoutes.settings);
-          //   },
-          // ),
+          Obx(
+            () => ListTile(
+              title: controller.isAuth.value
+                  ? const Text('Dashboard')
+                  : Container(),
+              leading: controller.isAuth.value
+                  ? const Icon(Icons.dashboard_outlined)
+                  : Container(),
+              onTap: () {
+                Get.toNamed(AppRoutes.home);
+              },
+            ),
+          ),
+          Obx(() => ListTile(
+                title: const Text('settings'),
+                leading: const Icon(Icons.settings_outlined),
+                onTap: () {
+                  Get.toNamed(AppRoutes.settings);
+                },
+              )),
           Obx(
             () => ListTile(
               title: controller.isAuth.value
                   ? const Text('Logout')
                   : const Text('Login'),
-              leading: const Icon(Icons.login_outlined),
+              leading: controller.isAuth.value
+                  ? const Icon(Icons.logout_outlined)
+                  : const Icon(Icons.login_outlined),
               onTap: () {
                 controller.logout();
                 Get.toNamed(AppRoutes.login);
@@ -57,7 +63,7 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.rate_review_outlined),
+            leading: const Icon(Icons.feedback_outlined),
             title: Text('feedback'.tr),
             onTap: () {
               Navigator.pop(context);
