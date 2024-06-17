@@ -24,7 +24,7 @@ jobs:
       - name: Build APK
         run: |
           cd android
-          bundle exec fastlane android build
+          bundle exec fastlane android test
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
