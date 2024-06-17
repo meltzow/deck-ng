@@ -119,8 +119,12 @@ void main() {
                 delay: const Duration(milliseconds: 10),
               ));
 
-      when(authServiceMock.getAccount()).thenReturn(
-          Account('username', 'foobar', 'authData', 'http://url.foo', true));
+      when(authServiceMock.getAccount()).thenReturn(Account(
+          username: 'username',
+          password: 'foobar',
+          authData: 'authData',
+          url: 'http://url.foo',
+          isAuthenticated: true));
       when(authServiceMock.isAuth()).thenReturn(true);
 
       var response = await service.get('/index.php/apps/deck/api/v1/boards');

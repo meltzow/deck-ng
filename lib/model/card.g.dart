@@ -41,7 +41,7 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
           : User.fromJson(json['owner'] as Map<String, dynamic>),
       stackId: (json['stackId'] as num).toInt(),
       title: json['title'] as String,
-      type: json['type'] as String,
+      type: json['type'] as String?,
       done:
           json['done'] == null ? null : DateTime.parse(json['done'] as String),
       notified: json['notified'] as bool?,

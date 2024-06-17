@@ -3,15 +3,16 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
-import 'dart:ui' as _i9;
+import 'dart:async' as _i8;
+import 'dart:ui' as _i10;
 
 import 'package:appflowy_board/appflowy_board.dart' as _i2;
-import 'package:deck_ng/controller/kanban_board_controller.dart' as _i4;
-import 'package:deck_ng/model/models.dart' as _i6;
-import 'package:flutter/material.dart' as _i5;
+import 'package:deck_ng/controller/kanban_board_controller.dart' as _i6;
+import 'package:deck_ng/model/models.dart' as _i4;
+import 'package:deck_ng/service/services.dart' as _i5;
+import 'package:flutter/material.dart' as _i7;
 import 'package:get/get.dart' as _i3;
-import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i8;
+import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -59,11 +60,61 @@ class _FakeInternalFinalCallback_2<T> extends _i1.SmartFake
         );
 }
 
+class _FakeBoard_3 extends _i1.SmartFake implements _i4.Board {
+  _FakeBoard_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCard_4 extends _i1.SmartFake implements _i4.Card {
+  _FakeCard_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAssignment_5 extends _i1.SmartFake implements _i4.Assignment {
+  _FakeAssignment_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAttachment_6 extends _i1.SmartFake implements _i4.Attachment {
+  _FakeAttachment_6(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCapabilities_7 extends _i1.SmartFake implements _i5.Capabilities {
+  _FakeCapabilities_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [KanbanBoardController].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockKanbanBoardController extends _i1.Mock
-    implements _i4.KanbanBoardController {
+    implements _i6.KanbanBoardController {
   MockKanbanBoardController() {
     _i1.throwOnMissingStub(this);
   }
@@ -103,10 +154,10 @@ class MockKanbanBoardController extends _i1.Mock
       ) as int);
 
   @override
-  Map<int, _i5.Widget> get myTabs => (super.noSuchMethod(
+  Map<int, _i7.Widget> get myTabs => (super.noSuchMethod(
         Invocation.getter(#myTabs),
-        returnValue: <int, _i5.Widget>{},
-      ) as Map<int, _i5.Widget>);
+        returnValue: <int, _i7.Widget>{},
+      ) as Map<int, _i7.Widget>);
 
   @override
   set boardId(int? value) => super.noSuchMethod(
@@ -118,7 +169,7 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
-  set stackData(List<_i6.Stack>? stacks) => super.noSuchMethod(
+  set stackData(List<_i4.Stack>? stacks) => super.noSuchMethod(
         Invocation.setter(
           #stackData,
           stacks,
@@ -127,10 +178,10 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
-  List<_i6.Stack> get stackData => (super.noSuchMethod(
+  List<_i4.Stack> get stackData => (super.noSuchMethod(
         Invocation.getter(#stackData),
-        returnValue: <_i6.Stack>[],
-      ) as List<_i6.Stack>);
+        returnValue: <_i4.Stack>[],
+      ) as List<_i4.Stack>);
 
   @override
   _i2.AppFlowyBoardController get boardCtl => (super.noSuchMethod(
@@ -193,14 +244,14 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
-  _i7.Future<void> refreshData() => (super.noSuchMethod(
+  _i8.Future<void> refreshData() => (super.noSuchMethod(
         Invocation.method(
           #refreshData,
           [],
         ),
-        returnValue: _i7.Future<void>.value(),
-        returnValueForMissingStub: _i7.Future<void>.value(),
-      ) as _i7.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
 
   @override
   void reorder(
@@ -290,16 +341,16 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
-  _i8.Disposer addListener(_i8.GetStateUpdate? listener) => (super.noSuchMethod(
+  _i9.Disposer addListener(_i9.GetStateUpdate? listener) => (super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
         ),
         returnValue: () {},
-      ) as _i8.Disposer);
+      ) as _i9.Disposer);
 
   @override
-  void removeListener(_i9.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i10.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -337,7 +388,7 @@ class MockKanbanBoardController extends _i1.Mock
   @override
   void removeListenerId(
     Object? id,
-    _i9.VoidCallback? listener,
+    _i10.VoidCallback? listener,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -360,9 +411,9 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
-  _i8.Disposer addListenerId(
+  _i9.Disposer addListenerId(
     Object? key,
-    _i8.GetStateUpdate? listener,
+    _i9.GetStateUpdate? listener,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -373,7 +424,7 @@ class MockKanbanBoardController extends _i1.Mock
           ],
         ),
         returnValue: () {},
-      ) as _i8.Disposer);
+      ) as _i9.Disposer);
 
   @override
   void disposeId(Object? id) => super.noSuchMethod(
@@ -383,4 +434,430 @@ class MockKanbanBoardController extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [BoardService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockBoardService extends _i1.Mock implements _i5.BoardService {
+  MockBoardService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i8.Future<List<_i4.Board>> getAllBoards() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllBoards,
+          [],
+        ),
+        returnValue: _i8.Future<List<_i4.Board>>.value(<_i4.Board>[]),
+      ) as _i8.Future<List<_i4.Board>>);
+
+  @override
+  _i8.Future<_i4.Board> getBoard(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getBoard,
+          [boardId],
+        ),
+        returnValue: _i8.Future<_i4.Board>.value(_FakeBoard_3(
+          this,
+          Invocation.method(
+            #getBoard,
+            [boardId],
+          ),
+        )),
+      ) as _i8.Future<_i4.Board>);
+}
+
+/// A class which mocks [NotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNotificationService extends _i1.Mock
+    implements _i5.NotificationService {
+  MockNotificationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic successMsg(
+    String? title,
+    String? message,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #successMsg,
+        [
+          title,
+          message,
+        ],
+      ));
+
+  @override
+  dynamic errorMsg(
+    String? s,
+    String? t,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #errorMsg,
+        [
+          s,
+          t,
+        ],
+      ));
+}
+
+/// A class which mocks [StackService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStackService extends _i1.Mock implements _i5.StackService {
+  MockStackService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i8.Future<List<_i4.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getAll,
+          [boardId],
+        ),
+        returnValue: _i8.Future<List<_i4.Stack>?>.value(),
+      ) as _i8.Future<List<_i4.Stack>?>);
+}
+
+/// A class which mocks [CardService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCardService extends _i1.Mock implements _i5.CardService {
+  MockCardService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i8.Future<_i4.Card> createCard(
+    int? boardId,
+    int? stackId,
+    String? title,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createCard,
+          [
+            boardId,
+            stackId,
+            title,
+          ],
+        ),
+        returnValue: _i8.Future<_i4.Card>.value(_FakeCard_4(
+          this,
+          Invocation.method(
+            #createCard,
+            [
+              boardId,
+              stackId,
+              title,
+            ],
+          ),
+        )),
+      ) as _i8.Future<_i4.Card>);
+
+  @override
+  _i8.Future<_i4.Card> updateCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i4.Card? card,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            card,
+          ],
+        ),
+        returnValue: _i8.Future<_i4.Card>.value(_FakeCard_4(
+          this,
+          Invocation.method(
+            #updateCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              card,
+            ],
+          ),
+        )),
+      ) as _i8.Future<_i4.Card>);
+
+  @override
+  _i8.Future<_i4.Card> getCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+          ],
+        ),
+        returnValue: _i8.Future<_i4.Card>.value(_FakeCard_4(
+          this,
+          Invocation.method(
+            #getCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+            ],
+          ),
+        )),
+      ) as _i8.Future<_i4.Card>);
+
+  @override
+  _i8.Future<void> deleteCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+          ],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  _i8.Future<_i4.Card> reorderCard(
+    int? boardId,
+    int? oldStackId,
+    int? cardId,
+    _i4.Card? card,
+    int? newOrder,
+    int? newStackId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #reorderCard,
+          [
+            boardId,
+            oldStackId,
+            cardId,
+            card,
+            newOrder,
+            newStackId,
+          ],
+        ),
+        returnValue: _i8.Future<_i4.Card>.value(_FakeCard_4(
+          this,
+          Invocation.method(
+            #reorderCard,
+            [
+              boardId,
+              oldStackId,
+              cardId,
+              card,
+              newOrder,
+              newStackId,
+            ],
+          ),
+        )),
+      ) as _i8.Future<_i4.Card>);
+
+  @override
+  _i8.Future<void> assignLabel2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    int? labelId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #assignLabel2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            labelId,
+          ],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  _i8.Future<void> removeLabel2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    int? labelId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeLabel2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            labelId,
+          ],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
+
+  @override
+  _i8.Future<_i4.Assignment> assignUser2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #assignUser2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            userId,
+          ],
+        ),
+        returnValue: _i8.Future<_i4.Assignment>.value(_FakeAssignment_5(
+          this,
+          Invocation.method(
+            #assignUser2Card,
+            [
+              boardId,
+              stackId,
+              cardId,
+              userId,
+            ],
+          ),
+        )),
+      ) as _i8.Future<_i4.Assignment>);
+
+  @override
+  _i8.Future<_i4.Assignment> unassignUser2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #unassignUser2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            userId,
+          ],
+        ),
+        returnValue: _i8.Future<_i4.Assignment>.value(_FakeAssignment_5(
+          this,
+          Invocation.method(
+            #unassignUser2Card,
+            [
+              boardId,
+              stackId,
+              cardId,
+              userId,
+            ],
+          ),
+        )),
+      ) as _i8.Future<_i4.Assignment>);
+
+  @override
+  _i8.Future<_i4.Attachment> addAttachmentToCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i4.Attachment? attachment,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAttachmentToCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            attachment,
+          ],
+        ),
+        returnValue: _i8.Future<_i4.Attachment>.value(_FakeAttachment_6(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+      ) as _i8.Future<_i4.Attachment>);
+}
+
+/// A class which mocks [AuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthService extends _i1.Mock implements _i5.AuthService {
+  MockAuthService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i8.Future<bool> login(
+    String? serverUrl,
+    String? username,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [
+            serverUrl,
+            username,
+            password,
+          ],
+        ),
+        returnValue: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
+
+  @override
+  _i8.Future<_i5.Capabilities> checkServer(String? serverUrl) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #checkServer,
+          [serverUrl],
+        ),
+        returnValue: _i8.Future<_i5.Capabilities>.value(_FakeCapabilities_7(
+          this,
+          Invocation.method(
+            #checkServer,
+            [serverUrl],
+          ),
+        )),
+      ) as _i8.Future<_i5.Capabilities>);
+
+  @override
+  bool isAuth() => (super.noSuchMethod(
+        Invocation.method(
+          #isAuth,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
 }

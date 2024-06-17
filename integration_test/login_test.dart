@@ -33,11 +33,11 @@ void main() {
     when(storageServiceMock.getAccount()).thenReturn(null);
     when(storageServiceMock.hasAccount()).thenReturn(false);
     when(storageServiceMock.saveAccount(Account(
-            "admin",
-            "admin",
-            'Basic ${base64.encode(utf8.encode('admin:admin'))}',
-            "http://192.168.178.81:8080",
-            false)))
+            username: "admin",
+            password: "admin",
+            authData: 'Basic ${base64.encode(utf8.encode('admin:admin'))}',
+            url: "http://192.168.178.81:8080",
+            isAuthenticated: false)))
         .thenReturn(null);
 
     when(storageServiceMock.hasSettings()).thenReturn(false);

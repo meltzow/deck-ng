@@ -34,7 +34,7 @@ void main() {
     var respStack = [stack];
 
     when(cardServiceMock.updateCard(
-            board.id, stack.id, draggedCard.id, draggedCard))
+            board.id, stack.id, draggedCard.id!, draggedCard))
         .thenAnswer((_) async => card1);
     when(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
         .thenReturn(null);
@@ -43,7 +43,7 @@ void main() {
     controller.reorder(stack.id, 1, 0);
 
     verify(cardServiceMock.updateCard(
-            board.id, stack.id, draggedCard.id, draggedCard))
+            board.id, stack.id, draggedCard.id!, draggedCard))
         .called(1);
 
     // verify(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
@@ -75,7 +75,7 @@ void main() {
     draggedToStack.cards = [card3];
 
     when(cardServiceMock.reorderCard(board.id, draggedFromStack.id,
-            draggedCard.id, draggedCard, -1, draggedToStack.id))
+            draggedCard.id!, draggedCard, -1, draggedToStack.id))
         .thenAnswer((_) async => draggedCard);
     when(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
         .thenReturn(null);
@@ -85,7 +85,7 @@ void main() {
         oldCardIndex, newCardIndex, draggedFromStack.id, draggedToStack.id);
 
     verify(cardServiceMock.reorderCard(board.id, draggedFromStack.id,
-            draggedCard.id, draggedCard, -1, draggedToStack.id))
+            draggedCard.id!, draggedCard, -1, draggedToStack.id))
         .called(1);
 
     // verify(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))

@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 class AuthServiceImpl extends GetxService implements AuthService {
   final Dio dioClient = Get.find<Dio>();
-  final credService = Get.find<StorageService>();
+  final storageService = Get.find<StorageService>();
 
   String _computeAuth(username, password) {
     return 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
@@ -40,21 +40,21 @@ class AuthServiceImpl extends GetxService implements AuthService {
   Future<bool> login(String serverUrl, String username, String password) async {
     //just save it, so the framework can use... but not authenticated (=false)
     var a = Account(
-        username,
-        password,
-        _computeAuth(username, password),
-        serverUrl.endsWith('/')
+        username: username,
+        password: password,
+        authData: _computeAuth(username, password),
+        url: serverUrl.endsWith('/')
             ? serverUrl.substring(0, serverUrl.length - 1)
             : serverUrl,
-        false);
-    await credService.saveAccount(a);
+        isAuthenticated: false);
+    await storageService.saveAccount(a);
     const url = '/ocs/v2.php/core/getapppassword';
-    var resp = await dioClient.get(serverUrl + url,
+    var resp = await dioClient.get(a.url + url,
         options: Options(headers: _getHeaders(url, a)));
     var apppassword = AppPassword.fromJson(resp.data);
     a.password = apppassword.ocs.data.apppassword;
     a.isAuthenticated = true;
-    await credService.saveAccount(a);
+    await storageService.saveAccount(a);
 
     return true;
   }
@@ -71,23 +71,23 @@ class AuthServiceImpl extends GetxService implements AuthService {
 
   @override
   bool isAuth() {
-    var auth = credService.getAccount();
+    var auth = storageService.getAccount();
     return auth != null && auth.isAuthenticated;
   }
 
   @override
   Account? getAccount() {
-    return credService.getAccount();
+    return storageService.getAccount();
   }
 
   @override
   logout() {
-    if (credService.hasAccount()) {
-      var acc = credService.getAccount()!;
+    if (storageService.hasAccount()) {
+      var acc = storageService.getAccount()!;
       acc.isAuthenticated = false;
       acc.password = '';
       acc.authData = '';
-      credService.saveAccount(acc);
+      storageService.saveAccount(acc);
     }
   }
 }

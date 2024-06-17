@@ -38,13 +38,6 @@ class MockStorageService extends _i1.Mock implements _i2.StorageService {
       ) as bool);
 
   @override
-  dynamic saveAccount(_i3.Account? account) =>
-      super.noSuchMethod(Invocation.method(
-        #saveAccount,
-        [account],
-      ));
-
-  @override
   bool hasSettings() => (super.noSuchMethod(
         Invocation.method(
           #hasSettings,

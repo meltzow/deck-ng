@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CardDetailsScreen extends StatelessWidget {
-  final CardDetailsController cardController = Get.put(CardDetailsController());
+  final CardDetailsController cardController =
+      Get.find<CardDetailsController>();
 
   CardDetailsScreen({super.key});
 

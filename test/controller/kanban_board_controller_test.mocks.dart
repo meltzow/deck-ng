@@ -57,6 +57,16 @@ class _FakeAssignment_2 extends _i1.SmartFake implements _i3.Assignment {
         );
 }
 
+class _FakeAttachment_3 extends _i1.SmartFake implements _i3.Attachment {
+  _FakeAttachment_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [BoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -362,6 +372,37 @@ class MockCardService extends _i1.Mock implements _i8.CardService {
           ),
         )),
       ) as _i5.Future<_i3.Assignment>);
+
+  @override
+  _i5.Future<_i3.Attachment> addAttachmentToCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i3.Attachment? attachment,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAttachmentToCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            attachment,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Attachment>.value(_FakeAttachment_3(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Attachment>);
 }
 
 /// A class which mocks [NotificationService].

@@ -66,8 +66,12 @@ void main() {
   testWidgets('display card details', (WidgetTester tester) async {
     late CardDetailsController controller = CardDetailsController();
     when(storageServiceMock.hasAccount()).thenReturn(true);
-    when(storageServiceMock.getAccount())
-        .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
 
     var board1 = nc.Board(title: 'garden', id: 1);
     var resp = [board1];
@@ -79,7 +83,7 @@ void main() {
     var stacksForBoard1 = [stack1];
 
     when(boardServiceMock.getBoard(board1.id)).thenAnswer((_) async => board1);
-    when(cardServiceMock.getCard(board1.id, stack1.id, card1.id))
+    when(cardServiceMock.getCard(board1.id, stack1.id, card1.id!))
         .thenAnswer((_) async => card1);
 
     Get.lazyReplace<CardDetailsController>(() => controller);
@@ -108,8 +112,12 @@ void main() {
   testWidgets('display dashboard', (WidgetTester tester) async {
     late DashboardController controller = DashboardController();
     when(storageServiceMock.hasAccount()).thenReturn(true);
-    when(storageServiceMock.getAccount())
-        .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
 
     var board1 = nc.Board(title: 'garden', id: 1);
     var resp = [board1];
@@ -155,8 +163,12 @@ void main() {
   testWidgets('display kanban board', (WidgetTester tester) async {
     late KanbanBoardController controller = KanbanBoardController();
     when(storageServiceMock.hasAccount()).thenReturn(true);
-    when(storageServiceMock.getAccount())
-        .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
 
     var board1 = nc.Board(title: 'garden', id: 1);
     var resp = [board1];
@@ -204,11 +216,11 @@ void main() {
     when(storageServiceMock.getAccount()).thenReturn(null);
     when(storageServiceMock.hasAccount()).thenReturn(false);
     when(storageServiceMock.saveAccount(Account(
-            "admin",
-            "admin",
-            'Basic ${base64.encode(utf8.encode('admin:admin'))}',
-            "http://192.168.178.81:8080",
-            false)))
+            username: "admin",
+            password: "admin",
+            authData: 'Basic ${base64.encode(utf8.encode('admin:admin'))}',
+            url: "http://192.168.178.81:8080",
+            isAuthenticated: false)))
         .thenReturn(null);
 
     when(storageServiceMock.hasSettings()).thenReturn(false);
@@ -246,8 +258,12 @@ void main() {
 
   testWidgets('display settings screen', (WidgetTester tester) async {
     when(storageServiceMock.hasAccount()).thenReturn(true);
-    when(storageServiceMock.getAccount())
-        .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
 
     when(storageServiceMock.hasSettings()).thenReturn(true);
     when(storageServiceMock.getSetting()).thenReturn(nc.Setting('english'));

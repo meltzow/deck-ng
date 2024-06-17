@@ -5,10 +5,9 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i3;
 
-import 'package:deck_ng/model/account.dart' as _i5;
-import 'package:deck_ng/model/models.dart' as _i6;
+import 'package:deck_ng/model/models.dart' as _i5;
 import 'package:deck_ng/service/auth_service.dart' as _i2;
-import 'package:deck_ng/service/notification_service.dart' as _i7;
+import 'package:deck_ng/service/notification_service.dart' as _i6;
 import 'package:deck_ng/service/storage_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -105,13 +104,6 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
       ) as bool);
 
   @override
-  dynamic saveAccount(_i5.Account? account) =>
-      super.noSuchMethod(Invocation.method(
-        #saveAccount,
-        [account],
-      ));
-
-  @override
   bool hasSettings() => (super.noSuchMethod(
         Invocation.method(
           #hasSettings,
@@ -121,7 +113,7 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i6.Setting? setting) =>
+  dynamic saveSetting(_i5.Setting? setting) =>
       super.noSuchMethod(Invocation.method(
         #saveSetting,
         [setting],
@@ -132,7 +124,7 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNotificationService extends _i1.Mock
-    implements _i7.NotificationService {
+    implements _i6.NotificationService {
   MockNotificationService() {
     _i1.throwOnMissingStub(this);
   }

@@ -33,7 +33,10 @@ class StorageServiceImpl extends GetxService implements StorageService {
   }
 
   @override
-  saveAccount(Account a) async {
+  saveAccount(Account? a) async {
+    if (a == null) {
+      return;
+    }
     await _box.write(keyUser, a.toJson());
   }
 

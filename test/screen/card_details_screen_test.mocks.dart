@@ -3,15 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
-import 'dart:ui' as _i9;
+import 'dart:async' as _i5;
 
-import 'package:deck_ng/controller/card_details_controller.dart' as _i4;
-import 'package:deck_ng/model/models.dart' as _i5;
-import 'package:file_picker/file_picker.dart' as _i7;
-import 'package:flutter/material.dart' as _i3;
-import 'package:get/get.dart' as _i2;
-import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i8;
+import 'package:deck_ng/model/models.dart' as _i3;
+import 'package:deck_ng/service/auth_service.dart' as _i2;
+import 'package:deck_ng/service/board_service.dart' as _i6;
+import 'package:deck_ng/service/card_service.dart' as _i8;
+import 'package:deck_ng/service/stack_service.dart' as _i7;
+import 'package:deck_ng/service/storage_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -27,8 +26,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeRx_0<T> extends _i1.SmartFake implements _i2.Rx<T> {
-  _FakeRx_0(
+class _FakeCapabilities_0 extends _i1.SmartFake implements _i2.Capabilities {
+  _FakeCapabilities_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -37,8 +36,8 @@ class _FakeRx_0<T> extends _i1.SmartFake implements _i2.Rx<T> {
         );
 }
 
-class _FakeRxList_1<E> extends _i1.SmartFake implements _i2.RxList<E> {
-  _FakeRxList_1(
+class _FakeBoard_1 extends _i1.SmartFake implements _i3.Board {
+  _FakeBoard_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -47,9 +46,8 @@ class _FakeRxList_1<E> extends _i1.SmartFake implements _i2.RxList<E> {
         );
 }
 
-class _FakeTextEditingController_2 extends _i1.SmartFake
-    implements _i3.TextEditingController {
-  _FakeTextEditingController_2(
+class _FakeCard_2 extends _i1.SmartFake implements _i3.Card {
+  _FakeCard_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -58,8 +56,8 @@ class _FakeTextEditingController_2 extends _i1.SmartFake
         );
 }
 
-class _FakeRxInt_3 extends _i1.SmartFake implements _i2.RxInt {
-  _FakeRxInt_3(
+class _FakeAssignment_3 extends _i1.SmartFake implements _i3.Assignment {
+  _FakeAssignment_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -68,9 +66,8 @@ class _FakeRxInt_3 extends _i1.SmartFake implements _i2.RxInt {
         );
 }
 
-class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
-    implements _i2.InternalFinalCallback<T> {
-  _FakeInternalFinalCallback_4(
+class _FakeAttachment_4 extends _i1.SmartFake implements _i3.Attachment {
+  _FakeAttachment_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -79,483 +76,426 @@ class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [CardDetailsController].
+/// A class which mocks [StorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCardDetailsController extends _i1.Mock
-    implements _i4.CardDetailsController {
-  MockCardDetailsController() {
+class MockStorageService extends _i1.Mock implements _i4.StorageService {
+  MockStorageService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.Rx<_i5.Card?> get card => (super.noSuchMethod(
-        Invocation.getter(#card),
-        returnValue: _FakeRx_0<_i5.Card?>(
-          this,
-          Invocation.getter(#card),
+  bool hasAccount() => (super.noSuchMethod(
+        Invocation.method(
+          #hasAccount,
+          [],
         ),
-      ) as _i2.Rx<_i5.Card?>);
-
-  @override
-  set card(_i2.Rx<_i5.Card?>? _card) => super.noSuchMethod(
-        Invocation.setter(
-          #card,
-          _card,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.Rx<_i5.Board?> get board => (super.noSuchMethod(
-        Invocation.getter(#board),
-        returnValue: _FakeRx_0<_i5.Board?>(
-          this,
-          Invocation.getter(#board),
-        ),
-      ) as _i2.Rx<_i5.Board?>);
-
-  @override
-  set board(_i2.Rx<_i5.Board?>? _board) => super.noSuchMethod(
-        Invocation.setter(
-          #board,
-          _board,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.RxList<_i5.User> get users => (super.noSuchMethod(
-        Invocation.getter(#users),
-        returnValue: _FakeRxList_1<_i5.User>(
-          this,
-          Invocation.getter(#users),
-        ),
-      ) as _i2.RxList<_i5.User>);
-
-  @override
-  set users(_i2.RxList<_i5.User>? _users) => super.noSuchMethod(
-        Invocation.setter(
-          #users,
-          _users,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.RxList<_i5.Attachment> get attachments => (super.noSuchMethod(
-        Invocation.getter(#attachments),
-        returnValue: _FakeRxList_1<_i5.Attachment>(
-          this,
-          Invocation.getter(#attachments),
-        ),
-      ) as _i2.RxList<_i5.Attachment>);
-
-  @override
-  set attachments(_i2.RxList<_i5.Attachment>? _attachments) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #attachments,
-          _attachments,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.RxList<_i5.Label> get labels => (super.noSuchMethod(
-        Invocation.getter(#labels),
-        returnValue: _FakeRxList_1<_i5.Label>(
-          this,
-          Invocation.getter(#labels),
-        ),
-      ) as _i2.RxList<_i5.Label>);
-
-  @override
-  set labels(_i2.RxList<_i5.Label>? _labels) => super.noSuchMethod(
-        Invocation.setter(
-          #labels,
-          _labels,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.RxList<_i5.Label> get selectedLabels => (super.noSuchMethod(
-        Invocation.getter(#selectedLabels),
-        returnValue: _FakeRxList_1<_i5.Label>(
-          this,
-          Invocation.getter(#selectedLabels),
-        ),
-      ) as _i2.RxList<_i5.Label>);
-
-  @override
-  set selectedLabels(_i2.RxList<_i5.Label>? _selectedLabels) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #selectedLabels,
-          _selectedLabels,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i3.TextEditingController get titleController => (super.noSuchMethod(
-        Invocation.getter(#titleController),
-        returnValue: _FakeTextEditingController_2(
-          this,
-          Invocation.getter(#titleController),
-        ),
-      ) as _i3.TextEditingController);
-
-  @override
-  _i3.TextEditingController get descriptionController => (super.noSuchMethod(
-        Invocation.getter(#descriptionController),
-        returnValue: _FakeTextEditingController_2(
-          this,
-          Invocation.getter(#descriptionController),
-        ),
-      ) as _i3.TextEditingController);
-
-  @override
-  _i3.TextEditingController get duedateController => (super.noSuchMethod(
-        Invocation.getter(#duedateController),
-        returnValue: _FakeTextEditingController_2(
-          this,
-          Invocation.getter(#duedateController),
-        ),
-      ) as _i3.TextEditingController);
-
-  @override
-  _i2.RxInt get boardId => (super.noSuchMethod(
-        Invocation.getter(#boardId),
-        returnValue: _FakeRxInt_3(
-          this,
-          Invocation.getter(#boardId),
-        ),
-      ) as _i2.RxInt);
-
-  @override
-  set boardId(_i2.RxInt? _boardId) => super.noSuchMethod(
-        Invocation.setter(
-          #boardId,
-          _boardId,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.RxInt get stackId => (super.noSuchMethod(
-        Invocation.getter(#stackId),
-        returnValue: _FakeRxInt_3(
-          this,
-          Invocation.getter(#stackId),
-        ),
-      ) as _i2.RxInt);
-
-  @override
-  set stackId(_i2.RxInt? _stackId) => super.noSuchMethod(
-        Invocation.setter(
-          #stackId,
-          _stackId,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.RxInt get cardId => (super.noSuchMethod(
-        Invocation.getter(#cardId),
-        returnValue: _FakeRxInt_3(
-          this,
-          Invocation.getter(#cardId),
-        ),
-      ) as _i2.RxInt);
-
-  @override
-  set cardId(_i2.RxInt? _cardId) => super.noSuchMethod(
-        Invocation.setter(
-          #cardId,
-          _cardId,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
-        Invocation.getter(#onStart),
-        returnValue: _FakeInternalFinalCallback_4<void>(
-          this,
-          Invocation.getter(#onStart),
-        ),
-      ) as _i2.InternalFinalCallback<void>);
-
-  @override
-  _i2.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
-        Invocation.getter(#onDelete),
-        returnValue: _FakeInternalFinalCallback_4<void>(
-          this,
-          Invocation.getter(#onDelete),
-        ),
-      ) as _i2.InternalFinalCallback<void>);
-
-  @override
-  bool get initialized => (super.noSuchMethod(
-        Invocation.getter(#initialized),
         returnValue: false,
       ) as bool);
 
   @override
-  bool get isClosed => (super.noSuchMethod(
-        Invocation.getter(#isClosed),
+  bool hasSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #hasSettings,
+          [],
+        ),
         returnValue: false,
       ) as bool);
 
   @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
+  dynamic saveSetting(_i3.Setting? setting) =>
+      super.noSuchMethod(Invocation.method(
+        #saveSetting,
+        [setting],
+      ));
+}
+
+/// A class which mocks [AuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthService extends _i1.Mock implements _i2.AuthService {
+  MockAuthService() {
+    _i1.throwOnMissingStub(this);
+  }
 
   @override
-  int get listeners => (super.noSuchMethod(
-        Invocation.getter(#listeners),
-        returnValue: 0,
-      ) as int);
-
-  @override
-  void onReady() => super.noSuchMethod(
-        Invocation.method(
-          #onReady,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i6.Future<void> fetchCard() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchCard,
-          [],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-
-  @override
-  void fetchAttachments() => super.noSuchMethod(
-        Invocation.method(
-          #fetchAttachments,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void fetchBoard() => super.noSuchMethod(
-        Invocation.method(
-          #fetchBoard,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void updateCard(_i5.Card? card) => super.noSuchMethod(
-        Invocation.method(
-          #updateCard,
-          [card],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void addLabel(_i5.Label? label) => super.noSuchMethod(
-        Invocation.method(
-          #addLabel,
-          [label],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void removeLabel(_i5.Label? label) => super.noSuchMethod(
-        Invocation.method(
-          #removeLabel,
-          [label],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void addUser(_i5.User? user) => super.noSuchMethod(
-        Invocation.method(
-          #addUser,
-          [user],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void removeUser(_i5.User? user) => super.noSuchMethod(
-        Invocation.method(
-          #removeUser,
-          [user],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void addAttachment(_i7.FilePickerResult? result) => super.noSuchMethod(
-        Invocation.method(
-          #addAttachment,
-          [result],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void removeAttachment(_i5.Attachment? attachment) => super.noSuchMethod(
-        Invocation.method(
-          #removeAttachment,
-          [attachment],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void update([
-    List<Object>? ids,
-    bool? condition = true,
-  ]) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #update,
-          [
-            ids,
-            condition,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void onInit() => super.noSuchMethod(
-        Invocation.method(
-          #onInit,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void onClose() => super.noSuchMethod(
-        Invocation.method(
-          #onClose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void $configureLifeCycle() => super.noSuchMethod(
-        Invocation.method(
-          #$configureLifeCycle,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i8.Disposer addListener(_i8.GetStateUpdate? listener) => (super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValue: () {},
-      ) as _i8.Disposer);
-
-  @override
-  void removeListener(_i9.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void refresh() => super.noSuchMethod(
-        Invocation.method(
-          #refresh,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void refreshGroup(Object? id) => super.noSuchMethod(
-        Invocation.method(
-          #refreshGroup,
-          [id],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void notifyChildrens() => super.noSuchMethod(
-        Invocation.method(
-          #notifyChildrens,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void removeListenerId(
-    Object? id,
-    _i9.VoidCallback? listener,
-  ) =>
-      super.noSuchMethod(
-        Invocation.method(
-          #removeListenerId,
-          [
-            id,
-            listener,
-          ],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  _i8.Disposer addListenerId(
-    Object? key,
-    _i8.GetStateUpdate? listener,
+  _i5.Future<bool> login(
+    String? serverUrl,
+    String? username,
+    String? password,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #addListenerId,
+          #login,
           [
-            key,
-            listener,
+            serverUrl,
+            username,
+            password,
           ],
         ),
-        returnValue: () {},
-      ) as _i8.Disposer);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  void disposeId(Object? id) => super.noSuchMethod(
+  _i5.Future<_i2.Capabilities> checkServer(String? serverUrl) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #disposeId,
-          [id],
+          #checkServer,
+          [serverUrl],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i5.Future<_i2.Capabilities>.value(_FakeCapabilities_0(
+          this,
+          Invocation.method(
+            #checkServer,
+            [serverUrl],
+          ),
+        )),
+      ) as _i5.Future<_i2.Capabilities>);
+
+  @override
+  bool isAuth() => (super.noSuchMethod(
+        Invocation.method(
+          #isAuth,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+}
+
+/// A class which mocks [BoardService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockBoardService extends _i1.Mock implements _i6.BoardService {
+  MockBoardService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<List<_i3.Board>> getAllBoards() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllBoards,
+          [],
+        ),
+        returnValue: _i5.Future<List<_i3.Board>>.value(<_i3.Board>[]),
+      ) as _i5.Future<List<_i3.Board>>);
+
+  @override
+  _i5.Future<_i3.Board> getBoard(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getBoard,
+          [boardId],
+        ),
+        returnValue: _i5.Future<_i3.Board>.value(_FakeBoard_1(
+          this,
+          Invocation.method(
+            #getBoard,
+            [boardId],
+          ),
+        )),
+      ) as _i5.Future<_i3.Board>);
+}
+
+/// A class which mocks [StackService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStackService extends _i1.Mock implements _i7.StackService {
+  MockStackService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<List<_i3.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getAll,
+          [boardId],
+        ),
+        returnValue: _i5.Future<List<_i3.Stack>?>.value(),
+      ) as _i5.Future<List<_i3.Stack>?>);
+}
+
+/// A class which mocks [CardService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCardService extends _i1.Mock implements _i8.CardService {
+  MockCardService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i5.Future<_i3.Card> createCard(
+    int? boardId,
+    int? stackId,
+    String? title,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createCard,
+          [
+            boardId,
+            stackId,
+            title,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_2(
+          this,
+          Invocation.method(
+            #createCard,
+            [
+              boardId,
+              stackId,
+              title,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
+
+  @override
+  _i5.Future<_i3.Card> updateCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i3.Card? card,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            card,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_2(
+          this,
+          Invocation.method(
+            #updateCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              card,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
+
+  @override
+  _i5.Future<_i3.Card> getCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_2(
+          this,
+          Invocation.method(
+            #getCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
+
+  @override
+  _i5.Future<void> deleteCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+          ],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<_i3.Card> reorderCard(
+    int? boardId,
+    int? oldStackId,
+    int? cardId,
+    _i3.Card? card,
+    int? newOrder,
+    int? newStackId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #reorderCard,
+          [
+            boardId,
+            oldStackId,
+            cardId,
+            card,
+            newOrder,
+            newStackId,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Card>.value(_FakeCard_2(
+          this,
+          Invocation.method(
+            #reorderCard,
+            [
+              boardId,
+              oldStackId,
+              cardId,
+              card,
+              newOrder,
+              newStackId,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Card>);
+
+  @override
+  _i5.Future<void> assignLabel2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    int? labelId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #assignLabel2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            labelId,
+          ],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> removeLabel2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    int? labelId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeLabel2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            labelId,
+          ],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<_i3.Assignment> assignUser2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #assignUser2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            userId,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Assignment>.value(_FakeAssignment_3(
+          this,
+          Invocation.method(
+            #assignUser2Card,
+            [
+              boardId,
+              stackId,
+              cardId,
+              userId,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Assignment>);
+
+  @override
+  _i5.Future<_i3.Assignment> unassignUser2Card(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    String? userId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #unassignUser2Card,
+          [
+            boardId,
+            stackId,
+            cardId,
+            userId,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Assignment>.value(_FakeAssignment_3(
+          this,
+          Invocation.method(
+            #unassignUser2Card,
+            [
+              boardId,
+              stackId,
+              cardId,
+              userId,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Assignment>);
+
+  @override
+  _i5.Future<_i3.Attachment> addAttachmentToCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i3.Attachment? attachment,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAttachmentToCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            attachment,
+          ],
+        ),
+        returnValue: _i5.Future<_i3.Attachment>.value(_FakeAttachment_4(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i3.Attachment>);
 }

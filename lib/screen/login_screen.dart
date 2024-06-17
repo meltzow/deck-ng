@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const Text(
-                'Welcome Back!',
+                'Welcome Back to Deck NG!',
                 style: TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              prefixIcon: Icon(Icons.link),
+                              prefixIcon: const Icon(Icons.link),
                             ),
                           )),
                       Obx(() => Text(
@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              prefixIcon: Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person),
                             ),
                           )),
                       const SizedBox(height: 10.0),

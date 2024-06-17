@@ -35,7 +35,7 @@ class Card {
   late User? owner;
   late int stackId;
   String title;
-  String type;
+  String? type;
   DateTime? done;
   bool? notified;
   List<User>? participants;
@@ -58,12 +58,12 @@ class Card {
     this.labels = const <Label>[],
     this.lastEditor,
     this.lastModified,
-    required this.order,
+    this.order = 0,
     this.overdue,
-    required this.owner,
+    this.owner,
     required this.stackId,
     required this.title,
-    required this.type,
+    this.type,
     this.done,
     this.notified,
     this.participants,

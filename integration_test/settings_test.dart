@@ -34,8 +34,12 @@ void main() {
 
   testWidgets('display settings screen', (WidgetTester tester) async {
     when(storageServiceMock.hasAccount()).thenReturn(true);
-    when(storageServiceMock.getAccount())
-        .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
 
     when(storageServiceMock.hasSettings()).thenReturn(true);
     when(storageServiceMock.getSetting()).thenReturn(nc.Setting('english'));

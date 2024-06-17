@@ -55,6 +55,16 @@ class _FakeAssignment_2 extends _i1.SmartFake implements _i2.Assignment {
         );
 }
 
+class _FakeAttachment_3 extends _i1.SmartFake implements _i2.Attachment {
+  _FakeAttachment_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [StorageService].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -68,15 +78,6 @@ class MockStorageService extends _i1.Mock implements _i3.StorageService {
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
-
-  @override
-  dynamic saveAccount(_i2.Account? account) => super.noSuchMethod(
-        Invocation.method(
-          #saveAccount,
-          [account],
-        ),
-        returnValueForMissingStub: null,
-      );
 
   @override
   bool hasSettings() => (super.noSuchMethod(
@@ -460,6 +461,50 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
           ),
         )),
       ) as _i5.Future<_i2.Assignment>);
+
+  @override
+  _i5.Future<_i2.Attachment> addAttachmentToCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i2.Attachment? attachment,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAttachmentToCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            attachment,
+          ],
+        ),
+        returnValue: _i5.Future<_i2.Attachment>.value(_FakeAttachment_3(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i2.Attachment>.value(_FakeAttachment_3(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+      ) as _i5.Future<_i2.Attachment>);
 }
 
 /// A class which mocks [NotificationService].

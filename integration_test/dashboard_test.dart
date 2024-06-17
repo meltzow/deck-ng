@@ -40,8 +40,12 @@ void main() {
 
   testWidgets('display dashboard', (WidgetTester tester) async {
     when(storageServiceMock.hasAccount()).thenReturn(true);
-    when(storageServiceMock.getAccount())
-        .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
 
     var board1 = nc.Board(title: 'garden', id: 1);
     var resp = [board1];

@@ -57,8 +57,18 @@ class _FakeAssignment_2 extends _i1.SmartFake implements _i2.Assignment {
         );
 }
 
-class _FakeCapabilities_3 extends _i1.SmartFake implements _i3.Capabilities {
-  _FakeCapabilities_3(
+class _FakeAttachment_3 extends _i1.SmartFake implements _i2.Attachment {
+  _FakeAttachment_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCapabilities_4 extends _i1.SmartFake implements _i3.Capabilities {
+  _FakeCapabilities_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -80,15 +90,6 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
-
-  @override
-  dynamic saveAccount(_i2.Account? account) => super.noSuchMethod(
-        Invocation.method(
-          #saveAccount,
-          [account],
-        ),
-        returnValueForMissingStub: null,
-      );
 
   @override
   bool hasSettings() => (super.noSuchMethod(
@@ -487,6 +488,50 @@ class MockCardService extends _i1.Mock implements _i8.CardService {
           ),
         )),
       ) as _i6.Future<_i2.Assignment>);
+
+  @override
+  _i6.Future<_i2.Attachment> addAttachmentToCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i2.Attachment? attachment,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAttachmentToCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            attachment,
+          ],
+        ),
+        returnValue: _i6.Future<_i2.Attachment>.value(_FakeAttachment_3(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i2.Attachment>.value(_FakeAttachment_3(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+      ) as _i6.Future<_i2.Attachment>);
 }
 
 /// A class which mocks [NotificationService].
@@ -557,7 +602,7 @@ class MockAuthService extends _i1.Mock implements _i3.AuthService {
           #checkServer,
           [serverUrl],
         ),
-        returnValue: _i6.Future<_i3.Capabilities>.value(_FakeCapabilities_3(
+        returnValue: _i6.Future<_i3.Capabilities>.value(_FakeCapabilities_4(
           this,
           Invocation.method(
             #checkServer,
@@ -565,7 +610,7 @@ class MockAuthService extends _i1.Mock implements _i3.AuthService {
           ),
         )),
         returnValueForMissingStub:
-            _i6.Future<_i3.Capabilities>.value(_FakeCapabilities_3(
+            _i6.Future<_i3.Capabilities>.value(_FakeCapabilities_4(
           this,
           Invocation.method(
             #checkServer,

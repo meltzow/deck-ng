@@ -41,13 +41,13 @@ class DrawerWidget extends StatelessWidget {
               },
             ),
           ),
-          Obx(() => ListTile(
-                title: const Text('settings'),
-                leading: const Icon(Icons.settings_outlined),
-                onTap: () {
-                  Get.toNamed(AppRoutes.settings);
-                },
-              )),
+          // Obx(() => ListTile(
+          //       title: const Text('settings'),
+          //       leading: const Icon(Icons.settings_outlined),
+          //       onTap: () {
+          //         Get.toNamed(AppRoutes.settings);
+          //       },
+          //     )),
           Obx(
             () => ListTile(
               title: controller.isAuth.value

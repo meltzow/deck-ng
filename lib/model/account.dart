@@ -11,8 +11,12 @@ class Account {
 
   late bool isAuthenticated;
 
-  Account(this.username, this.password, this.authData, this.url,
-      this.isAuthenticated);
+  Account(
+      {required this.username,
+      required this.password,
+      required this.authData,
+      required this.url,
+      required this.isAuthenticated});
 
   factory Account.fromJson(Map<String, dynamic> json) =>
       _$AccountFromJson(json);

@@ -37,7 +37,7 @@ class LoginController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    username.value = 'dddd';
+    username.value = '';
     await readAccountData();
   }
 

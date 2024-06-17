@@ -4,7 +4,7 @@ abstract class StorageService {
   Account? getAccount();
   bool hasAccount();
 
-  saveAccount(Account account);
+  saveAccount(Account? account);
 
   bool hasSettings();
   Setting? getSetting();

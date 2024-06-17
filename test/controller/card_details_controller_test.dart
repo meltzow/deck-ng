@@ -1,13 +1,9 @@
 import 'package:deck_ng/controller/card_details_controller.dart';
-import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/model/card.dart';
-import 'package:deck_ng/model/label.dart';
-import 'package:deck_ng/model/stack.dart';
+import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:multi_dropdown/models/value_item.dart';
 import 'package:test/test.dart';
 
 import 'card_details_controller_test.mocks.dart';
@@ -35,10 +31,10 @@ void main() {
     controller.cardId = RxInt(cardId);
     controller.boardId = RxInt(boardId);
     controller.stackId = RxInt(stackId);
-    controller.cardData = Rx<Card>(card);
+    controller.card = Rx<Card>(card);
 
-    Card resp1 = card..labels.add(labels.first);
-    Card resp2 = card..labels.add(labels[1]);
+    Card resp2 = card;
+    card.labels = [labels[1]];
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 1))
         .thenAnswer((_) async {});
     when(cardServiceMock.assignLabel2Card(boardId, stackId, cardId, 2))
@@ -47,10 +43,9 @@ void main() {
     when(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
         .thenReturn(null);
 
-    controller.saveLabels(
-        labels.map((e) => ValueItem(label: e.title, value: e.id)).toList());
+    controller.addLabel(labels.first);
 
-    expect(controller.cardData1.labels.length, labels.length);
+    expect(controller.card.value?.labels.length, labels.length);
   });
 
   tearDown(() {

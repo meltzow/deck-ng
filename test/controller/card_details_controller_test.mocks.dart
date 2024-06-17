@@ -44,8 +44,18 @@ class _FakeAssignment_1 extends _i1.SmartFake implements _i2.Assignment {
         );
 }
 
-class _FakeBoard_2 extends _i1.SmartFake implements _i2.Board {
-  _FakeBoard_2(
+class _FakeAttachment_2 extends _i1.SmartFake implements _i2.Attachment {
+  _FakeAttachment_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeBoard_3 extends _i1.SmartFake implements _i2.Board {
+  _FakeBoard_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -308,6 +318,37 @@ class MockCardService extends _i1.Mock implements _i3.CardService {
           ),
         )),
       ) as _i4.Future<_i2.Assignment>);
+
+  @override
+  _i4.Future<_i2.Attachment> addAttachmentToCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i2.Attachment? attachment,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAttachmentToCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            attachment,
+          ],
+        ),
+        returnValue: _i4.Future<_i2.Attachment>.value(_FakeAttachment_2(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+      ) as _i4.Future<_i2.Attachment>);
 }
 
 /// A class which mocks [NotificationService].
@@ -369,7 +410,7 @@ class MockBoardService extends _i1.Mock implements _i6.BoardService {
           #getBoard,
           [boardId],
         ),
-        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_2(
+        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_3(
           this,
           Invocation.method(
             #getBoard,

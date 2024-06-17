@@ -15,7 +15,7 @@ class CardItem extends AppFlowyGroupItem {
 }
 
 class KanbanBoardScreen extends StatelessWidget {
-  final KanbanBoardController controller = Get.put(KanbanBoardController());
+  final KanbanBoardController controller = Get.find<KanbanBoardController>();
 
   KanbanBoardScreen({super.key});
 

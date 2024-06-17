@@ -42,8 +42,12 @@ void main() {
 
   testWidgets('display card details', (WidgetTester tester) async {
     when(storageServiceMock.hasAccount()).thenReturn(true);
-    when(storageServiceMock.getAccount())
-        .thenReturn(nc.Account('foo', 'ddd', 'authData', 'url', true));
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
 
     var board1 = nc.Board(title: 'garden', id: 1);
     var resp = [board1];
@@ -55,7 +59,7 @@ void main() {
     var stacksForBoard1 = [stack1];
 
     when(boardServiceMock.getBoard(board1.id)).thenAnswer((_) async => board1);
-    when(cardServiceMock.getCard(board1.id, stack1.id, card1.id))
+    when(cardServiceMock.getCard(board1.id, stack1.id, card1.id!))
         .thenAnswer((_) async => card1);
 
     Get.lazyReplace<CardDetailsController>(() => controller);
