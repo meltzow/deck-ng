@@ -1,0 +1,39 @@
+name: Flutter iOS Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Flutter actions
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.8.1'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Flutter tests
+        run: flutter test
+
+      - name: Set up Fastlane
+        run: |
+          sudo gem install bundler
+          bundle install
+
+      - name: Build iOS
+        run: bundle exec fastlane ios build
+
+      - name: Upload iOS build
+        uses: actions/upload-artifact@v2
+        with:
+          name: Runner.app
+          path: build/ios/iphoneos/Runner.app

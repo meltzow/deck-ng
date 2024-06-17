@@ -861,3 +861,37 @@ class MockAuthService extends _i1.Mock implements _i5.AuthService {
         returnValue: false,
       ) as bool);
 }
+
+/// A class which mocks [StorageService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStorageService extends _i1.Mock implements _i5.StorageService {
+  MockStorageService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  bool hasAccount() => (super.noSuchMethod(
+        Invocation.method(
+          #hasAccount,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool hasSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #hasSettings,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  dynamic saveSetting(_i4.Setting? setting) =>
+      super.noSuchMethod(Invocation.method(
+        #saveSetting,
+        [setting],
+      ));
+}

@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../service/auth_service_test.mocks.dart';
 import 'kanban_board_screen_test.mocks.dart';
 import 'test_helpers.dart';
 

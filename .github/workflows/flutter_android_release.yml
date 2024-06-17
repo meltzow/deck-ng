@@ -1,0 +1,49 @@
+name: Android Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: 'Which track should be used? One of beta, production'
+        required: true
+        default: 'beta'
+        options:
+          - beta
+          - production
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Flutter actions
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.8.1'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Flutter tests
+        run: flutter test
+
+      - name: Set up Fastlane
+        run: |
+          sudo gem install bundler
+          bundle install
+
+      - name: Build APK
+        run: bundle exec fastlane android build
+
+      - name: Generate .jks file
+        run: echo ${{secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }} | base64 -d > ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
+
+      - name: Release to Google Play
+        run: bundle exec fastlane android deploy track:${{ github.event.inputs.track }}
+        env:
+          GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
+          FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }}
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
