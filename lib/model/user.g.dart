@@ -10,7 +10,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       primaryKey: json['primaryKey'] as String? ?? '',
       uid: json['uid'] as String? ?? '',
       displayname: json['displayname'] as String? ?? '',
-      type: json['type'] as int? ?? 0,
+      type: (json['type'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{

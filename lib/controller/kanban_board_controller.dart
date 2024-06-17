@@ -110,7 +110,7 @@ class KanbanBoardController extends GetxController {
     currentDraggedCard.order = newOrderValue;
 
     var card1 = await _cardService.updateCard(_boardId,
-        currentDraggedCard.stackId, currentDraggedCard.id, currentDraggedCard);
+        currentDraggedCard.stackId, currentDraggedCard.id!, currentDraggedCard);
     cardSuccessMsg();
   }
 
@@ -136,7 +136,7 @@ class KanbanBoardController extends GetxController {
     // card.stackId = _stackData.value[newListIndex!].id;
     //save card
     var group = await _cardService.reorderCard(_boardId, oldStack.id,
-        draggedCard.id, draggedCard, draggedCard.order, newStack.id);
+        draggedCard.id!, draggedCard, draggedCard.order, newStack.id);
 
     cardSuccessMsg();
   }

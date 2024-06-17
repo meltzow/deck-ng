@@ -21,12 +21,12 @@ Board _$BoardFromJson(Map<String, dynamic> json) => Board(
       color: json['color'] as String?,
       archived: json['archived'] as bool? ?? false,
       acl: json['acl'] as List<dynamic>?,
-      shared: json['shared'] as int?,
+      shared: (json['shared'] as num?)?.toInt(),
       deletedAt: _$JsonConverterFromJson<int, DateTime>(
           json['deletedAt'], const EpochDateTimeConverter().fromJson),
       lastModified: _$JsonConverterFromJson<int, DateTime>(
           json['lastModified'], const EpochDateTimeConverter().fromJson),
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       users: (json['users'] as List<dynamic>?)
               ?.map((e) => User.fromJson(e as Map<String, dynamic>))
               .toList() ??

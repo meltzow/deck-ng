@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:deck_ng/model/assignment.dart';
+import 'package:deck_ng/model/attachment.dart';
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/service/card_service.dart';
 import 'package:deck_ng/service/http_service.dart';
@@ -99,5 +100,15 @@ class CardServiceImpl extends GetxService implements CardService {
     //     json.encode({'order': newOrder}));
     // List<dynamic> mediaList = (responseData as List);
     // return mediaList;
+  }
+
+  @override
+  Future<Attachment> addAttachmentToCard(
+      int boardId, int stackId, int cardId, Attachment attachment) async {
+    var responseData = await httpService.post(
+        '/index.php/apps/deck/api/v1/boards/$boardId/stacks/$stackId/cards/$cardId/attachments',
+        json.encode({'type': 'deck_file', 'file': attachment.data}));
+
+    return Attachment.fromJson(responseData);
   }
 }

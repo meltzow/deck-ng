@@ -23,4 +23,7 @@ abstract class CardService {
 
   Future<Assignment> unassignUser2Card(
       int boardId, int stackId, int cardId, String userId);
+
+  Future<Attachment> addAttachmentToCard(
+      int boardId, int stackId, int cardId, Attachment attachment);
 }

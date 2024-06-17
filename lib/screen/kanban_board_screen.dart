@@ -17,6 +17,8 @@ class CardItem extends AppFlowyGroupItem {
 class KanbanBoardScreen extends StatelessWidget {
   final KanbanBoardController controller = Get.put(KanbanBoardController());
 
+  KanbanBoardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +27,13 @@ class KanbanBoardScreen extends StatelessWidget {
         title: const Text('Kanban Board'),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             onPressed: controller.refreshData,
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Obx(() {
           if (controller.isLoading.value) {
             return const Center(
@@ -57,7 +59,7 @@ class KanbanBoardScreen extends StatelessWidget {
         return AppFlowyGroupHeader(
           title: Text(
             columnData.headerData.groupName,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           height: 50,
           margin: config.groupMargin,
@@ -74,7 +76,7 @@ class KanbanBoardScreen extends StatelessWidget {
           ),
         );
       },
-      groupConstraints: BoxConstraints.tightFor(width: 240),
+      groupConstraints: const BoxConstraints.tightFor(width: 240),
     );
   }
 }

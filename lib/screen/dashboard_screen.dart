@@ -16,7 +16,6 @@ class DashboardScreen extends StatelessWidget {
       drawer: DrawerWidget(),
       appBar: AppBar(
         title: const Text('Dashboard'),
-        backgroundColor: Colors.blueAccent,
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

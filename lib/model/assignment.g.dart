@@ -7,10 +7,10 @@ part of 'assignment.dart';
 // **************************************************************************
 
 Assignment _$AssignmentFromJson(Map<String, dynamic> json) => Assignment(
-      json['cardId'] as int,
-      json['id'] as int,
-      User.fromJson(json['participant'] as Map<String, dynamic>),
-      json['type'] as int,
+      cardId: (json['cardId'] as num).toInt(),
+      id: (json['id'] as num).toInt(),
+      participant: User.fromJson(json['participant'] as Map<String, dynamic>),
+      type: (json['type'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AssignmentToJson(Assignment instance) =>

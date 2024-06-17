@@ -49,9 +49,9 @@ Map<String, dynamic> _$AppPasswordOcsToJson(AppPasswordOcs instance) =>
     };
 
 Version _$VersionFromJson(Map<String, dynamic> json) => Version(
-      json['major'] as int,
-      json['minor'] as int,
-      json['micro'] as int,
+      (json['major'] as num).toInt(),
+      (json['minor'] as num).toInt(),
+      (json['micro'] as num).toInt(),
       json['string'] as String,
       json['edition'] as String,
       json['extendedSupport'] as bool,
@@ -111,7 +111,7 @@ Map<String, dynamic> _$AppPasswordDataToJson(AppPasswordData instance) =>
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
       json['status'] as String,
-      json['statuscode'] as int,
+      (json['statuscode'] as num).toInt(),
       json['message'] as String,
     );
 

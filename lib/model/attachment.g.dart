@@ -7,16 +7,17 @@ part of 'attachment.dart';
 // **************************************************************************
 
 Attachment _$AttachmentFromJson(Map<String, dynamic> json) => Attachment(
-      json['cardId'] as int,
-      json['type'] as String,
-      json['data'] as String,
-      json['lastModified'] as int?,
-      json['createdAt'] as int?,
-      json['createdBy'] as String,
-      _$JsonConverterFromJson<int, DateTime>(
+      cardId: (json['cardId'] as num).toInt(),
+      type: json['type'] as String,
+      data: json['data'] as String,
+      lastModified: (json['lastModified'] as num?)?.toInt(),
+      createdAt: (json['createdAt'] as num?)?.toInt(),
+      createdBy: json['createdBy'] as String,
+      deletedAt: _$JsonConverterFromJson<int, DateTime>(
           json['deletedAt'], const EpochDateTimeConverter().fromJson),
-      ExtendedData.fromJson(json['extendedData'] as Map<String, dynamic>),
-      json['id'] as int,
+      extendedData:
+          ExtendedData.fromJson(json['extendedData'] as Map<String, dynamic>),
+      id: (json['id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AttachmentToJson(Attachment instance) =>
@@ -46,9 +47,9 @@ Json? _$JsonConverterToJson<Json, Value>(
     value == null ? null : toJson(value);
 
 ExtendedData _$ExtendedDataFromJson(Map<String, dynamic> json) => ExtendedData(
-      json['filesize'] as int?,
-      json['mimetype'] as String,
-      Info.fromJson(json['info'] as Map<String, dynamic>),
+      filesize: (json['filesize'] as num?)?.toInt(),
+      mimetype: json['mimetype'] as String,
+      info: Info.fromJson(json['info'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ExtendedDataToJson(ExtendedData instance) =>
@@ -59,10 +60,10 @@ Map<String, dynamic> _$ExtendedDataToJson(ExtendedData instance) =>
     };
 
 Info _$InfoFromJson(Map<String, dynamic> json) => Info(
-      json['dirname'] as String,
-      json['basename'] as String,
-      json['extension'] as String,
-      json['filename'] as String,
+      dirname: json['dirname'] as String,
+      basename: json['basename'] as String,
+      extension: json['extension'] as String,
+      filename: json['filename'] as String,
     );
 
 Map<String, dynamic> _$InfoToJson(Info instance) => <String, dynamic>{
