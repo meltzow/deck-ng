@@ -26,14 +26,17 @@ jobs:
 
       - name: Set up Fastlane
         run: |
+          cd android
           sudo gem install bundler
           bundle install
 
       - name: Build APK
-        run: bundle exec fastlane android build
+        run: |
+          cd android
+          bundle exec fastlane android build
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
           name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: android/build/app/outputs/flutter-apk/app-release.apk

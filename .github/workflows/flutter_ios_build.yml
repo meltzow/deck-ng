@@ -26,14 +26,17 @@ jobs:
 
       - name: Set up Fastlane
         run: |
+          cd ios
           sudo gem install bundler
           bundle install
 
       - name: Build iOS
-        run: bundle exec fastlane ios build
+        run: |
+          cd ios
+          bundle exec fastlane ios build
 
       - name: Upload iOS build
         uses: actions/upload-artifact@v2
         with:
           name: Runner.app
-          path: build/ios/iphoneos/Runner.app
+          path: ios/build/ios/iphoneos/Runner.app
