@@ -16,4 +16,7 @@ runs:
         distribution: 'temurin' # See 'Supported distributions' for available options
         java-version: 11
         check-latest: true
+    - name: install gradle
+      shell: bash
+      run: gradle wrapper
 
