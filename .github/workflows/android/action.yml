@@ -18,5 +18,7 @@ runs:
         check-latest: true
     - name: install gradle
       shell: bash
-      run: gradle wrapper
+      run: |
+        cd android
+        gradle wrapper
 
