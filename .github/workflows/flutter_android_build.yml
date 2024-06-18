@@ -15,6 +15,9 @@ jobs:
       - uses: ./.github/workflows/flutter
       - uses: ./.github/workflows/android
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./android/gradlew
+
       - name: Build APK
         run: |
           cd android
