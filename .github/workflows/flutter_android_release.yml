@@ -16,16 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ./.github/workflows/_flutter_build.yml
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-      - name: Set up Fastlane
-        run: |
-          cd android
-          sudo gem install bundler
-          bundle config set path 'vendor/bundle'
-          bundle install
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/flutter
+      - uses: ./.github/workflows/android
 
       - name: Build APK
         run: |

@@ -1,5 +1,5 @@
-name: "setup for ionic"
-description: "setup environment"
+name: "setup for flutter"
+description: "setup environment for flutter"
 runs:
   using: "composite"
   steps:

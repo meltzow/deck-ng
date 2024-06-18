@@ -1,0 +1,28 @@
+name: "setup for flutter and fastlane"
+description: "setup environment for flutter and fastlane"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Flutter actions
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '3.19.5'
+
+    - name: Install dependencies
+      run: flutter pub get
+      shell: bash
+
+    - name: Run Flutter tests
+      run: flutter test
+      shell: bash
+
+    - uses: ruby/setup-ruby@v1
+      with:
+      bundler-cache: true
+
+    - name: Set up Fastlane
+      run: |
+        cd android
+        sudo gem install bundler
+        bundle config set path 'vendor/bundle'
+        bundle install
