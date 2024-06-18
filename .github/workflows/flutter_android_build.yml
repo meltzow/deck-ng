@@ -12,8 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/flutter
-      - uses: ./.github/workflows/android
+#      - uses: ./.github/workflows/flutter
+#      - uses: ./.github/workflows/android
+      - run: ls -al android/
 
       - name: Grant execute permission for gradlew
         run: chmod +x android/gradlew
