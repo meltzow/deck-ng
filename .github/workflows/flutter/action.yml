@@ -9,18 +9,19 @@ runs:
         flutter-version: '3.19.5'
 
     - name: Install dependencies
-      run: flutter pub get
       shell: bash
+      run: flutter pub get
 
     - name: Run Flutter tests
-      run: flutter test
       shell: bash
+      run: flutter test
 
     - uses: ruby/setup-ruby@v1
       with:
-      bundler-cache: true
+        bundler-cache: true
 
     - name: Set up Fastlane
+      shell: bash
       run: |
         cd android
         sudo gem install bundler
