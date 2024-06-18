@@ -35,7 +35,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do |options|
-      ensure_git_branch(branch: 'main')
+#       ensure_git_branch(branch: 'main')
       #sh "cd .. && ionic cap sync android --prod"
 
       sh "echo Your password is #{password}"
