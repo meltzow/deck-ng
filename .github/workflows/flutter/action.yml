@@ -16,10 +16,6 @@ runs:
       shell: bash
       run: flutter test
 
-    - uses: ruby/setup-ruby@v1
-      with:
-        bundler-cache: true
-
     - name: Set up Fastlane
       shell: bash
       run: |
