@@ -18,10 +18,10 @@ jobs:
       - name: Build APK
         run: |
           cd android
-          bundle exec fastlane android test
+          bundle exec fastlane android build
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
           name: app-release.apk
-          path: android/build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
