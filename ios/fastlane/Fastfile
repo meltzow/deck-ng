@@ -22,8 +22,12 @@ scheme = "Runner"
 default_platform(:ios)
 
 platform :ios do
-  lane :build do |options|
-    ensure_git_branch(branch: 'main')
+   lane :build do
+       build_app(scheme: scheme, clean: true)
+   end
+
+  lane :release do |options|
+#     ensure_git_branch(branch: 'main')
     setup_ci
 
     app_store_connect_api_key(key_id: ENV['FASTLANE_APPLE_API_KEY_ID'], issuer_id: ENV['FASTLANE_APPLE_API_ISSUER_ID'], key_content: ENV['FASTLANE_APPLE_API_KEY'])
@@ -36,9 +40,6 @@ platform :ios do
     else
       match(git_url: "git@github.com:meltzow/deck-ng-certs.git", type: "appstore", readonly: false)
     end
-
-    bundle_install
-    #sh "cd .. && ionic cap sync ios --prod"
 
     increment_version_number(version_number: version_name)
     previous_build_number_beta = latest_testflight_build_number(app_identifier:ENV["APP_IDENTIFIER"])
@@ -74,7 +75,7 @@ platform :ios do
   end
 
   lane :beta do
-    build(track: 'beta')
+    release(track: 'beta')
 #     update_app_identifier(xcodeproj: project, plist_path: "App/Info.plist", app_identifier: identifier)
 #     update_info_plist(xcodeproj: project, plist_path: "App/Info.plist", display_name: ENV["APP_NAME"])
     notification(subtitle: "Finished Building", message: "App uploaded")
@@ -82,12 +83,6 @@ platform :ios do
 
   lane :sim do
     build_app(clean: true, scheme: scheme, skip_package_ipa: true, skip_archive: true, destination: "platform=iOS Simulator,name=iPhone 15")
-  end
-
-  lane :release do
-    build(track: 'production')
-
-    notification(subtitle: "Finished Building", message: "App uploaded")
   end
 
   lane :snapshots do

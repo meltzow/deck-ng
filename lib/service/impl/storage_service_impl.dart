@@ -1,18 +1,25 @@
-import 'dart:async';
+import 'dart:ui';
 
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/model/setting.dart';
+import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/storage_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class StorageServiceImpl extends GetxService implements IStorageService {
+class StorageServiceImpl extends GetxService implements StorageService {
   final String keyUser = 'user';
-  late final GetStorage _box;
+  final String keySetting = 'setting';
+  final GetStorage _box = GetStorage();
 
-  Future<IStorageService> init() async {
-    await GetStorage.init();
-    _box = GetStorage();
-    return this;
+  @override
+  void onInit() {
+    super.onInit();
+
+    if (hasSettings()) {
+      Get.updateLocale(
+          Locale(Get.find<StorageService>().getSetting()!.language));
+    }
   }
 
   @override
@@ -26,7 +33,25 @@ class StorageServiceImpl extends GetxService implements IStorageService {
   }
 
   @override
-  saveAccount(Account a) async {
+  saveAccount(Account? a) async {
+    if (a == null) {
+      return;
+    }
     await _box.write(keyUser, a.toJson());
+  }
+
+  @override
+  bool hasSettings() {
+    return _box.hasData(keySetting);
+  }
+
+  @override
+  Setting? getSetting() {
+    return hasSettings() ? Setting.fromJson(_box.read(keySetting)) : null;
+  }
+
+  @override
+  saveSetting(Setting setting) async {
+    await _box.write(keySetting, setting.toJson());
   }
 }

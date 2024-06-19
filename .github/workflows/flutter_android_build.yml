@@ -1,0 +1,27 @@
+name: Flutter Android Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/flutter
+      - uses: ./.github/workflows/android
+
+      - name: Build APK
+        run: |
+          cd android
+          bundle exec fastlane android build
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk

@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/label.dart';
-import 'package:deck_ng/service/Icard_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
 import 'package:deck_ng/service/impl/card_service_impl.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
@@ -14,7 +13,7 @@ import 'package:path_provider_platform_interface/path_provider_platform_interfac
 import 'board_service_test.mocks.dart';
 import 'fake_provider.dart';
 
-@GenerateMocks([IHttpService])
+@GenerateMocks([HttpService])
 void main() {
   group('cardGroup', () {
     setUpAll(() async {
@@ -23,8 +22,8 @@ void main() {
     });
 
     test('add label to card successfully', () async {
-      final httpServiceMock = Get.put<IHttpService>(MockIHttpService());
-      final ICardService cardService = Get.put<ICardService>(CardServiceImpl());
+      final httpServiceMock = Get.put<HttpService>(MockHttpService());
+      final CardService cardService = Get.put<CardService>(CardServiceImpl());
 
       var boardId = 1;
       var stackId = 1;

@@ -5,52 +5,17 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: update_fastlane" time="2.298278523">
+      <testcase classname="fastlane.lanes" name="0: update_fastlane" time="2.153133975">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.000106198">
+      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.000102081">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: Switch to android deploy lane" time="9.4176e-05">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="3: ensure_git_branch" time="0.00157072">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="4: google_play_track_version_codes" time="1.923268668">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="5: google_play_track_version_codes" time="1.684870385">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="6: android_set_version_code" time="0.000607714">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="7: android_set_version_name" time="0.002070893">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="8: clean bundleRelease" time="19.533007043">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="9: upload_to_play_store" time="67.68959696">
+      <testcase classname="fastlane.lanes" name="2: assembleRelease" time="4.103939129">
         
       </testcase>
     

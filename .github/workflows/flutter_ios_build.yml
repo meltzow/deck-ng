@@ -1,0 +1,39 @@
+name: Flutter iOS Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Flutter actions
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.19.5'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Flutter tests
+        run: flutter test
+
+      - name: Set up Fastlane
+        run: |
+          cd ios
+          sudo gem install bundler
+          bundle install
+
+      - name: Build iOS
+        run: |
+          cd ios
+          bundle exec fastlane ios build
+
+      - name: Upload iOS build
+        uses: actions/upload-artifact@v2
+        with:
+          name: Runner.app
+          path: ios/build/ios/iphoneos/Runner.app

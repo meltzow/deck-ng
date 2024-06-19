@@ -1,8 +1,8 @@
-import 'package:deck_ng/service/Inotification_service.dart';
+import 'package:deck_ng/service/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NotificationService implements INotificationService {
+class NotificationServiceImpl implements NotificationService {
   @override
   successMsg(String title, String message) {
     Get.showSnackbar(

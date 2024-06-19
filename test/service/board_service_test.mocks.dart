@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i2;
 
-import 'package:deck_ng/service/Ihttp_service.dart' as _i4;
+import 'package:deck_ng/service/http_service.dart' as _i4;
 import 'package:deck_ng/service/impl/retry.dart' as _i6;
 import 'package:dio/dio.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -44,11 +44,11 @@ class _FakeResponse_1<T1> extends _i1.SmartFake implements _i3.Response<T1> {
         );
 }
 
-/// A class which mocks [IHttpService].
+/// A class which mocks [HttpService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIHttpService extends _i1.Mock implements _i4.IHttpService {
-  MockIHttpService() {
+class MockHttpService extends _i1.Mock implements _i4.HttpService {
+  MockHttpService() {
     _i1.throwOnMissingStub(this);
   }
 

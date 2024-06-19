@@ -2,25 +2,24 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Icredential_service.dart';
+import 'package:deck_ng/service/auth_service.dart';
+import 'package:deck_ng/service/storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
-class AuthServiceImpl extends GetxService implements IAuthService {
+class AuthServiceImpl extends GetxService implements AuthService {
   final Dio dioClient = Get.find<Dio>();
-  final credService = Get.find<IStorageService>();
+  final storageService = Get.find<StorageService>();
 
-  final url = '/ocs/v2.php/core/getapppassword';
-
-  String computeAuth(username, password) {
+  String _computeAuth(username, password) {
     return 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
   }
 
   Map<String, String> _getHeaders(String path,
       [Account? account, Object? body]) {
     var headers = <String, String>{
-      HttpHeaders.acceptHeader: "application/json"
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.userAgentHeader: 'deckNG client',
     };
     if (account?.authData != null) {
       headers[HttpHeaders.authorizationHeader] = account!.authData;
@@ -41,28 +40,28 @@ class AuthServiceImpl extends GetxService implements IAuthService {
   Future<bool> login(String serverUrl, String username, String password) async {
     //just save it, so the framework can use... but not authenticated (=false)
     var a = Account(
-        username,
-        password,
-        computeAuth(username, password),
-        serverUrl.endsWith('/')
+        username: username,
+        password: password,
+        authData: _computeAuth(username, password),
+        url: serverUrl.endsWith('/')
             ? serverUrl.substring(0, serverUrl.length - 1)
             : serverUrl,
-        false);
-    await credService.saveAccount(a);
-
-    var resp = await dioClient.get(serverUrl + url,
+        isAuthenticated: false);
+    await storageService.saveAccount(a);
+    const url = '/ocs/v2.php/core/getapppassword';
+    var resp = await dioClient.get(a.url + url,
         options: Options(headers: _getHeaders(url, a)));
     var apppassword = AppPassword.fromJson(resp.data);
     a.password = apppassword.ocs.data.apppassword;
     a.isAuthenticated = true;
-    await credService.saveAccount(a);
+    await storageService.saveAccount(a);
 
     return true;
   }
 
   @override
   Future<Capabilities> checkServer(String serverUrl) async {
-    var url = '/ocs/v1.php/cloud/capabilities';
+    var url = '/ocs/v2.php/cloud/capabilities';
 
     var resp = await dioClient.get(serverUrl + url,
         options: Options(headers: _getHeaders(url)));
@@ -72,12 +71,23 @@ class AuthServiceImpl extends GetxService implements IAuthService {
 
   @override
   bool isAuth() {
-    var auth = credService.getAccount();
+    var auth = storageService.getAccount();
     return auth != null && auth.isAuthenticated;
   }
 
   @override
   Account? getAccount() {
-    return credService.getAccount();
+    return storageService.getAccount();
+  }
+
+  @override
+  logout() {
+    if (storageService.hasAccount()) {
+      var acc = storageService.getAccount()!;
+      acc.isAuthenticated = false;
+      acc.password = '';
+      acc.authData = '';
+      storageService.saveAccount(acc);
+    }
   }
 }

@@ -1,308 +1,224 @@
-import 'package:deck_ng/component/drawer_widget.dart';
-import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
+import 'package:deck_ng/model/card.dart' as card_model;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class CardDetailsScreen extends StatelessWidget {
-  final controller = Get.find<CardDetailsController>();
+  final CardDetailsController cardController =
+      Get.find<CardDetailsController>();
 
   CardDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        drawer: const DrawerWidget(),
-        appBar: AppBar(
-          title: Text("Card details".tr),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.refresh,
-                size: 22,
+    return Obx(() {
+      final card = cardController.card.value;
+      if (card == null) {
+        return const Center(child: CircularProgressIndicator());
+      } else {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Card Details'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: cardController.fetchCard,
               ),
-              onPressed: () {
-                controller.refreshData();
-              },
-            ),
-            IconButton(
-              icon: const Icon(
-                Icons.save,
-                size: 22,
-              ),
-              onPressed: () {
-                controller.saveCard();
-              },
-            )
-          ],
-        ),
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                  child: RefreshIndicator(
-                onRefresh: controller.refreshData,
-                child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30))),
-                    margin: const EdgeInsets.only(top: 25),
-                    child: Obx(
-                      () => controller.isLoading.value
-                          ? const LoadingIndicator()
-                          : Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: SingleChildScrollView(
-                                  child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Stack(
-                                      alignment: Alignment.bottomRight,
-                                      children: [
-                                        Container(
-                                          height: 120,
-                                          width: 120,
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Image.network(
-                                              "https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_960_720.jpg",
-                                              fit: BoxFit.cover),
-                                        ),
-                                        /*  Container(
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.all(0),
-                                          padding: const EdgeInsets.all(0),
-                                          width: 40,
-                                          height: 40,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xff3a57e8),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: const Icon(
-                                            Icons.photo_camera,
-                                            color: Color(0xffffffff),
-                                            size: 20,
-                                          ),
-                                        ),*/
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                                    child: ListTile(
-                                      title: TextField(
-                                        controller: controller.titleController,
-                                        decoration: InputDecoration(
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                            borderSide: const BorderSide(
-                                                color: Color(0xff9e9e9e),
-                                                width: 1),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                            borderSide: const BorderSide(
-                                                color: Color(0xff9e9e9e),
-                                                width: 1),
-                                          ),
-                                          labelText: "Title".tr,
-                                          labelStyle: const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontStyle: FontStyle.normal,
-                                            fontSize: 16,
-                                          ),
-                                          filled: true,
-                                          isDense: false,
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 8, horizontal: 12),
-                                        ),
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 14,
-                                        ),
-                                        textAlign: TextAlign.start,
-                                      ),
-                                      dense: true,
-                                      contentPadding: const EdgeInsets.all(0),
-                                      selected: false,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.zero,
-                                      ),
-                                      leading: Icon(
-                                        Icons.title,
-                                        size: 24,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                      ),
-                                    ),
-                                  ),
-                                  const Divider(
-                                    color: Color(0xffdddddd),
-                                    height: 15,
-                                    thickness: 0,
-                                    indent: 50,
-                                    endIndent: 0,
-                                  ),
-                                  ListTile(
-                                    title: TextField(
-                                      controller: controller
-                                          .descriptionEditingController,
-                                      decoration: InputDecoration(
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xff9e9e9e),
-                                              width: 1),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xff9e9e9e),
-                                              width: 1),
-                                        ),
-                                        labelText: "Description".tr,
-                                        labelStyle: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 16,
-                                          color: Color(0xff9e9e9e),
-                                        ),
-                                        filled: true,
-                                        isDense: false,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 8, horizontal: 12),
-                                      ),
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                    dense: true,
-                                    contentPadding: const EdgeInsets.all(0),
-                                    selected: false,
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.zero,
-                                    ),
-                                    leading: Icon(Icons.subtitles,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        size: 24),
-                                  ),
-                                  const Divider(
-                                    color: Color(0xffdddddd),
-                                    height: 15,
-                                    thickness: 0,
-                                    indent: 50,
-                                    endIndent: 0,
-                                  ),
-                                  ListTile(
-                                    contentPadding: const EdgeInsets.all(0),
-                                    title: Text(controller.dueDatePreview),
-                                    leading: Icon(Icons.calendar_month,
-                                        size: 24,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                    onTap: () async {
-                                      var result = await showDatePicker(
-                                        context: context,
-                                        initialDate: controller.dueDate,
-                                        firstDate: DateTime(2017, 1),
-                                        lastDate: DateTime(2027, 7),
-                                        helpText: 'Select a date',
-                                      );
-                                      controller.setDueDate(result);
-                                    },
-                                  ),
-                                  const Divider(
-                                    color: Color(0xffdddddd),
-                                    height: 20,
-                                    thickness: 0,
-                                    indent: 50,
-                                    endIndent: 0,
-                                  ),
-                                  ListTile(
-                                    contentPadding: const EdgeInsets.all(0),
-                                    title: MultiSelectDropDown<int>(
-                                      dropdownMargin: 0.0,
-                                      clearIcon: null,
-                                      onOptionSelected:
-                                          (List<ValueItem<int>> labels) {
-                                        controller.saveLabels(labels);
-                                      },
-                                      onOptionRemoved: (index, selectedLabel) =>
-                                          controller.removeLabel(selectedLabel),
-                                      options: controller.allLabelValueItems,
-                                      selectedOptions:
-                                          controller.selectedLabelValueItems,
-                                    ),
-                                    leading: Icon(
-                                      Icons.label,
-                                      size: 24,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                    ),
-                                  ),
-                                  const Divider(
-                                    color: Color(0xffdddddd),
-                                    height: 20,
-                                    thickness: 0,
-                                    indent: 50,
-                                    endIndent: 0,
-                                  ),
-                                  ListTile(
-                                    contentPadding: const EdgeInsets.all(0),
-                                    title: MultiSelectDropDown<String>(
-                                      clearIcon: null,
-                                      onOptionSelected:
-                                          (List<ValueItem<String>> assignees) {
-                                        controller.saveUsers(assignees);
-                                      },
-                                      onOptionRemoved: (index,
-                                              selectedAssignee) =>
-                                          controller
-                                              .removeAssignee(selectedAssignee),
-                                      options: controller.allUsersValueItems,
-                                      selectedOptions: controller
-                                          .selectedAssigneesValueItems,
-                                    ),
-                                    leading: Icon(Icons.person,
-                                        size: 24,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                  ),
-                                ],
-                              )),
-                            ),
-                    )),
-              ))
             ],
           ),
-        ));
+          body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                children: [
+                  TextField(
+                    controller: cardController.titleController,
+                    decoration: const InputDecoration(labelText: 'Title'),
+                  ),
+                  TextField(
+                    controller: cardController.descriptionController,
+                    decoration: const InputDecoration(labelText: 'Description'),
+                  ),
+                  TextField(
+                    controller: cardController.duedateController,
+                    decoration: const InputDecoration(labelText: 'Due Date'),
+                    readOnly: true,
+                    onTap: () async {
+                      DateTime? selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: card.duedate ?? DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (selectedDate != null) {
+                        cardController.duedateController.text =
+                            selectedDate.toIso8601String();
+                        cardController.card.value =
+                            card.copyWith(duedate: selectedDate);
+                      }
+                    },
+                  ),
+                  _buildLabelsField(context, card),
+                  _buildAssignedUsersField(context, card),
+                  ElevatedButton(
+                    onPressed: () {
+                      cardController.updateCard(card);
+                    },
+                    child: const Text('Save'),
+                  ),
+                ],
+              )),
+        );
+      }
+    });
+  }
+
+  Widget _buildLabelsField(BuildContext context, card_model.Card card) {
+    if (cardController.labels.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Labels'),
+        ...card.labels.map((label) {
+          return ListTile(
+            title: Text(label.title),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                cardController.removeLabel(label);
+              },
+            ),
+          );
+        }),
+        ElevatedButton(
+          onPressed: () {
+            _addLabelDialog(context);
+          },
+          child: const Text('Add Label'),
+        ),
+      ],
+    );
+  }
+
+  void _addLabelDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text('Add Label'),
+          children: [
+            ...cardController.labels.map((label) {
+              return Obx(() {
+                return CheckboxListTile(
+                  title: Text(label.title),
+                  value: cardController.selectedLabels.contains(label),
+                  onChanged: (bool? value) {
+                    if (value == true) {
+                      cardController.selectedLabels.add(label);
+                    } else {
+                      cardController.selectedLabels.remove(label);
+                    }
+                  },
+                );
+              });
+            }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    cardController.selectedLabels.forEach((label) {
+                      cardController.addLabel(label);
+                    });
+                    cardController.selectedLabels.clear();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Add'),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildAssignedUsersField(BuildContext context, card_model.Card card) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Assigned Users'),
+        ...?card.assignedUsers?.map((assignment) {
+          return ListTile(
+            title: Text(assignment.participant.displayname),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                cardController.removeUser(assignment.participant);
+              },
+            ),
+          );
+        }),
+        ElevatedButton(
+          onPressed: () {
+            _addUserDialog(context);
+          },
+          child: const Text('Add User'),
+        ),
+      ],
+    );
+  }
+
+  void _addUserDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Add User'),
+          children: [
+            ...cardController.users.map((user) {
+              return Obx(() {
+                return CheckboxListTile(
+                  title: Text(user.displayname),
+                  value: cardController.card.value?.assignedUsers?.any(
+                      (assignment) => assignment.participant.uid == user.uid),
+                  onChanged: (bool? value) {
+                    if (value == true) {
+                      cardController.addUser(user);
+                    } else {
+                      cardController.removeUser(user);
+                    }
+                  },
+                );
+              });
+            }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Add'),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 }

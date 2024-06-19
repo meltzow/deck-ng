@@ -8,18 +8,18 @@ part of 'stack.dart';
 
 Stack _$StackFromJson(Map<String, dynamic> json) => Stack(
       title: json['title'] as String,
-      boardId: json['boardId'] as int,
+      boardId: (json['boardId'] as num).toInt(),
       deletedAt: _$JsonConverterFromJson<int, DateTime>(
           json['deletedAt'], const EpochDateTimeConverter().fromJson),
       cards: (json['cards'] as List<dynamic>?)
               ?.map((e) => Card.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
+      order: (json['order'] as num?)?.toInt() ?? 0,
     )
       ..lastModified = _$JsonConverterFromJson<int, DateTime>(
           json['lastModified'], const EpochDateTimeConverter().fromJson)
-      ..order = json['order'] as int?
       ..ETag = json['ETag'] as String;
 
 Map<String, dynamic> _$StackToJson(Stack instance) => <String, dynamic>{

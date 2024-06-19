@@ -1,28 +1,39 @@
-# A list of screen capture tests
+# Screen capture tests
+# Note: flutter driver expects a pair of files eg, main.dart and main_test.dart
+driver: test_driver/screenshot_driver.dart
 tests:
-  # Note: flutter driver expects a pair of files eg, main1.dart and main1_test.dart
-  - --target=integration_test/login_test.dart --driver=test_driver/integration_test.dart
-  - --target=integration_test/board_overview_test.dart --driver=test_driver/integration_test.dart
-  - --target=integration_test/board_details_test.dart --driver=test_driver/integration_test.dart
+  - integration_test/screenshots_test.dart
 
-# Interim location of screenshots from tests
-staging: /tmp/screenshots
+# Interim location of screenshots from tests before processing
+staging: /tmp/screenshots/staging
 
-# A list of locales supported by the app
+# A list of locales supported in app
 locales:
-  - en
-  - de
+  - en-GB
+  - de-DE
 
-# A map of devices to emulate
+# A list of devices to run tests on
 devices:
-  ios:
-    iPhone 14:
-      frame: false
-    iPad Pro (12.9-inch) (6th generation):
-      orientation: LandscapeRight
-      frame: false
   android:
-    Nexus 6P:
+    Nexus 9:
+      orientation:
+        - LandscapeRight
+        - Portrait
+    Pixel 4:
+      orientation:
+        - LandscapeRight
+        - Portrait
+
 
 # Frame screenshots
-frame: true
+frame: false
+
+# Run mode can be one of 'normal' (default), 'recording', 'comparison' or 'archive'.
+
+# If run mode is 'recording' or 'comparison', a directory is required for recorded images.
+recording: /tmp/screenshots/record
+
+# If not intending to upload screenshots, images can be stored in an archive dir.
+# This over-rides output to fastlane dirs.
+# If run mode is 'archive', a directory is required for archived images.
+archive: /tmp/screenshots/archive

@@ -6,7 +6,9 @@
 import 'dart:async' as _i4;
 
 import 'package:deck_ng/model/models.dart' as _i2;
-import 'package:deck_ng/service/Icard_service.dart' as _i3;
+import 'package:deck_ng/service/board_service.dart' as _i6;
+import 'package:deck_ng/service/card_service.dart' as _i3;
+import 'package:deck_ng/service/notification_service.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -42,11 +44,31 @@ class _FakeAssignment_1 extends _i1.SmartFake implements _i2.Assignment {
         );
 }
 
-/// A class which mocks [ICardService].
+class _FakeAttachment_2 extends _i1.SmartFake implements _i2.Attachment {
+  _FakeAttachment_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeBoard_3 extends _i1.SmartFake implements _i2.Board {
+  _FakeBoard_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [CardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockICardService extends _i1.Mock implements _i3.ICardService {
-  MockICardService() {
+class MockCardService extends _i1.Mock implements _i3.CardService {
+  MockCardService() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -296,4 +318,104 @@ class MockICardService extends _i1.Mock implements _i3.ICardService {
           ),
         )),
       ) as _i4.Future<_i2.Assignment>);
+
+  @override
+  _i4.Future<_i2.Attachment> addAttachmentToCard(
+    int? boardId,
+    int? stackId,
+    int? cardId,
+    _i2.Attachment? attachment,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAttachmentToCard,
+          [
+            boardId,
+            stackId,
+            cardId,
+            attachment,
+          ],
+        ),
+        returnValue: _i4.Future<_i2.Attachment>.value(_FakeAttachment_2(
+          this,
+          Invocation.method(
+            #addAttachmentToCard,
+            [
+              boardId,
+              stackId,
+              cardId,
+              attachment,
+            ],
+          ),
+        )),
+      ) as _i4.Future<_i2.Attachment>);
+}
+
+/// A class which mocks [NotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNotificationService extends _i1.Mock
+    implements _i5.NotificationService {
+  MockNotificationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic successMsg(
+    String? title,
+    String? message,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #successMsg,
+        [
+          title,
+          message,
+        ],
+      ));
+
+  @override
+  dynamic errorMsg(
+    String? s,
+    String? t,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #errorMsg,
+        [
+          s,
+          t,
+        ],
+      ));
+}
+
+/// A class which mocks [BoardService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockBoardService extends _i1.Mock implements _i6.BoardService {
+  MockBoardService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllBoards,
+          [],
+        ),
+        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+      ) as _i4.Future<List<_i2.Board>>);
+
+  @override
+  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
+        Invocation.method(
+          #getBoard,
+          [boardId],
+        ),
+        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_3(
+          this,
+          Invocation.method(
+            #getBoard,
+            [boardId],
+          ),
+        )),
+      ) as _i4.Future<_i2.Board>);
 }

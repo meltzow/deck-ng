@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.0
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: '>=3.3.3 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -46,7 +46,9 @@ dependencies:
   flutter_gen: any
   appflowy_board: ^0.1.1
   intl: any
-
+  google_fonts: ^6.1.0
+  flutter_colorpicker: ^1.0.3
+  file_picker: ^8.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -56,10 +58,12 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.4.4
   build_runner: ^2.4.8
-#  screenshots:
-#    git:
-#      url: https://github.com/meltzow/screenshots.git
-#      ref: master
+  flutter_driver:
+    sdk: flutter
+  screenshots:
+    git:
+      url: https://github.com/meltzow/screenshots
+
   http_mock_adapter: ^0.6.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -137,3 +141,17 @@ dart_define:
     - name: WIREDASH_SECRET
       description: we need the secret from your wiredash.io login
       required: true
+  flavors:
+    - name: production
+      description: The production flavor
+    - name: staging
+      description: The staging flavor
+    - name: development
+      description: The development flavor
+
+
+scripts:
+  generate_files: flutter pub run build_runner build --delete-conflicting-outputs
+  generate_icons: flutter pub run flutter_launcher_icons:main
+  generate_screenshots_android: screenshots --config=screenshots.yaml
+  generate_screenshots_ios: screenshots --config=screenshots-ios.yaml

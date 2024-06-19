@@ -1,18 +1,19 @@
 import 'dart:io';
 
+import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/Iauth_service.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/auth_service.dart';
+import 'package:deck_ng/service/http_service.dart';
 import 'package:deck_ng/service/impl/retry.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as getX;
 
-class HttpService extends getX.GetxService implements IHttpService {
-  final IAuthService authService = getX.Get.find<IAuthService>();
+class HttpServiceImpl extends getX.GetxService implements HttpService {
+  final AuthService authService = getX.Get.find<AuthService>();
   final Dio httpClient = getX.Get.find<Dio>();
 
-  HttpService();
+  HttpServiceImpl();
 
   Map<String, String> getHeaders(String path,
       [Account? account, Object? body]) {
@@ -110,9 +111,9 @@ class CustomInterceptor extends Interceptor {
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
     if (kDebugMode) {
-      print("onError: ${err.response?.statusCode}");
+      print("onError: ${err.message}");
     }
-    getX.Get.toNamed('/auth/login');
+    getX.Get.toNamed(AppRoutes.login);
     return handler.next(err);
   }
 }

@@ -1,36 +1,66 @@
-import 'package:deck_ng/env.dart';
-import 'package:deck_ng/model/board.dart';
+import 'dart:convert';
+
+import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/service/Ihttp_service.dart';
+import 'package:deck_ng/service/services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:screenshots/src/capture_screen.dart';
 
-import '../test/service/board_service_test.mocks.dart';
+import 'login_test.mocks.dart';
 
-@GenerateMocks([IHttpService])
+@GenerateMocks([AuthService, StorageService, NotificationService])
 void main() {
-  late IHttpService httpServiceMock;
-  final IntegrationTestWidgetsFlutterBinding binding =
+  IntegrationTestWidgetsFlutterBinding binding =
       IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    Environment.init();
-    Get.replace<IHttpService>(MockIHttpService());
-    httpServiceMock = Get.find<IHttpService>();
+    late AuthService authServiceMock;
 
-    var resp = [Board(title: 'garden', id: 1)].map((e) => e.toJson()).toList();
-    when(httpServiceMock.getListResponse('/index.php/apps/deck/api/v1/boards'))
+    Get.replace<AuthService>(MockAuthService());
+    authServiceMock = Get.find<AuthService>();
+
+    Get.replace<StorageService>(MockStorageService());
+    var storageServiceMock = Get.find<StorageService>();
+
+    Get.replace<NotificationService>(MockNotificationService());
+    //var storageServiceMock = Get.find<IStorageService>();
+
+    when(storageServiceMock.getAccount()).thenReturn(null);
+    when(storageServiceMock.hasAccount()).thenReturn(false);
+    when(storageServiceMock.saveAccount(Account(
+            username: "admin",
+            password: "admin",
+            authData: 'Basic ${base64.encode(utf8.encode('admin:admin'))}',
+            url: "http://192.168.178.81:8080",
+            isAuthenticated: false)))
+        .thenReturn(null);
+
+    when(storageServiceMock.hasSettings()).thenReturn(false);
+
+    var resp = Capabilities(CapabilitiesOcs(
+        meta: Meta('success', 200, 'success'),
+        data: CapabilitiesData(Version(0, 0, 26, "26.0.0", '', false), {})));
+    when(authServiceMock.checkServer('https://my.next.cloud'))
         .thenAnswer((_) async => resp);
+    when(authServiceMock.isAuth()).thenReturn(false);
   });
 
-  testWidgets('display login screen', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
-    await Future.delayed(const Duration(seconds: 1), () {});
+  testWidgets('display login screen', (tester) async {
+    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+
+    await tester.enterText(
+        find.byKey(const Key('serverUrl')), 'https://my.next.cloud');
+    await tester.enterText(find.byKey(const Key('username')), 'deckNG');
+    await tester.enterText(find.byKey(const Key('password')), 'secret');
     await tester.pumpAndSettle();
-    //FIXME
-    // await screenshot(binding, tester, lo.localeName, 'login', silent: false);
+    expect(find.text('Login'), findsOneWidget);
+    await tester.tapAt(const Offset(10, 10));
+    await tester.pumpAndSettle();
+    await screenshot(binding, tester, 'login_screen');
   });
 }

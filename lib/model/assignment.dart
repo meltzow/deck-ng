@@ -10,7 +10,11 @@ class Assignment {
   late User participant;
   late int type;
 
-  Assignment(this.cardId, this.id, this.participant, this.type);
+  Assignment(
+      {required this.cardId,
+      required this.id,
+      required this.participant,
+      required this.type});
 
   factory Assignment.fromJson(Map<String, dynamic> json) =>
       _$AssignmentFromJson(json);

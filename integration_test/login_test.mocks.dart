@@ -3,13 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i2;
+import 'dart:async' as _i3;
 
-import 'package:deck_ng/service/Ihttp_service.dart' as _i4;
-import 'package:deck_ng/service/impl/retry.dart' as _i6;
-import 'package:dio/dio.dart' as _i3;
+import 'package:deck_ng/model/models.dart' as _i5;
+import 'package:deck_ng/service/auth_service.dart' as _i2;
+import 'package:deck_ng/service/notification_service.dart' as _i6;
+import 'package:deck_ng/service/storage_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -24,8 +24,8 @@ import 'package:mockito/src/dummies.dart' as _i5;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeFuture_0<T1> extends _i1.SmartFake implements _i2.Future<T1> {
-  _FakeFuture_0(
+class _FakeCapabilities_0 extends _i1.SmartFake implements _i2.Capabilities {
+  _FakeCapabilities_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -34,123 +34,124 @@ class _FakeFuture_0<T1> extends _i1.SmartFake implements _i2.Future<T1> {
         );
 }
 
-class _FakeResponse_1<T1> extends _i1.SmartFake implements _i3.Response<T1> {
-  _FakeResponse_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-/// A class which mocks [IHttpService].
+/// A class which mocks [AuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIHttpService extends _i1.Mock implements _i4.IHttpService {
-  MockIHttpService() {
+class MockAuthService extends _i1.Mock implements _i2.AuthService {
+  MockAuthService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.Future<Map<String, dynamic>> get(String? path) => (super.noSuchMethod(
-        Invocation.method(
-          #get,
-          [path],
-        ),
-        returnValue:
-            _i2.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i2.Future<Map<String, dynamic>>);
-
-  @override
-  _i2.Future<List<dynamic>> getListResponse(String? path) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getListResponse,
-          [path],
-        ),
-        returnValue: _i2.Future<List<dynamic>>.value(<dynamic>[]),
-      ) as _i2.Future<List<dynamic>>);
-
-  @override
-  _i2.Future<Map<String, dynamic>> post(
-    String? path, [
-    dynamic body,
-    bool? useAccount,
-  ]) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #post,
-          [
-            path,
-            body,
-            useAccount,
-          ],
-        ),
-        returnValue:
-            _i2.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i2.Future<Map<String, dynamic>>);
-
-  @override
-  _i2.Future<T> put<T>(
-    String? path,
-    dynamic body,
+  _i3.Future<bool> login(
+    String? serverUrl,
+    String? username,
+    String? password,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #put,
+          #login,
           [
-            path,
-            body,
+            serverUrl,
+            username,
+            password,
           ],
         ),
-        returnValue: _i5.ifNotNull(
-              _i5.dummyValueOrNull<T>(
-                this,
-                Invocation.method(
-                  #put,
-                  [
-                    path,
-                    body,
-                  ],
-                ),
-              ),
-              (T v) => _i2.Future<T>.value(v),
-            ) ??
-            _FakeFuture_0<T>(
-              this,
-              Invocation.method(
-                #put,
-                [
-                  path,
-                  body,
-                ],
-              ),
-            ),
-      ) as _i2.Future<T>);
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
 
   @override
-  _i2.Future<_i3.Response<T>> retry<T>(
-    _i3.RequestOptions? ops, [
-    _i6.RetryOptions? retryOptions,
-  ]) =>
+  _i3.Future<_i2.Capabilities> checkServer(String? serverUrl) =>
       (super.noSuchMethod(
         Invocation.method(
-          #retry,
-          [
-            ops,
-            retryOptions,
-          ],
+          #checkServer,
+          [serverUrl],
         ),
-        returnValue: _i2.Future<_i3.Response<T>>.value(_FakeResponse_1<T>(
+        returnValue: _i3.Future<_i2.Capabilities>.value(_FakeCapabilities_0(
           this,
           Invocation.method(
-            #retry,
-            [
-              ops,
-              retryOptions,
-            ],
+            #checkServer,
+            [serverUrl],
           ),
         )),
-      ) as _i2.Future<_i3.Response<T>>);
+      ) as _i3.Future<_i2.Capabilities>);
+
+  @override
+  bool isAuth() => (super.noSuchMethod(
+        Invocation.method(
+          #isAuth,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+}
+
+/// A class which mocks [StorageService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStorageService extends _i1.Mock implements _i4.StorageService {
+  MockStorageService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  bool hasAccount() => (super.noSuchMethod(
+        Invocation.method(
+          #hasAccount,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool hasSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #hasSettings,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  dynamic saveSetting(_i5.Setting? setting) =>
+      super.noSuchMethod(Invocation.method(
+        #saveSetting,
+        [setting],
+      ));
+}
+
+/// A class which mocks [NotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNotificationService extends _i1.Mock
+    implements _i6.NotificationService {
+  MockNotificationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic successMsg(
+    String? title,
+    String? message,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #successMsg,
+        [
+          title,
+          message,
+        ],
+      ));
+
+  @override
+  dynamic errorMsg(
+    String? s,
+    String? t,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #errorMsg,
+        [
+          s,
+          t,
+        ],
+      ));
 }

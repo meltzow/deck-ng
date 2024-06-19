@@ -15,7 +15,8 @@ class Stack {
   @JsonKey(defaultValue: <Card>[])
   late List<Card> cards;
   late int id;
-  late int? order;
+  @JsonKey(defaultValue: 0)
+  late int order;
   late String ETag;
 
   Stack(
@@ -23,7 +24,8 @@ class Stack {
       required this.boardId,
       this.deletedAt,
       this.cards = const <Card>[],
-      required this.id});
+      required this.id,
+      this.order = 0});
 
   factory Stack.fromJson(Map<String, dynamic> json) => _$StackFromJson(json);
 

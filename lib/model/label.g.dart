@@ -9,11 +9,11 @@ part of 'label.dart';
 Label _$LabelFromJson(Map<String, dynamic> json) => Label(
       title: json['title'] as String,
       color: json['color'] as String?,
-      id: json['id'] as int?,
-      boardId: json['boardId'] as int?,
-      lastModified: json['lastModified'] as int?,
+      id: (json['id'] as num?)?.toInt(),
+      boardId: (json['boardId'] as num?)?.toInt(),
+      lastModified: (json['lastModified'] as num?)?.toInt(),
       ETAG: json['ETAG'] as String?,
-      cardId: json['cardId'] as int?,
+      cardId: (json['cardId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$LabelToJson(Label instance) => <String, dynamic>{
