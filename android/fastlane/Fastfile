@@ -33,11 +33,21 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do |options|
-#       ensure_git_branch(branch: 'main')
-      #sh "cd .. && ionic cap sync android --prod"
+  lane :build do
+    gradle(
+        task: 'assemble',
+        build_type: 'Release',
+        properties: {
+        "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
+        "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
+        "android.injected.signing.key.alias" => "upload",
+        "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
+        }
+    )
+  end
 
+  desc "Deploy a new version to the Google Play"
+  lane :release do |options|
       sh "echo Your password is #{password}"
       if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
         previous_build_number_beta = google_play_track_version_codes(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], track: "beta")[0]
