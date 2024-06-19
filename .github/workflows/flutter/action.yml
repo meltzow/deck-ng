@@ -10,7 +10,9 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: flutter pub get
+      run: |
+        flutter config --no-analytics
+        flutter pub get
 
     - name: Run Flutter tests
       shell: bash
