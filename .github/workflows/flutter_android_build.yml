@@ -19,6 +19,11 @@ jobs:
         run: |
           cd android
           bundle exec fastlane android build
+        env:
+          GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
+          FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }}
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
