@@ -14,7 +14,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/flutter
       - uses: ./.github/workflows/android
-
+      - name: Generate .jks file
+        run: echo "$FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64" | base64 -d > "$FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"
       - name: Build APK
         run: |
           cd android
