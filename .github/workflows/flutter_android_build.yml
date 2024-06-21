@@ -16,7 +16,7 @@ jobs:
       - uses: ./.github/workflows/android
       - name: Generate .jks file
         working-directory: android
-        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > ./app/keystore.jks
+        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
       - name: Build APK
         working-directory: android
         run: |
@@ -25,7 +25,7 @@ jobs:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
           FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
           FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }}
-          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: "./keystore.jks"
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: "/tmp/keystore.jks"
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
