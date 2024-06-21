@@ -13,7 +13,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/flutter
-      - uses: ./.github/workflows/android
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/android/.gradle/caches
+            ~/android/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: 17
+          check-latest: true
+      - name: install gradle
+        shell: bash
+        run: |
+          cd android
+          gradle wrapper
       - name: Generate .jks file
         working-directory: android
         run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
