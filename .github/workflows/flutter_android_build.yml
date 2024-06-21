@@ -15,7 +15,7 @@ jobs:
       - uses: ./.github/workflows/flutter
       - uses: ./.github/workflows/android
       - name: Generate .jks file
-        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > ./keystore.jks
+        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > ./android/keystore.jks
       - name: Build APK
         run: |
           cd android
