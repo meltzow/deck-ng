@@ -31,6 +31,14 @@ jobs:
         run: |
           cd ios
           bundle exec fastlane ios build
+        env:
+          BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
+          FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
+          FASTLANE_APPLE_API_ISSUER_ID: ${{ secrets.FASTLANE_APPLE_API_ISSUER_ID }}
+          FASTLANE_APPLE_API_KEY: ${{ secrets.FASTLANE_APPLE_API_KEY }}
+          APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
+          DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
+          DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
 
       - name: Upload iOS build
         uses: actions/upload-artifact@v2
