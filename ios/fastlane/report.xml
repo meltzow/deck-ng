@@ -5,77 +5,19 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: update_fastlane" time="6.045188">
+      <testcase classname="fastlane.lanes" name="0: update_fastlane" time="0.000334905">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: default_platform" time="0.000116">
+      <testcase classname="fastlane.lanes" name="1: default_platform" time="0.000100507">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: Switch to ios build lane" time="7.6e-05">
+      <testcase classname="fastlane.lanes" name="2: match" time="1.659066463">
         
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="03: ensure_git_branch" time="0.048509">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="04: setup_ci" time="0.000162">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="05: app_store_connect_api_key" time="0.002251">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="06: match" time="5.395231">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="07: bundle_install" time="0.201521">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="08: increment_version_number" time="0.670516">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="09: latest_testflight_build_number" time="2.290409">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="10: app_store_build_number" time="2.892076">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="11: increment_build_number" time="0.21041">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="12: build_app" time="60.802092">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="13: upload_to_testflight" time="156.464258">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="14: notification" time="0.881919">
+          <failure message="/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/runner.rb:229:in `chdir&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/runner.rb:229:in `execute_action&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing&apos;&#10;Fastfile:32:in `block (2 levels) in parsing_binding&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/lane.rb:41:in `call&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/runner.rb:49:in `block in execute&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/runner.rb:45:in `chdir&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/runner.rb:45:in `execute&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/lane_manager.rb:46:in `cruise_lane&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/command_line_handler.rb:34:in `handle&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run&apos;&#10;/home/mario/gems/gems/commander-4.6.0/lib/commander/command.rb:187:in `call&apos;&#10;/home/mario/gems/gems/commander-4.6.0/lib/commander/command.rb:157:in `run&apos;&#10;/home/mario/gems/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!&apos;&#10;/home/mario/gems/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/commands_generator.rb:363:in `run&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/commands_generator.rb:43:in `start&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off&apos;&#10;/home/mario/gems/gems/fastlane-2.221.1/bin/fastlane:23:in `&lt;top (required)&gt;&apos;&#10;/home/mario/gems/bin/fastlane:25:in `load&apos;&#10;/home/mario/gems/bin/fastlane:25:in `&lt;main&gt;&apos;&#10;&#10;Invalid password passed via &apos;MATCH_PASSWORD&apos;" />
         
       </testcase>
     

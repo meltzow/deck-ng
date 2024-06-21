@@ -26,10 +26,26 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios import_certificate_by_github
+
+```sh
+[bundle exec] fastlane ios import_certificate_by_github
+```
+
+
+
 ### ios build
 
 ```sh
 [bundle exec] fastlane ios build
+```
+
+
+
+### ios release
+
+```sh
+[bundle exec] fastlane ios release
 ```
 
 
@@ -46,14 +62,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ```sh
 [bundle exec] fastlane ios sim
-```
-
-
-
-### ios release
-
-```sh
-[bundle exec] fastlane ios release
 ```
 
 
