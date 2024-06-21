@@ -39,6 +39,7 @@ jobs:
           APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
           DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
           DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD}}
 
       - name: Upload iOS build
         uses: actions/upload-artifact@v2
