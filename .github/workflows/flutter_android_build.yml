@@ -15,7 +15,7 @@ jobs:
       - uses: ./.github/workflows/flutter
       - uses: ./.github/workflows/android
       - name: Generate .jks file
-        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
+        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > ./keystore.jks
       - name: Build APK
         run: |
           cd android
@@ -24,7 +24,7 @@ jobs:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
           FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
           FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }}
-          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: "./keystore.jks"
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
