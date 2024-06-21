@@ -21,7 +21,11 @@ jobs:
         with:
           bundler-cache: true
       - name: Generate .jks file
-        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
+        run: echo "${{ FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > ${{ FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
+        env:
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}
+
       - run: bundle exec fastlane android build track:${{ inputs.track }}
         env:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
