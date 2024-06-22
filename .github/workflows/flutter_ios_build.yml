@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Flutter actions
         uses: subosito/flutter-action@v1
@@ -16,20 +16,32 @@ jobs:
           flutter-version: '3.19.5'
 
       - name: Install dependencies
-        run: flutter pub get
+        run: | 
+          flutter config --no-analytics
+          flutter pub get
 
       - name: Run Flutter tests
         run: flutter test
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - run: |
+          cd ios
+          brew install fastlane
 
       - name: Set up Fastlane
         run: |
           cd ios
           sudo gem install bundler
+          bundle config set path 'vendor/bundle'
           bundle install
 
       - name: Build iOS
         run: |
           cd ios
+          pod install
           bundle exec fastlane ios build
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
