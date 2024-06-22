@@ -8,20 +8,3 @@ runs:
       with:
         flutter-version: '3.19.5'
 
-    - name: Install dependencies
-      shell: bash
-      run: |
-        flutter config --no-analytics
-        flutter pub get
-
-    - name: Run Flutter tests
-      shell: bash
-      run: flutter test
-
-    - name: Set up Fastlane
-      shell: bash
-      run: |
-        cd android
-        sudo gem install bundler
-        bundle config set path 'vendor/bundle'
-        bundle install
