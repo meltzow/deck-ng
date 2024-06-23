@@ -35,7 +35,7 @@ platform :ios do
 
    lane :build do
        import_certificate_by_github
-       build_app(scheme: scheme, clean: true, xcargs: "-allowProvisioningUpdates")
+       build_app(scheme: scheme, clean: true)
    end
 
   lane :release do |options|
