@@ -1,1 +1,1 @@
-support dart technology
+Komplett überarbeitete Version mit neuer Benutzeroberfläche. Neue Funktionen kommen in den nächsten Versionen.

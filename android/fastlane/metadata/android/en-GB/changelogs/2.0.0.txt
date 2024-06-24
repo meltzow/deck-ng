@@ -1,1 +1,1 @@
-support dart technology
+Completely revised version with a new user interface. New features will be coming in the next versions.
