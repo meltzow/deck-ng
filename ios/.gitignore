@@ -36,3 +36,5 @@ Runner/GeneratedPluginRegistrant.*
 *.mobileprovision
 *.ipa
 *.app.dSYM.zip
+
+**/report.xml

@@ -40,7 +40,6 @@ jobs:
           sudo gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install
-          sudo gem install fastlane
 
       - name: Build iOS
         run: |
