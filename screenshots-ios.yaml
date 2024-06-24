@@ -17,7 +17,7 @@ devices:
   ios:
     iPhone 15:
       frame: false
-    iPad Pro (12.9-inch) (6th generation):
+    iPad Pro 13-inch (M4):
       orientation: LandscapeRight
       frame: false
 
