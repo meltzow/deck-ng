@@ -30,9 +30,9 @@ jobs:
           bundler-cache: true
           ruby-version: "3.3"
 
-      - run: |
-          cd ios
-          brew install fastlane
+#      - run: |
+#          cd ios
+#          brew install fastlane
 
       - name: Set up Fastlane
         run: |
@@ -40,12 +40,13 @@ jobs:
           sudo gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install
+          sudo gem install fastlane
 
       - name: Build iOS
         run: |
           cd ios
           pod install
-          bundle exec fastlane ios build
+          bundle exec fastlane ios release track:beta
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
           FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
