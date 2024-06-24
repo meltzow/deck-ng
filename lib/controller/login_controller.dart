@@ -11,6 +11,8 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
   var username = ''.obs;
   var password = ''.obs;
+  var urlController = TextEditingController();
+  var userNameController = TextEditingController();
   var passwordController = TextEditingController();
 
   var url = ''.obs;
@@ -20,6 +22,29 @@ class LoginController extends GetxController {
   var isPasswordVisible = false.obs;
 
   Rxn<Version> nextcloudVersion = Rxn();
+
+  @override
+  void onInit() {
+    urlController.addListener(() {
+      url.value = urlController.text;
+    });
+
+    userNameController.addListener(() {
+      username.value = userNameController.text;
+    });
+
+    passwordController.addListener(() {
+      password.value = passwordController.text;
+    });
+
+    // focusNode.addListener(() {
+    //   if (!focusNode.hasFocus) {
+    //     checkCapabilties();
+    //   }
+    // });
+
+    super.onInit();
+  }
 
   void validateUrl(String value) {
     // Regex pattern to match HTTP/HTTPS URLs and IP addresses
@@ -37,7 +62,6 @@ class LoginController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    username.value = '';
     await readAccountData();
   }
 

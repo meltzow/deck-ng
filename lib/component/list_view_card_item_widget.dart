@@ -20,7 +20,7 @@ class ListViewCardItem extends StatelessWidget {
         data != null ? data!.title : "",
       ),
       subtitle: Text(
-        data != null
+        data != null && data!.description != null
             ? '${data!.description!.substring(0, min(50, data!.description!.length))}...'
             : "",
       ),

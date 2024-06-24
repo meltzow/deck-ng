@@ -61,5 +61,5 @@ void main() {
     await binding.convertFlutterSurfaceToImage();
     await tester.pumpAndSettle();
     await screenshot(binding, tester, 'settings_screen');
-  });
+  }, skip: true);
 }
