@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:deck_ng/service/services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,9 @@ class LoginController extends GetxController {
   var credService = Get.find<StorageService>();
   var authService = Get.find<AuthService>();
   var notificationService = Get.find<NotificationService>();
+
+  final focusNode = FocusNode();
+  Timer? typingTimer;
 
   var isLoading = false.obs;
   var username = ''.obs;
@@ -37,11 +42,12 @@ class LoginController extends GetxController {
       password.value = passwordController.text;
     });
 
-    // focusNode.addListener(() {
-    //   if (!focusNode.hasFocus) {
-    //     checkCapabilties();
-    //   }
-    // });
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        typingTimer?.cancel(); // Cancel the timer if it's still running
+        validateUrl(url.value);
+      }
+    });
 
     super.onInit();
   }
@@ -98,8 +104,8 @@ class LoginController extends GetxController {
       serverInfo.value = resp.ocs.data.version.string;
       // _deckVersion.value = resp.ocs.data.version.string;
     } on DioException {
-      serverInfo.value = 'not found';
-      // _deckVersion.value = 'not found';
+      serverInfo.value = 'Invalid URL or IP Address';
+      isUrlValid.value = false;
     }
     isLoading.value = false;
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,9 +41,14 @@ class LoginScreen extends StatelessWidget {
                           TextField(
                             key: const Key('serverUrl'),
                             controller: _controller.urlController,
+                            focusNode: _controller.focusNode,
                             onChanged: (value) {
                               _controller.url.value = value;
-                              _controller.validateUrl(value);
+                              _controller.typingTimer?.cancel();
+                              _controller.typingTimer =
+                                  Timer(const Duration(seconds: 2), () {
+                                _controller.validateUrl(value);
+                              });
                             },
                             decoration: InputDecoration(
                               labelText: 'URL or IP Address',
@@ -106,7 +113,6 @@ class LoginScreen extends StatelessWidget {
                                     ? null
                                     : _controller.login,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blueAccent,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),

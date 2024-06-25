@@ -4,6 +4,7 @@ import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart';
 
 class DashboardScreen extends StatelessWidget {
   final DashboardController _controller = Get.find<DashboardController>();
@@ -34,6 +35,10 @@ class DashboardScreen extends StatelessWidget {
                   child: LoadingIndicator(),
                 );
               }
+              WidgetsBinding.instance!.addPostFrameCallback((_) {
+                Wiredash.of(context)
+                    .showPromoterSurvey(inheritMaterialTheme: true);
+              });
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -108,7 +113,7 @@ class DashboardScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               value.toString(),
-              style: const TextStyle(fontSize: 20, color: Colors.blueAccent),
+              style: const TextStyle(fontSize: 20, color: Colors.deepPurple),
             ),
           ],
         ),

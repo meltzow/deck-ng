@@ -50,10 +50,10 @@ class MyApp extends StatelessWidget {
           // collectMetaData: (metaData) async =>
           // metaData..userEmail = 'dash@wiredash.io',
           // frequency: Duration(days: 90), // default
-          // initialDelay: Duration(days: 7), // default
-          initialDelay: Duration.zero, // disable initial delay
-          // minimumAppStarts: 3, // default
-          minimumAppStarts: 0, // disable minimum app starts
+          initialDelay: Duration(days: 7), // default
+          //initialDelay: Duration.zero, // disable initial delay
+          minimumAppStarts: 3, // default
+          //minimumAppStarts: 0, // disable minimum app starts
         ),
         collectMetaData: (metaData) => metaData..custom['language'] = 'de',
         child: GetMaterialApp(

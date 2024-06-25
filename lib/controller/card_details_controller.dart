@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 
@@ -143,45 +140,45 @@ class CardDetailsController extends GetxController {
     );
   }
 
-  void addAttachment(FilePickerResult result) async {
-    var file = result.files.single;
-    // Create an Attachment object from the selected file
-    Attachment attachment = Attachment(
-      cardId: card.value!.id!,
-      type: 'file',
-      data: base64Encode(file.bytes!),
-      lastModified: DateTime.now().millisecondsSinceEpoch,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      createdBy: 'Your User ID', // Replace with the actual user ID
-      deletedAt: null,
-      extendedData: ExtendedData(
-        filesize: file.size,
-        mimetype: file.extension!,
-        info: Info(
-          dirname: 'Directory Name', // Replace with the actual directory name
-          basename: 'Base Name', // Replace with the actual base name
-          extension: file.extension!,
-          filename: file.name,
-        ),
-      ),
-      id: 0, // Replace with the actual ID
-    );
-
-    await _cardService.addAttachmentToCard(
-        boardId.value, stackId.value, cardId.value, attachment);
-
-    card.value = card.value?.copyWith(
-      attachments: [...?card.value?.attachments, attachment],
-    );
-  }
-
-  void removeAttachment(Attachment attachment) {
-    card.value = card.value?.copyWith(
-      attachments: card.value?.attachments
-          ?.where((a) =>
-              a.extendedData.info.filename !=
-              attachment.extendedData.info.filename)
-          .toList(),
-    );
-  }
+  // void addAttachment(FilePickerResult result) async {
+  //   var file = result.files.single;
+  //   // Create an Attachment object from the selected file
+  //   Attachment attachment = Attachment(
+  //     cardId: card.value!.id!,
+  //     type: 'file',
+  //     data: base64Encode(file.bytes!),
+  //     lastModified: DateTime.now().millisecondsSinceEpoch,
+  //     createdAt: DateTime.now().millisecondsSinceEpoch,
+  //     createdBy: 'Your User ID', // Replace with the actual user ID
+  //     deletedAt: null,
+  //     extendedData: ExtendedData(
+  //       filesize: file.size,
+  //       mimetype: file.extension!,
+  //       info: Info(
+  //         dirname: 'Directory Name', // Replace with the actual directory name
+  //         basename: 'Base Name', // Replace with the actual base name
+  //         extension: file.extension!,
+  //         filename: file.name,
+  //       ),
+  //     ),
+  //     id: 0, // Replace with the actual ID
+  //   );
+  //
+  //   await _cardService.addAttachmentToCard(
+  //       boardId.value, stackId.value, cardId.value, attachment);
+  //
+  //   card.value = card.value?.copyWith(
+  //     attachments: [...?card.value?.attachments, attachment],
+  //   );
+  // }
+  //
+  // void removeAttachment(Attachment attachment) {
+  //   card.value = card.value?.copyWith(
+  //     attachments: card.value?.attachments
+  //         ?.where((a) =>
+  //             a.extendedData.info.filename !=
+  //             attachment.extendedData.info.filename)
+  //         .toList(),
+  //   );
+  // }
 }
