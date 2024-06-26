@@ -87,7 +87,7 @@ class DashboardScreen extends StatelessWidget {
                         title: Text(board.title),
                         subtitle: Text('ID: ${board.id}'),
                         onTap: () {
-                          Get.toNamed(
+                          Get.offNamed(
                             AppRoutes.kanbanBoard,
                             parameters: {'boardId': board.id.toString()},
                           );

@@ -57,9 +57,40 @@ class KanbanBoardScreen extends StatelessWidget {
       controller: controller.boardController,
       headerBuilder: (context, columnData) {
         return AppFlowyGroupHeader(
-          title: Text(
-            columnData.headerData.groupName,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+          addIcon: const Icon(Icons.add),
+          onAddButtonClick: () async {
+            String? title;
+            title = await showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('New card'),
+                content: TextField(
+                  onChanged: (value) => title = value,
+                  decoration: const InputDecoration(hintText: "Card title"),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, title),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            if (title != null) {
+              Get.find<KanbanBoardController>()
+                  .createCard(int.parse(columnData.id), title!);
+            }
+          },
+          title: Expanded(
+            child: Row(
+              children: [
+                Text(
+                  columnData.headerData.groupName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+              ],
+            ),
           ),
           height: 50,
           margin: config.groupMargin,

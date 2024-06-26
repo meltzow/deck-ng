@@ -37,7 +37,7 @@ class DrawerWidget extends StatelessWidget {
                   ? const Icon(Icons.dashboard_outlined)
                   : Container(),
               onTap: () {
-                Get.toNamed(AppRoutes.home);
+                Get.offNamed(AppRoutes.home);
               },
             ),
           ),
@@ -58,7 +58,7 @@ class DrawerWidget extends StatelessWidget {
                   : const Icon(Icons.login_outlined),
               onTap: () {
                 controller.logout();
-                Get.toNamed(AppRoutes.login);
+                Get.offNamed(AppRoutes.login);
               },
             ),
           ),

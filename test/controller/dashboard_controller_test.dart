@@ -10,6 +10,14 @@ import 'dashboard_controller_test.mocks.dart';
 
 @GenerateMocks([AuthService, BoardService, StackService])
 void main() {
+  setUp(() {
+    Get.testMode = true;
+  });
+
+  tearDown(() {
+    Get.reset();
+  });
+
   test(
       '''Test the state of the reactive variable "boardDataCount" across all of its lifecycles''',
       () async {

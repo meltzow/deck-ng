@@ -71,11 +71,11 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
   json_serializable: any
-  devtools_extensions: ^0.0.13
+  devtools_extensions: ^0.2.1
   analyzer: ^6.4.1
   path_provider_platform_interface: any
   plugin_platform_interface: any
-  flutter_oss_licenses: ^2.0.1
+  flutter_oss_licenses: ^3.0.2
 
 flutter_launcher_icons:
   android: true
@@ -154,3 +154,4 @@ scripts:
   generate_icons: flutter pub run flutter_launcher_icons:main
   generate_screenshots_android: screenshots --config=screenshots.yaml
   generate_screenshots_ios: screenshots --config=screenshots-ios.yaml
+  generate_licenses: flutter pub run flutter_oss_licenses:generate.dart

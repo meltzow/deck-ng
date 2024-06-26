@@ -9,6 +9,7 @@ import 'package:deck_ng/model/models.dart' as _i3;
 import 'package:deck_ng/service/auth_service.dart' as _i2;
 import 'package:deck_ng/service/board_service.dart' as _i6;
 import 'package:deck_ng/service/card_service.dart' as _i8;
+import 'package:deck_ng/service/notification_service.dart' as _i9;
 import 'package:deck_ng/service/stack_service.dart' as _i7;
 import 'package:deck_ng/service/storage_service.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
@@ -498,4 +499,40 @@ class MockCardService extends _i1.Mock implements _i8.CardService {
           ),
         )),
       ) as _i5.Future<_i3.Attachment>);
+}
+
+/// A class which mocks [NotificationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNotificationService extends _i1.Mock
+    implements _i9.NotificationService {
+  MockNotificationService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  dynamic successMsg(
+    String? title,
+    String? message,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #successMsg,
+        [
+          title,
+          message,
+        ],
+      ));
+
+  @override
+  dynamic errorMsg(
+    String? s,
+    String? t,
+  ) =>
+      super.noSuchMethod(Invocation.method(
+        #errorMsg,
+        [
+          s,
+          t,
+        ],
+      ));
 }

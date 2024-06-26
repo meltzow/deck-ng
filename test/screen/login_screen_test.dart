@@ -13,9 +13,13 @@ class MockLoginController extends GetxController
   var username = ''.obs;
   var password = ''.obs;
   var isPasswordVisible = false.obs;
+  var urlController = TextEditingController();
+  var userNameController = TextEditingController();
   var passwordController = TextEditingController();
   var serverInfo = ''.obs;
   var isLoading = false.obs;
+
+  final focusNode = FocusNode();
 }
 
 void main() {
@@ -29,6 +33,7 @@ void main() {
   });
 
   tearDown(() {
+    loginController.onClose();
     Get.reset();
   });
 

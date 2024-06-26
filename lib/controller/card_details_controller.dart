@@ -13,6 +13,8 @@ class CardDetailsController extends GetxController {
 
   final CardService _cardService = Get.find<CardService>();
   final BoardService _boardService = Get.find<BoardService>();
+  final NotificationService _notificationService =
+      Get.find<NotificationService>();
 
   final material.TextEditingController titleController =
       material.TextEditingController();
@@ -72,41 +74,12 @@ class CardDetailsController extends GetxController {
     }
   }
 
-  void updateCard(Card card) async {
-    final updatedCard = Card(
-      ETag: card.ETag,
-      archived: card.archived,
-      assignedUsers: card.assignedUsers,
-      attachmentCount: card.attachmentCount,
-      attachments: card.attachments,
-      commentsCount: card.commentsCount,
-      commentsUnread: card.commentsUnread,
-      createdAt: card.createdAt,
-      deletedAt: card.deletedAt,
-      description: descriptionController.text,
-      duedate: DateTime.tryParse(duedateController.text),
-      id: card.id,
-      labels: card.labels,
-      lastEditor: card.lastEditor,
-      lastModified: DateTime.now(),
-      order: card.order,
-      overdue: card.overdue,
-      owner: card.owner,
-      stackId: card.stackId,
-      title: titleController.text,
-      type: card.type,
-      done: card.done,
-      notified: card.notified,
-      participants: card.participants,
-      relatedStack: card.relatedStack,
-      relatedBoard: card.relatedBoard,
-    );
-
-    await _cardService.updateCard(
-        boardId.value, stackId.value, this.card.value!.id!, updatedCard);
+  Future<void> updateCard(Card card) async {
+    var updatedCard = await _cardService.updateCard(
+        boardId.value, stackId.value, this.card.value!.id!, card);
     this.card.value = updatedCard;
     // Display success message
-    Get.snackbar('Success', 'Card updated successfully');
+    _notificationService.successMsg('Card', 'Card updated successfully');
   }
 
   void addLabel(Label label) {

@@ -23,8 +23,14 @@ class MockCardDetailsController extends CardDetailsController with Mock {
   var selectedLabels = <Label>[].obs;
 }
 
-@GenerateMocks(
-    [StorageService, AuthService, BoardService, StackService, CardService])
+@GenerateMocks([
+  StorageService,
+  AuthService,
+  BoardService,
+  StackService,
+  CardService,
+  NotificationService
+])
 void main() {
   late CardDetailsController cardDetailsControllerMock;
   late StorageService storageServiceMock;
@@ -32,6 +38,7 @@ void main() {
   late BoardService boardServiceMock;
   late StackService stackServiceMock;
   late CardService cardServiceMock;
+  late NotificationService notificationServiceMock;
 
   setUp(() {
     Get.testMode = true;
@@ -40,6 +47,8 @@ void main() {
     storageServiceMock = Get.put<StorageService>(MockStorageService());
     cardServiceMock = Get.put<CardService>(MockCardService());
     boardServiceMock = Get.put<BoardService>(MockBoardService());
+    notificationServiceMock =
+        Get.put<NotificationService>(MockNotificationService());
 
     Get.parameters = <String, String>{
       'boardId': '1',

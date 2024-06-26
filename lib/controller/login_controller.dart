@@ -52,6 +52,12 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    typingTimer?.cancel();
+    super.onClose();
+  }
+
   void validateUrl(String value) {
     // Regex pattern to match HTTP/HTTPS URLs and IP addresses
     const urlPattern =
@@ -108,5 +114,12 @@ class LoginController extends GetxController {
       isUrlValid.value = false;
     }
     isLoading.value = false;
+  }
+
+  void startValidationTimer(String value) {
+    typingTimer?.cancel();
+    typingTimer = Timer(const Duration(seconds: 2), () {
+      validateUrl(value);
+    });
   }
 }

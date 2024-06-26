@@ -10,23 +10,39 @@ import 'kanban_board_controller_test.mocks.dart';
 
 @GenerateMocks([BoardService, StackService, CardService, NotificationService])
 void main() {
-  var boardRepositoryImplMock = Get.put<BoardService>(MockBoardService());
-  var stackServiceMock = Get.put<StackService>(MockStackService());
-  var cardServiceMock = Get.put<CardService>(MockCardService());
-  var notifyServiceMock =
-      Get.put<NotificationService>(MockNotificationService());
+  late BoardService boardServiceMock;
+  late StackService stackServiceMock;
+  late CardService cardServiceMock;
+  late NotificationService notifyServiceMock;
+
   setUp(() {
     Get.testMode = true;
+    boardServiceMock = Get.put<BoardService>(MockBoardService());
+    stackServiceMock = Get.put<StackService>(MockStackService());
+    cardServiceMock = Get.put<CardService>(MockCardService());
+    notifyServiceMock = Get.put<NotificationService>(MockNotificationService());
+  });
+
+  tearDown(() {
+    Get.reset();
   });
 
   test('reordering in same stack must save old card with new order', () async {
+    Get.parameters = <String, String>{'boardId': '1'};
+    var board = NC.Board(title: 'foo', id: 1);
+    when(boardServiceMock.getBoard(board.id)).thenAnswer((_) async {
+      return board;
+    });
+    when(stackServiceMock.getAll(board.id)).thenAnswer((_) async {
+      return [];
+    });
+
     final controller = Get.put(KanbanBoardController());
 
     controller.boardId = 1;
     expect(controller.boardId, 1);
     expect(controller.stackData, []);
 
-    var board = NC.Board(title: 'foo', id: 1);
     var stack = NC.Stack(title: "offen", id: 17, boardId: board.id);
     var card1 = NC.Card(title: "issue1", id: 1, stackId: stack.id);
     var draggedCard = NC.Card(title: "issue2", id: 2, stackId: stack.id);
@@ -51,6 +67,15 @@ void main() {
   });
 
   test('reordering in different stack at first position', () async {
+    var board = NC.Board(title: 'foo', id: 1);
+    when(boardServiceMock.getBoard(board.id)).thenAnswer((_) async {
+      return board;
+    });
+    when(stackServiceMock.getAll(board.id)).thenAnswer((_) async {
+      return [];
+    });
+
+    Get.parameters = <String, String>{'boardId': '1'};
     final controller = Get.put(KanbanBoardController());
 
     controller.boardId = 1;
@@ -60,7 +85,6 @@ void main() {
     var oldCardIndex = 1;
     var newCardIndex = 0;
 
-    var board = NC.Board(title: 'foo', id: 1);
     var draggedFromStack =
         NC.Stack(title: "backlog", id: 18, boardId: board.id);
     var draggedToStack =

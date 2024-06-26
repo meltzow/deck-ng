@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,11 +42,7 @@ class LoginScreen extends StatelessWidget {
                             focusNode: _controller.focusNode,
                             onChanged: (value) {
                               _controller.url.value = value;
-                              _controller.typingTimer?.cancel();
-                              _controller.typingTimer =
-                                  Timer(const Duration(seconds: 2), () {
-                                _controller.validateUrl(value);
-                              });
+                              _controller.startValidationTimer(value);
                             },
                             decoration: InputDecoration(
                               labelText: 'URL or IP Address',
