@@ -2,6 +2,7 @@ import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
@@ -35,10 +36,17 @@ class DashboardScreen extends StatelessWidget {
                   child: LoadingIndicator(),
                 );
               }
-              WidgetsBinding.instance!.addPostFrameCallback((_) {
-                Wiredash.of(context)
-                    .showPromoterSurvey(inheritMaterialTheme: true);
-              });
+              if (_controller.boards.isEmpty) {
+                return const Center(
+                  child: Text('No boards found'),
+                );
+              }
+              if (kReleaseMode) {
+                WidgetsBinding.instance!.addPostFrameCallback((_) {
+                  Wiredash.of(context)
+                      .showPromoterSurvey(inheritMaterialTheme: true);
+                });
+              }
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
