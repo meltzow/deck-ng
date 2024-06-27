@@ -36,9 +36,7 @@ Card _$CardFromJson(Map<String, dynamic> json) => Card(
           json['lastModified'], const EpochDateTimeConverter().fromJson),
       order: (json['order'] as num?)?.toInt() ?? 0,
       overdue: (json['overdue'] as num?)?.toInt(),
-      owner: json['owner'] == null
-          ? null
-          : User.fromJson(json['owner'] as Map<String, dynamic>),
+      owner: json['owner'] == null ? '' : mapUser(json['owner']),
       stackId: (json['stackId'] as num).toInt(),
       title: json['title'] as String,
       type: json['type'] as String?,
@@ -77,7 +75,7 @@ Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
           instance.lastModified, const EpochDateTimeConverter().toJson),
       'order': instance.order,
       'overdue': instance.overdue,
-      'owner': instance.owner?.toJson(),
+      'owner': instance.owner,
       'stackId': instance.stackId,
       'title': instance.title,
       'type': instance.type,

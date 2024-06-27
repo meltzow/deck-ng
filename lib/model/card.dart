@@ -32,7 +32,8 @@ class Card {
   @JsonKey(defaultValue: 0)
   late int order;
   int? overdue;
-  late User? owner;
+  @JsonKey(defaultValue: '', fromJson: mapUser)
+  late Object owner;
   late int stackId;
   String title;
   String? type;
@@ -60,7 +61,7 @@ class Card {
     this.lastModified,
     this.order = 0,
     this.overdue,
-    this.owner,
+    this.owner = '',
     required this.stackId,
     required this.title,
     this.type,
@@ -93,7 +94,7 @@ class Card {
     DateTime? lastModified,
     int? order,
     int? overdue,
-    User? owner,
+    String? owner,
     int? stackId,
     String? title,
     String? type,

@@ -24,7 +24,7 @@ class DrawerWidget extends StatelessWidget {
                 color: myTheme.primaryColor,
               ),
               child: Text('deck NG'.tr,
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
+                  style: const TextStyle(color: Colors.white, fontSize: 24)),
             ),
             onTap: () => Get.toNamed(AppRoutes.home),
           ),
