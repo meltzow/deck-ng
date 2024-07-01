@@ -105,18 +105,63 @@ void main() {
         .thenReturn(null);
     controller.stackData = [draggedFromStack, draggedToStack];
 
-    controller.cardReorderHandler(
+    await controller.cardReorderHandler(
         oldCardIndex, newCardIndex, draggedFromStack.id, draggedToStack.id);
 
     verify(cardServiceMock.reorderCard(board.id, draggedFromStack.id,
             draggedCard.id!, draggedCard, -1, draggedToStack.id))
         .called(1);
 
-    // verify(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
-    //     .called(1);
+    verify(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
+        .called(1);
   });
 
-  tearDown(() {
-    Get.delete<KanbanBoardController>();
+  test('reordering to different empty stack', () async {
+    var board = NC.Board(title: 'foo', id: 1);
+    when(boardServiceMock.getBoard(board.id)).thenAnswer((_) async {
+      return board;
+    });
+    when(stackServiceMock.getAll(board.id)).thenAnswer((_) async {
+      return [];
+    });
+
+    Get.parameters = <String, String>{'boardId': '1'};
+    final controller = Get.put(KanbanBoardController());
+
+    controller.boardId = 1;
+    expect(controller.boardId, 1);
+    expect(controller.stackData, []);
+
+    var oldCardIndex = 1;
+    var newCardIndex = 0;
+
+    var draggedFromStack =
+        NC.Stack(title: "backlog", id: 18, boardId: board.id);
+    var draggedToStack =
+        NC.Stack(title: "in progress", id: 20, boardId: board.id);
+    var draggedCard =
+        NC.Card(title: "issue1", id: 1, stackId: draggedFromStack.id);
+    var card2 = NC.Card(title: "issue2", id: 2, stackId: draggedFromStack.id);
+    draggedFromStack.cards = [card2, draggedCard];
+    expect(draggedFromStack.cards[oldCardIndex].id, draggedCard.id);
+
+    draggedToStack.cards = [];
+
+    when(cardServiceMock.reorderCard(board.id, draggedFromStack.id,
+            draggedCard.id!, draggedCard, 0, draggedToStack.id))
+        .thenAnswer((_) async => draggedCard);
+    when(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
+        .thenReturn(null);
+    controller.stackData = [draggedFromStack, draggedToStack];
+
+    await controller.cardReorderHandler(
+        oldCardIndex, newCardIndex, draggedFromStack.id, draggedToStack.id);
+
+    verify(cardServiceMock.reorderCard(board.id, draggedFromStack.id,
+            draggedCard.id!, draggedCard, 0, draggedToStack.id))
+        .called(1);
+
+    verify(notifyServiceMock.successMsg('Card', 'Card Updated Successfully'))
+        .called(1);
   });
 }

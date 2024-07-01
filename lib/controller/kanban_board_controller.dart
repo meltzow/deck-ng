@@ -98,6 +98,7 @@ class KanbanBoardController extends GetxController {
 
     var card1 = await _cardService.updateCard(boardId,
         currentDraggedCard.stackId, currentDraggedCard.id!, currentDraggedCard);
+
     cardSuccessMsg();
   }
 
@@ -111,8 +112,11 @@ class KanbanBoardController extends GetxController {
     if (cardAtNewPosition != null) {
       draggedCard.order = cardAtNewPosition.order - 1;
     } else {
-      var cardAtNewPositionMinus1 =
-          newStack.cards.elementAtOrNull(newCardIndex - 1);
+      var cardAtNewPositionMinus1;
+      if (newCardIndex - 1 >= 0) {
+        cardAtNewPositionMinus1 =
+            newStack.cards.elementAtOrNull(newCardIndex - 1);
+      }
       if (cardAtNewPositionMinus1 != null) {
         draggedCard.order = cardAtNewPositionMinus1.order + 1;
       } else {
@@ -139,6 +143,6 @@ class KanbanBoardController extends GetxController {
     var createdCard = await _cardService.createCard(boardId, stackId, title);
     var stack = _findStackById(stackId);
     stack!.cards.add(createdCard);
-    _notificationService.successMsg('Card', 'Card Created Successfully');
+    cardSuccessMsg();
   }
 }
