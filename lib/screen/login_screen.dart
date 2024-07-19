@@ -1,3 +1,4 @@
+import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerWidget(),
+      appBar: AppBar(
+        title: const Text('deck NG'),
+      ),
       body: Center(
         child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -19,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   const Text(
-                    'Welcome Back to Deck NG!',
+                    'Welcome back to deck NG!',
                     style: TextStyle(
                       fontSize: 32.0,
                       fontWeight: FontWeight.bold,

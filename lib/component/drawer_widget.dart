@@ -29,17 +29,13 @@ class DrawerWidget extends StatelessWidget {
             onTap: () => Get.toNamed(AppRoutes.home),
           ),
           Obx(
-            () => ListTile(
-              title: controller.isAuth.value
-                  ? const Text('Dashboard')
-                  : Container(),
-              leading: controller.isAuth.value
-                  ? const Icon(Icons.dashboard_outlined)
-                  : Container(),
+            () => controller.isAuth.value ? ListTile(
+              title: const Text('Dashboard'),
+              leading: const Icon(Icons.dashboard_outlined),
               onTap: () {
                 Get.offNamed(AppRoutes.home);
               },
-            ),
+            ): const SizedBox.shrink(),
           ),
           // Obx(() => ListTile(
           //       title: const Text('settings'),
