@@ -35,7 +35,7 @@ platform :ios do
 
    lane :build do
        import_certificate_from_github
-       build_app(scheme: scheme, clean: true, export_method: 'appstore')
+       build_app(scheme: scheme, clean: true, export_method: 'app-store')
    end
 
   lane :release do |options|
