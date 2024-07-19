@@ -28,7 +28,6 @@ platform :ios do
        import_certificate(keychain_name: "login", certificate_path: apple_intermediate_certificate_path)
        if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
          match(git_url: "https://github.com/meltzow/deck-ng-certs.git" , type: "appstore", git_basic_authorization: ENV['BASE64_BASIC_AUTH_CERTS_REPO'] , readonly: true)
-         match(git_url: "https://github.com/meltzow/deck-ng-certs.git" , type: "development", git_basic_authorization: ENV['BASE64_BASIC_AUTH_CERTS_REPO'] , readonly: true)
        else
          match(git_url: "git@github.com:meltzow/deck-ng-certs.git", type: "appstore", readonly: true)
        end
