@@ -38,10 +38,6 @@ void main() {
       Get.reset();
     });
 
-    test('trivial test of getAccount', () async {
-      final AuthService authService = Get.put<AuthService>(AuthServiceImpl());
-    });
-
     test('login with a suburl', () async {
       final AuthService authService = Get.put<AuthService>(AuthServiceImpl());
 
@@ -50,6 +46,21 @@ void main() {
 
       var resp = AppPassword(
           AppPasswordOcs(meta: Meta('', 200, ''), data: AppPasswordData('')));
+
+      dioAdapter.onGet(
+          'https://localhost:1234/nextcloud/ocs/v2.php/core/autocomplete/get?search=JOANNE%40EMAIL.ISP&itemType=%20&itemId=%20&shareTypes[]=8&limit=2',
+          (server) {
+        return server.reply(
+          200,
+          '',
+          delay: const Duration(milliseconds: 10),
+        );
+      }, headers: {
+        'accept': 'application/json',
+        'user-agent': 'deckNG client',
+        'authorization': 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+        'OCS-APIREQUEST': 'true'
+      });
 
       dioAdapter.onGet(
           'https://localhost:1234/nextcloud/ocs/v2.php/core/getapppassword',
@@ -71,7 +82,7 @@ void main() {
 
       expect(success, true);
 
-      verify(storageServiceMock.saveAccount(argThat(isA<Account>()))).called(2);
+      verify(storageServiceMock.saveAccount(argThat(isA<Account>()))).called(3);
     });
 
     test('login with a suburl which ends with "/"', () async {
@@ -79,6 +90,21 @@ void main() {
 
       when(storageServiceMock.saveAccount(argThat(isA<Account>())))
           .thenAnswer((_) async => {});
+
+      dioAdapter.onGet(
+          'https://localhost:1234/nextcloud/ocs/v2.php/core/autocomplete/get?search=JOANNE%40EMAIL.ISP&itemType=%20&itemId=%20&shareTypes[]=8&limit=2',
+          (server) {
+        return server.reply(
+          200,
+          '',
+          delay: const Duration(milliseconds: 10),
+        );
+      }, headers: {
+        'accept': 'application/json',
+        'user-agent': 'deckNG client',
+        'authorization': 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+        'OCS-APIREQUEST': 'true'
+      });
 
       var resp = AppPassword(
           AppPasswordOcs(meta: Meta('', 200, ''), data: AppPasswordData('')));
@@ -105,7 +131,7 @@ void main() {
       verify(storageServiceMock.saveAccount(argThat(
         predicate<Account>(
             (account) => account.url == 'https://localhost:1234/nextcloud'),
-      ))).called(2);
+      ))).called(3);
     });
 
     // test('returns login successfully - all request successfully', () async {
