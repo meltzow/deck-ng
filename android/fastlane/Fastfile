@@ -19,6 +19,15 @@ version_name = pubspec['version']
 
 default_platform(:android)
 
+# Load Dart defines from dart_define.json
+def load_dart_defines
+  file_path = '../dart_define.json' # Adjust the path according to your project structure
+  dart_defines = JSON.parse(File.read(file_path))
+  dart_defines.each do |key, value|
+    ENV[key] = value
+  end
+end
+
 platform :android do
   lane :production do
     deploy(track: 'production')
@@ -34,8 +43,9 @@ platform :android do
   end
 
   lane :build do
+    load_dart_defines # Load and set Dart defines as environment variables
     gradle(
-        task: 'assemble',
+        task: 'bundle',
         build_type: 'Release',
         properties: {
         "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
@@ -64,16 +74,7 @@ platform :android do
       android_set_version_code(version_code: current_build_number)
       android_set_version_name(version_name: %Q['#{version_name}'])
 
-      gradle(
-            task: 'clean bundle',
-            build_type: 'Release',
-            properties: {
-                "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
-                "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
-                "android.injected.signing.key.alias" => "upload",
-                "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
-              }
-          )
+      build
       if ENV['GOOGLE_PLAY_JSON_KEY_DATA']
         upload_to_play_store(json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], skip_upload_apk: true, track: options[:track], aab: '../build/app/outputs/bundle/release/app-release.aab' )
       else
