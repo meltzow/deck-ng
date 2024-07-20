@@ -76,7 +76,7 @@ jobs:
       - name: Release to Google Play
         working-directory: android
         run: |
-          bundle exec fastlane android deploy track:${{ github.event.inputs.track }}
+          bundle exec fastlane android release track:${{ github.event.inputs.track }}
         env:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
           FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
