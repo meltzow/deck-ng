@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController _controller = Get.find<LoginController>();
+  final GlobalKey _tooltipKey = GlobalKey();
 
   LoginScreen({super.key});
 
@@ -90,19 +91,40 @@ class LoginScreen extends StatelessWidget {
                                 obscureText:
                                     !_controller.isPasswordVisible.value,
                                 decoration: InputDecoration(
-                                  labelText: 'Password',
+                                  labelText: 'User Password',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   prefixIcon: const Icon(Icons.lock),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      _controller.isPasswordVisible.value
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                    ),
-                                    onPressed:
-                                        _controller.togglePasswordVisibility,
+                                  suffixIcon: Row(
+                                    mainAxisSize: MainAxisSize
+                                        .min, // Prevent icon overflow
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          _controller.isPasswordVisible.value
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                        ),
+                                        onPressed: _controller
+                                            .togglePasswordVisibility,
+                                      ),
+                                      GestureDetector(
+                                        // Step 2: Wrap the Icon with GestureDetector
+                                        onTap: () {
+                                          final dynamic tooltip =
+                                              _tooltipKey.currentState;
+                                          tooltip?.ensureTooltipVisible();
+                                        },
+                                        child: Tooltip(
+                                          // Step 3: Use the GlobalKey for the Tooltip
+                                          key: _tooltipKey,
+                                          message:
+                                              'I will create an app-specific password using your account password. Be sure, your account password will not be stored.',
+                                          child: Icon(Icons.info_outline),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               )),
