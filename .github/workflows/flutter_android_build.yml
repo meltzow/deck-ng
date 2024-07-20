@@ -58,9 +58,11 @@ jobs:
         run: |
           cd android
           gradle wrapper --no-daemon
+
       - name: Generate .jks file
         working-directory: android
         run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
+
       - name: Build APK
         working-directory: android
         run: |

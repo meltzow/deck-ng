@@ -1,4 +1,4 @@
-name: Android Release
+name: Flutter Android Release
 
 on:
   workflow_dispatch:
@@ -17,12 +17,56 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/flutter
-      - uses: ./.github/workflows/android
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.2'
+          channel: 'stable'
+          cache: true
 
-      - name: Build APK
+      - name: Install dependencies
+        shell: bash
+        run: |
+          flutter config --no-analytics
+          flutter pub get
+
+      - name: Run Flutter tests
+        shell: bash
+        run: flutter test
+
+      - name: Set up Fastlane
+        shell: bash
         run: |
           cd android
+          sudo gem install bundler
+          bundle config set path 'vendor/bundle'
+          bundle install      
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/android/.gradle/caches
+            ~/android/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: 17
+          check-latest: true
+          cache: gradle
+          cache-dependency-path: | # optional
+            android/*.gradle*
+            android/**/gradle-wrapper.properties
+      - name: install gradle
+        shell: bash
+        run: |
+          cd android
+          gradle wrapper --no-daemon
+
+      - name: Build APK
+        working-directory: android
+        run: |
           bundle exec fastlane android build
 
       - name: Release to Google Play

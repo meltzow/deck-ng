@@ -1,4 +1,4 @@
-name: Flutter iOS Build
+name: Flutter iOS Release
 
 on:
   workflow_dispatch:
@@ -41,11 +41,11 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install
 
-      - name: Build iOS
+      - name: Release iOS
         run: |
           cd ios
           pod install
-          bundle exec fastlane ios build
+          bundle exec fastlane ios release track:beta
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
           FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
