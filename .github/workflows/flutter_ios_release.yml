@@ -2,6 +2,14 @@ name: Flutter iOS Release
 
 on:
   workflow_dispatch:
+    inputs:
+      track:
+        description: 'Which track should be used? One of beta, production'
+        required: true
+        default: 'beta'
+        options:
+          - beta
+          - production
 
 jobs:
   build:
@@ -45,7 +53,7 @@ jobs:
         run: |
           cd ios
           pod install
-          bundle exec fastlane ios release track:beta
+          bundle exec fastlane ios release track:${{ github.event.inputs.track }}
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
           FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
@@ -54,9 +62,3 @@ jobs:
           DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
           DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD}}
-
-      - name: Upload iOS build
-        uses: actions/upload-artifact@v2
-        with:
-          name: Runner.app
-          path: ios/build/ios/iphoneos/Runner.app
