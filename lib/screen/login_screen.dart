@@ -91,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                                 obscureText:
                                     !_controller.isPasswordVisible.value,
                                 decoration: InputDecoration(
-                                  labelText: 'User Password',
+                                  labelText: 'Password',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -108,21 +108,6 @@ class LoginScreen extends StatelessWidget {
                                         ),
                                         onPressed: _controller
                                             .togglePasswordVisibility,
-                                      ),
-                                      GestureDetector(
-                                        // Step 2: Wrap the Icon with GestureDetector
-                                        onTap: () {
-                                          final dynamic tooltip =
-                                              _tooltipKey.currentState;
-                                          tooltip?.ensureTooltipVisible();
-                                        },
-                                        child: Tooltip(
-                                          // Step 3: Use the GlobalKey for the Tooltip
-                                          key: _tooltipKey,
-                                          message:
-                                              'I will create an app-specific password using your account password. Be sure, your account password will not be stored.',
-                                          child: Icon(Icons.info_outline),
-                                        ),
                                       ),
                                     ],
                                   ),

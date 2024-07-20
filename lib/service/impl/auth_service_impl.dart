@@ -48,15 +48,31 @@ class AuthServiceImpl extends GetxService implements AuthService {
             : serverUrl,
         isAuthenticated: false);
     await storageService.saveAccount(a);
-    const url = '/ocs/v2.php/core/getapppassword';
-    var resp = await dioClient.get(a.url + url,
-        options: Options(headers: _getHeaders(url, a)));
-    var apppassword = AppPassword.fromJson(resp.data);
-    a.password = apppassword.ocs.data.apppassword;
-    a.isAuthenticated = true;
-    await storageService.saveAccount(a);
+    const firstTestUrl =
+        '/ocs/v2.php/core/autocomplete/get?search=JOANNE%40EMAIL.ISP&itemType=%20&itemId=%20&shareTypes[]=8&limit=2';
 
-    return true;
+    var resp = await dioClient.get(a.url + firstTestUrl,
+        options: Options(headers: _getHeaders(firstTestUrl, a)));
+    if (resp.statusCode == 200) {
+      a.isAuthenticated = true;
+      await storageService.saveAccount(a);
+      try {
+        //test if creating a app password is possible
+        const url = '/ocs/v2.php/core/getapppassword';
+        var resp = await dioClient.get(a.url + url,
+            options: Options(headers: _getHeaders(url, a)));
+        var apppassword = AppPassword.fromJson(resp.data);
+        a.password = apppassword.ocs.data.apppassword;
+        a.authData = _computeAuth(a.username, a.password);
+        await storageService.saveAccount(a);
+      } catch (e) {
+        //this is expected if user inserted a app password (app password must not create new app passwords)
+        print(e);
+      }
+      return true;
+    }
+
+    return false;
   }
 
   @override

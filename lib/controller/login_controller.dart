@@ -90,16 +90,16 @@ class LoginController extends GetxController {
     try {
       successful =
           await authService.login(url.value, username.value, password.value);
-      if (successful) {
-        Get.toNamed('/boards');
-        notificationService.successMsg("Login", "Login Successful");
-      } else {
-        notificationService.errorMsg("Login",
-            "Login not Successful. Please check username and password");
-      }
     } on DioException catch (e) {
+      // notificationService.errorMsg(
+      //     "Login", "Login not Successful. ${e.message}");
+    }
+    if (successful) {
+      Get.toNamed('/boards');
+      notificationService.successMsg("Login", "Login Successful");
+    } else {
       notificationService.errorMsg(
-          "Login", "Login not Successful. ${e.message}");
+          "Login", "Login not Successful. Please check username and password");
     }
   }
 
@@ -109,7 +109,7 @@ class LoginController extends GetxController {
       Capabilities resp = await authService.checkServer(url.value);
       serverInfo.value = resp.ocs.data.version.string;
       // _deckVersion.value = resp.ocs.data.version.string;
-    } on DioException {
+    } on DioException catch (e) {
       serverInfo.value = 'Invalid URL or IP Address';
       isUrlValid.value = false;
     }
