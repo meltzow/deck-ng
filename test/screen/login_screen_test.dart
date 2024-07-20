@@ -1,9 +1,13 @@
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:deck_ng/screen/login_screen.dart';
+import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+
+import 'login_screen_test.mocks.dart';
 
 class MockLoginController extends GetxController
     with Mock
@@ -22,11 +26,20 @@ class MockLoginController extends GetxController
   final focusNode = FocusNode();
 }
 
+@GenerateMocks([StorageService, AuthService, NotificationService])
 void main() {
   late LoginController loginController;
+  late StorageService storageServiceMock;
+  late AuthService authServiceMock;
+  late NotificationService notificationServiceMock;
 
   setUp(() {
     Get.testMode = true;
+
+    authServiceMock = Get.put<AuthService>(MockAuthService());
+    storageServiceMock = Get.put<StorageService>(MockStorageService());
+    notificationServiceMock =
+        Get.put<NotificationService>(MockNotificationService());
 
     loginController = MockLoginController();
     Get.put<LoginController>(loginController);
@@ -44,7 +57,7 @@ void main() {
     await tester.pumpWidget(GetMaterialApp(home: LoginScreen()));
 
     // Verify that the login screen is shown.
-    expect(find.text('Welcome Back to Deck NG!'), findsOneWidget);
+    expect(find.text('Welcome back to deck NG!'), findsOneWidget);
 
     // Simulate user interactions
     await tester.enterText(
