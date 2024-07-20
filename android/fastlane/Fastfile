@@ -19,15 +19,6 @@ version_name = pubspec['version']
 
 default_platform(:android)
 
-# Load Dart defines from dart_define.json
-def load_dart_defines
-  file_path = '../dart_define.json' # Adjust the path according to your project structure
-  dart_defines = JSON.parse(File.read(file_path))
-  dart_defines.each do |key, value|
-    ENV[key] = value
-  end
-end
-
 platform :android do
   lane :production do
     deploy(track: 'production')
@@ -43,7 +34,6 @@ platform :android do
   end
 
   lane :build do
-    load_dart_defines # Load and set Dart defines as environment variables
     gradle(
         task: 'bundle',
         build_type: 'Release',

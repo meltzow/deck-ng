@@ -21,15 +21,6 @@ scheme = "Runner"
 
 default_platform(:ios)
 
-# Load Dart defines from dart_define.json
-def load_dart_defines
-  file_path = '../dart_define.json' # Adjust the path according to your project structure
-  dart_defines = JSON.parse(File.read(file_path))
-  dart_defines.each do |key, value|
-    ENV[key] = value
-  end
-end
-
 platform :ios do
    lane :import_certificate_from_github do
        apple_intermediate_certificate_path = "/tmp/AppleWWDRCAG3.cer"
@@ -43,7 +34,6 @@ platform :ios do
    end
 
    lane :build do
-       load_dart_defines # Load and set Dart defines as environment variables
        import_certificate_from_github
        build_app(scheme: scheme, clean: true, export_method: 'app-store')
    end
