@@ -26,7 +26,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: | 
+        run: |
           flutter config --no-analytics
           flutter pub get
 
@@ -70,12 +70,12 @@ jobs:
           cd android
           gradle wrapper --no-daemon
 
-      - name: Build APK
+      - name: Generate .jks file
         working-directory: android
-        run: |
-          bundle exec fastlane android build
+        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
 
       - name: Release to Google Play
+        working-directory: android
         run: |
           cd android
           bundle exec fastlane android deploy track:${{ github.event.inputs.track }}
@@ -83,4 +83,4 @@ jobs:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}
           FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
           FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }}
-          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH }}
+          FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: "/tmp/keystore.jks"

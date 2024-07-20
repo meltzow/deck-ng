@@ -12,14 +12,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+
+      - name: Set up Flutter actions
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
           channel: 'stable'
           cache: true
 
       - name: Install dependencies
-        shell: bash
         run: |
           flutter config --no-analytics
           flutter pub get
@@ -28,8 +29,13 @@ jobs:
         shell: bash
         run: flutter test
 
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: "3.3"
+
       - name: Set up Fastlane
-        shell: bash
         run: |
           cd android
           sudo gem install bundler
