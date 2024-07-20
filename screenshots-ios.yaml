@@ -12,11 +12,18 @@ locales:
   - en-GB
   - de-DE
 
+
 # A list of devices to run tests on
+# see more at https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications
 devices:
   ios:
-    iPhone 15:
+    # 6,5'' Display (required)
+    iPhone 14 Plus:
       frame: false
+    # 5,5'' Display (required)
+    iPhone 18 Plus:
+      frame: false
+    # 13'' Display (required)
     iPad Pro 13-inch (M4):
       orientation: LandscapeRight
       frame: false
