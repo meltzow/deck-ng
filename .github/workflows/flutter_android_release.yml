@@ -65,9 +65,8 @@ jobs:
             android/*.gradle*
             android/**/gradle-wrapper.properties
       - name: install gradle
-        shell: bash
+        working-directory: android
         run: |
-          cd android
           gradle wrapper --no-daemon
 
       - name: Generate .jks file
@@ -77,7 +76,6 @@ jobs:
       - name: Release to Google Play
         working-directory: android
         run: |
-          cd android
           bundle exec fastlane android deploy track:${{ github.event.inputs.track }}
         env:
           GOOGLE_PLAY_JSON_KEY_DATA: ${{ secrets.GOOGLE_PLAY_JSON_KEY_DATA }}

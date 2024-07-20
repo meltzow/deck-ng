@@ -60,9 +60,8 @@ jobs:
             android/*.gradle*
             android/**/gradle-wrapper.properties
       - name: install gradle
-        shell: bash
+        working-directory: android
         run: |
-          cd android
           gradle wrapper --no-daemon
 
       - name: Generate .jks file
