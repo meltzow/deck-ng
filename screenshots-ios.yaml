@@ -19,14 +19,18 @@ devices:
   ios:
     # 6,5'' Display (required)
     iPhone 14 Plus:
-      frame: false
+    #  frame: false
     # 5,5'' Display (required)
-    iPhone 18 Plus:
-      frame: false
-    # 13'' Display (required)
-    iPad Pro 13-inch (M4):
-      orientation: LandscapeRight
-      frame: false
+    iPhone 8 Plus:
+  # frame: false
+  # 13'' Display (required)
+    iPad Air 13-inch (M2):
+    # orientation:
+    # - LandscapeRight
+    # 12,9'' Display (required)
+    iPad Pro (12.9-inch) (6th generation):
+    # orientation:
+    #   - LandscapeRight
 
 # Frame screenshots
 frame: false

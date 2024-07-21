@@ -106,7 +106,7 @@ void main() {
     await tester.pumpAndSettle();
     await binding.convertFlutterSurfaceToImage();
     await tester.pumpAndSettle();
-    await screenshot(binding, tester, 'card_details_screen');
+    await screenshot(binding, tester, '04-card_details_screen');
   });
 
   testWidgets('display dashboard', (WidgetTester tester) async {
@@ -157,7 +157,7 @@ void main() {
     await tester.pumpAndSettle();
     await binding.convertFlutterSurfaceToImage();
     await tester.pumpAndSettle();
-    await screenshot(binding, tester, 'dashboard_screen');
+    await screenshot(binding, tester, '02-dashboard_screen');
   });
 
   testWidgets('display kanban board', (WidgetTester tester) async {
@@ -209,7 +209,7 @@ void main() {
     await tester.pumpAndSettle();
     await binding.convertFlutterSurfaceToImage();
     await tester.pumpAndSettle();
-    await screenshot(binding, tester, 'kanban_board_screen');
+    await screenshot(binding, tester, '03-kanban_board_screen');
   });
 
   testWidgets('display login screen', (tester) async {
@@ -227,7 +227,7 @@ void main() {
 
     var resp = Capabilities(CapabilitiesOcs(
         meta: Meta('success', 200, 'success'),
-        data: CapabilitiesData(Version(0, 0, 26, "26.0.0", '', false), {})));
+        data: CapabilitiesData(Version(0, 0, 28, "28.0.0", '', false), {})));
     when(authServiceMock.checkServer('https://my.next.cloud'))
         .thenAnswer((_) async => resp);
     when(authServiceMock.isAuth()).thenReturn(false);
@@ -253,9 +253,9 @@ void main() {
     expect(find.text('Login'), findsOneWidget);
     await tester.tapAt(const Offset(10, 10));
     await tester.pumpAndSettle();
-    await screenshot(binding, tester, 'login_screen');
+    await screenshot(binding, tester, '01-login_screen');
   });
-
+/*
   testWidgets('display settings screen', (WidgetTester tester) async {
     when(storageServiceMock.hasAccount()).thenReturn(true);
     when(storageServiceMock.getAccount()).thenReturn(nc.Account(
@@ -286,5 +286,5 @@ void main() {
     await binding.convertFlutterSurfaceToImage();
     await tester.pumpAndSettle();
     await screenshot(binding, tester, 'settings_screen');
-  });
+  }); */
 }

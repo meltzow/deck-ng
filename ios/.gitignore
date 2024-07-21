@@ -38,3 +38,4 @@ Runner/GeneratedPluginRegistrant.*
 *.app.dSYM.zip
 
 **/report.xml
+/fastlane/Preview.html
