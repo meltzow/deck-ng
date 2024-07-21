@@ -75,6 +75,9 @@ class CardDetailsController extends GetxController {
   }
 
   Future<void> updateCard(Card card) async {
+    card.title = titleController.text;
+    card.description = descriptionController.text;
+
     var updatedCard = await _cardService.updateCard(
         boardId.value, stackId.value, this.card.value!.id!, card);
     this.card.value = updatedCard;
@@ -111,6 +114,11 @@ class CardDetailsController extends GetxController {
           ?.where((a) => a.participant.uid != user.uid)
           .toList(),
     );
+  }
+
+  void clearDueDate() {
+    card.value?.duedate = null;
+    duedateController.text = '';
   }
 
   // void addAttachment(FilePickerResult result) async {

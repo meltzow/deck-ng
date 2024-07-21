@@ -38,24 +38,37 @@ class CardDetailsScreen extends StatelessWidget {
                     controller: cardController.descriptionController,
                     decoration: const InputDecoration(labelText: 'Description'),
                   ),
-                  TextField(
-                    controller: cardController.duedateController,
-                    decoration: const InputDecoration(labelText: 'Due Date'),
-                    readOnly: true,
-                    onTap: () async {
-                      DateTime? selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: card.duedate ?? DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                      );
-                      if (selectedDate != null) {
-                        cardController.duedateController.text =
-                            selectedDate.toIso8601String();
-                        cardController.card.value =
-                            card.copyWith(duedate: selectedDate);
-                      }
-                    },
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: cardController.duedateController,
+                          decoration:
+                              const InputDecoration(labelText: 'Due Date'),
+                          readOnly: true,
+                          onTap: () async {
+                            DateTime? selectedDate = await showDatePicker(
+                              context: context,
+                              initialDate: card.duedate ?? DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+                            if (selectedDate != null) {
+                              cardController.duedateController.text =
+                                  selectedDate.toIso8601String();
+                              cardController.card.value =
+                                  card.copyWith(duedate: selectedDate);
+                            }
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          cardController.clearDueDate();
+                        },
+                      ),
+                    ],
                   ),
                   _buildLabelsField(context, card),
                   _buildAssignedUsersField(context, card),
@@ -106,7 +119,7 @@ class CardDetailsScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: Text('Add Label'),
+          title: const Text('Add Label'),
           children: [
             ...cardController.labels.map((label) {
               return Obx(() {
@@ -130,17 +143,17 @@ class CardDetailsScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
                 TextButton(
                   onPressed: () {
-                    cardController.selectedLabels.forEach((label) {
+                    for (var label in cardController.selectedLabels) {
                       cardController.addLabel(label);
-                    });
+                    }
                     cardController.selectedLabels.clear();
                     Navigator.of(context).pop();
                   },
-                  child: Text('Add'),
+                  child: const Text('Add'),
                 ),
               ],
             ),
@@ -206,13 +219,13 @@ class CardDetailsScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Add'),
+                  child: const Text('Add'),
                 ),
               ],
             ),
