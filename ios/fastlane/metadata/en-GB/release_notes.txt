@@ -1,10 +1,1 @@
-2.0.0 a fully new design and a lot of technical changes under the hood
-1.5.0 add support for move cards to other stacks, order cards and delete cards
-1.4.0 add support for duedate
-1.3.0 add support for creating cards and new markdown renderer for card description
-1.2.0 add support for login flow
-1.1.1 link all boards into menu
-      fix some value displaying bugs
-1.1.0 add barcode login
-1.0.5 fix strange UI-Bug in combination with headers in board/stack-overview
-      fix back links in headers
+a fully new design and a lot of technical changes under the hood

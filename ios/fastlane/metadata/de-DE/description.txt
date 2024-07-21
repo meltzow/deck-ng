@@ -1,2 +1,3 @@
-Verwalte deine Aufgaben in nextcloud Deck auf deinem iOS-Gerät.
-Helft durch eurer Feedback und Wünsche die App zu dem zu machen, was ihr wollt und braucht. Zögert nicht konstruktive Kritik zu äußern. Da die App als open source zur Verfügung steht, könnt ihr auch gern bei der Weiterentwicklung unterstützen
+Verwalten Sie Ihre Aufgaben auf Nextcloud Deck über Ihr iOS-Gerät
+
+Diese App befindet sich derzeit in den frühen Entwicklungsphasen und stellt nur ein Minimal Viable Product (MVP) dar. Daher bietet sie möglicherweise noch nicht alle Funktionen. Wir laden Sie ein, zur Weiterentwicklung der App beizutragen, indem Sie uns Ihr Feedback und Ihre Vorschläge mitteilen. Konstruktive Kritik ist willkommen, während wir an der Verbesserung der App arbeiten.
