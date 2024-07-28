@@ -60,4 +60,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Runner.app
-          path: ios/build/ios/iphoneos/Runner.app
+          path: ios/Runner.app
