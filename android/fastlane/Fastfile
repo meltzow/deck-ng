@@ -44,7 +44,7 @@ platform :android do
         "android.injected.signing.key.alias" => "upload",
         "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
         },
-        build_extra_args: "--dart-define=#{dart_define}"
+        flags: "--dart-define=#{dart_define}"
     )
   end
 

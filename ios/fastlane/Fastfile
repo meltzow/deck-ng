@@ -40,7 +40,7 @@ platform :ios do
       scheme: scheme,
       clean: true,
       export_method: 'app-store',
-      build_extra_args: "--dart-define=#{dart_define}"
+      xcargs: "--dart-define=#{dart_define}"
     )
   end
 

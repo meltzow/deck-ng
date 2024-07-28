@@ -77,6 +77,7 @@ jobs:
           FASTLANE_ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEY_PASSWORD }}
           FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }}
           FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: "/tmp/keystore.jks"
+          WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v2

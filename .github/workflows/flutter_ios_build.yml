@@ -54,6 +54,7 @@ jobs:
           DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
           DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD}}
+          WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
 
       - name: Upload iOS build
         uses: actions/upload-artifact@v2
