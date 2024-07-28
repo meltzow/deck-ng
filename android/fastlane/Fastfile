@@ -43,8 +43,9 @@ platform :android do
         "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
         "android.injected.signing.key.alias" => "upload",
         "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
+        "flutter.buildMode" => "release",
+        "flutter.dart-define" => dart_define
         },
-        flags: "--dart-define=#{dart_define}"
     )
   end
 
