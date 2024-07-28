@@ -7,12 +7,13 @@ on:
         description: 'Which track should be used? One of beta, production'
         required: true
         default: 'beta'
+        type: choice
         options:
           - beta
           - production
 
 jobs:
-  build:
+  release:
     runs-on: macos-latest
 
     steps:
