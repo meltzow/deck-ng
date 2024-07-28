@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Flutter actions
         uses: subosito/flutter-action@v2
@@ -80,7 +80,7 @@ jobs:
           WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
 
       - name: Upload APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
           path: build/app/outputs/bundle/release/app-release.aab
