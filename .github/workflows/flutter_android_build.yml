@@ -84,3 +84,9 @@ jobs:
         with:
           name: app-release.apk
           path: build/app/outputs/bundle/release/app-release.aab
+
+      - name: Upload key.properties
+        uses: actions/upload-artifact@v4
+        with:
+          name: key.properties
+          path: android/key.properties
