@@ -33,21 +33,18 @@ platform :android do
     gradle(task: "test")
   end
 
-  lane :build do
-    dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
-    gradle(
-        task: 'bundle',
-        build_type: 'Release',
-        properties: {
-        "android.injected.signing.store.file" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH"],
-        "android.injected.signing.store.password" => ENV["FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD"],
-        "android.injected.signing.key.alias" => "upload",
-        "android.injected.signing.key.password" => ENV["FASTLANE_ANDROID_SIGNING_KEY_PASSWORD"],
-        "flutter.buildMode" => "release",
-        "flutter.dart-define" => dart_define
-        },
-    )
-  end
+   lane :build do
+       dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
+
+       # Generate key.properties file without printing the commands
+       sh "echo 'storePassword=#{ENV['FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD']}' > key.properties", log: false
+       sh "echo 'keyPassword=#{ENV['FASTLANE_ANDROID_SIGNING_KEY_PASSWORD']}' >> key.properties", log: false
+       sh "echo 'keyAlias=upload' >> key.properties", log: false
+       sh "echo 'storeFile=#{ENV['FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH']}' >> key.properties", log: false
+
+       # Build with Flutter
+       sh("flutter build appbundle --release --dart-define=#{dart_define}")
+   end
 
   desc "Deploy a new version to the Google Play"
   lane :release do |options|
@@ -75,20 +72,8 @@ platform :android do
       end
     end
 
-lane :update_metadata do
-   upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, skip_upload_aab: true, skip_upload_changelogs: true, track: "beta")
-end
-
-
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta_bkp do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-
+    lane :update_metadata do
+       upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, skip_upload_aab: true, skip_upload_changelogs: true, track: "beta")
+    end
 
 end
