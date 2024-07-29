@@ -42,7 +42,7 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install      
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: |
             ~/android/.gradle/caches
