@@ -90,3 +90,9 @@ jobs:
         with:
           name: key.properties
           path: android/key.properties
+
+      - name: Upload key.properties1
+        uses: actions/upload-artifact@v4
+        with:
+          name: key.properties
+          path: key.properties
