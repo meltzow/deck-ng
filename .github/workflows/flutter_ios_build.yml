@@ -35,15 +35,17 @@ jobs:
 #          brew install fastlane
 
       - name: Set up Fastlane
+        working-directory: ios
         run: |
-          cd ios
           sudo gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install
+          gem install cocoapods --user-install
+          gem which cocoapods
 
       - name: Build iOS
+        working-directory: ios
         run: |
-          cd ios
           bundle exec fastlane ios build
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
