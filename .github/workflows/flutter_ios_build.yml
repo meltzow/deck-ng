@@ -26,6 +26,7 @@ jobs:
         with:
           bundler-cache: true
           ruby-version: "3.3"
+          working-directory: ios
 
       - name: Set up Fastlane and CocoaPods
         working-directory: ios
