@@ -36,12 +36,7 @@ platform :ios do
   lane :build do
     import_certificate_from_github
     dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
-    build_app(
-      scheme: scheme,
-      clean: true,
-      export_method: 'app-store',
-      xcargs: "--dart-define=#{dart_define}"
-    )
+    flutter build ipa --release --dart-define=#{dart_define}
   end
 
   lane :release do |options|
