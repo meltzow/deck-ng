@@ -41,8 +41,11 @@ platform :android do
        sh "echo 'keyPassword=#{ENV['FASTLANE_ANDROID_SIGNING_KEY_PASSWORD']}' >> ../key.properties", log: false
        sh "echo 'keyAlias=upload' >> ../key.properties", log: false
        sh "echo 'storeFile=#{ENV['FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH']}' >> ../key.properties", log: false
-       sh "ls -al"
+       sh "ls -al ../"
        sh "pwd"
+
+      # Verify the contents of key.properties
+      sh "cat ../key.properties"
 
        # Build with Flutter
        sh("flutter build appbundle --release --dart-define=#{dart_define}")

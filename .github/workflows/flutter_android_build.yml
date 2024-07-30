@@ -66,7 +66,9 @@ jobs:
 
       - name: Generate .jks file
         working-directory: android
-        run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
+        run: |
+          echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
+          keytool -list -v -keystore /tmp/keystore.jks -storepass ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }} -alias upload
 
       - name: Build APK
         working-directory: android
