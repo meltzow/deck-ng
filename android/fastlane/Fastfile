@@ -37,10 +37,10 @@ platform :android do
        dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
 
        # Generate key.properties file without printing the commands
-       sh "echo 'storePassword=#{ENV['FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD']}' > ./key.properties", log: false
-       sh "echo 'keyPassword=#{ENV['FASTLANE_ANDROID_SIGNING_KEY_PASSWORD']}' >> ./key.properties", log: false
-       sh "echo 'keyAlias=upload' >> ./key.properties", log: false
-       sh "echo 'storeFile=#{ENV['FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH']}' >> ./key.properties", log: false
+       sh "echo 'storePassword=#{ENV['FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD']}' > ../key.properties", log: false
+       sh "echo 'keyPassword=#{ENV['FASTLANE_ANDROID_SIGNING_KEY_PASSWORD']}' >> ../key.properties", log: false
+       sh "echo 'keyAlias=upload' >> ../key.properties", log: false
+       sh "echo 'storeFile=#{ENV['FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH']}' >> ../key.properties", log: false
        sh "ls -al"
        sh "pwd"
 
