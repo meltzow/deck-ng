@@ -34,14 +34,19 @@ jobs:
 #          cd ios
 #          brew install fastlane
 
-      - name: Set up Fastlane
+      - name: Set up Fastlane and CocoaPods
         working-directory: ios
         run: |
           sudo gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install
-          gem install cocoapods --user-install
-          gem which cocoapods
+          sudo gem install cocoapods
+          pod setup
+
+      - name: Install CocoaPods dependencies
+        working-directory: ios
+        run: |
+          pod install
 
       - name: Build iOS
         working-directory: ios
