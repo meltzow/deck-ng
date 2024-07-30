@@ -56,6 +56,8 @@ jobs:
         working-directory: ios
         run: |
           set -x
+          gem install cocoapods --user-install
+          gem which cocoapods
           bundle exec fastlane ios build || exit 1
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
