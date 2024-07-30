@@ -44,7 +44,7 @@ jobs:
       - name: Build iOS
         run: |
           cd ios
-          pod install
+ #         pod install
           bundle exec fastlane ios build
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
