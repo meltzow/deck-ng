@@ -22,18 +22,18 @@ jobs:
           flutter config --no-analytics
           flutter pub get
 
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3'
-          bundler-cache: true
-          working-directory: ios
+#      - uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: '3.3'
+#          bundler-cache: true
+#          working-directory: ios
 
-      - name: Install CocoaPods
-        working-directory: ios
-        run: |
-          sudo gem install cocoapods
-          pod setup
-          echo "PATH=$PATH:/Users/runner/.local/share/gem/ruby/3.3.0/bin" >> $GITHUB_ENV
+#      - name: Install CocoaPods
+#        working-directory: ios
+#        run: |
+#          sudo gem install cocoapods
+#          pod setup
+#          echo "PATH=$PATH:/Users/runner/.local/share/gem/ruby/3.3.0/bin" >> $GITHUB_ENV
 
       - name: Verify CocoaPods Installation
         run: |
@@ -59,13 +59,11 @@ jobs:
         with:
           podfile-path: ios/Podfile.lock
 
-
-
       - name: Build iOS
         working-directory: ios
         run: |
           set -x
-          flutter doctor
+          flutter doctor -v 
           bundle exec fastlane ios build || exit 1
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
