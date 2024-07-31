@@ -59,10 +59,13 @@ jobs:
         with:
           podfile-path: ios/Podfile.lock
 
+
+
       - name: Build iOS
         working-directory: ios
         run: |
           set -x
+          flutter doctor
           bundle exec fastlane ios build || exit 1
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
