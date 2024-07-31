@@ -24,20 +24,21 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
+          ruby-version: '3.3'
           bundler-cache: true
-          ruby-version: "3.3"
           working-directory: ios
 
-      - name: Set up Fastlane and CocoaPods
+      - name: Install CocoaPods
         working-directory: ios
         run: |
-          set -x
-          sudo gem install bundler
-          bundle config set path 'vendor/bundle'
-          bundle install
           sudo gem install cocoapods
           pod setup
-          pod repo update
+          echo "PATH=$PATH:/Users/runner/.local/share/gem/ruby/3.3.0/bin" >> $GITHUB_ENV
+
+      - name: Verify CocoaPods Installation
+        run: |
+          pod --version
+          which pod
 
       - name: Install CocoaPods dependencies
         working-directory: ios
@@ -51,13 +52,12 @@ jobs:
           echo "Ruby Path: $(which ruby)"
           echo "CocoaPods Version: $(pod --version)"
           echo "CocoaPods Path: $(which pod)"
+          echo "Bundler Version: $(bundle -v)"
 
       - name: Build iOS
         working-directory: ios
         run: |
           set -x
-          gem install cocoapods --user-install
-          gem which cocoapods
           bundle exec fastlane ios build || exit 1
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
@@ -66,7 +66,7 @@ jobs:
           FASTLANE_APPLE_API_KEY: ${{ secrets.FASTLANE_APPLE_API_KEY }}
           DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
           DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
-          MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD}}
+          MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD }}
           WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
 
       - name: Setup secrets
