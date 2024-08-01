@@ -1,4 +1,4 @@
-name: Flutter iOS Release
+name: Flutter iOS Release2
 
 on:
   workflow_dispatch:
@@ -32,5 +32,6 @@ jobs:
 
       - name: Build iOS App
         run: |
-          bundle install --path vendor/bundle 
+          bundle config set path 'vendor/bundle'
+          bundle install
           bundle flutter build ios --release --no-codesign
