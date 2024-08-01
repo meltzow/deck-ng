@@ -30,7 +30,9 @@ jobs:
 
       - name: Execute Fastlane Lane 'beta'
         working-directory: ios
-        run: bundle exec fastlane ios beta
+        run: |
+          bundle install
+          bundle exec fastlane ios beta
         env:
           MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD }}
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
