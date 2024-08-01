@@ -1,0 +1,44 @@
+name: Build and Deploy iOS App with Fastlane and Flutter
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.22.2'
+
+      - name: Install Dependencies
+        run: |
+          flutter config --no-analytics
+          flutter pub get
+
+      - name: Install CocoaPods
+        run: |
+          sudo gem install cocoapods
+          cd ios
+          pod install
+          cd ..
+
+      - name: Install Fastlane
+        run: gem install fastlane
+
+      - name: Execute Fastlane Lane 'beta'
+        run: fastlane ios beta
+        env:
+          MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD }}
+          BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
+          FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
+          FASTLANE_APPLE_API_ISSUER_ID: ${{ secrets.FASTLANE_APPLE_API_ISSUER_ID }}
+          FASTLANE_APPLE_API_KEY: ${{ secrets.FASTLANE_APPLE_API_KEY }}
+          DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
+          DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
+          WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
