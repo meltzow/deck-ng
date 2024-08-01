@@ -35,4 +35,4 @@ jobs:
         run: |
           bundle config set path 'vendor/bundle'
           bundle install
-          bundle flutter build ios --release --no-codesign
+          bundle exec flutter build ios --release --no-codesign
