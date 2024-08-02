@@ -39,7 +39,10 @@ platform :ios do
     dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
     # Build with Flutter
     Dir.chdir("..") do
-      sh("flutter build ipa --release --dart-define=#{dart_define}")
+        Dir.chdir("..") do
+            sh("pwd")
+            sh("flutter build ipa --release --dart-define=#{dart_define}")
+        end
     end
   end
 

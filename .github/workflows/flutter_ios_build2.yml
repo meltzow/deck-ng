@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
+  build:
     runs-on: macos-latest
 
     steps:
@@ -36,6 +36,26 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install
 
+#      - name: Build iOS App
+#        run: |
+#          flutter build ios --release --no-codesign
+
       - name: Build iOS App
+        working-directory: ios
         run: |
-          flutter build ios --release --no-codesign
+          bundle exec fastlane ios build
+        env:
+          BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
+          FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
+          FASTLANE_APPLE_API_ISSUER_ID: ${{ secrets.FASTLANE_APPLE_API_ISSUER_ID }}
+          FASTLANE_APPLE_API_KEY: ${{ secrets.FASTLANE_APPLE_API_KEY }}
+          DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
+          DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
+          MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD }}
+          WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
+
+      - name: Upload iOS build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Runner.app
+          path: ios/Runner.app
