@@ -25,18 +25,14 @@ jobs:
 
       - name: Set up Ruby and CocoaPods
         run: |
-          brew install rbenv ruby-build
-          rbenv install 2.7.2 --skip-existing
-          rbenv global 2.7.2
+          brew install ruby
           gem install bundler
           gem install cocoapods
-          rbenv rehash
 
       - name: Install CocoaPods
+        working-directory: ios
         run: |
-          cd ios
           pod install
-          cd ..
 
       - name: Build iOS App
         working-directory: ios
