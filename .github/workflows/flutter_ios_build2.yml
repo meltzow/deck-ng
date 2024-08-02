@@ -27,7 +27,7 @@ jobs:
         run: |
           brew install ruby
           gem install bundler
-          gem install cocoapods
+          brew install cocoapods
 
       - name: Install CocoaPods
         working-directory: ios
