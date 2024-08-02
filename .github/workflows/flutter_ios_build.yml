@@ -23,18 +23,17 @@ jobs:
           flutter config --no-analytics
           flutter pub get
 
-#      - uses: ruby/setup-ruby@v1
-#        with:
-#          ruby-version: '3.3'
-#          bundler-cache: true
-#          working-directory: ios
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          working-directory: ios
 
-#      - name: Install CocoaPods
-#        working-directory: ios
-#        run: |
-#          sudo gem install cocoapods
-#          pod setup
-#          echo "PATH=$PATH:/Users/runner/.local/share/gem/ruby/3.3.0/bin" >> $GITHUB_ENV
+      - name: Install CocoaPods
+        working-directory: ios
+        run: |
+          sudo gem install cocoapods
+          pod setup
 
       - name: Verify CocoaPods Installation
         run: |
@@ -55,17 +54,10 @@ jobs:
           echo "CocoaPods Path: $(which pod)"
           echo "Bundler Version: $(bundle -v)"
 
-      - name: setup-cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          podfile-path: ios/Podfile.lock
-
       - name: Build iOS
         working-directory: ios
         run: |
-          set -x
-          flutter doctor -v 
-          bundle exec fastlane ios build || exit 1
+          bundle exec fastlane ios build
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
           FASTLANE_APPLE_API_KEY_ID: ${{ secrets.FASTLANE_APPLE_API_KEY_ID }}
@@ -75,12 +67,6 @@ jobs:
           DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD }}
           WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
-
-      - name: Setup secrets
-        run: |
-          echo "::add-mask::${{ secrets.FASTLANE_APPLE_API_KEY }}"
-          echo "::add-mask::${{ secrets.FASTLANE_CERT_MATCH_PASSWORD }}"
-          echo "::add-mask::${{ secrets.FASTLANE_DEMO_PASSWORD }}"
 
       - name: Upload iOS build
         uses: actions/upload-artifact@v4
