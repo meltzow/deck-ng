@@ -23,9 +23,17 @@ jobs:
           flutter config --no-analytics
           flutter pub get
 
+      - name: Set up Ruby and CocoaPods
+        run: |
+          brew install rbenv ruby-build
+          rbenv install 2.7.2 --skip-existing
+          rbenv global 2.7.2
+          gem install bundler
+          gem install cocoapods
+          rbenv rehash
+
       - name: Install CocoaPods
         run: |
-          brew install cocoapods
           cd ios
           pod install
           cd ..
