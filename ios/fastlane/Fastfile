@@ -37,9 +37,10 @@ platform :ios do
     setup_ci
     import_certificate_from_github
     dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
-    sh("sudo gem install cocoapods")
     # Build with Flutter
-    sh("flutter build ipa --release --dart-define=#{dart_define}")
+    Dir.chdir("..") do
+      sh("flutter build ipa --release --dart-define=#{dart_define}")
+    end
   end
 
   lane :release do |options|
