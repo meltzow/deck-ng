@@ -38,7 +38,9 @@ platform :ios do
     import_certificate_from_github
     dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
     # Build with Flutter
+    sh("pwd")
     Dir.chdir("..") do
+        sh("pwd")
         Dir.chdir("..") do
             sh("pwd")
             sh("flutter build ipa --release --dart-define=#{dart_define}")
