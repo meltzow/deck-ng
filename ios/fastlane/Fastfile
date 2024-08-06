@@ -38,14 +38,11 @@ platform :ios do
     import_certificate_from_github
 
     sh("pwd")
-    sh("ls build/ios/archive/Runner.xcarchive")
-    sh("ls ../build/ios/archive/Runner.xcarchive")
     sh("ls ../../build/ios/archive/Runner.xcarchive")
-    sh("ls ../../../build/ios/archive/Runner.xcarchive")
 
     build_app(
       skip_build_archive: true,
-      archive_path: "../build/ios/archive/Runner.xcarchive",
+      archive_path: "../../build/ios/archive/Runner.xcarchive",
     )
   end
 
