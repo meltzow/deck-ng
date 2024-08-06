@@ -36,16 +36,11 @@ platform :ios do
   lane :build do
     setup_ci
     import_certificate_from_github
-    dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
-    # Build with Flutter
-    sh("pwd")
-    Dir.chdir("..") do
-        sh("pwd")
-        Dir.chdir("..") do
-            sh("pwd")
-            sh("flutter build ipa --release --dart-define=#{dart_define}")
-        end
-    end
+
+    build_app(
+      skip_build_archive: true,
+      archive_path: "../../build/ios/archive/Runner.xcarchive",
+    )
   end
 
   lane :release do |options|

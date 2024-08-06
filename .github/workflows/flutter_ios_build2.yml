@@ -25,6 +25,7 @@ jobs:
 
       - name: Set up Ruby and CocoaPods
         run: |
+          HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
           brew install ruby
           gem install bundler
           brew install cocoapods
@@ -36,11 +37,11 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install
 
-#      - name: Build iOS App
-#        run: |
-#          set -x
-#          pwd
-#          flutter build ios --release --no-codesign
+      - name: Build iOS App
+        run: |
+          set -x
+          pwd
+          flutter build ios --release --no-codesign
 
       - name: Build iOS App
         working-directory: ios
@@ -61,4 +62,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Runner.app
-          path: ios/Runner.app
+          path: build/ios/iphoneos/Runner.app
