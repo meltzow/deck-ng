@@ -39,7 +39,7 @@ platform :ios do
 
     build_app(
       skip_build_archive: true,
-      archive_path: "../../build/ios/archive/Runner.xcarchive",
+      archive_path: "../build/ios/archive/Runner.xcarchive",
     )
   end
 
