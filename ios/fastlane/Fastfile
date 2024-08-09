@@ -41,7 +41,7 @@ platform :ios do
     Dir.chdir('/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/') do
         build_app(
           skip_build_archive: true,
-          archive_path: archivcde_path + "/Runner.xcarchive",
+          archive_path: archive_path + "/Runner.xcarchive",
         )
     end
   end
