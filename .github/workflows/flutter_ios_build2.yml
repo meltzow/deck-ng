@@ -37,13 +37,13 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install
 
-      - name: Build iOS App
+      - name: Build iOS App with flutter
         run: |
           set -x
           pwd
           flutter build ios --release --no-codesign
 
-      - name: Build iOS App
+      - name: Build iOS App with fastlane
         working-directory: ios
         run: |
           set -x
