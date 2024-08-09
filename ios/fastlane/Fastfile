@@ -41,7 +41,7 @@ platform :ios do
     sh "pwd"
     #Dir.chdir('../') do
         build_app(
-          project: "../Runner.xcodeproj",
+          project: "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcodeproj",
           skip_build_archive: true,
           archive_path: archive_path,
         )
