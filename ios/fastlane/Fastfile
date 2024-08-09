@@ -38,12 +38,12 @@ platform :ios do
     import_certificate_from_github
 
     archive_path = '/Users/runner/work/deck_ng_flutter/deck_ng_flutter/build/ios/archive'
-
-    build_app(
-       workspace: "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcworkspace",
-      skip_build_archive: true,
-      archive_path: archive_path + "/Runner.xcarchive",
-    )
+    Dir.chdir('/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/') do
+        build_app(
+          skip_build_archive: true,
+          archive_path: archivcde_path + "/Runner.xcarchive",
+        )
+    end
   end
 
   lane :release do |options|
