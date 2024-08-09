@@ -37,12 +37,17 @@ platform :ios do
     setup_ci
     import_certificate_from_github
 
-    sh("pwd")
-    sh("ls ../../build/ios/archive/Runner.xcarchive")
+    archive_path = `find / -name "Runner.xcarchive" -type d 2>/dev/null`.strip
+
+    if archive_path.empty?
+      UI.error("Runner.xcarchive directory not found.")
+    else
+      UI.message("Runner.xcarchive directory is located at: #{archive_path}")
+    end
 
     build_app(
       skip_build_archive: true,
-      archive_path: "../../build/ios/archive/Runner.xcarchive",
+      archive_path: archive_path + "/Runner.xcarchive",
     )
   end
 
