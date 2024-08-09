@@ -37,14 +37,15 @@ platform :ios do
     setup_ci
     import_certificate_from_github
 
-    archive_path = '/Users/runner/work/deck_ng_flutter/deck_ng_flutter/build/ios/archive/Runner.xcarchive'
-    Dir.chdir('/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/') do
+    archive_path = '../../build/ios/archive/Runner.xcarchive'
+    sh "pwd"
+    #Dir.chdir('../') do
         build_app(
-          project: "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcodeproj",
+          project: "Runner.xcodeproj",
           skip_build_archive: true,
           archive_path: archive_path,
         )
-    end
+    #end
   end
 
   lane :release do |options|
