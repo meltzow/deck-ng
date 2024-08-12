@@ -70,7 +70,6 @@ platform :ios do
 
     Dir.chdir "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcworkspace" do
         sh "pwd"
-        sh "sudo gem install cocoapods"
         sh "bundle install"
         sh "pod setup"
         sh "pod install"
