@@ -66,7 +66,20 @@ platform :ios do
 
     increment_build_number(build_number: current_build_number)
 
-    build
+    dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
+
+    Dir.chdir "../.." do
+        puts "*** Build flutter iOS release for version #{version_name}+#{current_build_number} ***"
+        sh("flutter", "build", "ipa", "--release", "--dart-define=#{dart_define}",  "--build-number=#{current_build_number}", "--build-name=#{version_name}")
+    end
+
+    archive_path = '/Users/runner/work/deck_ng_flutter/deck_ng_flutter/build/ios/archive'
+
+    build_app(
+       workspace: "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcworkspace",
+      skip_build_archive: true,
+      archive_path: archive_path + "/Runner.xcarchive",
+    )
 
     if options[:track] == 'beta'
       identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
