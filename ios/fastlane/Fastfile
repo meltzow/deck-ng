@@ -68,7 +68,7 @@ platform :ios do
 
     dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
 
-    Dir.chdir "../.." do
+    Dir.chdir "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcworkspace" do
         puts "*** Build flutter iOS release for version #{version_name}+#{current_build_number} ***"
         sh("flutter", "build", "ipa", "--release", "--dart-define=#{dart_define}",  "--build-number=#{current_build_number}", "--build-name=#{version_name}")
     end
