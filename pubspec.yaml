@@ -40,13 +40,13 @@ dependencies:
   json_annotation: ^4.9.0
   url_launcher: ^6.3.0
   flutter_launcher_icons: ^0.13.1
-  catcher_2: ^1.2.6
   wiredash: ^2.2.1
   flutter_gen: any
   appflowy_board: ^0.1.2
   intl: ^0.19.0
   google_fonts: ^6.2.1
   flutter_colorpicker: ^1.1.0
+  device_info_plus: ^10.1.2
 #  file_picker: ^8.0.0+1
 
 dev_dependencies:

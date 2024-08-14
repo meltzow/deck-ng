@@ -1,4 +1,3 @@
-import 'package:catcher_2/catcher_2.dart';
 import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
@@ -58,7 +57,6 @@ class MyApp extends StatelessWidget {
         collectMetaData: (metaData) => metaData..custom['language'] = 'de',
         child: GetMaterialApp(
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
-          navigatorKey: Catcher2.navigatorKey,
           translations: Translation(),
           locale: Get.deviceLocale,
           fallbackLocale: const Locale('en', 'GB'),

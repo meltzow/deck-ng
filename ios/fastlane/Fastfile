@@ -27,9 +27,9 @@ platform :ios do
     `curl https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer --output #{apple_intermediate_certificate_path}`
     import_certificate(keychain_name: "login", certificate_path: apple_intermediate_certificate_path)
     if ENV['BASE64_BASIC_AUTH_CERTS_REPO']
-      match(git_url: "https://github.com/meltzow/deck-ng-certs.git", type: "appstore", git_basic_authorization: ENV['BASE64_BASIC_AUTH_CERTS_REPO'], readonly: true)
+      match(git_url: "https://github.com/meltzow/deck-ng-certs.git",  git_basic_authorization: ENV['BASE64_BASIC_AUTH_CERTS_REPO'], readonly: true)
     else
-      match(git_url: "git@github.com:meltzow/deck-ng-certs.git", type: "appstore", readonly: true)
+      match(git_url: "git@github.com:meltzow/deck-ng-certs.git", readonly: true)
     end
   end
 
@@ -55,7 +55,8 @@ platform :ios do
     app_store_connect_api_key(
       key_id: ENV['FASTLANE_APPLE_API_KEY_ID'],
       issuer_id: ENV['FASTLANE_APPLE_API_ISSUER_ID'],
-      key_content: ENV['FASTLANE_APPLE_API_KEY']
+      key_content: ENV['FASTLANE_APPLE_API_KEY'],
+      in_house: false
     )
 
     increment_version_number(version_number: version_name)
@@ -68,22 +69,19 @@ platform :ios do
 
     dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
 
-    Dir.chdir "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcworkspace" do
+    Dir.chdir ".." do
         sh "pwd"
         sh "bundle install"
         sh "pod setup"
         sh "pod install"
         puts "*** Build flutter iOS release for version #{version_name}+#{current_build_number} ***"
-        sh("flutter", "build", "ipa", "--release", "--dart-define=#{dart_define}",  "--build-number=#{current_build_number}", "--build-name=#{version_name}")
+        sh("flutter", "build", "ipa", "--release", "--verbose", "--dart-define=#{dart_define}",  "--build-number=#{current_build_number}", "--build-name=#{version_name}")
     end
 
-    archive_path = '/Users/runner/work/deck_ng_flutter/deck_ng_flutter/build/ios/archive'
-
-    build_app(
-       workspace: "/Users/runner/work/deck_ng_flutter/deck_ng_flutter/ios/Runner.xcworkspace",
-      skip_build_archive: true,
-      archive_path: archive_path + "/Runner.xcarchive",
-    )
+   build_app(
+       skip_build_archive: true,
+       archive_path: "../build/ios/archive/Runner.xcarchive",
+     )
 
     if options[:track] == 'beta'
       identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
