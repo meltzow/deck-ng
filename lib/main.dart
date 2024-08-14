@@ -7,6 +7,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
-  MyApp(debugShowCheckedModeBanner: kDebugMode ? true : false);
+  runApp(MyApp(debugShowCheckedModeBanner: kDebugMode ? true : false));
 
 }
