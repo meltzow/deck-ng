@@ -69,17 +69,16 @@ platform :ios do
 
     dart_define = "WIREDASH_SECRET=#{ENV['WIREDASH_SECRET']}"
 
-     # automatic code signing
-    update_code_signing_settings(
-      use_automatic_signing: true,
-      path: "../Runner.xcodeproj"
-    )
-
     Dir.chdir ".." do
         sh "pwd"
         sh "bundle install"
         sh "pod setup"
         sh "pod install"
+        # automatic code signing
+        update_code_signing_settings(
+          use_automatic_signing: true,
+          path: "Runner.xcodeproj"
+        )
         puts "*** Build flutter iOS release for version #{version_name}+#{current_build_number} ***"
         sh("flutter", "build", "ipa", "--release", "--verbose", "--dart-define=#{dart_define}",  "--build-number=#{current_build_number}", "--build-name=#{version_name}")
     end
