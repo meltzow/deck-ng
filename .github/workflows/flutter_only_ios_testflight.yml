@@ -53,7 +53,7 @@ jobs:
           echo "${{ secrets.PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/$(uuidgen).mobileprovision
 
       - name: Build iOS app
-        run: flutter build ipa --release
+        run: flutter build ipa --release --verbose
 
       - name: Install Fastlane
         run: sudo gem install fastlane
@@ -65,4 +65,7 @@ jobs:
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }} # Optional, wenn 2FA aktiviert ist
         run: |
           cd ios
+          pwd 
+          ls -la /Users/runner/work/deck_ng_flutter/deck_ng_flutter/build/ios/ipa/
+          ls -la /Users/runner/work/deck_ng_flutter/deck_ng_flutter/build/ios/ipa/deckng.ipa
           fastlane pilot upload --ipa ../build/ios/ipa/deckng.ipa --username "${{ secrets.APPLE_ID }}"
