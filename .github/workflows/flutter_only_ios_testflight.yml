@@ -65,4 +65,4 @@ jobs:
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }} # Optional, wenn 2FA aktiviert ist
         run: |
           cd ios
-          fastlane pilot upload --ipa ../build/ios/ipa/deckng.ipa --username "$APPLE_ID" --api_key_path "fastlane/Appfile"
+          fastlane pilot upload --ipa ../../build/ios/ipa/deckng.ipa --username "$APPLE_ID"
