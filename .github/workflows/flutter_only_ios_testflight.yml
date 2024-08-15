@@ -31,9 +31,9 @@ jobs:
 
       - name: Create a temporary keychain
         run: |
-          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
           security set-keychain-settings -t 3600 -u build.keychain
         env:
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
@@ -42,7 +42,7 @@ jobs:
         run: |
           echo "${{ secrets.CERTIFICATE_PRIVATE_KEY }}" | base64 --decode > /tmp/certificate.p12
           sudo security import /tmp/certificate.p12 -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
         env:
           CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
