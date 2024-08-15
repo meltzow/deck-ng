@@ -1,0 +1,55 @@
+name: Build and Deploy iOS to TestFlight with flutter only
+
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: 'Which track should be used? One of beta, production'
+        required: true
+        default: 'beta'
+        type: choice
+        options:
+          - beta
+          - production
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Set up signing certificate
+        run: |
+          echo "${{ secrets.CERTIFICATE_PRIVATE_KEY }}" | base64 --decode > /tmp/certificate.p12
+          sudo security import /tmp/certificate.p12 -P "" -A -T /usr/bin/codesign
+          sudo security set-key-partition-list -S apple-tool:,apple: -s -k "${{ secrets.APPLE_ID }}" /Users/runner/Library/Keychains/login.keychain-db
+
+      - name: Set up provisioning profile
+        run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "${{ secrets.PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/$(uuidgen).mobileprovision
+
+      - name: Build iOS app
+        run: flutter build ipa --release
+
+      - name: Install Fastlane
+        run: sudo gem install fastlane
+
+      - name: Upload to TestFlight with Fastlane
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
+          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }} # Optional, wenn 2FA aktiviert ist
+        run: |
+          cd ios
+          fastlane pilot upload --ipa ../build/ios/ipa/Runner.ipa --username "$APPLE_ID" --api_key_path "../fastlane/Appfile"
