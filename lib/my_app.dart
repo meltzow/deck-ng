@@ -4,6 +4,7 @@ import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/controller/login_controller.dart';
 import 'package:deck_ng/controller/settings_controller.dart';
+import 'package:deck_ng/env/env.dart';
 import 'package:deck_ng/guard.dart';
 import 'package:deck_ng/l10n/translation.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wiredash(
         projectId: 'deck-ng-te1kmcw',
-        secret: '',
+        secret: Env.WIREDASH_SECRET,
         psOptions: const PsOptions(
           // collectMetaData: (metaData) async =>
           // metaData..userEmail = 'dash@wiredash.io',
