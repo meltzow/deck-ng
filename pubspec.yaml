@@ -48,7 +48,7 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_colorpicker: ^1.1.0
   device_info_plus: ^10.1.2
-#  file_picker: ^8.0.0+1
+  envied: ^0.5.4+1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +77,7 @@ dev_dependencies:
   path_provider_platform_interface: any
   plugin_platform_interface: any
   flutter_oss_licenses: ^3.0.2
+  envied_generator: ^0.5.4+1
 
 flutter_launcher_icons:
   android: true
@@ -135,19 +136,6 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
-dart_define:
-  # REQUIRED: The variables to add to the generated config files
-  variables:
-    - name: WIREDASH_SECRET
-      description: we need the secret from your wiredash.io login
-      required: true
-  flavors:
-    - name: production
-      description: The production flavor
-    - name: staging
-      description: The staging flavor
-    - name: development
-      description: The development flavor
 
 #flutter_scripts
 # see https://pub.dev/documentation/flutter_scripts/latest/
