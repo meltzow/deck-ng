@@ -1,6 +1,6 @@
 storage_mode("git")
 type("appstore") # The default type, can be: appstore, adhoc, enterprise or development
-app_identifier(["net.meltzow.deckngo"]) # The bundle identifier of your app
+app_identifier(["net.meltzow.deckng"]) # The bundle identifier of your app
 username("appstore@meltzow.net")
 
 # app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
