@@ -17,13 +17,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Set up Flutter actions
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
           channel: 'stable'
+          flutter-version-file: pubspec.yaml
           cache: true
 
       - name: Install dependencies
@@ -32,9 +33,7 @@ jobs:
           flutter pub get
 
       - name: Run Flutter tests
-        shell: bash
         run: flutter test
-
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -46,7 +45,7 @@ jobs:
           cd android
           sudo gem install bundler
           bundle config set path 'vendor/bundle'
-          bundle install      
+          bundle install
 
       - uses: actions/cache@v4
         with:
@@ -56,6 +55,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
@@ -65,6 +65,7 @@ jobs:
           cache-dependency-path: | # optional
             android/*.gradle*
             android/**/gradle-wrapper.properties
+
       - name: install gradle
         working-directory: android
         run: |
@@ -73,6 +74,12 @@ jobs:
       - name: Generate .jks file
         working-directory: android
         run: echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
+
+      - name: Create .env file
+        run: echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
+
+      - name: build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Release to Google Play
         working-directory: android

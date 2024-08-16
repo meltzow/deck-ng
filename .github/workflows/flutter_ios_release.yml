@@ -28,7 +28,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: | 
+        run: |
           flutter config --no-analytics
           flutter pub get
 # FIXME: comment out because of saving some ios build time, Uncomment the following lines if ios build running
@@ -40,10 +40,6 @@ jobs:
           bundler-cache: true
           ruby-version: "3.3"
 
-#      - run: |
-#          cd ios
-#          brew install fastlane
-
       - name: Set up Fastlane
         run: |
           cd ios
@@ -54,7 +50,7 @@ jobs:
       - name: Create .env file
         run: echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
 
-      - name: Create .env file
+      - name: build_runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Release iOS
