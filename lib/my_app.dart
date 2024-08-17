@@ -23,6 +23,7 @@ import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
@@ -43,8 +44,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wiredash(
-        projectId: 'deck-ng-te1kmcw',
-        secret: Env.WIREDASH_SECRET,
+        projectId: kReleaseMode ? 'deck-ng-te1kmcw' : 'deck-ng-tests-7x6ml4x',
+        secret: kReleaseMode ? Env.WIREDASH_SECRET : Env.WIREDASH_SECRET_TEST,
         psOptions: const PsOptions(
           // collectMetaData: (metaData) async =>
           // metaData..userEmail = 'dash@wiredash.io',
