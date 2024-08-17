@@ -2,6 +2,7 @@ import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart' as wd;
 
 class CardDetailsController extends GetxController {
   var card = Rx<Card?>(null);
@@ -89,12 +90,14 @@ class CardDetailsController extends GetxController {
     card.value = card.value?.copyWith(
       labels: [...card.value!.labels, label],
     );
+    wd.Wiredash.trackEvent("add Label", data: {"label": label.title});
   }
 
   void removeLabel(Label label) {
     card.value = card.value?.copyWith(
       labels: card.value!.labels.where((l) => l.title != label.title).toList(),
     );
+    wd.Wiredash.trackEvent("remove Label", data: {"label": label.title});
   }
 
   void addUser(User user) async {
@@ -103,6 +106,7 @@ class CardDetailsController extends GetxController {
     card.value = card.value?.copyWith(
       assignedUsers: [...?card.value?.assignedUsers, assignment],
     );
+    wd.Wiredash.trackEvent("add User");
   }
 
   void removeUser(User user) async {
@@ -114,6 +118,7 @@ class CardDetailsController extends GetxController {
           ?.where((a) => a.participant.uid != user.uid)
           .toList(),
     );
+    wd.Wiredash.trackEvent("remove User");
   }
 
   void clearDueDate() {

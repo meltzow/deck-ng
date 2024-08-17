@@ -4,6 +4,7 @@ import 'package:deck_ng/service/services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart';
 
 class LoginController extends GetxController {
   var credService = Get.find<StorageService>();
@@ -95,9 +96,13 @@ class LoginController extends GetxController {
       //     "Login", "Login not Successful. ${e.message}");
     }
     if (successful) {
+      await Wiredash.trackEvent('successfully login',
+          data: {'url': url.value, 'nextcloudVersion': nextcloudVersion.value});
       Get.toNamed('/boards');
       notificationService.successMsg("Login", "Login Successful");
     } else {
+      await Wiredash.trackEvent('not successfully login',
+          data: {'url': url.value, 'nextcloudVersion': nextcloudVersion.value});
       notificationService.errorMsg(
           "Login", "Login not Successful. Please check username and password");
     }

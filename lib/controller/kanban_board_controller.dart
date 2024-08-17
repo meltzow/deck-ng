@@ -4,6 +4,7 @@ import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart';
 
 class KanbanBoardController extends GetxController {
   late AppFlowyBoardController boardController;
@@ -100,6 +101,11 @@ class KanbanBoardController extends GetxController {
         currentDraggedCard.stackId, currentDraggedCard.id!, currentDraggedCard);
 
     cardSuccessMsg();
+    Wiredash.trackEvent("reorder card on kanban board", data: {
+      "selectedStackIndex": selectedStackIndex,
+      "oldIndex": oldIndex,
+      "newIndex": newIndex
+    });
   }
 
   cardReorderHandler(
@@ -144,5 +150,6 @@ class KanbanBoardController extends GetxController {
     var stack = _findStackById(stackId);
     stack!.cards.add(createdCard);
     cardSuccessMsg();
+    Wiredash.trackEvent("create card on kanban board");
   }
 }
