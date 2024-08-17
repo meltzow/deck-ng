@@ -114,22 +114,34 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               )),
                           const SizedBox(height: 20.0),
-                          Obx(() => ElevatedButton(
-                                onPressed: _controller.isLoading.value
-                                    ? null
-                                    : _controller.login,
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 15.0),
-                                ),
-                                child: _controller.isLoading.value
-                                    ? const CircularProgressIndicator(
-                                        color: Colors.white)
-                                    : const Text('Login'),
-                              )),
+                          Center(
+                              child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                Obx(() => ElevatedButton(
+                                      onPressed: _controller.isLoading.value
+                                          ? null
+                                          : _controller.login,
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15.0),
+                                      ),
+                                      child: _controller.isLoading.value
+                                          ? const CircularProgressIndicator(
+                                              color: Colors.white)
+                                          : const Text('Login'),
+                                    )),
+                                const SizedBox(width: 10.0),
+                                ElevatedButton.icon(
+                                  onPressed: _controller.scanBarcode,
+                                  icon: const Icon(Icons.qr_code_scanner),
+                                  label: const Text('Login with Barcode'),
+                                )
+                              ]))
                         ],
                       ),
                     ),

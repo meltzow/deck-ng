@@ -1,0 +1,1 @@
+Login with a barcode from your nextcloud is now supported.

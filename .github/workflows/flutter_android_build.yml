@@ -2,9 +2,9 @@ name: Flutter Android Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
 
 jobs:
   build:
@@ -27,7 +27,9 @@ jobs:
           flutter pub get
 
       - name: Create .env file
-        run: echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
+        run: |
+          echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
+          echo "WIREDASH_SECRET_TEST=${{ secrets.WIREDASH_SECRET_TEST }}" >> .env
 
       - name: build_runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
