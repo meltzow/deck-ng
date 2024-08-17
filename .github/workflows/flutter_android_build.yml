@@ -26,6 +26,12 @@ jobs:
           flutter config --no-analytics
           flutter pub get
 
+      - name: Create .env file
+        run: echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
+
+      - name: build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
       - name: Run Flutter tests
         run: flutter test
 
@@ -70,9 +76,6 @@ jobs:
         run: |
           echo "${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_BASE64 }}" | base64 --decode > /tmp/keystore.jks
           keytool -list -v -keystore /tmp/keystore.jks -storepass ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }} -alias upload
-
-      - name: Create .env file
-        run: echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
 
       - name: build_runner
         run: flutter pub run build_runner build --delete-conflicting-outputs
