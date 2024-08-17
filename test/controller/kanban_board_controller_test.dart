@@ -1,9 +1,11 @@
 import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/model/models.dart' as NC;
 import 'package:deck_ng/service/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:stack_trace/stack_trace.dart';
 import 'package:test/test.dart';
 
 import 'kanban_board_controller_test.mocks.dart';
@@ -14,6 +16,14 @@ void main() {
   late StackService stackServiceMock;
   late CardService cardServiceMock;
   late NotificationService notifyServiceMock;
+
+  // Set up demangleStackTrace for non-standard stack traces
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is Chain) {
+      return stack.toTrace();
+    }
+    return stack;
+  };
 
   setUp(() {
     Get.testMode = true;
