@@ -1,0 +1,1 @@
+Der Login mit einem Barcode von deiner Nextcloud wird nun unterstützt.
