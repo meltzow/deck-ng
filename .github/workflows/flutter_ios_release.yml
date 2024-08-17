@@ -31,9 +31,17 @@ jobs:
         run: |
           flutter config --no-analytics
           flutter pub get
-# FIXME: comment out because of saving some ios build time, Uncomment the following lines if ios build running
-#      - name: Run Flutter tests
-#        run: flutter test
+
+      - name: Create .env file
+        run: |
+          echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
+          echo "WIREDASH_SECRET_TEST=${{ secrets.WIREDASH_SECRET_TEST }}" >> .env
+
+      - name: build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Run Flutter tests
+        run: flutter test
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -46,12 +54,6 @@ jobs:
           sudo gem install bundler
           bundle config set path 'vendor/bundle'
           bundle install
-
-      - name: Create .env file
-        run: echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
-
-      - name: build_runner
-        run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Release iOS
         run: |

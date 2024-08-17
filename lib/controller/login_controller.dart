@@ -1,10 +1,20 @@
 import 'dart:async';
 
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
+
+class BarcodeScanData {
+  late String url;
+  late String username;
+  late String password;
+
+  BarcodeScanData(
+      {required this.url, required this.username, required this.password});
+}
 
 class LoginController extends GetxController {
   var credService = Get.find<StorageService>();
@@ -87,6 +97,7 @@ class LoginController extends GetxController {
   }
 
   login() async {
+    isLoading.value = true;
     var successful = false;
     try {
       successful =
@@ -106,6 +117,7 @@ class LoginController extends GetxController {
       notificationService.errorMsg(
           "Login", "Login not Successful. Please check username and password");
     }
+    isLoading.value = false;
   }
 
   void checkCapabilties() async {
@@ -126,5 +138,51 @@ class LoginController extends GetxController {
     typingTimer = Timer(const Duration(seconds: 2), () {
       validateUrl(value);
     });
+  }
+
+  Future<void> scanBarcode() async {
+    try {
+      var result = await BarcodeScanner.scan();
+      //nc://login/user:admin&password:AZdNL-cA5gw-teTtT-6e38a-zcL8a&server:http://192.168.178.81:8080
+      if (result.rawContent.isNotEmpty) {
+        // Assuming the barcode contains URL, username, and password separated by commas
+        BarcodeScanData data = parseBarcode(result.rawContent);
+        urlController.text = data.url;
+        userNameController.text = data.username;
+        passwordController.text = data.password;
+        await Wiredash.trackEvent('wants to login with barcode');
+        login();
+      } else {
+        notificationService.errorMsg("Login", "Invalid barcode format");
+        await Wiredash.trackEvent('unsuccessfully login with barcode');
+      }
+    } catch (e) {
+      notificationService.errorMsg("Login", "Failed to scan barcode: $e");
+      await Wiredash.trackEvent('unsuccessfully login with barcode');
+    }
+  }
+
+  BarcodeScanData parseBarcode(String barcode) {
+    const prefix = "nc://login/";
+    if (!barcode.startsWith(prefix)) {
+      throw FormatException("Invalid barcode format");
+    }
+
+    final content = barcode.substring(prefix.length);
+    final parts = content.split('&');
+
+    if (parts.length != 3) {
+      throw FormatException("Invalid barcode format");
+    }
+
+    final userPart = parts[0].replaceFirst('user:', '');
+    final passwordPart = parts[1].replaceFirst('password:', '');
+    final serverPart = parts[2].replaceFirst('server:', '');
+
+    final username = userPart;
+    final password = passwordPart;
+    final server = serverPart;
+
+    return BarcodeScanData(url: server, username: username, password: password);
   }
 }
