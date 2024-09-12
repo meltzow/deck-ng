@@ -32,13 +32,11 @@ jobs:
           flutter config --no-analytics
           flutter pub get
 
-      - name: Create .env file
+      - name: Create .env file for testing
         run: |
-          echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
-          echo "WIREDASH_SECRET_TEST=${{ secrets.WIREDASH_SECRET_TEST }}" >> .env
-
-      - name: build_runner
-        run: flutter pub run build_runner build --delete-conflicting-outputs
+          echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET_TEST }}" > .env
+          echo "WIREDASH_PROJECT_ID=${{ secrets.WIREDASH_PROJECT_ID_TEST }}" >> .env
+          flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Run Flutter tests
         run: flutter test
@@ -55,6 +53,16 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install
 
+      - name: Create .env file for release
+        run: |
+          if [ "${{ github.event.inputs.track }}" == "production" ]; then
+            echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
+            echo "WIREDASH_PROJECT_ID=${{ secrets.WIREDASH_PROJECT_ID }}" >> .env
+            flutter pub run build_runner build --delete-conflicting-outputs
+          else
+            echo "on track ${{ github.event.inputs.track }}, no new .env files needed"
+          fi
+
       - name: Release iOS
         run: |
           cd ios
@@ -68,4 +76,3 @@ jobs:
           DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
           DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD}}
-          WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}

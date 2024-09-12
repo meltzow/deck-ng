@@ -1,1 +1,1 @@
-a fully new design and a lot of technical changes under the hood
+Der Login mit einem Barcode von deiner Nextcloud wird nun unterstützt.

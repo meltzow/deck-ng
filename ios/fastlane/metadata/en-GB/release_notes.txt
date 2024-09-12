@@ -1,1 +1,1 @@
-a fully new design and a lot of technical changes under the hood
+Login with a barcode from your nextcloud is now supported.

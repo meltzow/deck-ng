@@ -7,6 +7,6 @@ abstract class Env {
   @EnviedField(varName: 'WIREDASH_SECRET', obfuscate: true)
   static final String WIREDASH_SECRET = _Env.WIREDASH_SECRET;
 
-  @EnviedField(varName: 'WIREDASH_SECRET_TEST', obfuscate: true)
-  static final String WIREDASH_SECRET_TEST = _Env.WIREDASH_SECRET_TEST;
+  @EnviedField(varName: 'WIREDASH_PROJECT_ID')
+  static final String WIREDASH_PROJECT_ID = _Env.WIREDASH_PROJECT_ID;
 }

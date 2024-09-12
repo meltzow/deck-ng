@@ -23,18 +23,17 @@ import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
 
 class MyApp extends StatelessWidget {
   final String? initialRoute;
-  List<GetPage>? initialPages;
+  final List<GetPage>? initialPages;
   final bool debugShowCheckedModeBanner;
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  MyApp(
+  const MyApp(
       {super.key,
       this.initialRoute,
       this.debugShowCheckedModeBanner = true,
@@ -44,8 +43,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wiredash(
-        projectId: kReleaseMode ? 'deck-ng-te1kmcw' : 'deck-ng-tests-7x6ml4x',
-        secret: kReleaseMode ? Env.WIREDASH_SECRET : Env.WIREDASH_SECRET_TEST,
+        projectId: Env.WIREDASH_PROJECT_ID,
+        secret: Env.WIREDASH_SECRET,
         psOptions: const PsOptions(
           // collectMetaData: (metaData) async =>
           // metaData..userEmail = 'dash@wiredash.io',
