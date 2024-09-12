@@ -92,8 +92,8 @@ jobs:
           FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD: ${{ secrets.FASTLANE_ANDROID_SIGNING_KEYSTORE_PASSWORD }}
           FASTLANE_ANDROID_SIGNING_KEYSTORE_PATH: "/tmp/keystore.jks"
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release.apk
-          path: build/app/outputs/bundle/release/app-release.aab
+     # - name: Upload APK
+      #  uses: actions/upload-artifact@v4
+       # with:
+       #   name: app-release.apk
+        #  path: build/app/outputs/bundle/release/app-release.aab
