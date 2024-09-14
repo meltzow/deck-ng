@@ -1,6 +1,7 @@
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/model/card.dart' as card_model;
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 
 class CardDetailsScreen extends StatelessWidget {
@@ -27,59 +28,92 @@ class CardDetailsScreen extends StatelessWidget {
             ],
           ),
           body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ListView(
-                children: [
-                  TextField(
-                    controller: cardController.titleController,
-                    decoration: const InputDecoration(labelText: 'Title'),
-                  ),
-                  TextField(
-                    controller: cardController.descriptionController,
-                    decoration: const InputDecoration(labelText: 'Description'),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: cardController.duedateController,
-                          decoration:
-                              const InputDecoration(labelText: 'Due Date'),
-                          readOnly: true,
-                          onTap: () async {
-                            DateTime? selectedDate = await showDatePicker(
-                              context: context,
-                              initialDate: card.duedate ?? DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101),
-                            );
-                            if (selectedDate != null) {
-                              cardController.duedateController.text =
-                                  selectedDate.toIso8601String();
-                              cardController.card.value =
-                                  card.copyWith(duedate: selectedDate);
-                            }
-                          },
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          cardController.clearDueDate();
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
+              children: [
+                TextField(
+                  controller: cardController.titleController,
+                  decoration: const InputDecoration(labelText: 'Title'),
+                ),
+                const SizedBox(height: 16.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Obx(() {
+                        if (cardController.isEditMode.value) {
+                          return TextField(
+                            controller: cardController.descriptionController,
+                            maxLines: null,
+                            onChanged: (text) {
+                              cardController.updateMarkdownPreview(text);
+                            },
+                            onEditingComplete: () {
+                              cardController.isEditMode.value = false;
+                            },
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              cardController.isEditMode.value = true;
+                            },
+                            child: SingleChildScrollView(
+                              child: MarkdownBody(
+                                data: cardController.markdownPreview.value,
+                              ),
+                            ),
+                          );
+                        }
+                      }),
+                    ),
+                    IconButton(
+                      icon: Icon(cardController.isEditMode.value
+                          ? Icons.preview
+                          : Icons.edit),
+                      onPressed: () {
+                        cardController.isEditMode.value =
+                            !cardController.isEditMode.value;
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: cardController.duedateController,
+                        decoration:
+                            const InputDecoration(labelText: 'Due Date'),
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: card.duedate ?? DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if (selectedDate != null) {
+                            cardController.duedateController.text =
+                                selectedDate.toIso8601String();
+                            cardController.card.value =
+                                card.copyWith(duedate: selectedDate);
+                          }
                         },
                       ),
-                    ],
-                  ),
-                  _buildLabelsField(context, card),
-                  _buildAssignedUsersField(context, card),
-                  ElevatedButton(
-                    onPressed: () {
-                      cardController.updateCard(card);
-                    },
-                    child: const Text('Save'),
-                  ),
-                ],
-              )),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: cardController.clearDueDate,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16.0),
+                _buildLabelsField(context, card),
+                const SizedBox(height: 16.0),
+                _buildAssignedUsersField(context, card),
+              ],
+            ),
+          ),
         );
       }
     });
@@ -122,41 +156,14 @@ class CardDetailsScreen extends StatelessWidget {
           title: const Text('Add Label'),
           children: [
             ...cardController.labels.map((label) {
-              return Obx(() {
-                return CheckboxListTile(
-                  title: Text(label.title),
-                  value: cardController.selectedLabels.contains(label),
-                  onChanged: (bool? value) {
-                    if (value == true) {
-                      cardController.selectedLabels.add(label);
-                    } else {
-                      cardController.selectedLabels.remove(label);
-                    }
-                  },
-                );
-              });
+              return SimpleDialogOption(
+                onPressed: () {
+                  cardController.addLabel(label);
+                  Navigator.pop(context);
+                },
+                child: Text(label.title),
+              );
             }),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    for (var label in cardController.selectedLabels) {
-                      cardController.addLabel(label);
-                    }
-                    cardController.selectedLabels.clear();
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Add'),
-                ),
-              ],
-            ),
           ],
         );
       },
