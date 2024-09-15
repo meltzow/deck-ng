@@ -20,7 +20,7 @@ class MockLoginController extends GetxController
   var urlController = TextEditingController();
   var userNameController = TextEditingController();
   var passwordController = TextEditingController();
-  var serverInfo = ''.obs;
+  var nextcloudVersionString = ''.obs;
   var isLoading = false.obs;
 
   final focusNode = FocusNode();

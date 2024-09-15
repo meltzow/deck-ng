@@ -59,9 +59,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           Obx(() => Text(
-                                _controller.isUrlValid.value
-                                    ? _controller.serverInfo.value
-                                    : 'Invalid URL or IP Address',
+                                _controller.urlErrorMessage.value.isNotEmpty
+                                    ? _controller.urlErrorMessage.value
+                                    : _controller.nextcloudVersionString.value,
                                 style: TextStyle(
                                   color: _controller.isUrlValid.value
                                       ? Colors.green
@@ -119,9 +119,9 @@ class LoginScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                 Obx(() => ElevatedButton(
-                                      onPressed: _controller.isLoading.value
-                                          ? null
-                                          : _controller.login,
+                                      onPressed: _controller.isFormValid.value
+                                          ? _controller.login
+                                          : null,
                                       style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
