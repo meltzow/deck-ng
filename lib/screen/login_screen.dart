@@ -119,6 +119,7 @@ class LoginScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                 Obx(() => ElevatedButton(
+                                      key: const Key('LoginBtn'),
                                       onPressed: _controller.isFormValid.value
                                           ? _controller.login
                                           : null,
@@ -139,7 +140,8 @@ class LoginScreen extends StatelessWidget {
                                 ElevatedButton.icon(
                                   onPressed: _controller.scanBarcode,
                                   icon: const Icon(Icons.qr_code_scanner),
-                                  label: const Text('Login with Barcode'),
+                                  label: const Text('Login with QR-Code'),
+                                  key: const Key('LoginQRBtn'),
                                 )
                               ]))
                         ],
