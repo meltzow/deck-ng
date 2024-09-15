@@ -33,24 +33,30 @@ class LoginController extends GetxController {
 
   var url = ''.obs;
   var isUrlValid = false.obs;
-  var serverInfo = ''.obs;
+  var urlErrorMessage = ''.obs;
 
   var isPasswordVisible = false.obs;
 
   Rxn<Version> nextcloudVersion = Rxn();
+  var nextcloudVersionString = ''.obs;
+  var isFormValid = false.obs;
 
   @override
   void onInit() {
+    super.onInit();
     urlController.addListener(() {
       url.value = urlController.text;
+      validateForm();
     });
 
     userNameController.addListener(() {
       username.value = userNameController.text;
+      validateForm();
     });
 
     passwordController.addListener(() {
       password.value = passwordController.text;
+      validateForm();
     });
 
     focusNode.addListener(() {
@@ -59,8 +65,12 @@ class LoginController extends GetxController {
         validateUrl(url.value);
       }
     });
+  }
 
-    super.onInit();
+  void validateForm() {
+    isFormValid.value = isUrlValid.value &&
+        username.value.isNotEmpty &&
+        password.value.isNotEmpty;
   }
 
   @override
@@ -70,12 +80,26 @@ class LoginController extends GetxController {
   }
 
   void validateUrl(String value) {
+    // Check if the URL starts with "http://" or "https://"
+    if (!value.startsWith('http://') && !value.startsWith('https://')) {
+      urlErrorMessage.value = 'URL must start with "http://" or "https://"';
+      isUrlValid.value = false;
+      return;
+    }
+
     // Regex pattern to match HTTP/HTTPS URLs and IP addresses
     const urlPattern =
         r'^(https?:\/\/)?(([\da-z\.-]+)\.([a-z\.]{2,6})|(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))(:\d+)?([\/\w \.-]*)*\/?$';
     final result = RegExp(urlPattern).hasMatch(value);
-    checkCapabilties();
+
+    if (!result) {
+      urlErrorMessage.value = 'Invalid URL or IP Address';
+    } else {
+      urlErrorMessage.value = '';
+    }
+
     isUrlValid.value = result;
+    checkCapabilties();
   }
 
   void togglePasswordVisibility() {
@@ -102,18 +126,22 @@ class LoginController extends GetxController {
     try {
       successful =
           await authService.login(url.value, username.value, password.value);
-    } on DioException catch (e) {
+    } on DioException {
       // notificationService.errorMsg(
       //     "Login", "Login not Successful. ${e.message}");
     }
     if (successful) {
-      await Wiredash.trackEvent('successfully login',
-          data: {'url': url.value, 'nextcloudVersion': nextcloudVersion.value});
+      await Wiredash.trackEvent('successfully login', data: {
+        'url': url.value,
+        'nextcloudVersion': nextcloudVersionString.value
+      });
       Get.toNamed('/boards');
       notificationService.successMsg("Login", "Login Successful");
     } else {
-      await Wiredash.trackEvent('not successfully login',
-          data: {'url': url.value, 'nextcloudVersion': nextcloudVersion.value});
+      await Wiredash.trackEvent('not successfully login', data: {
+        'url': url.value,
+        'nextcloudVersion': nextcloudVersionString.value
+      });
       notificationService.errorMsg(
           "Login", "Login not Successful. Please check username and password");
     }
@@ -124,10 +152,10 @@ class LoginController extends GetxController {
     isLoading.value = true;
     try {
       Capabilities resp = await authService.checkServer(url.value);
-      serverInfo.value = resp.ocs.data.version.string;
-      // _deckVersion.value = resp.ocs.data.version.string;
-    } on DioException catch (e) {
-      serverInfo.value = 'Invalid URL or IP Address';
+      nextcloudVersionString.value = resp.ocs.data.version.string;
+      nextcloudVersion.value = resp.ocs.data.version;
+    } on DioException {
+      nextcloudVersionString.value = 'Invalid URL or IP Address';
       isUrlValid.value = false;
     }
     isLoading.value = false;
@@ -165,14 +193,14 @@ class LoginController extends GetxController {
   BarcodeScanData parseBarcode(String barcode) {
     const prefix = "nc://login/";
     if (!barcode.startsWith(prefix)) {
-      throw FormatException("Invalid barcode format");
+      throw const FormatException("Invalid barcode format");
     }
 
     final content = barcode.substring(prefix.length);
     final parts = content.split('&');
 
     if (parts.length != 3) {
-      throw FormatException("Invalid barcode format");
+      throw const FormatException("Invalid barcode format");
     }
 
     final userPart = parts[0].replaceFirst('user:', '');

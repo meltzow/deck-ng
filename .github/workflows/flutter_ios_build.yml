@@ -23,31 +23,46 @@ jobs:
           flutter config --no-analytics
           flutter pub get
 
+      - name: Create .env file
+        run: |
+          echo "WIREDASH_SECRET=${{ secrets.WIREDASH_SECRET }}" > .env
+          echo "WIREDASH_SECRET_TEST=${{ secrets.WIREDASH_SECRET_TEST }}" >> .env
+          echo "IS_PRODUCTION=false" >> .env
+
+      - name: build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+#      - name: Run Flutter tests
+#        run: flutter test
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true
           working-directory: ios
 
-      - name: Install CocoaPods
-        working-directory: ios
+      - name: Set up Fastlane
         run: |
-          sudo gem install cocoapods
-          pod setup
+          cd ios
+          sudo gem install bundler
+          bundle config set path 'vendor/bundle'
+          bundle install
 
-      - name: Verify CocoaPods Installation
-        run: |
-          pod --version
-          which pod
+#      - name: Install CocoaPods
+#        working-directory: ios
+#        run: |
+#          sudo gem install cocoapods
+#          pod setup
 
-      - name: Install CocoaPods dependencies
-        working-directory: ios
-        run: |
-          pod install
+ #     - name: Install CocoaPods dependencies
+ #       working-directory: ios
+ #       run: |
+ #         pod install
 
       - name: Build iOS
         working-directory: ios
         run: |
+          pod install
           bundle exec fastlane ios build
         env:
           BASE64_BASIC_AUTH_CERTS_REPO: ${{ secrets.BASE64_BASIC_AUTH_CERTS_REPO }}
@@ -57,10 +72,3 @@ jobs:
           DEMO_USER: ${{ secrets.FASTLANE_DEMO_USER }}
           DEMO_PASSWORD: ${{ secrets.FASTLANE_DEMO_PASSWORD }}
           MATCH_PASSWORD: ${{ secrets.FASTLANE_CERT_MATCH_PASSWORD }}
-          WIREDASH_SECRET: ${{ secrets.WIREDASH_SECRET }}
-
-      #- name: Upload iOS build
-      #  uses: actions/upload-artifact@v4
-      #  with:
-       #   name: Runner.app
-        #  path: build/ios/iphoneos/deckng.ipa

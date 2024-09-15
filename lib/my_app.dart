@@ -43,8 +43,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wiredash(
-        projectId: Env.WIREDASH_PROJECT_ID,
-        secret: Env.WIREDASH_SECRET,
+        projectId:
+            Env.IS_PRODUCTION ? 'deck-ng-te1kmcw' : 'deck-ng-tests-7x6ml4x',
+        secret:
+            Env.IS_PRODUCTION ? Env.WIREDASH_SECRET : Env.WIREDASH_SECRET_TEST,
         psOptions: const PsOptions(
           // collectMetaData: (metaData) async =>
           // metaData..userEmail = 'dash@wiredash.io',

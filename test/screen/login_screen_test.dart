@@ -20,10 +20,14 @@ class MockLoginController extends GetxController
   var urlController = TextEditingController();
   var userNameController = TextEditingController();
   var passwordController = TextEditingController();
-  var serverInfo = ''.obs;
+  var nextcloudVersionString = ''.obs;
   var isLoading = false.obs;
+  var urlErrorMessage = ''.obs;
+  var isFormValid = true.obs;
 
   final focusNode = FocusNode();
+
+  startValidationTimer(String value) {}
 }
 
 @GenerateMocks([StorageService, AuthService, NotificationService])
@@ -65,8 +69,11 @@ void main() {
     await tester.enterText(find.byType(TextField).at(1), 'username');
     await tester.enterText(find.byType(TextField).at(2), 'password');
 
+    loginController.isFormValid.value = true;
     // Tap the login button.
-    await tester.tap(find.byType(ElevatedButton));
+    expect(find.byKey(const Key('LoginBtn')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('LoginBtn')));
+
     await tester.pump();
 
     // Verify that the login method was called.

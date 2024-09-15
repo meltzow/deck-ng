@@ -1,16 +1,24 @@
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/model/card.dart' as card_model;
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 
 class CardDetailsScreen extends StatelessWidget {
   final CardDetailsController cardController =
       Get.find<CardDetailsController>();
+  final FocusNode descriptionFocusNode = FocusNode();
 
   CardDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    descriptionFocusNode.addListener(() {
+      if (!descriptionFocusNode.hasFocus) {
+        cardController.isEditMode.value = false;
+      }
+    });
+
     return Obx(() {
       final card = cardController.card.value;
       if (card == null) {
@@ -27,17 +35,17 @@ class CardDetailsScreen extends StatelessWidget {
             ],
           ),
           body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ListView(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
                   TextField(
                     controller: cardController.titleController,
                     decoration: const InputDecoration(labelText: 'Title'),
                   ),
-                  TextField(
-                    controller: cardController.descriptionController,
-                    decoration: const InputDecoration(labelText: 'Description'),
-                  ),
+                  const SizedBox(height: 16.0),
+                  _buildDescriptionField(context, card),
+                  const SizedBox(height: 16.0),
                   Row(
                     children: [
                       Expanded(
@@ -63,15 +71,16 @@ class CardDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          cardController.clearDueDate();
-                        },
+                        icon: const Icon(Icons.clear),
+                        onPressed: cardController.clearDueDate,
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16.0),
                   _buildLabelsField(context, card),
+                  const SizedBox(height: 16.0),
                   _buildAssignedUsersField(context, card),
+                  const SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: () {
                       cardController.updateCard(card);
@@ -79,9 +88,65 @@ class CardDetailsScreen extends StatelessWidget {
                     child: const Text('Save'),
                   ),
                 ],
-              )),
+              ),
+            ),
+          ),
         );
       }
+    });
+  }
+
+  Widget _buildDescriptionField(BuildContext context, card_model.Card card) {
+    return Obx(() {
+      return Row(
+        children: [
+          Expanded(
+            child: cardController.isEditMode.value
+                ? SingleChildScrollView(
+                    child: TextField(
+                      controller: cardController.descriptionController,
+                      focusNode: descriptionFocusNode,
+                      decoration:
+                          const InputDecoration(labelText: 'Description'),
+                      maxLines: null,
+                      onChanged: (text) {
+                        cardController.updateMarkdownPreview(text);
+                      },
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: () {
+                      cardController.isEditMode.value = true;
+                      descriptionFocusNode.requestFocus();
+                    },
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Description'),
+                          MarkdownBody(
+                            data: cardController.markdownPreview.value,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+          ),
+          IconButton(
+            icon: Icon(
+                cardController.isEditMode.value ? Icons.preview : Icons.edit),
+            onPressed: () {
+              cardController.isEditMode.value =
+                  !cardController.isEditMode.value;
+              if (cardController.isEditMode.value) {
+                descriptionFocusNode.requestFocus();
+              } else {
+                descriptionFocusNode.unfocus();
+              }
+            },
+          ),
+        ],
+      );
     });
   }
 
@@ -122,41 +187,14 @@ class CardDetailsScreen extends StatelessWidget {
           title: const Text('Add Label'),
           children: [
             ...cardController.labels.map((label) {
-              return Obx(() {
-                return CheckboxListTile(
-                  title: Text(label.title),
-                  value: cardController.selectedLabels.contains(label),
-                  onChanged: (bool? value) {
-                    if (value == true) {
-                      cardController.selectedLabels.add(label);
-                    } else {
-                      cardController.selectedLabels.remove(label);
-                    }
-                  },
-                );
-              });
+              return SimpleDialogOption(
+                onPressed: () {
+                  cardController.addLabel(label);
+                  Navigator.pop(context);
+                },
+                child: Text(label.title),
+              );
             }),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    for (var label in cardController.selectedLabels) {
-                      cardController.addLabel(label);
-                    }
-                    cardController.selectedLabels.clear();
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Add'),
-                ),
-              ],
-            ),
           ],
         );
       },
