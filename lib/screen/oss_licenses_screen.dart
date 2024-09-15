@@ -3,6 +3,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Licenses',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const OssLicensesPage(),
+    );
+  }
+}
+
 class OssLicensesPage extends StatelessWidget {
   const OssLicensesPage({super.key});
 
@@ -15,7 +35,7 @@ class OssLicensesPage extends StatelessWidget {
         lp.addAll(l.paragraphs.map((p) => p.text));
       }
     }
-    final licenses = ossLicenses.toList();
+    final licenses = allDependencies.toList();
     for (var key in lm.keys) {
       licenses.add(Package(
         name: key,
@@ -25,7 +45,7 @@ class OssLicensesPage extends StatelessWidget {
         license: lm[key]!.join('\n\n'),
         isMarkdown: false,
         isSdk: false,
-        isDirectDependency: false,
+        dependencies: [],
       ));
     }
     return licenses..sort((a, b) => a.name.compareTo(b.name));
