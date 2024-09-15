@@ -84,6 +84,7 @@ void main() {
 
     // Verify the counter starts at 0.
     expect(find.text('Card Details'), findsOneWidget);
+    expect(find.text('Save'), findsOneWidget);
 
     // // Finds the floating action button to tap on.
     // final fab = find.byKey(const Key('increment'));

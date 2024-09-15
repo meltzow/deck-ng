@@ -11,6 +11,8 @@ class CardDetailsController extends GetxController {
   var attachments = <Attachment>[].obs;
   var labels = <Label>[].obs;
   var selectedLabels = <Label>[].obs;
+  var markdownPreview = ''.obs;
+  var isEditMode = false.obs;
 
   final CardService _cardService = Get.find<CardService>();
   final BoardService _boardService = Get.find<BoardService>();
@@ -50,19 +52,16 @@ class CardDetailsController extends GetxController {
       duedateController.text = card.value!.duedate != null
           ? card.value!.duedate!.toIso8601String()
           : '';
+      markdownPreview.value = card.value!.description ?? '';
     }
+  }
+
+  void updateMarkdownPreview(String text) {
+    markdownPreview.value = text;
   }
 
   void fetchAttachments() {
     //FIXME: Fetch attachments from service
-    // // Beispielanhänge aus der Datenbank
-    // var attachmentResponse = [
-    //   {'name': 'Attachment1', 'url': 'https://example.com/file1'},
-    //   {'name': 'Attachment2', 'url': 'https://example.com/file2'},
-    // ];
-    //
-    // attachments.value =
-    //     attachmentResponse.map((e) => Attachment.fromJson(e)).toList();
   }
 
   void fetchBoard() async {
@@ -125,46 +124,4 @@ class CardDetailsController extends GetxController {
     card.value?.duedate = null;
     duedateController.text = '';
   }
-
-  // void addAttachment(FilePickerResult result) async {
-  //   var file = result.files.single;
-  //   // Create an Attachment object from the selected file
-  //   Attachment attachment = Attachment(
-  //     cardId: card.value!.id!,
-  //     type: 'file',
-  //     data: base64Encode(file.bytes!),
-  //     lastModified: DateTime.now().millisecondsSinceEpoch,
-  //     createdAt: DateTime.now().millisecondsSinceEpoch,
-  //     createdBy: 'Your User ID', // Replace with the actual user ID
-  //     deletedAt: null,
-  //     extendedData: ExtendedData(
-  //       filesize: file.size,
-  //       mimetype: file.extension!,
-  //       info: Info(
-  //         dirname: 'Directory Name', // Replace with the actual directory name
-  //         basename: 'Base Name', // Replace with the actual base name
-  //         extension: file.extension!,
-  //         filename: file.name,
-  //       ),
-  //     ),
-  //     id: 0, // Replace with the actual ID
-  //   );
-  //
-  //   await _cardService.addAttachmentToCard(
-  //       boardId.value, stackId.value, cardId.value, attachment);
-  //
-  //   card.value = card.value?.copyWith(
-  //     attachments: [...?card.value?.attachments, attachment],
-  //   );
-  // }
-  //
-  // void removeAttachment(Attachment attachment) {
-  //   card.value = card.value?.copyWith(
-  //     attachments: card.value?.attachments
-  //         ?.where((a) =>
-  //             a.extendedData.info.filename !=
-  //             attachment.extendedData.info.filename)
-  //         .toList(),
-  //   );
-  // }
 }
