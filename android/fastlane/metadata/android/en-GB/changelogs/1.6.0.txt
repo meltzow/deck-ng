@@ -1,1 +1,0 @@
-add support for assigning users, labels and due date for cards

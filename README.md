@@ -1,4 +1,4 @@
-# deck_ng
+# Nextcloud Deck NG
 
 A new Flutter project.
 

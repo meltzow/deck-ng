@@ -950,7 +950,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e083a80238502541baf373daab976b32e6aaaaa1
+      resolved-ref: a11fbce99e3b69fc1b3bec4661fcf1f3993e23c6
       url: "https://github.com/meltzow/screenshots"
     source: git
     version: "3.1.2"

@@ -5,7 +5,6 @@ import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/controller/kanban_board_controller.dart';
 import 'package:deck_ng/controller/login_controller.dart';
-import 'package:deck_ng/controller/settings_controller.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/models.dart' as nc;
 import 'package:deck_ng/my_app.dart';
@@ -13,7 +12,6 @@ import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
-import 'package:deck_ng/screen/settings_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -78,9 +76,13 @@ void main() {
     when(boardServiceMock.getAllBoards()).thenAnswer((_) async => resp);
 
     var stack1 = nc.Stack(title: 'todo', boardId: board1.id, id: 1);
-    var card1 = nc.Card(title: 'seeding carrots', id: 1, stackId: stack1.id);
+    var card1 = nc.Card(
+        title: 'seeding carrots',
+        id: 1,
+        stackId: stack1.id,
+        description:
+            '# How To Seed Carrots? \n\n1. Dig a hole\n2. Put the seed in\n3. Cover the hole');
     stack1.cards = [card1];
-    var stacksForBoard1 = [stack1];
 
     when(boardServiceMock.getBoard(board1.id)).thenAnswer((_) async => board1);
     when(cardServiceMock.getCard(board1.id, stack1.id, card1.id!))
