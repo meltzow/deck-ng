@@ -1,0 +1,1 @@
+Better support for login and card description: Markdown is now supported.

@@ -18,10 +18,8 @@ devices:
     Nexus 9:
       orientation:
         - LandscapeRight
-        - Portrait
     Pixel 4:
       orientation:
-        - LandscapeRight
         - Portrait
 
 

@@ -1,0 +1,1 @@
+Bessere Unterstützung beim Login und bei der Beschreibung einer Karte wird nun Markdown unterstützt.
