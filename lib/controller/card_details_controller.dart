@@ -2,6 +2,8 @@ import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart'; // Import this
+import 'package:intl/intl.dart';
 import 'package:wiredash/wiredash.dart' as wd;
 
 class CardDetailsController extends GetxController {
@@ -36,6 +38,7 @@ class CardDetailsController extends GetxController {
     boardId = RxInt(int.parse(Get.parameters['boardId']!));
     stackId = RxInt(int.parse(Get.parameters['stackId']!));
     cardId = RxInt(int.parse(Get.parameters['cardId']!));
+    await initializeDateFormatting(); // Initialize date formatting
     fetchCard();
     fetchAttachments();
     fetchBoard();
@@ -50,10 +53,16 @@ class CardDetailsController extends GetxController {
       titleController.text = card.value!.title;
       descriptionController.text = card.value!.description ?? '';
       duedateController.text = card.value!.duedate != null
-          ? card.value!.duedate!.toIso8601String()
+          ? formatDueDate(card.value!.duedate!,
+              material.Localizations.localeOf(Get.context!).toString())
           : '';
       markdownPreview.value = card.value!.description ?? '';
     }
+  }
+
+  String formatDueDate(DateTime date, String locale) {
+    final DateFormat formatter = DateFormat.yMd(locale);
+    return formatter.format(date);
   }
 
   void updateMarkdownPreview(String text) {
@@ -80,7 +89,7 @@ class CardDetailsController extends GetxController {
 
     var updatedCard = await _cardService.updateCard(
         boardId.value, stackId.value, this.card.value!.id!, card);
-    this.card.value = updatedCard;
+    this.fetchCard();
     // Display success message
     _notificationService.successMsg('Card', 'Card updated successfully');
   }

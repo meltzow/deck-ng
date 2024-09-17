@@ -6,22 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListViewCardItem extends StatelessWidget {
-  final NC.Card? data;
+  final NC.Card? card;
   final int boardId;
 
   const ListViewCardItem(
-      {super.key, required this.data, required this.boardId});
+      {super.key, required this.card, required this.boardId});
 
   @override
   Widget build(BuildContext context) {
     return Card(
         child: ListTile(
       title: Text(
-        data != null ? data!.title : "",
+        card != null ? card!.title : "",
       ),
       subtitle: Text(
-        data != null && data!.description != null
-            ? '${data!.description!.substring(0, min(50, data!.description!.length))}...'
+        card != null &&
+                card!.description != null &&
+                card!.description!.isNotEmpty
+            ? '${card!.description!.substring(0, min(30, card!.description!.length))} ...'
             : "",
       ),
       onTap: () {
@@ -33,8 +35,8 @@ class ListViewCardItem extends StatelessWidget {
           AppRoutes.cardDetails,
           parameters: {
             'boardId': boardId.toString(),
-            'stackId': data!.stackId.toString(),
-            'cardId': data!.id.toString()
+            'stackId': card!.stackId.toString(),
+            'cardId': card!.id.toString()
           },
         );
       },

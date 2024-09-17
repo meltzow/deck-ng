@@ -24,6 +24,7 @@ import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -33,13 +34,13 @@ class MyApp extends StatelessWidget {
   final bool debugShowCheckedModeBanner;
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  const MyApp(
-      {super.key,
-      this.initialRoute,
-      this.debugShowCheckedModeBanner = true,
-      this.initialPages});
+  const MyApp({
+    super.key,
+    this.initialRoute,
+    this.debugShowCheckedModeBanner = true,
+    this.initialPages,
+  });
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Wiredash(
@@ -48,20 +49,24 @@ class MyApp extends StatelessWidget {
         secret:
             Env.IS_PRODUCTION ? Env.WIREDASH_SECRET : Env.WIREDASH_SECRET_TEST,
         psOptions: const PsOptions(
-          // collectMetaData: (metaData) async =>
-          // metaData..userEmail = 'dash@wiredash.io',
-          // frequency: Duration(days: 90), // default
-          initialDelay: Duration(days: 7), // default
-          //initialDelay: Duration.zero, // disable initial delay
-          minimumAppStarts: 3, // default
-          //minimumAppStarts: 0, // disable minimum app starts
+          initialDelay: Duration(days: 7),
+          minimumAppStarts: 3,
         ),
         collectMetaData: (metaData) => metaData..custom['language'] = 'de',
         child: GetMaterialApp(
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           translations: Translation(),
           locale: Get.deviceLocale,
-          fallbackLocale: const Locale('en', 'GB'),
+          fallbackLocale: const Locale('en'),
+          supportedLocales: const [
+            Locale('en'), // English
+            Locale('de'), // German
+          ],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           title: 'deck NG',
           theme: myTheme,
           initialRoute: initialRoute ?? AppRoutes.home,
@@ -71,9 +76,7 @@ class MyApp extends StatelessWidget {
                 GetPage(
                     name: AppRoutes.home,
                     page: () => DashboardScreen(),
-                    middlewares: [
-                      Guard(), // Add the middleware here
-                    ],
+                    middlewares: [Guard()],
                     binding: BindingsBuilder(() {
                       Get.lazyPut<HttpService>(() => HttpServiceImpl());
                       Get.lazyPut<BoardService>(() => BoardServiceImpl());

@@ -102,7 +102,7 @@ class KanbanBoardScreen extends StatelessWidget {
           key: Key(groupItem.id),
           alignment: Alignment.centerLeft,
           child: ListViewCardItem(
-            data: cardItem.card,
+            card: cardItem.card,
             boardId: controller.boardId,
           ),
         );
