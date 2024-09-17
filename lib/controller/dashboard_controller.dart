@@ -2,6 +2,7 @@ import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart';
 
 class DashboardData {
   late String valueName;
@@ -28,13 +29,18 @@ class DashboardController extends GetxController {
 
   final BoardService _boardService = Get.find<BoardService>();
   final StackService _stackService = Get.find<StackService>();
+  final AuthService _authService = Get.find<AuthService>();
 
   List<DashboardData> get dashboardData => _dashboardData.value;
 
   @override
   void onReady() async {
+    super.onReady();
     fetchData();
-    return super.onReady();
+    Wiredash.of(Get.context!).modifyMetaData((metaData) {
+      metaData.custom['nextcloudVersion'] = _authService.getAccount()!.version;
+      return metaData;
+    });
   }
 
   Future<void> fetchData() async {

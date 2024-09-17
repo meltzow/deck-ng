@@ -1,14 +1,14 @@
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart'; // Import this
 import 'package:intl/intl.dart';
-import 'package:wiredash/wiredash.dart' as wd;
 
 class CardDetailsController extends GetxController {
-  var card = Rx<Card?>(null);
-  var board = Rx<Board?>(null);
+  var card = Rxn<Card?>(null);
+  var board = Rxn<Board?>(null);
   var users = <User>[].obs;
   var attachments = <Attachment>[].obs;
   var labels = <Label>[].obs;
@@ -20,6 +20,7 @@ class CardDetailsController extends GetxController {
   final BoardService _boardService = Get.find<BoardService>();
   final NotificationService _notificationService =
       Get.find<NotificationService>();
+  final TrackingService _trackingService = Get.find<TrackingService>();
 
   final material.TextEditingController titleController =
       material.TextEditingController();
@@ -87,9 +88,9 @@ class CardDetailsController extends GetxController {
     card.title = titleController.text;
     card.description = descriptionController.text;
 
-    var updatedCard = await _cardService.updateCard(
+    await _cardService.updateCard(
         boardId.value, stackId.value, this.card.value!.id!, card);
-    this.fetchCard();
+    fetchCard();
     // Display success message
     _notificationService.successMsg('Card', 'Card updated successfully');
   }
@@ -98,14 +99,14 @@ class CardDetailsController extends GetxController {
     card.value = card.value?.copyWith(
       labels: [...card.value!.labels, label],
     );
-    wd.Wiredash.trackEvent("add Label", data: {"label": label.title});
+    _trackingService.onButtonClickedEvent("add Label");
   }
 
   void removeLabel(Label label) {
     card.value = card.value?.copyWith(
       labels: card.value!.labels.where((l) => l.title != label.title).toList(),
     );
-    wd.Wiredash.trackEvent("remove Label", data: {"label": label.title});
+    _trackingService.onButtonClickedEvent("remove Label");
   }
 
   void addUser(User user) async {
@@ -114,7 +115,7 @@ class CardDetailsController extends GetxController {
     card.value = card.value?.copyWith(
       assignedUsers: [...?card.value?.assignedUsers, assignment],
     );
-    wd.Wiredash.trackEvent("add User");
+    _trackingService.onButtonClickedEvent("add User");
   }
 
   void removeUser(User user) async {
@@ -126,7 +127,7 @@ class CardDetailsController extends GetxController {
           ?.where((a) => a.participant.uid != user.uid)
           .toList(),
     );
-    wd.Wiredash.trackEvent("remove User");
+    _trackingService.onButtonClickedEvent("remove User");
   }
 
   void clearDueDate() {

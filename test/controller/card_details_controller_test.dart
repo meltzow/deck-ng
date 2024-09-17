@@ -42,7 +42,7 @@ void main() {
     controller.cardId = RxInt(cardId);
     controller.boardId = RxInt(boardId);
     controller.stackId = RxInt(stackId);
-    controller.card = Rx<Card>(card);
+    controller.card = Rxn<Card>(card);
 
     Card resp2 = card;
     card.labels = [labels[1]];
@@ -70,7 +70,7 @@ void main() {
     controller.cardId = RxInt(cardId);
     controller.boardId = RxInt(boardId);
     controller.stackId = RxInt(stackId);
-    controller.card = Rx<Card>(card);
+    controller.card = Rxn<Card>(card);
 
     Card resp2 = card;
 

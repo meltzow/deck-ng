@@ -37,7 +37,7 @@ class Board {
   @EpochDateTimeConverter()
   final DateTime? lastModified;
   @JsonKey(defaultValue: [])
-  late List<Label> labels;
+  late List<Label> labels = [];
   @JsonKey(defaultValue: [])
   late List<User> users = [];
   late User owner;
