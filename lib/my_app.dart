@@ -12,6 +12,7 @@ import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/screen/oss_licenses_screen.dart';
+import 'package:deck_ng/screen/privacy_policy_screen.dart';
 import 'package:deck_ng/screen/settings_screen.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
 import 'package:deck_ng/service/impl/board_service_impl.dart';
@@ -21,6 +22,7 @@ import 'package:deck_ng/service/impl/notification_service_impl.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -130,6 +132,14 @@ class MyApp extends StatelessWidget {
                   page: () => const OssLicensesPage(),
                 ),
                 GetPage(
+                  name: AppRoutes.privacyPolicy,
+                  page: () => PrivacyPolicyScreen(),
+                  binding: BindingsBuilder(() {
+                    Get.lazyPut<PrivacyPolicyController>(
+                        () => PrivacyPolicyController());
+                  }),
+                ),
+                GetPage(
                     name: AppRoutes.settings,
                     page: () => SettingScreen(),
                     binding: BindingsBuilder(() {
@@ -149,5 +159,6 @@ class InitialBinding implements Bindings {
     Get.put<Dio>(Dio());
     Get.put<AuthService>(AuthServiceImpl());
     Get.put<StorageService>(StorageServiceImpl());
+    Get.put<TrackingService>(TrackingService());
   }
 }
