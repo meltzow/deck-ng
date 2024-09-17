@@ -239,10 +239,13 @@ class CardDetailsScreen extends StatelessWidget {
           children: [
             ...cardController.users.map((user) {
               return Obx(() {
+                bool isChecked = cardController.card.value?.assignedUsers?.any(
+                        (assignment) =>
+                            assignment.participant.uid == user.uid) ??
+                    false;
                 return CheckboxListTile(
                   title: Text(user.displayname),
-                  value: cardController.card.value?.assignedUsers?.any(
-                      (assignment) => assignment.participant.uid == user.uid),
+                  value: isChecked,
                   onChanged: (bool? value) {
                     if (value == true) {
                       cardController.addUser(user);

@@ -57,10 +57,10 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           translations: Translation(),
           locale: Get.deviceLocale,
-          fallbackLocale: const Locale('en', ''),
+          fallbackLocale: const Locale('en'),
           supportedLocales: const [
-            Locale('en', ''), // English
-            Locale('de', ''), // German
+            Locale('en'), // English
+            Locale('de'), // German
           ],
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,

@@ -89,7 +89,7 @@ class CardDetailsController extends GetxController {
 
     var updatedCard = await _cardService.updateCard(
         boardId.value, stackId.value, this.card.value!.id!, card);
-    this.card.value = updatedCard;
+    this.fetchCard();
     // Display success message
     _notificationService.successMsg('Card', 'Card updated successfully');
   }
