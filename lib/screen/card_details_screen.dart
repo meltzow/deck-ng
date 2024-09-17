@@ -3,6 +3,7 @@ import 'package:deck_ng/model/card.dart' as card_model;
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CardDetailsScreen extends StatelessWidget {
   final CardDetailsController cardController =
@@ -62,8 +63,10 @@ class CardDetailsScreen extends StatelessWidget {
                               lastDate: DateTime(2101),
                             );
                             if (selectedDate != null) {
+                              final DateFormat formatter = DateFormat.yMd(
+                                  Localizations.localeOf(context).toString());
                               cardController.duedateController.text =
-                                  selectedDate.toIso8601String();
+                                  formatter.format(selectedDate);
                               cardController.card.value =
                                   card.copyWith(duedate: selectedDate);
                             }
