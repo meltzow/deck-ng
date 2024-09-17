@@ -77,7 +77,7 @@ void main() {
         Get.put<CardDetailsController>(MockCardDetailsController());
     await tester.pumpWidget(GetMaterialApp(home: CardDetailsScreen()));
 
-    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
     Get.toNamed(AppRoutes.cardDetails);
     //await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();

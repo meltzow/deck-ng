@@ -12,6 +12,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       authData: json['authData'] as String,
       url: json['url'] as String,
       isAuthenticated: json['isAuthenticated'] as bool,
+      version: json['version'] as String? ?? '',
     );
 
 Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'authData': instance.authData,
       'url': instance.url,
       'isAuthenticated': instance.isAuthenticated,
+      'version': instance.version,
     };

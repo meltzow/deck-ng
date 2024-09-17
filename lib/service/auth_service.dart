@@ -141,7 +141,8 @@ class Meta {
 }
 
 abstract class AuthService {
-  Future<bool> login(String serverUrl, String username, String password);
+  Future<bool> login(
+      String serverUrl, String username, String password, String? version);
 
   logout();
 

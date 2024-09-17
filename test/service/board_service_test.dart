@@ -40,22 +40,17 @@ void main() {
       expect(boardRepo.getAllBoards(), throwsException);
     });
 
-    // test('returns a boards if the http call completes successfully', () async {
-    //   getIt.unregister<http.Client>();
-    //   getIt.registerSingleton<http.Client>(MockClient());
-    //   final client = getIt<http.Client>();
-    //   final BoardRepository boardRepo = getIt<BoardRepository>();
-    //
-    //   // Use Mockito to return a successful response when it calls the
-    //   // provided http.Client.
-    //   when(client.get(
-    //           Uri.parse(
-    //               "http://192.168.178.59:8080/index.php/apps/deck/api/v1/boards/1"),
-    //           headers: anyNamed('headers')))
-    //       .thenAnswer((_) async =>
-    //           http.Response('{"title": "foobar mock", "id": 33}', 200));
-    //
-    //   expect(await boardRepo.getBoard(1), isA<Board>());
-    // });
+    test('throws an exception if the http response contains invalid JSON',
+        () async {
+      final httpServiceMock = Get.put<HttpService>(MockHttpService());
+      final BoardService boardRepo = Get.put<BoardService>(BoardServiceImpl());
+
+      // Simulate an invalid JSON response by throwing a FormatException
+      when(httpServiceMock
+              .getListResponse('/index.php/apps/deck/api/v1/boards'))
+          .thenThrow(const FormatException('Invalid JSON'));
+
+      expect(boardRepo.getAllBoards(), throwsA(isA<FormatException>()));
+    });
   });
 }

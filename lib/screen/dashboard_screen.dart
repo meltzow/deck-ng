@@ -36,6 +36,11 @@ class DashboardScreen extends StatelessWidget {
                   child: LoadingIndicator(),
                 );
               }
+              if (_controller.errorMessage.isNotEmpty) {
+                return Center(
+                  child: Text(_controller.errorMessage.value),
+                );
+              }
               if (_controller.boards.isEmpty) {
                 return const Center(
                   child: Text('No boards found'),
@@ -82,9 +87,10 @@ class DashboardScreen extends StatelessWidget {
                       child: ListTile(
                         leading: CircleAvatar(
                           backgroundColor: board.boardColor,
-                          child: Text(board.title[0]),
+                          child: Text(
+                              board.title.isNotEmpty ? board.title[0] : ''),
                         ),
-                        title: Text(board.title),
+                        title: Text(board.title ?? ''),
                         subtitle: Text('ID: ${board.id}'),
                         onTap: () {
                           Get.offNamed(

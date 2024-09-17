@@ -12,15 +12,14 @@ class Stack {
   late DateTime? deletedAt;
   @EpochDateTimeConverter()
   late DateTime? lastModified;
-  @JsonKey(defaultValue: <Card>[])
+  @JsonKey(defaultValue: [])
   late List<Card> cards;
   late int id;
-  @JsonKey(defaultValue: 0)
   late int order;
   late String ETag;
 
   Stack(
-      {required this.title,
+      {this.title = '',
       required this.boardId,
       this.deletedAt,
       this.cards = const <Card>[],

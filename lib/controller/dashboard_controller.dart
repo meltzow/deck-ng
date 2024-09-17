@@ -22,6 +22,7 @@ class DashboardController extends GetxController {
   var taskCount = 0.obs;
 
   final RxBool isLoading = RxBool(true);
+  final RxString errorMessage = ''.obs;
   var boards = <Board>[].obs;
   final Rx<List<DashboardData>> _dashboardData = Rx<List<DashboardData>>([]);
 
@@ -38,19 +39,24 @@ class DashboardController extends GetxController {
 
   Future<void> fetchData() async {
     isLoading.value = true;
-    boards.value = (await _boardService.getAllBoards()).obs;
-    _dashboardData.value = (await _computeDashboard()).obs;
+    errorMessage.value = '';
+    try {
+      boards.value = (await _boardService.getAllBoards()).obs;
+      _dashboardData.value = (await _computeDashboard()).obs;
 
-    boardCount.value = boards.length;
-    stackCount.value =
-        boards.fold(0, (sum, board) => sum + board.stacks.length);
-    taskCount.value = boards.fold(
-        0,
-        (sum, board) =>
-            sum +
-            board.stacks.fold(0, (sum, stack) => sum + stack.cards.length));
-
-    isLoading.value = false;
+      boardCount.value = boards.length;
+      stackCount.value =
+          boards.fold(0, (sum, board) => sum + board.stacks.length);
+      taskCount.value = boards.fold(
+          0,
+          (sum, board) =>
+              sum +
+              board.stacks.fold(0, (sum, stack) => sum + stack.cards.length));
+    } catch (e) {
+      errorMessage.value = 'Failed to fetch data: ${e.toString()}';
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<List<DashboardData>> _computeDashboard() async {

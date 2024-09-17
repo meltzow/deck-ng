@@ -48,8 +48,8 @@ class _FakeRxBool_1 extends _i1.SmartFake implements _i2.RxBool {
         );
 }
 
-class _FakeRxList_2<E> extends _i1.SmartFake implements _i2.RxList<E> {
-  _FakeRxList_2(
+class _FakeRxString_2 extends _i1.SmartFake implements _i2.RxString {
+  _FakeRxString_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -58,9 +58,19 @@ class _FakeRxList_2<E> extends _i1.SmartFake implements _i2.RxList<E> {
         );
 }
 
-class _FakeInternalFinalCallback_3<T> extends _i1.SmartFake
+class _FakeRxList_3<E> extends _i1.SmartFake implements _i2.RxList<E> {
+  _FakeRxList_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
     implements _i2.InternalFinalCallback<T> {
-  _FakeInternalFinalCallback_3(
+  _FakeInternalFinalCallback_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -69,8 +79,8 @@ class _FakeInternalFinalCallback_3<T> extends _i1.SmartFake
         );
 }
 
-class _FakeBoard_4 extends _i1.SmartFake implements _i3.Board {
-  _FakeBoard_4(
+class _FakeBoard_5 extends _i1.SmartFake implements _i3.Board {
+  _FakeBoard_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -79,8 +89,8 @@ class _FakeBoard_4 extends _i1.SmartFake implements _i3.Board {
         );
 }
 
-class _FakeCapabilities_5 extends _i1.SmartFake implements _i4.Capabilities {
-  _FakeCapabilities_5(
+class _FakeCapabilities_6 extends _i1.SmartFake implements _i4.Capabilities {
+  _FakeCapabilities_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -162,9 +172,18 @@ class MockDashboardController extends _i1.Mock
       ) as _i2.RxBool);
 
   @override
+  _i2.RxString get errorMessage => (super.noSuchMethod(
+        Invocation.getter(#errorMessage),
+        returnValue: _FakeRxString_2(
+          this,
+          Invocation.getter(#errorMessage),
+        ),
+      ) as _i2.RxString);
+
+  @override
   _i2.RxList<_i3.Board> get boards => (super.noSuchMethod(
         Invocation.getter(#boards),
-        returnValue: _FakeRxList_2<_i3.Board>(
+        returnValue: _FakeRxList_3<_i3.Board>(
           this,
           Invocation.getter(#boards),
         ),
@@ -188,7 +207,7 @@ class MockDashboardController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
         Invocation.getter(#onStart),
-        returnValue: _FakeInternalFinalCallback_3<void>(
+        returnValue: _FakeInternalFinalCallback_4<void>(
           this,
           Invocation.getter(#onStart),
         ),
@@ -197,7 +216,7 @@ class MockDashboardController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
         Invocation.getter(#onDelete),
-        returnValue: _FakeInternalFinalCallback_3<void>(
+        returnValue: _FakeInternalFinalCallback_4<void>(
           this,
           Invocation.getter(#onDelete),
         ),
@@ -408,7 +427,7 @@ class MockBoardService extends _i1.Mock implements _i4.BoardService {
           #getBoard,
           [boardId],
         ),
-        returnValue: _i6.Future<_i3.Board>.value(_FakeBoard_4(
+        returnValue: _i6.Future<_i3.Board>.value(_FakeBoard_5(
           this,
           Invocation.method(
             #getBoard,
@@ -485,6 +504,7 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
     String? serverUrl,
     String? username,
     String? password,
+    String? version,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -493,6 +513,7 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
             serverUrl,
             username,
             password,
+            version,
           ],
         ),
         returnValue: _i6.Future<bool>.value(false),
@@ -505,7 +526,7 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
           #checkServer,
           [serverUrl],
         ),
-        returnValue: _i6.Future<_i4.Capabilities>.value(_FakeCapabilities_5(
+        returnValue: _i6.Future<_i4.Capabilities>.value(_FakeCapabilities_6(
           this,
           Invocation.method(
             #checkServer,

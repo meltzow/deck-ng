@@ -24,8 +24,9 @@ class BoardSetting {
 
 @JsonSerializable(explicitToJson: true)
 class Board {
+  @JsonKey(defaultValue: '')
   final String title;
-  final String color;
+  final String? color;
   @JsonKey(defaultValue: false)
   late bool? archived = false;
   final int id;
@@ -36,7 +37,7 @@ class Board {
   @EpochDateTimeConverter()
   final DateTime? lastModified;
   @JsonKey(defaultValue: [])
-  late List<Label> labels = [];
+  late List<Label> labels;
   @JsonKey(defaultValue: [])
   late List<User> users = [];
   late User owner;
