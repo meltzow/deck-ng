@@ -12,6 +12,7 @@ import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/screen/oss_licenses_screen.dart';
+import 'package:deck_ng/screen/privacy_policy_controller.dart';
 import 'package:deck_ng/screen/privacy_policy_screen.dart';
 import 'package:deck_ng/screen/settings_screen.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
