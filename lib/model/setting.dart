@@ -6,6 +6,8 @@ part 'setting.g.dart';
 class Setting {
   late String language;
   bool optOut;
+  String? distinctId;
+  String? distinceIdLastUpdated;
 
   Setting(this.language, {this.optOut = false});
 

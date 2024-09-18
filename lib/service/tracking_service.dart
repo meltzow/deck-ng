@@ -4,6 +4,7 @@ import 'package:deck_ng/service/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wiredash/wiredash.dart';
 
 void reportException(FlutterErrorDetails details) {
@@ -24,6 +25,7 @@ void reportException(FlutterErrorDetails details) {
 
 class TrackingService extends GetxService {
   final StorageService storageService = Get.find<StorageService>();
+  final Uuid uuid = Uuid();
 
   bool isOptedOut() {
     return storageService.getSetting()?.optOut ?? false;
@@ -41,26 +43,71 @@ class TrackingService extends GetxService {
     storageService.saveSetting(setting);
   }
 
-  onScreenEvent(String screenName) async {
+  String _generateDistinctId() {
+    return uuid.v4();
+  }
+
+  void _updateDistinctIdIfNeeded() {
+    final setting = storageService.getSetting() ?? Setting('');
+    final today = DateTime.now().toIso8601String().split('T').first;
+
+    // needed for consent-less tracking
+    if (setting.distinceIdLastUpdated != today) {
+      setting.distinctId = _generateDistinctId();
+      setting.distinceIdLastUpdated = today;
+      storageService.saveSetting(setting);
+      Posthog().identify(userId: setting.distinctId ?? '');
+      Wiredash.of(Get.context!).modifyMetaData((metaData) {
+        metaData.custom['distinctId'] = setting.distinctId;
+        return metaData;
+      });
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    _updateDistinctIdIfNeeded();
+  }
+
+  void trackEvent(String eventName, {Map<String, dynamic>? properties}) {
     if (isOptedOut()) return;
 
-    Wiredash.of(Get.context!).trackEvent(screenName);
-    await Posthog().screen(
-      screenName: 'Dashboard Screen',
+    final distinctId = storageService.getSetting()?.distinctId ?? '';
+    Posthog().capture(
+      eventName: eventName,
+      properties: {
+        ...?properties,
+        'distinct_id': distinctId,
+      },
     );
   }
 
-  onButtonClickedEvent(String buttonName) async {
+  void onScreenEvent(String screenName) async {
     if (isOptedOut()) return;
 
+    final distinctId = storageService.getSetting()?.distinctId ?? '';
+    Wiredash.of(Get.context!).trackEvent(screenName);
+    await Posthog().screen(
+      screenName: screenName,
+      properties: {
+        'distinct_id': distinctId,
+      },
+    );
+  }
+
+  void onButtonClickedEvent(String buttonName) async {
+    if (isOptedOut()) return;
+
+    final distinctId = storageService.getSetting()?.distinctId ?? '';
     Wiredash.of(Get.context!).trackEvent(buttonName);
 
     await Posthog().capture(
       eventName: 'ButtonClicked',
       properties: {
         'button': buttonName,
-        'number': 1337,
         'clicked': true,
+        'distinct_id': distinctId,
       },
     );
   }
