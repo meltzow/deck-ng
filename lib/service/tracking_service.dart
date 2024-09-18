@@ -7,25 +7,29 @@ import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wiredash/wiredash.dart';
 
-void reportException(FlutterErrorDetails details) {
-  if (Get.find<TrackingService>().isOptedOut()) return;
-
-  Posthog().capture(
-    eventName: 'Exception',
-    properties: {
-      'error': details.exceptionAsString(),
-      'stack_trace': details.stack.toString(),
-      'library': details.library.toString(),
-      'context': details.context!.toDescription(),
-      'information': details.informationCollector.toString(),
-      'appVersion': Env.VERSION,
-    },
-  );
-}
-
 class TrackingService extends GetxService {
   final StorageService storageService = Get.find<StorageService>();
   final Uuid uuid = Uuid();
+
+  enableExceptionTracking() {
+    if (isOptedOut()) return;
+
+    FlutterError.onError = (FlutterErrorDetails details) {
+      Posthog().capture(
+        eventName: 'Exception',
+        properties: {
+          'error': details.exceptionAsString(),
+          'stack_trace': details.stack.toString(),
+          'library': details.library.toString(),
+          'context': details.context!.toDescription(),
+          'information': details.informationCollector.toString(),
+          'appVersion': Env.VERSION,
+        },
+      );
+      // Optionally: log to other services like Crashlytics or Sentry
+      FlutterError.dumpErrorToConsole(details);
+    };
+  }
 
   bool isOptedOut() {
     return storageService.getSetting()?.optOut ?? false;
@@ -57,10 +61,10 @@ class TrackingService extends GetxService {
       setting.distinceIdLastUpdated = today;
       storageService.saveSetting(setting);
       Posthog().identify(userId: setting.distinctId ?? '');
-      Wiredash.of(Get.context!).modifyMetaData((metaData) {
-        metaData.custom['distinctId'] = setting.distinctId;
-        return metaData;
-      });
+      // Wiredash.of(Get.context!).modifyMetaData((metaData) {
+      //   metaData.custom['distinctId'] = setting.distinctId;
+      //   return metaData;
+      // });
     }
   }
 
@@ -68,6 +72,7 @@ class TrackingService extends GetxService {
   void onInit() {
     super.onInit();
     _updateDistinctIdIfNeeded();
+    enableExceptionTracking();
   }
 
   void trackEvent(String eventName, {Map<String, dynamic>? properties}) {

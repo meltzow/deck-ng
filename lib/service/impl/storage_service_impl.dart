@@ -17,8 +17,9 @@ class StorageServiceImpl extends GetxService implements StorageService {
     super.onInit();
 
     if (hasSettings()) {
-      Get.updateLocale(
-          Locale(Get.find<StorageService>().getSetting()!.language));
+      if (getSetting() != null && getSetting()!.language.isNotEmpty) {
+        Get.updateLocale(Locale(getSetting()!.language));
+      }
     }
   }
 
