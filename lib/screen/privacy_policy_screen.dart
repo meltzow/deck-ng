@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/get.dart';
+import 'package:markdown/markdown.dart' as md;
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PrivacyPolicyController extends GetxController {
@@ -24,12 +25,13 @@ class PrivacyPolicyController extends GetxController {
           onWebResourceError: (WebResourceError error) {},
         ),
       );
-    _loadHtmlFromAssets();
+    _loadMarkdownFromAssets();
   }
 
-  Future<void> _loadHtmlFromAssets() async {
-    final htmlString =
-        await rootBundle.loadString('assets/privacy_policy.html');
+  Future<void> _loadMarkdownFromAssets() async {
+    final markdownString =
+        await rootBundle.loadString('assets/privacy_policy.md');
+    final htmlString = md.markdownToHtml(markdownString);
     webViewController.loadRequest(Uri.dataFromString(
       htmlString,
       mimeType: 'text/html',
