@@ -1,7 +1,9 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wiredash/wiredash.dart';
 
 class DashboardData {
   late String valueName;
@@ -22,35 +24,47 @@ class DashboardController extends GetxController {
   var taskCount = 0.obs;
 
   final RxBool isLoading = RxBool(true);
+  final RxString errorMessage = ''.obs;
   var boards = <Board>[].obs;
   final Rx<List<DashboardData>> _dashboardData = Rx<List<DashboardData>>([]);
 
   final BoardService _boardService = Get.find<BoardService>();
   final StackService _stackService = Get.find<StackService>();
+  final AuthService _authService = Get.find<AuthService>();
+  final TrackingService _trackingService = Get.find<TrackingService>();
 
   List<DashboardData> get dashboardData => _dashboardData.value;
 
   @override
   void onReady() async {
-    fetchData();
-    return super.onReady();
+    super.onReady();
+    _fetchData();
+    Wiredash.of(Get.context!).modifyMetaData((metaData) {
+      metaData.custom['nextcloudVersion'] = _authService.getAccount()!.version;
+      return metaData;
+    });
   }
 
-  Future<void> fetchData() async {
+  Future<void> _fetchData() async {
     isLoading.value = true;
-    boards.value = (await _boardService.getAllBoards()).obs;
-    _dashboardData.value = (await _computeDashboard()).obs;
+    errorMessage.value = '';
+    try {
+      boards.value = (await _boardService.getAllBoards()).obs;
+      _dashboardData.value = (await _computeDashboard()).obs;
 
-    boardCount.value = boards.length;
-    stackCount.value =
-        boards.fold(0, (sum, board) => sum + board.stacks.length);
-    taskCount.value = boards.fold(
-        0,
-        (sum, board) =>
-            sum +
-            board.stacks.fold(0, (sum, stack) => sum + stack.cards.length));
-
-    isLoading.value = false;
+      boardCount.value = boards.length;
+      stackCount.value =
+          boards.fold(0, (sum, board) => sum + board.stacks.length);
+      taskCount.value = boards.fold(
+          0,
+          (sum, board) =>
+              sum +
+              board.stacks.fold(0, (sum, stack) => sum + stack.cards.length));
+    } catch (e) {
+      errorMessage.value = 'Failed to fetch data: ${e.toString()}';
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<List<DashboardData>> _computeDashboard() async {
@@ -81,5 +95,10 @@ class DashboardController extends GetxController {
           count: taskCount,
           icon: Icons.check_circle_outline)
     ];
+  }
+
+  refreshBtnClick() {
+    _trackingService.onButtonClickedEvent("refresh Btn clicked");
+    _fetchData();
   }
 }

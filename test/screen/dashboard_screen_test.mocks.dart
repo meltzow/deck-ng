@@ -3,8 +3,8 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
-import 'dart:ui' as _i8;
+import 'dart:async' as _i8;
+import 'dart:ui' as _i7;
 
 import 'package:deck_ng/controller/dashboard_controller.dart' as _i5;
 import 'package:deck_ng/model/board.dart' as _i3;
@@ -12,7 +12,7 @@ import 'package:deck_ng/model/models.dart' as _i10;
 import 'package:deck_ng/model/stack.dart' as _i9;
 import 'package:deck_ng/service/services.dart' as _i4;
 import 'package:get/get.dart' as _i2;
-import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i7;
+import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -48,8 +48,8 @@ class _FakeRxBool_1 extends _i1.SmartFake implements _i2.RxBool {
         );
 }
 
-class _FakeRxList_2<E> extends _i1.SmartFake implements _i2.RxList<E> {
-  _FakeRxList_2(
+class _FakeRxString_2 extends _i1.SmartFake implements _i2.RxString {
+  _FakeRxString_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -58,9 +58,19 @@ class _FakeRxList_2<E> extends _i1.SmartFake implements _i2.RxList<E> {
         );
 }
 
-class _FakeInternalFinalCallback_3<T> extends _i1.SmartFake
+class _FakeRxList_3<E> extends _i1.SmartFake implements _i2.RxList<E> {
+  _FakeRxList_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
     implements _i2.InternalFinalCallback<T> {
-  _FakeInternalFinalCallback_3(
+  _FakeInternalFinalCallback_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -69,8 +79,8 @@ class _FakeInternalFinalCallback_3<T> extends _i1.SmartFake
         );
 }
 
-class _FakeBoard_4 extends _i1.SmartFake implements _i3.Board {
-  _FakeBoard_4(
+class _FakeBoard_5 extends _i1.SmartFake implements _i3.Board {
+  _FakeBoard_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -79,8 +89,8 @@ class _FakeBoard_4 extends _i1.SmartFake implements _i3.Board {
         );
 }
 
-class _FakeCapabilities_5 extends _i1.SmartFake implements _i4.Capabilities {
-  _FakeCapabilities_5(
+class _FakeCapabilities_6 extends _i1.SmartFake implements _i4.Capabilities {
+  _FakeCapabilities_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -162,9 +172,18 @@ class MockDashboardController extends _i1.Mock
       ) as _i2.RxBool);
 
   @override
+  _i2.RxString get errorMessage => (super.noSuchMethod(
+        Invocation.getter(#errorMessage),
+        returnValue: _FakeRxString_2(
+          this,
+          Invocation.getter(#errorMessage),
+        ),
+      ) as _i2.RxString);
+
+  @override
   _i2.RxList<_i3.Board> get boards => (super.noSuchMethod(
         Invocation.getter(#boards),
-        returnValue: _FakeRxList_2<_i3.Board>(
+        returnValue: _FakeRxList_3<_i3.Board>(
           this,
           Invocation.getter(#boards),
         ),
@@ -188,7 +207,7 @@ class MockDashboardController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
         Invocation.getter(#onStart),
-        returnValue: _FakeInternalFinalCallback_3<void>(
+        returnValue: _FakeInternalFinalCallback_4<void>(
           this,
           Invocation.getter(#onStart),
         ),
@@ -197,7 +216,7 @@ class MockDashboardController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
         Invocation.getter(#onDelete),
-        returnValue: _FakeInternalFinalCallback_3<void>(
+        returnValue: _FakeInternalFinalCallback_4<void>(
           this,
           Invocation.getter(#onDelete),
         ),
@@ -235,16 +254,6 @@ class MockDashboardController extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
-
-  @override
-  _i6.Future<void> fetchData() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchData,
-          [],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
 
   @override
   void update([
@@ -290,16 +299,16 @@ class MockDashboardController extends _i1.Mock
       );
 
   @override
-  _i7.Disposer addListener(_i7.GetStateUpdate? listener) => (super.noSuchMethod(
+  _i6.Disposer addListener(_i6.GetStateUpdate? listener) => (super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
         ),
         returnValue: () {},
-      ) as _i7.Disposer);
+      ) as _i6.Disposer);
 
   @override
-  void removeListener(_i8.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -337,7 +346,7 @@ class MockDashboardController extends _i1.Mock
   @override
   void removeListenerId(
     Object? id,
-    _i8.VoidCallback? listener,
+    _i7.VoidCallback? listener,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -360,9 +369,9 @@ class MockDashboardController extends _i1.Mock
       );
 
   @override
-  _i7.Disposer addListenerId(
+  _i6.Disposer addListenerId(
     Object? key,
-    _i7.GetStateUpdate? listener,
+    _i6.GetStateUpdate? listener,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -373,7 +382,7 @@ class MockDashboardController extends _i1.Mock
           ],
         ),
         returnValue: () {},
-      ) as _i7.Disposer);
+      ) as _i6.Disposer);
 
   @override
   void disposeId(Object? id) => super.noSuchMethod(
@@ -394,28 +403,28 @@ class MockBoardService extends _i1.Mock implements _i4.BoardService {
   }
 
   @override
-  _i6.Future<List<_i3.Board>> getAllBoards() => (super.noSuchMethod(
+  _i8.Future<List<_i3.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
           #getAllBoards,
           [],
         ),
-        returnValue: _i6.Future<List<_i3.Board>>.value(<_i3.Board>[]),
-      ) as _i6.Future<List<_i3.Board>>);
+        returnValue: _i8.Future<List<_i3.Board>>.value(<_i3.Board>[]),
+      ) as _i8.Future<List<_i3.Board>>);
 
   @override
-  _i6.Future<_i3.Board> getBoard(int? boardId) => (super.noSuchMethod(
+  _i8.Future<_i3.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getBoard,
           [boardId],
         ),
-        returnValue: _i6.Future<_i3.Board>.value(_FakeBoard_4(
+        returnValue: _i8.Future<_i3.Board>.value(_FakeBoard_5(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-      ) as _i6.Future<_i3.Board>);
+      ) as _i8.Future<_i3.Board>);
 }
 
 /// A class which mocks [NotificationService].
@@ -463,13 +472,13 @@ class MockStackService extends _i1.Mock implements _i4.StackService {
   }
 
   @override
-  _i6.Future<List<_i9.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
+  _i8.Future<List<_i9.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getAll,
           [boardId],
         ),
-        returnValue: _i6.Future<List<_i9.Stack>?>.value(),
-      ) as _i6.Future<List<_i9.Stack>?>);
+        returnValue: _i8.Future<List<_i9.Stack>?>.value(),
+      ) as _i8.Future<List<_i9.Stack>?>);
 }
 
 /// A class which mocks [AuthService].
@@ -481,10 +490,11 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
   }
 
   @override
-  _i6.Future<bool> login(
+  _i8.Future<bool> login(
     String? serverUrl,
     String? username,
     String? password,
+    String? version,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -493,26 +503,27 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
             serverUrl,
             username,
             password,
+            version,
           ],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
 
   @override
-  _i6.Future<_i4.Capabilities> checkServer(String? serverUrl) =>
+  _i8.Future<_i4.Capabilities> checkServer(String? serverUrl) =>
       (super.noSuchMethod(
         Invocation.method(
           #checkServer,
           [serverUrl],
         ),
-        returnValue: _i6.Future<_i4.Capabilities>.value(_FakeCapabilities_5(
+        returnValue: _i8.Future<_i4.Capabilities>.value(_FakeCapabilities_6(
           this,
           Invocation.method(
             #checkServer,
             [serverUrl],
           ),
         )),
-      ) as _i6.Future<_i4.Capabilities>);
+      ) as _i8.Future<_i4.Capabilities>);
 
   @override
   bool isAuth() => (super.noSuchMethod(
@@ -551,9 +562,12 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i10.Setting? setting) =>
-      super.noSuchMethod(Invocation.method(
-        #saveSetting,
-        [setting],
-      ));
+  _i8.Future<void> saveSetting(_i10.Setting? setting) => (super.noSuchMethod(
+        Invocation.method(
+          #saveSetting,
+          [setting],
+        ),
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
 }

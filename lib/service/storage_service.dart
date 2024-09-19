@@ -8,5 +8,5 @@ abstract class StorageService {
 
   bool hasSettings();
   Setting? getSetting();
-  saveSetting(Setting setting);
+  Future<void> saveSetting(Setting setting);
 }

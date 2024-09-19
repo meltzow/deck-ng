@@ -21,7 +21,9 @@ class DashboardScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: _controller.fetchData,
+            onPressed: () {
+              _controller.refreshBtnClick();
+            },
           ),
         ],
       ),
@@ -34,6 +36,11 @@ class DashboardScreen extends StatelessWidget {
               if (_controller.isLoading.value) {
                 return const Center(
                   child: LoadingIndicator(),
+                );
+              }
+              if (_controller.errorMessage.isNotEmpty) {
+                return Center(
+                  child: Text(_controller.errorMessage.value),
                 );
               }
               if (_controller.boards.isEmpty) {
@@ -82,9 +89,10 @@ class DashboardScreen extends StatelessWidget {
                       child: ListTile(
                         leading: CircleAvatar(
                           backgroundColor: board.boardColor,
-                          child: Text(board.title[0]),
+                          child: Text(
+                              board.title.isNotEmpty ? board.title[0] : ''),
                         ),
-                        title: Text(board.title),
+                        title: Text(board.title ?? ''),
                         subtitle: Text('ID: ${board.id}'),
                         onTap: () {
                           Get.offNamed(

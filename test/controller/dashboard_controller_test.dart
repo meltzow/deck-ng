@@ -47,4 +47,39 @@ void main() {
 
     expect(controller.boardCount.value, 1);
   });
+
+  test('fetchData updates the state correctly', () async {
+    // Mock services
+    BoardService boardServiceMock = Get.put<BoardService>(MockBoardService());
+    StackService stackServiceMock = Get.put<StackService>(MockStackService());
+
+    // Create the controller
+    final controller = Get.put(DashboardController());
+
+    // Set up mock responses
+    var boards = [Board(title: 'foo', id: 1)];
+    var stacks = [
+      Stack(
+          title: 'title',
+          boardId: 1,
+          id: 1,
+          cards: [Card(title: 'card1', stackId: 1)])
+    ];
+    when(boardServiceMock.getAllBoards()).thenAnswer((_) async => boards);
+    when(stackServiceMock.getAll(1)).thenAnswer((_) async => stacks);
+
+    // Call fetchData
+    await controller.fetchData();
+
+    // Verify state changes
+    expect(controller.boardCount.value, 1);
+    expect(controller.stackCount.value, 1);
+    expect(controller.taskCount.value, 1);
+    expect(controller.isLoading.value, false);
+    expect(controller.boards.length, 1);
+    expect(controller.dashboardData.length, 3);
+    expect(controller.dashboardData[0].count, 1); // # Boards
+    expect(controller.dashboardData[1].count, 1); // # stack
+    expect(controller.dashboardData[2].count, 1); // # tasks
+  });
 }

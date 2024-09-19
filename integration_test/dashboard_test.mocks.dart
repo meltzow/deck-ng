@@ -3,10 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
 import 'package:deck_ng/model/models.dart' as _i2;
-import 'package:deck_ng/service/board_service.dart' as _i4;
+import 'package:deck_ng/service/board_service.dart' as _i5;
 import 'package:deck_ng/service/notification_service.dart' as _i7;
 import 'package:deck_ng/service/stack_service.dart' as _i6;
 import 'package:deck_ng/service/storage_service.dart' as _i3;
@@ -60,51 +60,52 @@ class MockStorageService extends _i1.Mock implements _i3.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i2.Setting? setting) => super.noSuchMethod(
+  _i4.Future<void> saveSetting(_i2.Setting? setting) => (super.noSuchMethod(
         Invocation.method(
           #saveSetting,
           [setting],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [BoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockBoardService extends _i1.Mock implements _i4.BoardService {
+class MockBoardService extends _i1.Mock implements _i5.BoardService {
   @override
-  _i5.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
+  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
           #getAllBoards,
           [],
         ),
-        returnValue: _i5.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
         returnValueForMissingStub:
-            _i5.Future<List<_i2.Board>>.value(<_i2.Board>[]),
-      ) as _i5.Future<List<_i2.Board>>);
+            _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+      ) as _i4.Future<List<_i2.Board>>);
 
   @override
-  _i5.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
+  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getBoard,
           [boardId],
         ),
-        returnValue: _i5.Future<_i2.Board>.value(_FakeBoard_0(
+        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_0(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i2.Board>.value(_FakeBoard_0(
+        returnValueForMissingStub: _i4.Future<_i2.Board>.value(_FakeBoard_0(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-      ) as _i5.Future<_i2.Board>);
+      ) as _i4.Future<_i2.Board>);
 }
 
 /// A class which mocks [StackService].
@@ -112,14 +113,14 @@ class MockBoardService extends _i1.Mock implements _i4.BoardService {
 /// See the documentation for Mockito's code generation for more information.
 class MockStackService extends _i1.Mock implements _i6.StackService {
   @override
-  _i5.Future<List<_i2.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
+  _i4.Future<List<_i2.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getAll,
           [boardId],
         ),
-        returnValue: _i5.Future<List<_i2.Stack>?>.value(),
-        returnValueForMissingStub: _i5.Future<List<_i2.Stack>?>.value(),
-      ) as _i5.Future<List<_i2.Stack>?>);
+        returnValue: _i4.Future<List<_i2.Stack>?>.value(),
+        returnValueForMissingStub: _i4.Future<List<_i2.Stack>?>.value(),
+      ) as _i4.Future<List<_i2.Stack>?>);
 }
 
 /// A class which mocks [NotificationService].

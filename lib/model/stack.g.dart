@@ -7,7 +7,7 @@ part of 'stack.dart';
 // **************************************************************************
 
 Stack _$StackFromJson(Map<String, dynamic> json) => Stack(
-      title: json['title'] as String,
+      title: json['title'] as String? ?? '',
       boardId: (json['boardId'] as num).toInt(),
       deletedAt: _$JsonConverterFromJson<int, DateTime>(
           json['deletedAt'], const EpochDateTimeConverter().fromJson),

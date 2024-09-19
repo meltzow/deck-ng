@@ -832,6 +832,7 @@ class MockAuthService extends _i1.Mock implements _i5.AuthService {
     String? serverUrl,
     String? username,
     String? password,
+    String? version,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -840,6 +841,7 @@ class MockAuthService extends _i1.Mock implements _i5.AuthService {
             serverUrl,
             username,
             password,
+            version,
           ],
         ),
         returnValue: _i7.Future<bool>.value(false),
@@ -898,9 +900,12 @@ class MockStorageService extends _i1.Mock implements _i5.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i4.Setting? setting) =>
-      super.noSuchMethod(Invocation.method(
-        #saveSetting,
-        [setting],
-      ));
+  _i7.Future<void> saveSetting(_i4.Setting? setting) => (super.noSuchMethod(
+        Invocation.method(
+          #saveSetting,
+          [setting],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }

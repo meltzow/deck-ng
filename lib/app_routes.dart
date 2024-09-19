@@ -5,4 +5,6 @@ class AppRoutes {
   static const login = '/auth/login';
   static const settings = '/settings';
   static const licenses = '/licenses';
+
+  static String privacyPolicy = '/privacy-policy';
 }

@@ -17,7 +17,7 @@ Map<String, dynamic> _$BoardSettingToJson(BoardSetting instance) =>
     };
 
 Board _$BoardFromJson(Map<String, dynamic> json) => Board(
-      title: json['title'] as String,
+      title: json['title'] as String? ?? '',
       color: json['color'] as String?,
       archived: json['archived'] as bool? ?? false,
       acl: json['acl'] as List<dynamic>?,

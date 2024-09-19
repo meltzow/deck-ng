@@ -15,8 +15,8 @@ import 'card_details_screen_test.mocks.dart';
 import 'test_helpers.dart';
 
 class MockCardDetailsController extends CardDetailsController with Mock {
-  var card = Rx<nc.Card?>(null);
-  var board = Rx<Board?>(null);
+  var card = Rxn<nc.Card?>(null);
+  var board = Rxn<Board?>(null);
   var users = <User>[].obs;
   var attachments = <Attachment>[].obs;
   var labels = <Label>[].obs;
@@ -77,7 +77,7 @@ void main() {
         Get.put<CardDetailsController>(MockCardDetailsController());
     await tester.pumpWidget(GetMaterialApp(home: CardDetailsScreen()));
 
-    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
     Get.toNamed(AppRoutes.cardDetails);
     //await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();

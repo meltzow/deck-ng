@@ -124,8 +124,8 @@ class LoginController extends GetxController {
     isLoading.value = true;
     var successful = false;
     try {
-      successful =
-          await authService.login(url.value, username.value, password.value);
+      successful = await authService.login(url.value, username.value,
+          password.value, nextcloudVersionString.value);
     } on DioException {
       // notificationService.errorMsg(
       //     "Login", "Login not Successful. ${e.message}");

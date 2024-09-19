@@ -78,7 +78,7 @@ void main() {
       });
 
       var success = await authService.login(
-          'https://localhost:1234/nextcloud', 'username', 'password');
+          'https://localhost:1234/nextcloud', 'username', 'password', '');
 
       expect(success, true);
 
@@ -125,7 +125,7 @@ void main() {
       });
 
       var success = await authService.login(
-          'https://localhost:1234/nextcloud/', 'username', 'password');
+          'https://localhost:1234/nextcloud/', 'username', 'password', '');
 
       expect(success, true);
       verify(storageServiceMock.saveAccount(argThat(

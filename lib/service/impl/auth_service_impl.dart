@@ -37,7 +37,8 @@ class AuthServiceImpl extends GetxService implements AuthService {
   }
 
   @override
-  Future<bool> login(String serverUrl, String username, String password) async {
+  Future<bool> login(String serverUrl, String username, String password,
+      String? version) async {
     //just save it, so the framework can use... but not authenticated (=false)
     var a = Account(
         username: username,
@@ -46,7 +47,8 @@ class AuthServiceImpl extends GetxService implements AuthService {
         url: serverUrl.endsWith('/')
             ? serverUrl.substring(0, serverUrl.length - 1)
             : serverUrl,
-        isAuthenticated: false);
+        isAuthenticated: false,
+        version: version);
     await storageService.saveAccount(a);
     const firstTestUrl =
         '/ocs/v2.php/core/autocomplete/get?search=JOANNE%40EMAIL.ISP&itemType=%20&itemId=%20&shareTypes[]=8&limit=2';

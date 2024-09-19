@@ -3,9 +3,9 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:deck_ng/model/models.dart' as _i4;
+import 'package:deck_ng/model/models.dart' as _i5;
 import 'package:deck_ng/service/auth_service.dart' as _i2;
 import 'package:deck_ng/service/notification_service.dart' as _i6;
 import 'package:deck_ng/service/storage_service.dart' as _i3;
@@ -61,11 +61,14 @@ class MockStorageService extends _i1.Mock implements _i3.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i4.Setting? setting) =>
-      super.noSuchMethod(Invocation.method(
-        #saveSetting,
-        [setting],
-      ));
+  _i4.Future<void> saveSetting(_i5.Setting? setting) => (super.noSuchMethod(
+        Invocation.method(
+          #saveSetting,
+          [setting],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [AuthService].
@@ -77,10 +80,11 @@ class MockAuthService extends _i1.Mock implements _i2.AuthService {
   }
 
   @override
-  _i5.Future<bool> login(
+  _i4.Future<bool> login(
     String? serverUrl,
     String? username,
     String? password,
+    String? version,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -89,26 +93,27 @@ class MockAuthService extends _i1.Mock implements _i2.AuthService {
             serverUrl,
             username,
             password,
+            version,
           ],
         ),
-        returnValue: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 
   @override
-  _i5.Future<_i2.Capabilities> checkServer(String? serverUrl) =>
+  _i4.Future<_i2.Capabilities> checkServer(String? serverUrl) =>
       (super.noSuchMethod(
         Invocation.method(
           #checkServer,
           [serverUrl],
         ),
-        returnValue: _i5.Future<_i2.Capabilities>.value(_FakeCapabilities_0(
+        returnValue: _i4.Future<_i2.Capabilities>.value(_FakeCapabilities_0(
           this,
           Invocation.method(
             #checkServer,
             [serverUrl],
           ),
         )),
-      ) as _i5.Future<_i2.Capabilities>);
+      ) as _i4.Future<_i2.Capabilities>);
 
   @override
   bool isAuth() => (super.noSuchMethod(
