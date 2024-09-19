@@ -3,7 +3,6 @@ import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wiredash/wiredash.dart';
 
 class DashboardData {
   late String valueName;
@@ -38,14 +37,11 @@ class DashboardController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    _fetchData();
-    Wiredash.of(Get.context!).modifyMetaData((metaData) {
-      metaData.custom['nextcloudVersion'] = _authService.getAccount()!.version;
-      return metaData;
-    });
+    fetchData();
+    _trackingService.modifyMetaData();
   }
 
-  Future<void> _fetchData() async {
+  Future<void> fetchData() async {
     isLoading.value = true;
     errorMessage.value = '';
     try {
@@ -99,6 +95,6 @@ class DashboardController extends GetxController {
 
   refreshBtnClick() {
     _trackingService.onButtonClickedEvent("refresh Btn clicked");
-    _fetchData();
+    fetchData();
   }
 }

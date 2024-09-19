@@ -1,6 +1,7 @@
 import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -8,10 +9,13 @@ import 'package:test/test.dart';
 
 import 'dashboard_controller_test.mocks.dart';
 
-@GenerateMocks([AuthService, BoardService, StackService])
+@GenerateMocks([AuthService, BoardService, StackService, TrackingService])
 void main() {
+  TrackingService trackingServiceMock = MockTrackingService();
   setUp(() {
     Get.testMode = true;
+    Get.put<TrackingService>(trackingServiceMock);
+    Get.put<AuthService>(MockAuthService());
   });
 
   tearDown(() {
@@ -36,6 +40,7 @@ void main() {
     when(boardRepositoryImplMock.getAllBoards()).thenAnswer((_) async => resp);
     when(stackServiceMock.getAll(1))
         .thenAnswer((_) async => [Stack(title: 'title', boardId: 1, id: 1)]);
+    when(trackingServiceMock.modifyMetaData()).thenAnswer((_) async {});
     controller.onReady();
 
     /// Test your functions

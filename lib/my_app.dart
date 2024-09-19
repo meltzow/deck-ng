@@ -22,6 +22,7 @@ import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/notification_service_impl.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
+import 'package:deck_ng/service/impl/tracking_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:deck_ng/theme.dart';
@@ -162,6 +163,6 @@ class InitialBinding implements Bindings {
     Get.put<Dio>(Dio());
     Get.put<AuthService>(AuthServiceImpl());
     Get.put<StorageService>(StorageServiceImpl());
-    Get.put<TrackingService>(TrackingService());
+    Get.put<TrackingService>(TrackingServiceImpl());
   }
 }
