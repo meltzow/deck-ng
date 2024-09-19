@@ -76,7 +76,7 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.local_police_outlined),
+            leading: const Icon(Icons.policy_outlined),
             title: Text('privacy policy'.tr),
             onTap: () {
               Get.toNamed(AppRoutes.privacyPolicy);

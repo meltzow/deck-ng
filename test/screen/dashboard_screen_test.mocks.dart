@@ -3,17 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
-import 'dart:ui' as _i7;
+import 'dart:async' as _i7;
+import 'dart:ui' as _i9;
 
-import 'package:deck_ng/controller/dashboard_controller.dart' as _i5;
+import 'package:deck_ng/controller/dashboard_controller.dart' as _i6;
 import 'package:deck_ng/model/board.dart' as _i3;
-import 'package:deck_ng/model/models.dart' as _i10;
-import 'package:deck_ng/model/stack.dart' as _i9;
+import 'package:deck_ng/model/models.dart' as _i11;
+import 'package:deck_ng/model/stack.dart' as _i10;
 import 'package:deck_ng/service/services.dart' as _i4;
+import 'package:deck_ng/service/tracking_service.dart' as _i12;
 import 'package:get/get.dart' as _i2;
-import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i6;
+import 'package:get/get_state_manager/src/simple/list_notifier.dart' as _i8;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i13;
+import 'package:uuid/uuid.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -99,11 +102,32 @@ class _FakeCapabilities_6 extends _i1.SmartFake implements _i4.Capabilities {
         );
 }
 
+class _FakeStorageService_7 extends _i1.SmartFake
+    implements _i4.StorageService {
+  _FakeStorageService_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeUuid_8 extends _i1.SmartFake implements _i5.Uuid {
+  _FakeUuid_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [DashboardController].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDashboardController extends _i1.Mock
-    implements _i5.DashboardController {
+    implements _i6.DashboardController {
   MockDashboardController() {
     _i1.throwOnMissingStub(this);
   }
@@ -199,10 +223,10 @@ class MockDashboardController extends _i1.Mock
       );
 
   @override
-  List<_i5.DashboardData> get dashboardData => (super.noSuchMethod(
+  List<_i6.DashboardData> get dashboardData => (super.noSuchMethod(
         Invocation.getter(#dashboardData),
-        returnValue: <_i5.DashboardData>[],
-      ) as List<_i5.DashboardData>);
+        returnValue: <_i6.DashboardData>[],
+      ) as List<_i6.DashboardData>);
 
   @override
   _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
@@ -256,6 +280,16 @@ class MockDashboardController extends _i1.Mock
       );
 
   @override
+  _i7.Future<void> fetchData() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchData,
+          [],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+
+  @override
   void update([
     List<Object>? ids,
     bool? condition = true,
@@ -299,16 +333,16 @@ class MockDashboardController extends _i1.Mock
       );
 
   @override
-  _i6.Disposer addListener(_i6.GetStateUpdate? listener) => (super.noSuchMethod(
+  _i8.Disposer addListener(_i8.GetStateUpdate? listener) => (super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
         ),
         returnValue: () {},
-      ) as _i6.Disposer);
+      ) as _i8.Disposer);
 
   @override
-  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i9.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -346,7 +380,7 @@ class MockDashboardController extends _i1.Mock
   @override
   void removeListenerId(
     Object? id,
-    _i7.VoidCallback? listener,
+    _i9.VoidCallback? listener,
   ) =>
       super.noSuchMethod(
         Invocation.method(
@@ -369,9 +403,9 @@ class MockDashboardController extends _i1.Mock
       );
 
   @override
-  _i6.Disposer addListenerId(
+  _i8.Disposer addListenerId(
     Object? key,
-    _i6.GetStateUpdate? listener,
+    _i8.GetStateUpdate? listener,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -382,7 +416,7 @@ class MockDashboardController extends _i1.Mock
           ],
         ),
         returnValue: () {},
-      ) as _i6.Disposer);
+      ) as _i8.Disposer);
 
   @override
   void disposeId(Object? id) => super.noSuchMethod(
@@ -403,28 +437,28 @@ class MockBoardService extends _i1.Mock implements _i4.BoardService {
   }
 
   @override
-  _i8.Future<List<_i3.Board>> getAllBoards() => (super.noSuchMethod(
+  _i7.Future<List<_i3.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
           #getAllBoards,
           [],
         ),
-        returnValue: _i8.Future<List<_i3.Board>>.value(<_i3.Board>[]),
-      ) as _i8.Future<List<_i3.Board>>);
+        returnValue: _i7.Future<List<_i3.Board>>.value(<_i3.Board>[]),
+      ) as _i7.Future<List<_i3.Board>>);
 
   @override
-  _i8.Future<_i3.Board> getBoard(int? boardId) => (super.noSuchMethod(
+  _i7.Future<_i3.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getBoard,
           [boardId],
         ),
-        returnValue: _i8.Future<_i3.Board>.value(_FakeBoard_5(
+        returnValue: _i7.Future<_i3.Board>.value(_FakeBoard_5(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-      ) as _i8.Future<_i3.Board>);
+      ) as _i7.Future<_i3.Board>);
 }
 
 /// A class which mocks [NotificationService].
@@ -472,13 +506,13 @@ class MockStackService extends _i1.Mock implements _i4.StackService {
   }
 
   @override
-  _i8.Future<List<_i9.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
+  _i7.Future<List<_i10.Stack>?> getAll(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getAll,
           [boardId],
         ),
-        returnValue: _i8.Future<List<_i9.Stack>?>.value(),
-      ) as _i8.Future<List<_i9.Stack>?>);
+        returnValue: _i7.Future<List<_i10.Stack>?>.value(),
+      ) as _i7.Future<List<_i10.Stack>?>);
 }
 
 /// A class which mocks [AuthService].
@@ -490,7 +524,7 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
   }
 
   @override
-  _i8.Future<bool> login(
+  _i7.Future<bool> login(
     String? serverUrl,
     String? username,
     String? password,
@@ -506,24 +540,24 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
             version,
           ],
         ),
-        returnValue: _i8.Future<bool>.value(false),
-      ) as _i8.Future<bool>);
+        returnValue: _i7.Future<bool>.value(false),
+      ) as _i7.Future<bool>);
 
   @override
-  _i8.Future<_i4.Capabilities> checkServer(String? serverUrl) =>
+  _i7.Future<_i4.Capabilities> checkServer(String? serverUrl) =>
       (super.noSuchMethod(
         Invocation.method(
           #checkServer,
           [serverUrl],
         ),
-        returnValue: _i8.Future<_i4.Capabilities>.value(_FakeCapabilities_6(
+        returnValue: _i7.Future<_i4.Capabilities>.value(_FakeCapabilities_6(
           this,
           Invocation.method(
             #checkServer,
             [serverUrl],
           ),
         )),
-      ) as _i8.Future<_i4.Capabilities>);
+      ) as _i7.Future<_i4.Capabilities>);
 
   @override
   bool isAuth() => (super.noSuchMethod(
@@ -562,12 +596,179 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
       ) as bool);
 
   @override
-  _i8.Future<void> saveSetting(_i10.Setting? setting) => (super.noSuchMethod(
+  _i7.Future<void> saveSetting(_i11.Setting? setting) => (super.noSuchMethod(
         Invocation.method(
           #saveSetting,
           [setting],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
+}
+
+/// A class which mocks [TrackingService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTrackingService extends _i1.Mock implements _i12.TrackingService {
+  MockTrackingService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.StorageService get storageService => (super.noSuchMethod(
+        Invocation.getter(#storageService),
+        returnValue: _FakeStorageService_7(
+          this,
+          Invocation.getter(#storageService),
+        ),
+      ) as _i4.StorageService);
+
+  @override
+  _i5.Uuid get uuid => (super.noSuchMethod(
+        Invocation.getter(#uuid),
+        returnValue: _FakeUuid_8(
+          this,
+          Invocation.getter(#uuid),
+        ),
+      ) as _i5.Uuid);
+
+  @override
+  _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
+        Invocation.getter(#onStart),
+        returnValue: _FakeInternalFinalCallback_4<void>(
+          this,
+          Invocation.getter(#onStart),
+        ),
+      ) as _i2.InternalFinalCallback<void>);
+
+  @override
+  _i2.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
+        Invocation.getter(#onDelete),
+        returnValue: _FakeInternalFinalCallback_4<void>(
+          this,
+          Invocation.getter(#onDelete),
+        ),
+      ) as _i2.InternalFinalCallback<void>);
+
+  @override
+  bool get initialized => (super.noSuchMethod(
+        Invocation.getter(#initialized),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get isClosed => (super.noSuchMethod(
+        Invocation.getter(#isClosed),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool isOptedOut() => (super.noSuchMethod(
+        Invocation.method(
+          #isOptedOut,
+          [],
+        ),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  void optOut() => super.noSuchMethod(
+        Invocation.method(
+          #optOut,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void optIn() => super.noSuchMethod(
+        Invocation.method(
+          #optIn,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onInit() => super.noSuchMethod(
+        Invocation.method(
+          #onInit,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void trackEvent(
+    String? eventName, {
+    Map<String, dynamic>? properties,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #trackEvent,
+          [eventName],
+          {#properties: properties},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onScreenEvent(String? screenName) => super.noSuchMethod(
+        Invocation.method(
+          #onScreenEvent,
+          [screenName],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onButtonClickedEvent(String? buttonName) => super.noSuchMethod(
+        Invocation.method(
+          #onButtonClickedEvent,
+          [buttonName],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  String determineBuildMode() => (super.noSuchMethod(
+        Invocation.method(
+          #determineBuildMode,
+          [],
+        ),
+        returnValue: _i13.dummyValue<String>(
+          this,
+          Invocation.method(
+            #determineBuildMode,
+            [],
+          ),
+        ),
+      ) as String);
+
+  @override
+  void onReady() => super.noSuchMethod(
+        Invocation.method(
+          #onReady,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onClose() => super.noSuchMethod(
+        Invocation.method(
+          #onClose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void $configureLifeCycle() => super.noSuchMethod(
+        Invocation.method(
+          #$configureLifeCycle,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
