@@ -131,6 +131,7 @@ class CardDetailsController extends GetxController {
   }
 
   void clearDueDate() {
+    _trackingService.onButtonClickedEvent('clear Due Date');
     card.value?.duedate = null;
     duedateController.text = '';
   }

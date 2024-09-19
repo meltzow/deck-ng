@@ -1,7 +1,7 @@
 import 'package:deck_ng/env/env.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/storage_service.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -24,6 +24,7 @@ class TrackingService extends GetxService {
           'context': details.context!.toDescription(),
           'information': details.informationCollector.toString(),
           'appVersion': Env.VERSION,
+          'buildMode': determineBuildMode(),
         },
       );
       // Optionally: log to other services like Crashlytics or Sentry
@@ -51,7 +52,7 @@ class TrackingService extends GetxService {
     return uuid.v4();
   }
 
-  void _updateDistinctIdIfNeeded() {
+  void _updateDistinctIdIfNeeded() async {
     final setting = storageService.getSetting() ?? Setting('');
     final today = DateTime.now().toIso8601String().split('T').first;
 
@@ -59,13 +60,14 @@ class TrackingService extends GetxService {
     if (setting.distinceIdLastUpdated != today) {
       setting.distinctId = _generateDistinctId();
       setting.distinceIdLastUpdated = today;
-      storageService.saveSetting(setting);
-      Posthog().identify(userId: setting.distinctId ?? '');
+      await storageService.saveSetting(setting);
+
       // Wiredash.of(Get.context!).modifyMetaData((metaData) {
       //   metaData.custom['distinctId'] = setting.distinctId;
       //   return metaData;
       // });
     }
+    Posthog().identify(userId: setting.distinctId!);
   }
 
   @override
@@ -92,11 +94,14 @@ class TrackingService extends GetxService {
     if (isOptedOut()) return;
 
     final distinctId = storageService.getSetting()?.distinctId ?? '';
-    Wiredash.of(Get.context!).trackEvent(screenName);
+    Wiredash.of(Get.context!).trackEvent(screenName, data: {
+      'distinctId': distinctId,
+    });
     await Posthog().screen(
       screenName: screenName,
       properties: {
         'distinct_id': distinctId,
+        'buildMode': determineBuildMode(),
       },
     );
   }
@@ -113,7 +118,20 @@ class TrackingService extends GetxService {
         'button': buttonName,
         'clicked': true,
         'distinct_id': distinctId,
+        'buildMode': determineBuildMode(),
       },
     );
+  }
+
+  String determineBuildMode() {
+    if (kReleaseMode) {
+      return "Release Mode";
+    } else if (kDebugMode) {
+      return "Debug Mode";
+    } else if (kProfileMode) {
+      return "Profile Mode";
+    } else {
+      return "Unknown Mode";
+    }
   }
 }

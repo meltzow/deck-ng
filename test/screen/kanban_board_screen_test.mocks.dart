@@ -900,9 +900,12 @@ class MockStorageService extends _i1.Mock implements _i5.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i4.Setting? setting) =>
-      super.noSuchMethod(Invocation.method(
-        #saveSetting,
-        [setting],
-      ));
+  _i7.Future<void> saveSetting(_i4.Setting? setting) => (super.noSuchMethod(
+        Invocation.method(
+          #saveSetting,
+          [setting],
+        ),
+        returnValue: _i7.Future<void>.value(),
+        returnValueForMissingStub: _i7.Future<void>.value(),
+      ) as _i7.Future<void>);
 }

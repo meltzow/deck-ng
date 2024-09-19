@@ -29,6 +29,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:wiredash/wiredash.dart';
 
 class MyApp extends StatelessWidget {
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         ),
         collectMetaData: (metaData) => metaData..custom['language'] = 'de',
         child: GetMaterialApp(
+          navigatorObservers: [PosthogObserver()],
           debugShowCheckedModeBanner: debugShowCheckedModeBanner,
           translations: Translation(),
           locale: Get.deviceLocale,

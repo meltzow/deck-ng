@@ -115,11 +115,14 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i5.Setting? setting) =>
-      super.noSuchMethod(Invocation.method(
-        #saveSetting,
-        [setting],
-      ));
+  _i3.Future<void> saveSetting(_i5.Setting? setting) => (super.noSuchMethod(
+        Invocation.method(
+          #saveSetting,
+          [setting],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }
 
 /// A class which mocks [NotificationService].

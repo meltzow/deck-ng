@@ -52,7 +52,7 @@ class StorageServiceImpl extends GetxService implements StorageService {
   }
 
   @override
-  saveSetting(Setting setting) async {
+  Future<void> saveSetting(Setting setting) async {
     await _box.write(keySetting, setting.toJson());
   }
 }

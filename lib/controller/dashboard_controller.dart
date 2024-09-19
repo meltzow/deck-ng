@@ -1,5 +1,6 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
@@ -30,20 +31,21 @@ class DashboardController extends GetxController {
   final BoardService _boardService = Get.find<BoardService>();
   final StackService _stackService = Get.find<StackService>();
   final AuthService _authService = Get.find<AuthService>();
+  final TrackingService _trackingService = Get.find<TrackingService>();
 
   List<DashboardData> get dashboardData => _dashboardData.value;
 
   @override
   void onReady() async {
     super.onReady();
-    fetchData();
+    _fetchData();
     Wiredash.of(Get.context!).modifyMetaData((metaData) {
       metaData.custom['nextcloudVersion'] = _authService.getAccount()!.version;
       return metaData;
     });
   }
 
-  Future<void> fetchData() async {
+  Future<void> _fetchData() async {
     isLoading.value = true;
     errorMessage.value = '';
     try {
@@ -93,5 +95,10 @@ class DashboardController extends GetxController {
           count: taskCount,
           icon: Icons.check_circle_outline)
     ];
+  }
+
+  refreshBtnClick() {
+    _trackingService.onButtonClickedEvent("refresh Btn clicked");
+    _fetchData();
   }
 }

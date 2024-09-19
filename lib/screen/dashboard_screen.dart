@@ -21,7 +21,9 @@ class DashboardScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: _controller.fetchData,
+            onPressed: () {
+              _controller.refreshBtnClick();
+            },
           ),
         ],
       ),

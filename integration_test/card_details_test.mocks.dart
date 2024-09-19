@@ -3,10 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
 import 'package:deck_ng/model/models.dart' as _i2;
-import 'package:deck_ng/service/board_service.dart' as _i4;
+import 'package:deck_ng/service/board_service.dart' as _i5;
 import 'package:deck_ng/service/card_service.dart' as _i6;
 import 'package:deck_ng/service/notification_service.dart' as _i7;
 import 'package:deck_ng/service/storage_service.dart' as _i3;
@@ -90,51 +90,52 @@ class MockStorageService extends _i1.Mock implements _i3.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i2.Setting? setting) => super.noSuchMethod(
+  _i4.Future<void> saveSetting(_i2.Setting? setting) => (super.noSuchMethod(
         Invocation.method(
           #saveSetting,
           [setting],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [BoardService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockBoardService extends _i1.Mock implements _i4.BoardService {
+class MockBoardService extends _i1.Mock implements _i5.BoardService {
   @override
-  _i5.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
+  _i4.Future<List<_i2.Board>> getAllBoards() => (super.noSuchMethod(
         Invocation.method(
           #getAllBoards,
           [],
         ),
-        returnValue: _i5.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+        returnValue: _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
         returnValueForMissingStub:
-            _i5.Future<List<_i2.Board>>.value(<_i2.Board>[]),
-      ) as _i5.Future<List<_i2.Board>>);
+            _i4.Future<List<_i2.Board>>.value(<_i2.Board>[]),
+      ) as _i4.Future<List<_i2.Board>>);
 
   @override
-  _i5.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
+  _i4.Future<_i2.Board> getBoard(int? boardId) => (super.noSuchMethod(
         Invocation.method(
           #getBoard,
           [boardId],
         ),
-        returnValue: _i5.Future<_i2.Board>.value(_FakeBoard_0(
+        returnValue: _i4.Future<_i2.Board>.value(_FakeBoard_0(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i2.Board>.value(_FakeBoard_0(
+        returnValueForMissingStub: _i4.Future<_i2.Board>.value(_FakeBoard_0(
           this,
           Invocation.method(
             #getBoard,
             [boardId],
           ),
         )),
-      ) as _i5.Future<_i2.Board>);
+      ) as _i4.Future<_i2.Board>);
 }
 
 /// A class which mocks [CardService].
@@ -142,7 +143,7 @@ class MockBoardService extends _i1.Mock implements _i4.BoardService {
 /// See the documentation for Mockito's code generation for more information.
 class MockCardService extends _i1.Mock implements _i6.CardService {
   @override
-  _i5.Future<_i2.Card> createCard(
+  _i4.Future<_i2.Card> createCard(
     int? boardId,
     int? stackId,
     String? title,
@@ -156,7 +157,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             title,
           ],
         ),
-        returnValue: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #createCard,
@@ -167,7 +168,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValueForMissingStub: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #createCard,
@@ -178,10 +179,10 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Card>);
+      ) as _i4.Future<_i2.Card>);
 
   @override
-  _i5.Future<_i2.Card> updateCard(
+  _i4.Future<_i2.Card> updateCard(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -197,7 +198,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             card,
           ],
         ),
-        returnValue: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #updateCard,
@@ -209,7 +210,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValueForMissingStub: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #updateCard,
@@ -221,10 +222,10 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Card>);
+      ) as _i4.Future<_i2.Card>);
 
   @override
-  _i5.Future<_i2.Card> getCard(
+  _i4.Future<_i2.Card> getCard(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -238,7 +239,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             cardId,
           ],
         ),
-        returnValue: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #getCard,
@@ -249,7 +250,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValueForMissingStub: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #getCard,
@@ -260,10 +261,10 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Card>);
+      ) as _i4.Future<_i2.Card>);
 
   @override
-  _i5.Future<void> deleteCard(
+  _i4.Future<void> deleteCard(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -277,12 +278,12 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             cardId,
           ],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i5.Future<_i2.Card> reorderCard(
+  _i4.Future<_i2.Card> reorderCard(
     int? boardId,
     int? oldStackId,
     int? cardId,
@@ -302,7 +303,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             newStackId,
           ],
         ),
-        returnValue: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValue: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #reorderCard,
@@ -316,7 +317,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i2.Card>.value(_FakeCard_1(
+        returnValueForMissingStub: _i4.Future<_i2.Card>.value(_FakeCard_1(
           this,
           Invocation.method(
             #reorderCard,
@@ -330,10 +331,10 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Card>);
+      ) as _i4.Future<_i2.Card>);
 
   @override
-  _i5.Future<void> assignLabel2Card(
+  _i4.Future<void> assignLabel2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -349,12 +350,12 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             labelId,
           ],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i5.Future<void> removeLabel2Card(
+  _i4.Future<void> removeLabel2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -370,12 +371,12 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             labelId,
           ],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 
   @override
-  _i5.Future<_i2.Assignment> assignUser2Card(
+  _i4.Future<_i2.Assignment> assignUser2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -391,7 +392,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             userId,
           ],
         ),
-        returnValue: _i5.Future<_i2.Assignment>.value(_FakeAssignment_2(
+        returnValue: _i4.Future<_i2.Assignment>.value(_FakeAssignment_2(
           this,
           Invocation.method(
             #assignUser2Card,
@@ -404,7 +405,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
           ),
         )),
         returnValueForMissingStub:
-            _i5.Future<_i2.Assignment>.value(_FakeAssignment_2(
+            _i4.Future<_i2.Assignment>.value(_FakeAssignment_2(
           this,
           Invocation.method(
             #assignUser2Card,
@@ -416,10 +417,10 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Assignment>);
+      ) as _i4.Future<_i2.Assignment>);
 
   @override
-  _i5.Future<_i2.Assignment> unassignUser2Card(
+  _i4.Future<_i2.Assignment> unassignUser2Card(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -435,7 +436,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             userId,
           ],
         ),
-        returnValue: _i5.Future<_i2.Assignment>.value(_FakeAssignment_2(
+        returnValue: _i4.Future<_i2.Assignment>.value(_FakeAssignment_2(
           this,
           Invocation.method(
             #unassignUser2Card,
@@ -448,7 +449,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
           ),
         )),
         returnValueForMissingStub:
-            _i5.Future<_i2.Assignment>.value(_FakeAssignment_2(
+            _i4.Future<_i2.Assignment>.value(_FakeAssignment_2(
           this,
           Invocation.method(
             #unassignUser2Card,
@@ -460,10 +461,10 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Assignment>);
+      ) as _i4.Future<_i2.Assignment>);
 
   @override
-  _i5.Future<_i2.Attachment> addAttachmentToCard(
+  _i4.Future<_i2.Attachment> addAttachmentToCard(
     int? boardId,
     int? stackId,
     int? cardId,
@@ -479,7 +480,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             attachment,
           ],
         ),
-        returnValue: _i5.Future<_i2.Attachment>.value(_FakeAttachment_3(
+        returnValue: _i4.Future<_i2.Attachment>.value(_FakeAttachment_3(
           this,
           Invocation.method(
             #addAttachmentToCard,
@@ -492,7 +493,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
           ),
         )),
         returnValueForMissingStub:
-            _i5.Future<_i2.Attachment>.value(_FakeAttachment_3(
+            _i4.Future<_i2.Attachment>.value(_FakeAttachment_3(
           this,
           Invocation.method(
             #addAttachmentToCard,
@@ -504,7 +505,7 @@ class MockCardService extends _i1.Mock implements _i6.CardService {
             ],
           ),
         )),
-      ) as _i5.Future<_i2.Attachment>);
+      ) as _i4.Future<_i2.Attachment>);
 }
 
 /// A class which mocks [NotificationService].
