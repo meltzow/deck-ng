@@ -47,6 +47,7 @@ class MockAuthService extends _i1.Mock implements _i2.AuthService {
     String? serverUrl,
     String? username,
     String? password,
+    String? version,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -55,6 +56,7 @@ class MockAuthService extends _i1.Mock implements _i2.AuthService {
             serverUrl,
             username,
             password,
+            version,
           ],
         ),
         returnValue: _i3.Future<bool>.value(false),
@@ -113,11 +115,14 @@ class MockStorageService extends _i1.Mock implements _i4.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i5.Setting? setting) =>
-      super.noSuchMethod(Invocation.method(
-        #saveSetting,
-        [setting],
-      ));
+  _i3.Future<void> saveSetting(_i5.Setting? setting) => (super.noSuchMethod(
+        Invocation.method(
+          #saveSetting,
+          [setting],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }
 
 /// A class which mocks [NotificationService].

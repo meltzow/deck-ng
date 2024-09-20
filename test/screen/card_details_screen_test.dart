@@ -6,6 +6,7 @@ import 'package:deck_ng/model/stack.dart' as ncstack;
 import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
@@ -15,8 +16,8 @@ import 'card_details_screen_test.mocks.dart';
 import 'test_helpers.dart';
 
 class MockCardDetailsController extends CardDetailsController with Mock {
-  var card = Rx<nc.Card?>(null);
-  var board = Rx<Board?>(null);
+  var card = Rxn<nc.Card?>(null);
+  var board = Rxn<Board?>(null);
   var users = <User>[].obs;
   var attachments = <Attachment>[].obs;
   var labels = <Label>[].obs;
@@ -29,7 +30,8 @@ class MockCardDetailsController extends CardDetailsController with Mock {
   BoardService,
   StackService,
   CardService,
-  NotificationService
+  NotificationService,
+  TrackingService
 ])
 void main() {
   late CardDetailsController cardDetailsControllerMock;
@@ -49,6 +51,7 @@ void main() {
     boardServiceMock = Get.put<BoardService>(MockBoardService());
     notificationServiceMock =
         Get.put<NotificationService>(MockNotificationService());
+    Get.put<TrackingService>(MockTrackingService());
 
     Get.parameters = <String, String>{
       'boardId': '1',
@@ -77,7 +80,7 @@ void main() {
         Get.put<CardDetailsController>(MockCardDetailsController());
     await tester.pumpWidget(GetMaterialApp(home: CardDetailsScreen()));
 
-    await tester.pumpWidget(MyApp(debugShowCheckedModeBanner: false));
+    await tester.pumpWidget(const MyApp(debugShowCheckedModeBanner: false));
     Get.toNamed(AppRoutes.cardDetails);
     //await Future.delayed(const Duration(seconds: 1), () {});
     await tester.pumpAndSettle();

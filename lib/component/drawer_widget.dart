@@ -29,13 +29,15 @@ class DrawerWidget extends StatelessWidget {
             onTap: () => Get.toNamed(AppRoutes.home),
           ),
           Obx(
-            () => controller.isAuth.value ? ListTile(
-              title: const Text('Dashboard'),
-              leading: const Icon(Icons.dashboard_outlined),
-              onTap: () {
-                Get.offNamed(AppRoutes.home);
-              },
-            ): const SizedBox.shrink(),
+            () => controller.isAuth.value
+                ? ListTile(
+                    title: const Text('Dashboard'),
+                    leading: const Icon(Icons.dashboard_outlined),
+                    onTap: () {
+                      Get.offNamed(AppRoutes.home);
+                    },
+                  )
+                : const SizedBox.shrink(),
           ),
           // Obx(() => ListTile(
           //       title: const Text('settings'),
@@ -71,6 +73,13 @@ class DrawerWidget extends StatelessWidget {
             title: Text('licenses'.tr),
             onTap: () {
               Get.toNamed(AppRoutes.licenses);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.policy_outlined),
+            title: Text('privacy policy'.tr),
+            onTap: () {
+              Get.toNamed(AppRoutes.privacyPolicy);
             },
           ),
         ],

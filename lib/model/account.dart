@@ -10,13 +10,15 @@ class Account {
   late String url;
 
   late bool isAuthenticated;
+  late String? version;
 
   Account(
       {required this.username,
       required this.password,
       required this.authData,
       required this.url,
-      required this.isAuthenticated});
+      required this.isAuthenticated,
+      this.version = ''});
 
   factory Account.fromJson(Map<String, dynamic> json) =>
       _$AccountFromJson(json);

@@ -12,4 +12,6 @@ abstract class Env {
 
   @EnviedField(varName: 'IS_PRODUCTION', obfuscate: false)
   static const bool IS_PRODUCTION = _Env.IS_PRODUCTION;
+
+  static String VERSION = '';
 }

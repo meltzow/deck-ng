@@ -2,12 +2,13 @@ import 'package:deck_ng/controller/dashboard_controller.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'kanban_board_screen_test.mocks.dart';
+import 'dashboard_screen_test.mocks.dart';
 import 'test_helpers.dart';
 
 @GenerateMocks([
@@ -16,7 +17,8 @@ import 'test_helpers.dart';
   NotificationService,
   StackService,
   AuthService,
-  StorageService
+  StorageService,
+  TrackingService
 ])
 void main() {
   late var controllerMock;
@@ -24,6 +26,7 @@ void main() {
   late AuthService authServiceMock;
   late StorageService storageServiceMock;
   late StackService stackServiceMock;
+  late TrackingService trackingServiceMock;
 
   setUp(() {
     Get.testMode = true;
@@ -31,6 +34,7 @@ void main() {
     storageServiceMock = Get.put<StorageService>(MockStorageService());
     boardServiceMock = Get.put<BoardService>(MockBoardService());
     stackServiceMock = Get.put<StackService>(MockStackService());
+    trackingServiceMock = Get.put<TrackingService>(MockTrackingService());
   });
 
   tearDown(() {
@@ -52,6 +56,8 @@ void main() {
         [Stack(title: 'todo', boardId: board1.id, id: 1, cards: [])]));
     when(stackServiceMock.getAll(board2.id)).thenAnswer((_) => Future.value(
         [Stack(title: 'todo2', boardId: board2.id, id: 1, cards: [])]));
+
+    when(trackingServiceMock.modifyMetaData()).thenAnswer((_) async {});
 
     controllerMock = Get.put<DashboardController>(DashboardController());
     await tester.pumpWidget(GetMaterialApp(

@@ -1,6 +1,7 @@
 import 'package:deck_ng/controller/card_details_controller.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:get/get.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -8,7 +9,8 @@ import 'package:test/test.dart';
 
 import 'card_details_controller_test.mocks.dart';
 
-@GenerateMocks([CardService, NotificationService, BoardService])
+@GenerateMocks(
+    [CardService, NotificationService, BoardService, TrackingService])
 void main() {
   late CardDetailsController controller;
   late CardService cardServiceMock;
@@ -20,6 +22,7 @@ void main() {
     boardServiceMock = Get.put<BoardService>(MockBoardService());
     cardServiceMock = Get.put<CardService>(MockCardService());
     notifyServiceMock = Get.put<NotificationService>(MockNotificationService());
+    Get.put<TrackingService>(MockTrackingService());
 
     controller = Get.put(CardDetailsController());
   });
@@ -42,7 +45,7 @@ void main() {
     controller.cardId = RxInt(cardId);
     controller.boardId = RxInt(boardId);
     controller.stackId = RxInt(stackId);
-    controller.card = Rx<Card>(card);
+    controller.card = Rxn<Card>(card);
 
     Card resp2 = card;
     card.labels = [labels[1]];
@@ -70,7 +73,7 @@ void main() {
     controller.cardId = RxInt(cardId);
     controller.boardId = RxInt(boardId);
     controller.stackId = RxInt(stackId);
-    controller.card = Rx<Card>(card);
+    controller.card = Rxn<Card>(card);
 
     Card resp2 = card;
 
@@ -78,6 +81,9 @@ void main() {
         .thenReturn(null);
     when(cardServiceMock.updateCard(boardId, stackId, cardId, card))
         .thenAnswer((_) async => resp2);
+
+    when(cardServiceMock.getCard(boardId, stackId, cardId))
+        .thenAnswer((_) async => card);
 
     await controller.updateCard(card);
 

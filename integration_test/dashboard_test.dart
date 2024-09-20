@@ -38,6 +38,10 @@ void main() {
     controller = DashboardController();
   });
 
+  tearDown(() {
+    Get.reset();
+  });
+
   testWidgets('display dashboard', (WidgetTester tester) async {
     when(storageServiceMock.hasAccount()).thenReturn(true);
     when(storageServiceMock.getAccount()).thenReturn(nc.Account(
@@ -86,5 +90,84 @@ void main() {
     await binding.convertFlutterSurfaceToImage();
     await tester.pumpAndSettle();
     await screenshot(binding, tester, 'dashboard_screen');
+  });
+
+  testWidgets('display error when fetching boards fails',
+      (WidgetTester tester) async {
+    when(storageServiceMock.hasAccount()).thenReturn(true);
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
+
+    // Simulate a failed HTTP request
+    when(boardServiceMock.getAllBoards())
+        .thenThrow(Exception('Failed to fetch boards'));
+
+    Get.lazyReplace<DashboardController>(() => controller);
+
+    await tester.pumpWidget(MyApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.home,
+        initialPages: [
+          GetPage(
+            name: AppRoutes.home,
+            page: () => DashboardScreen(),
+          )
+        ]));
+    await Future.delayed(const Duration(seconds: 1), () {});
+    await tester.pumpAndSettle();
+    await binding.convertFlutterSurfaceToImage();
+    await tester.pumpAndSettle();
+    await screenshot(binding, tester, 'dashboard_screen_error');
+
+    // Verify that the error state is displayed
+    expect(find.text('Failed to fetch data: Exception: Failed to fetch boards'),
+        findsOneWidget);
+  });
+
+  testWidgets('display error when board data is invalid',
+      (WidgetTester tester) async {
+    when(storageServiceMock.hasAccount()).thenReturn(true);
+    when(storageServiceMock.getAccount()).thenReturn(nc.Account(
+        username: 'foo',
+        password: 'ddd',
+        authData: 'authData',
+        url: 'url',
+        isAuthenticated: true));
+
+    // Simulate a successful HTTP request with invalid board data
+    var invalidBoard =
+        nc.Board(title: '', id: 1); // Title is mandatory but empty
+    var resp = [invalidBoard];
+    when(boardServiceMock.getAllBoards()).thenAnswer((_) async => resp);
+    List<nc.Stack> stacksForBoard1 = [];
+
+    when(stackServiceMock.getAll(invalidBoard.id))
+        .thenAnswer((_) async => stacksForBoard1);
+
+    Get.lazyReplace<DashboardController>(() => controller);
+
+    await tester.pumpWidget(MyApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.home,
+        initialPages: [
+          GetPage(
+            name: AppRoutes.home,
+            page: () => DashboardScreen(),
+          ),
+        ]));
+
+    await Future.delayed(const Duration(seconds: 1), () {});
+    await tester.pumpAndSettle();
+    await binding.convertFlutterSurfaceToImage();
+    await tester.pumpAndSettle();
+    await screenshot(binding, tester, 'dashboard_screen_invalid_data');
+
+    // Verify that the error state is displayed
+    expect(
+        find.text('Failed to fetch data: Invalid board data'), findsOneWidget);
   });
 }

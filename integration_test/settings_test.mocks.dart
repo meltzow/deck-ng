@@ -3,8 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:deck_ng/model/models.dart' as _i3;
-import 'package:deck_ng/service/notification_service.dart' as _i4;
+import 'dart:async' as _i3;
+
+import 'package:deck_ng/model/models.dart' as _i4;
+import 'package:deck_ng/service/notification_service.dart' as _i5;
 import 'package:deck_ng/service/storage_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -46,20 +48,21 @@ class MockStorageService extends _i1.Mock implements _i2.StorageService {
       ) as bool);
 
   @override
-  dynamic saveSetting(_i3.Setting? setting) => super.noSuchMethod(
+  _i3.Future<void> saveSetting(_i4.Setting? setting) => (super.noSuchMethod(
         Invocation.method(
           #saveSetting,
           [setting],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }
 
 /// A class which mocks [NotificationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockNotificationService extends _i1.Mock
-    implements _i4.NotificationService {
+    implements _i5.NotificationService {
   @override
   dynamic successMsg(
     String? title,

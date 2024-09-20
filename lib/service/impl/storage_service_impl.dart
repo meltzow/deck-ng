@@ -17,8 +17,9 @@ class StorageServiceImpl extends GetxService implements StorageService {
     super.onInit();
 
     if (hasSettings()) {
-      Get.updateLocale(
-          Locale(Get.find<StorageService>().getSetting()!.language));
+      if (getSetting() != null && getSetting()!.language.isNotEmpty) {
+        Get.updateLocale(Locale(getSetting()!.language));
+      }
     }
   }
 
@@ -51,7 +52,7 @@ class StorageServiceImpl extends GetxService implements StorageService {
   }
 
   @override
-  saveSetting(Setting setting) async {
+  Future<void> saveSetting(Setting setting) async {
     await _box.write(keySetting, setting.toJson());
   }
 }

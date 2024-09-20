@@ -44,6 +44,7 @@ class MockAuthService extends _i1.Mock implements _i2.AuthService {
     String? serverUrl,
     String? username,
     String? password,
+    String? version,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -52,6 +53,7 @@ class MockAuthService extends _i1.Mock implements _i2.AuthService {
             serverUrl,
             username,
             password,
+            version,
           ],
         ),
         returnValue: _i3.Future<bool>.value(false),
