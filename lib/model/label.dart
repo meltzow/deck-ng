@@ -1,3 +1,5 @@
+// lib/model/label.dart
+
 import 'dart:ui';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -14,14 +16,15 @@ class Label {
   String? ETAG;
   int? cardId;
 
-  Label(
-      {required this.title,
-      this.color,
-      required this.id,
-      this.boardId,
-      this.lastModified,
-      this.ETAG,
-      this.cardId});
+  Label({
+    required this.title,
+    this.color,
+    required this.id,
+    this.boardId,
+    this.lastModified,
+    this.ETAG,
+    this.cardId,
+  });
 
   factory Label.fromJson(Map<String, dynamic> json) => _$LabelFromJson(json);
 

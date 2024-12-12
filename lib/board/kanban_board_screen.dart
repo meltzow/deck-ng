@@ -1,7 +1,6 @@
 import 'package:appflowy_board/appflowy_board.dart';
-import 'package:deck_ng/component/drawer_widget.dart';
-import 'package:deck_ng/component/list_view_card_item_widget.dart';
-import 'package:deck_ng/controller/kanban_board_controller.dart';
+import 'package:deck_ng/board/kanban_board_controller.dart';
+import 'package:deck_ng/board/list_view_card_item_widget.dart';
 import 'package:deck_ng/model/card.dart' as NC;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,9 +21,8 @@ class KanbanBoardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerWidget(),
       appBar: AppBar(
-        title: const Text('Kanban Board'),
+        title: const Text('Board'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

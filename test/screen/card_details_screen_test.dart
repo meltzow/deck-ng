@@ -1,10 +1,10 @@
 import 'package:deck_ng/app_routes.dart';
-import 'package:deck_ng/controller/card_details_controller.dart';
+import 'package:deck_ng/card/card_details_controller.dart';
+import 'package:deck_ng/card/card_details_screen.dart';
 import 'package:deck_ng/model/card.dart' as nc;
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/model/stack.dart' as ncstack;
 import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/screen/card_details_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter_test/flutter_test.dart';

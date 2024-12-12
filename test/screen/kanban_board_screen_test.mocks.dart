@@ -7,7 +7,7 @@ import 'dart:async' as _i7;
 import 'dart:ui' as _i9;
 
 import 'package:appflowy_board/appflowy_board.dart' as _i2;
-import 'package:deck_ng/controller/kanban_board_controller.dart' as _i6;
+import 'package:deck_ng/board/kanban_board_controller.dart' as _i6;
 import 'package:deck_ng/model/models.dart' as _i4;
 import 'package:deck_ng/service/services.dart' as _i5;
 import 'package:get/get.dart' as _i3;

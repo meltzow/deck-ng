@@ -1,9 +1,11 @@
+// lib/card/card_details_controller.dart
+
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
-import 'package:intl/date_symbol_data_local.dart'; // Import this
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class CardDetailsController extends GetxController {
@@ -39,7 +41,11 @@ class CardDetailsController extends GetxController {
     boardId = RxInt(int.parse(Get.parameters['boardId']!));
     stackId = RxInt(int.parse(Get.parameters['stackId']!));
     cardId = RxInt(int.parse(Get.parameters['cardId']!));
-    await initializeDateFormatting(); // Initialize date formatting
+    await initializeDateFormatting();
+    refreshData();
+  }
+
+  Future<void> refreshData() async {
     fetchCard();
     fetchAttachments();
     fetchBoard();
@@ -91,7 +97,6 @@ class CardDetailsController extends GetxController {
     await _cardService.updateCard(
         boardId.value, stackId.value, this.card.value!.id!, card);
     fetchCard();
-    // Display success message
     _notificationService.successMsg('Card', 'Card updated successfully');
   }
 
@@ -100,6 +105,8 @@ class CardDetailsController extends GetxController {
       labels: [...card.value!.labels, label],
     );
     _trackingService.onButtonClickedEvent("add Label");
+    _cardService.assignLabel2Card(
+        boardId.value, stackId.value, cardId.value, label.id!);
   }
 
   void removeLabel(Label label) {
@@ -107,6 +114,8 @@ class CardDetailsController extends GetxController {
       labels: card.value!.labels.where((l) => l.title != label.title).toList(),
     );
     _trackingService.onButtonClickedEvent("remove Label");
+    _cardService.removeLabel2Card(
+        boardId.value, stackId.value, cardId.value, label.id!);
   }
 
   void addUser(User user) async {

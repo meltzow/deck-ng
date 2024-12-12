@@ -1,4 +1,6 @@
-import 'package:deck_ng/controller/card_details_controller.dart';
+// lib/card/card_details_screen.dart
+
+import 'package:deck_ng/card/card_details_controller.dart';
 import 'package:deck_ng/model/card.dart' as card_model;
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -31,7 +33,7 @@ class CardDetailsScreen extends StatelessWidget {
             actions: [
               IconButton(
                 icon: const Icon(Icons.refresh),
-                onPressed: cardController.fetchCard,
+                onPressed: cardController.refreshData,
               ),
             ],
           ),
@@ -154,16 +156,24 @@ class CardDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildLabelsField(BuildContext context, card_model.Card card) {
-    if (cardController.labels.isEmpty) {
-      return const SizedBox.shrink();
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('Labels'),
         ...card.labels.map((label) {
           return ListTile(
-            title: Text(label.title),
+            title: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: label.color1,
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+              child: Text(
+                label.title,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
@@ -171,7 +181,7 @@ class CardDetailsScreen extends StatelessWidget {
               },
             ),
           );
-        }),
+        }).toList(),
         ElevatedButton(
           onPressed: () {
             _addLabelDialog(context);
@@ -197,7 +207,7 @@ class CardDetailsScreen extends StatelessWidget {
                 },
                 child: Text(label.title),
               );
-            }),
+            }).toList(),
           ],
         );
       },
@@ -219,7 +229,7 @@ class CardDetailsScreen extends StatelessWidget {
               },
             ),
           );
-        }),
+        }).toList(),
         ElevatedButton(
           onPressed: () {
             _addUserDialog(context);
@@ -255,7 +265,7 @@ class CardDetailsScreen extends StatelessWidget {
                   },
                 );
               });
-            }),
+            }).toList(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

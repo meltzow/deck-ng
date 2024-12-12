@@ -1,11 +1,9 @@
 import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/loading_indicator.dart';
-import 'package:deck_ng/controller/dashboard_controller.dart';
-import 'package:flutter/foundation.dart';
+import 'package:deck_ng/dashboard/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wiredash/wiredash.dart';
 
 class DashboardScreen extends StatelessWidget {
   final DashboardController _controller = Get.find<DashboardController>();
@@ -25,6 +23,22 @@ class DashboardScreen extends StatelessWidget {
               _controller.refreshBtnClick();
             },
           ),
+          Obx(() {
+            return DropdownButton<SortOption>(
+              value: _controller.sortOption.value,
+              onChanged: (SortOption? newValue) {
+                if (newValue != null) {
+                  _controller.sortBoards(newValue);
+                }
+              },
+              items: SortOption.values.map((SortOption option) {
+                return DropdownMenuItem<SortOption>(
+                  value: option,
+                  child: Text(option == SortOption.name ? 'Name' : 'Date'),
+                );
+              }).toList(),
+            );
+          }),
         ],
       ),
       body: Padding(
@@ -32,37 +46,6 @@ class DashboardScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(() {
-              if (_controller.isLoading.value) {
-                return const Center(
-                  child: LoadingIndicator(),
-                );
-              }
-              if (_controller.errorMessage.isNotEmpty) {
-                return Center(
-                  child: Text(_controller.errorMessage.value),
-                );
-              }
-              if (_controller.boards.isEmpty) {
-                return const Center(
-                  child: Text('No boards found'),
-                );
-              }
-              if (kReleaseMode) {
-                WidgetsBinding.instance!.addPostFrameCallback((_) {
-                  Wiredash.of(context)
-                      .showPromoterSurvey(inheritMaterialTheme: true);
-                });
-              }
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _metricCard('Boards', _controller.boardCount.value),
-                  _metricCard('Stacks', _controller.stackCount.value),
-                  _metricCard('Tasks', _controller.taskCount.value),
-                ],
-              );
-            }),
             const SizedBox(height: 20),
             const Text(
               'Boards',
@@ -93,9 +76,8 @@ class DashboardScreen extends StatelessWidget {
                               board.title.isNotEmpty ? board.title[0] : ''),
                         ),
                         title: Text(board.title ?? ''),
-                        subtitle: Text('ID: ${board.id}'),
                         onTap: () {
-                          Get.offNamed(
+                          Get.toNamed(
                             AppRoutes.kanbanBoard,
                             parameters: {'boardId': board.id.toString()},
                           );
@@ -106,31 +88,6 @@ class DashboardScreen extends StatelessWidget {
                 ),
               );
             }),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _metricCard(String title, int value) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              value.toString(),
-              style: const TextStyle(fontSize: 20, color: Colors.deepPurple),
-            ),
           ],
         ),
       ),

@@ -6,7 +6,7 @@
 import 'dart:async' as _i6;
 import 'dart:ui' as _i8;
 
-import 'package:deck_ng/controller/dashboard_controller.dart' as _i5;
+import 'package:deck_ng/dashboard/dashboard_controller.dart' as _i5;
 import 'package:deck_ng/model/board.dart' as _i3;
 import 'package:deck_ng/model/models.dart' as _i10;
 import 'package:deck_ng/model/stack.dart' as _i9;
@@ -70,9 +70,19 @@ class _FakeRxList_3<E> extends _i1.SmartFake implements _i2.RxList<E> {
         );
 }
 
-class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
+class _FakeRx_4<T> extends _i1.SmartFake implements _i2.Rx<T> {
+  _FakeRx_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeInternalFinalCallback_5<T> extends _i1.SmartFake
     implements _i2.InternalFinalCallback<T> {
-  _FakeInternalFinalCallback_4(
+  _FakeInternalFinalCallback_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -81,8 +91,8 @@ class _FakeInternalFinalCallback_4<T> extends _i1.SmartFake
         );
 }
 
-class _FakeBoard_5 extends _i1.SmartFake implements _i3.Board {
-  _FakeBoard_5(
+class _FakeBoard_6 extends _i1.SmartFake implements _i3.Board {
+  _FakeBoard_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -91,8 +101,8 @@ class _FakeBoard_5 extends _i1.SmartFake implements _i3.Board {
         );
 }
 
-class _FakeCapabilities_6 extends _i1.SmartFake implements _i4.Capabilities {
-  _FakeCapabilities_6(
+class _FakeCapabilities_7 extends _i1.SmartFake implements _i4.Capabilities {
+  _FakeCapabilities_7(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -201,6 +211,24 @@ class MockDashboardController extends _i1.Mock
       );
 
   @override
+  _i2.Rx<_i5.SortOption> get sortOption => (super.noSuchMethod(
+        Invocation.getter(#sortOption),
+        returnValue: _FakeRx_4<_i5.SortOption>(
+          this,
+          Invocation.getter(#sortOption),
+        ),
+      ) as _i2.Rx<_i5.SortOption>);
+
+  @override
+  set sortOption(_i2.Rx<_i5.SortOption>? _sortOption) => super.noSuchMethod(
+        Invocation.setter(
+          #sortOption,
+          _sortOption,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   List<_i5.DashboardData> get dashboardData => (super.noSuchMethod(
         Invocation.getter(#dashboardData),
         returnValue: <_i5.DashboardData>[],
@@ -209,7 +237,7 @@ class MockDashboardController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
         Invocation.getter(#onStart),
-        returnValue: _FakeInternalFinalCallback_4<void>(
+        returnValue: _FakeInternalFinalCallback_5<void>(
           this,
           Invocation.getter(#onStart),
         ),
@@ -218,7 +246,7 @@ class MockDashboardController extends _i1.Mock
   @override
   _i2.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
         Invocation.getter(#onDelete),
-        returnValue: _FakeInternalFinalCallback_4<void>(
+        returnValue: _FakeInternalFinalCallback_5<void>(
           this,
           Invocation.getter(#onDelete),
         ),
@@ -247,6 +275,15 @@ class MockDashboardController extends _i1.Mock
         Invocation.getter(#listeners),
         returnValue: 0,
       ) as int);
+
+  @override
+  void sortBoards(_i5.SortOption? option) => super.noSuchMethod(
+        Invocation.method(
+          #sortBoards,
+          [option],
+        ),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void onReady() => super.noSuchMethod(
@@ -429,7 +466,7 @@ class MockBoardService extends _i1.Mock implements _i4.BoardService {
           #getBoard,
           [boardId],
         ),
-        returnValue: _i6.Future<_i3.Board>.value(_FakeBoard_5(
+        returnValue: _i6.Future<_i3.Board>.value(_FakeBoard_6(
           this,
           Invocation.method(
             #getBoard,
@@ -528,7 +565,7 @@ class MockAuthService extends _i1.Mock implements _i4.AuthService {
           #checkServer,
           [serverUrl],
         ),
-        returnValue: _i6.Future<_i4.Capabilities>.value(_FakeCapabilities_6(
+        returnValue: _i6.Future<_i4.Capabilities>.value(_FakeCapabilities_7(
           this,
           Invocation.method(
             #checkServer,

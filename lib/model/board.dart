@@ -1,3 +1,5 @@
+// lib/model/board.dart
+
 import 'dart:math';
 import 'dart:ui';
 
@@ -47,19 +49,19 @@ class Board {
   @JsonKey(defaultValue: [])
   late List<Stack> stacks = [];
 
-  Board(
-      {required this.title,
-      String? color,
-      this.archived,
-      this.acl,
-      this.shared,
-      this.deletedAt,
-      this.lastModified,
-      required this.id,
-      this.users = const [],
-      this.owner = const User(),
-      List<Label>? labels = const []})
-      : color = color ?? (Random().nextDouble() * 0xFFFFFF).toInt().toString();
+  Board({
+    required this.title,
+    String? color,
+    this.archived,
+    this.acl,
+    this.shared,
+    this.deletedAt,
+    this.lastModified,
+    required this.id,
+    this.users = const [],
+    this.owner = const User(),
+    this.labels = const [],
+  }) : color = color ?? (Random().nextDouble() * 0xFFFFFF).toInt().toString();
 
   factory Board.fromJson(Map<String, dynamic> json) => _$BoardFromJson(json);
 
