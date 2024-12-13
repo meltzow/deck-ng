@@ -12,7 +12,9 @@ import 'package:deck_ng/service/card_service.dart' as _i8;
 import 'package:deck_ng/service/notification_service.dart' as _i9;
 import 'package:deck_ng/service/stack_service.dart' as _i7;
 import 'package:deck_ng/service/storage_service.dart' as _i4;
+import 'package:deck_ng/service/tracking_service.dart' as _i10;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i11;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -631,4 +633,100 @@ class MockAuthService extends _i1.Mock implements _i3.AuthService {
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+}
+
+/// A class which mocks [TrackingService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockTrackingService extends _i1.Mock implements _i10.TrackingService {
+  @override
+  bool isOptedOut() => (super.noSuchMethod(
+        Invocation.method(
+          #isOptedOut,
+          [],
+        ),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  void optOut() => super.noSuchMethod(
+        Invocation.method(
+          #optOut,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void optIn() => super.noSuchMethod(
+        Invocation.method(
+          #optIn,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void trackEvent(
+    String? eventName, {
+    Map<String, dynamic>? properties,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #trackEvent,
+          [eventName],
+          {#properties: properties},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onScreenEvent(String? screenName) => super.noSuchMethod(
+        Invocation.method(
+          #onScreenEvent,
+          [screenName],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onButtonClickedEvent(String? buttonName) => super.noSuchMethod(
+        Invocation.method(
+          #onButtonClickedEvent,
+          [buttonName],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  String determineBuildMode() => (super.noSuchMethod(
+        Invocation.method(
+          #determineBuildMode,
+          [],
+        ),
+        returnValue: _i11.dummyValue<String>(
+          this,
+          Invocation.method(
+            #determineBuildMode,
+            [],
+          ),
+        ),
+        returnValueForMissingStub: _i11.dummyValue<String>(
+          this,
+          Invocation.method(
+            #determineBuildMode,
+            [],
+          ),
+        ),
+      ) as String);
+
+  @override
+  void modifyMetaData() => super.noSuchMethod(
+        Invocation.method(
+          #modifyMetaData,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

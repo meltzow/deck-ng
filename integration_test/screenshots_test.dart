@@ -13,6 +13,7 @@ import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/models.dart' as nc;
 import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ import 'screenshots_test.mocks.dart';
   MockSpec<CardService>(),
   MockSpec<NotificationService>(),
   MockSpec<AuthService>(),
+  MockSpec<TrackingService>(),
 ])
 void main() {
   late StorageService storageServiceMock;
@@ -37,6 +39,7 @@ void main() {
   late StackService stackServiceMock;
   late CardService cardServiceMock;
   late AuthService authServiceMock;
+  late TrackingService trackingServiceMock;
 
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -52,7 +55,8 @@ void main() {
     stackServiceMock = Get.find<StackService>();
     Get.replace<AuthService>(MockAuthService());
     authServiceMock = Get.find<AuthService>();
-
+    Get.replace<TrackingService>(MockTrackingService());
+    trackingServiceMock = Get.find<TrackingService>();
     Get.replace<NotificationService>(MockNotificationService());
   });
 
@@ -162,7 +166,7 @@ void main() {
     await screenshot(binding, tester, '02-dashboard_screen');
   });
 
-  testWidgets('display kanban board', (WidgetTester tester) async {
+  testWidgets('display board details', (WidgetTester tester) async {
     late KanbanBoardController controller = KanbanBoardController();
     when(storageServiceMock.hasAccount()).thenReturn(true);
     when(storageServiceMock.getAccount()).thenReturn(nc.Account(
@@ -229,7 +233,7 @@ void main() {
 
     var resp = Capabilities(CapabilitiesOcs(
         meta: Meta('success', 200, 'success'),
-        data: CapabilitiesData(Version(0, 0, 28, "28.0.0", '', false), {})));
+        data: CapabilitiesData(Version(0, 0, 30, "30.0.0", '', false), {})));
     when(authServiceMock.checkServer('https://my.next.cloud'))
         .thenAnswer((_) async => resp);
     when(authServiceMock.isAuth()).thenReturn(false);
