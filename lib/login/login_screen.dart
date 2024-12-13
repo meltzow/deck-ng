@@ -1,5 +1,5 @@
 import 'package:deck_ng/component/drawer_widget.dart';
-import 'package:deck_ng/controller/login_controller.dart';
+import 'package:deck_ng/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

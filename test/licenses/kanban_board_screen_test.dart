@@ -1,6 +1,6 @@
-import 'package:deck_ng/controller/kanban_board_controller.dart';
+import 'package:deck_ng/board_details/kanban_board_controller.dart';
+import 'package:deck_ng/board_details/kanban_board_screen.dart';
 import 'package:deck_ng/model/models.dart';
-import 'package:deck_ng/screen/kanban_board_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -57,7 +57,7 @@ void main() {
     await tester.pumpWidget(GetMaterialApp(home: KanbanBoardScreen()));
 
     // Verify that our counter starts at 0.
-    expect(find.text('Kanban Board'), findsOneWidget);
+    expect(find.text('Board'), findsOneWidget);
     // expect(find.text('foo'), findsNothing);
     //
     // // Tap the '+' icon and trigger a frame.

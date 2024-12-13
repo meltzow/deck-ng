@@ -1,6 +1,6 @@
-import 'package:deck_ng/controller/dashboard_controller.dart';
+import 'package:deck_ng/dashboard/dashboard_controller.dart';
+import 'package:deck_ng/dashboard/dashboard_screen.dart';
 import 'package:deck_ng/model/models.dart';
-import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter_test/flutter_test.dart';

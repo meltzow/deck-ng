@@ -1,8 +1,8 @@
 import 'package:deck_ng/app_routes.dart';
-import 'package:deck_ng/controller/dashboard_controller.dart';
+import 'package:deck_ng/dashboard/dashboard_controller.dart';
+import 'package:deck_ng/dashboard/dashboard_screen.dart';
 import 'package:deck_ng/model/models.dart' as nc;
 import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/screen/dashboard_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';

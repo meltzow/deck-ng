@@ -17,6 +17,8 @@ class DashboardData {
       this.icon = Icons.favorite});
 }
 
+enum SortOption { name, date }
+
 class DashboardController extends GetxController {
   var boardCount = 0.obs;
   var stackCount = 0.obs;
@@ -33,6 +35,17 @@ class DashboardController extends GetxController {
   final TrackingService _trackingService = Get.find<TrackingService>();
 
   List<DashboardData> get dashboardData => _dashboardData.value;
+
+  var sortOption = SortOption.name.obs;
+
+  void sortBoards(SortOption option) {
+    sortOption.value = option;
+    if (option == SortOption.name) {
+      boards.sort((a, b) => a.title.compareTo(b.title));
+    } else if (option == SortOption.date) {
+      boards.sort((a, b) => a.id.compareTo(b.id));
+    }
+  }
 
   @override
   void onReady() async {
@@ -56,6 +69,7 @@ class DashboardController extends GetxController {
           (sum, board) =>
               sum +
               board.stacks.fold(0, (sum, stack) => sum + stack.cards.length));
+      sortBoards(sortOption.value); // Boards nach dem Abrufen sortieren
     } catch (e) {
       errorMessage.value = 'Failed to fetch data: ${e.toString()}';
     } finally {

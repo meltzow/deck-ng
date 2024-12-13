@@ -20,6 +20,10 @@ samples, guidance on mobile development, and a full API reference.
 
 # development
 * start the dockerservices in docker-compose.yml ("nextcloud" and "database")
+* cp example.env .env
+* comment out all lines with "static final String" in lib/env/env.dart
+* flutter_scripts run => "generate_files"
+* 
 
 ## running integration test (disabled currently)
 * flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_MANAGER_HOST=10.0.2.2 --dart-define CONVENIENT_TEST_APP_CODE_DIR=$PWD

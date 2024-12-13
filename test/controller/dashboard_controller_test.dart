@@ -1,4 +1,4 @@
-import 'package:deck_ng/controller/dashboard_controller.dart';
+import 'package:deck_ng/dashboard/dashboard_controller.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
