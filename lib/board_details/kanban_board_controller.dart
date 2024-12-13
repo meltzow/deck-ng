@@ -1,5 +1,5 @@
 import 'package:appflowy_board/appflowy_board.dart';
-import 'package:deck_ng/board/kanban_board_screen.dart';
+import 'package:deck_ng/board_details/kanban_board_screen.dart';
 import 'package:deck_ng/model/models.dart' as NC;
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:appflowy_board/appflowy_board.dart';
-import 'package:deck_ng/board/kanban_board_controller.dart';
-import 'package:deck_ng/board/list_view_card_item_widget.dart';
+import 'package:deck_ng/board_details/kanban_board_controller.dart';
+import 'package:deck_ng/board_details/list_view_card_item_widget.dart';
 import 'package:deck_ng/model/card.dart' as NC;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

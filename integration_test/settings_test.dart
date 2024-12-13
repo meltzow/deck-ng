@@ -1,9 +1,9 @@
 import 'package:deck_ng/app_routes.dart';
-import 'package:deck_ng/controller/settings_controller.dart';
 import 'package:deck_ng/model/models.dart' as nc;
 import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/screen/settings_screen.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/settings/settings_controller.dart';
+import 'package:deck_ng/settings/settings_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';

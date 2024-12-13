@@ -1,5 +1,5 @@
-import 'package:deck_ng/board/kanban_board_controller.dart';
-import 'package:deck_ng/board/kanban_board_screen.dart';
+import 'package:deck_ng/board_details/kanban_board_controller.dart';
+import 'package:deck_ng/board_details/kanban_board_screen.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter_test/flutter_test.dart';

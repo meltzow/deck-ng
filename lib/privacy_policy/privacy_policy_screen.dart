@@ -1,4 +1,4 @@
-import 'package:deck_ng/screen/privacy_policy_controller.dart';
+import 'package:deck_ng/privacy_policy/privacy_policy_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';

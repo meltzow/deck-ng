@@ -1,6 +1,6 @@
 import 'package:deck_ng/app_routes.dart';
-import 'package:deck_ng/card/card_details_controller.dart';
-import 'package:deck_ng/card/card_details_screen.dart';
+import 'package:deck_ng/card_details/card_details_controller.dart';
+import 'package:deck_ng/card_details/card_details_screen.dart';
 import 'package:deck_ng/model/models.dart' as nc;
 import 'package:deck_ng/my_app.dart';
 import 'package:deck_ng/service/services.dart';

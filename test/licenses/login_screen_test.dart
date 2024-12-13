@@ -1,5 +1,5 @@
-import 'package:deck_ng/controller/login_controller.dart';
-import 'package:deck_ng/screen/login_screen.dart';
+import 'package:deck_ng/login/login_controller.dart';
+import 'package:deck_ng/login/login_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

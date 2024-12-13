@@ -1,6 +1,6 @@
 // lib/card/card_details_screen.dart
 
-import 'package:deck_ng/card/card_details_controller.dart';
+import 'package:deck_ng/card_details/card_details_controller.dart';
 import 'package:deck_ng/model/card.dart' as card_model;
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';

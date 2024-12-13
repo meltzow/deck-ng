@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:deck_ng/app_routes.dart';
-import 'package:deck_ng/board/kanban_board_controller.dart';
-import 'package:deck_ng/board/kanban_board_screen.dart';
-import 'package:deck_ng/card/card_details_controller.dart';
-import 'package:deck_ng/card/card_details_screen.dart';
-import 'package:deck_ng/controller/login_controller.dart';
+import 'package:deck_ng/board_details/kanban_board_controller.dart';
+import 'package:deck_ng/board_details/kanban_board_screen.dart';
+import 'package:deck_ng/card_details/card_details_controller.dart';
+import 'package:deck_ng/card_details/card_details_screen.dart';
 import 'package:deck_ng/dashboard/dashboard_controller.dart';
 import 'package:deck_ng/dashboard/dashboard_screen.dart';
+import 'package:deck_ng/login/login_controller.dart';
+import 'package:deck_ng/login/login_screen.dart';
 import 'package:deck_ng/model/account.dart';
 import 'package:deck_ng/model/models.dart' as nc;
 import 'package:deck_ng/my_app.dart';
-import 'package:deck_ng/screen/login_screen.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
