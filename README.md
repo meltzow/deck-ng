@@ -27,3 +27,9 @@ Nextcloud Deck NG – Your Project Management Tool
 * dart pub global activate -s git https://github.com/meltzow/screenshots.git
 * export PATH="$PATH":"$HOME/.pub-cache/bin"
 * flutter_scripts run
+
+### stores & marketing URLs
+* https://play.google.com/store/apps/details?id=net.meltzow.deckng
+* https://play.google.com/console/u/0/developers/7989774826491590599/app/4976068423564949204/app-dashboard?timespan=thirtyDays
+* https://appstoreconnect.apple.com/apps/6443334702/distribution
+* 
