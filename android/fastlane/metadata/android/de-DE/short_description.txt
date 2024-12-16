@@ -1,1 +1,1 @@
-nexcloud deck mobile client - the next generation
+Effiziente Teamarbeit und Organisation auf deinem Nextcloud-Server.

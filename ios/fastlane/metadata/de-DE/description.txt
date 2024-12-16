@@ -1,3 +1,6 @@
-Verwalten Sie Ihre Aufgaben auf Nextcloud Deck über Ihr iOS-Gerät
+Nextcloud Deck NG ist die perfekte App, um deine Projekte und Aufgaben zu organisieren – flexibel, sicher und vollständig integriert in deinen Nextcloud-Server. Ob privat oder beruflich, Nextcloud Deck NG hilft dir, den Überblick zu behalten und effizienter zu arbeiten.
 
-Diese App befindet sich derzeit in den frühen Entwicklungsphasen und stellt nur ein Minimal Viable Product (MVP) dar. Daher bietet sie möglicherweise noch nicht alle Funktionen. Wir laden Sie ein, zur Weiterentwicklung der App beizutragen, indem Sie uns Ihr Feedback und Ihre Vorschläge mitteilen. Konstruktive Kritik ist willkommen, während wir an der Verbesserung der App arbeiten.
+Kompatibilität:
+Erfordert Nextcloud Server Version 28 oder höher und die Deck-App aktiviert.
+
+Lade Nextcloud Deck NG herunter und verbessere deine Organisation – überall und jederzeit!

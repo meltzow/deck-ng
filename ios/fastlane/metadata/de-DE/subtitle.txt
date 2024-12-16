@@ -1,1 +1,1 @@
-Aufgabenpflege für nextcloud
+Effiziente Teamarbeit und Organisation auf deinem Nextcloud-Server.

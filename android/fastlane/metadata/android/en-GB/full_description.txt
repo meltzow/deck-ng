@@ -1,1 +1,6 @@
-nextclouds organization tool deck at your mobile device
+Nextcloud Deck NG is the ultimate app to manage your projects and tasks – flexible, secure, and fully integrated with your Nextcloud server. Whether for personal use or team collaboration, Nextcloud Deck NG helps you stay organized and work more efficiently.
+
+Compatibility:
+Requires Nextcloud Server version 28 or higher with the Deck app enabled.
+
+Download Nextcloud Deck NG today and take your organization to the next level – anywhere, anytime!

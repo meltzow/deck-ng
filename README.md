@@ -1,22 +1,5 @@
 # Nextcloud Deck NG
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-## run
-* dart run build_runner watch --delete-conflicting-outputs
+Nextcloud Deck NG – Your Project Management Tool
 
 # development
 * start the dockerservices in docker-compose.yml ("nextcloud" and "database")
@@ -24,10 +7,8 @@ samples, guidance on mobile development, and a full API reference.
 * comment out all lines with "static final String" in lib/env/env.dart
 * flutter_scripts run => "generate_files"
 * 
-
 ## running integration test (disabled currently)
 * flutter run integration_test/main_test.dart --host-vmservice-port 9753 --disable-service-auth-codes --dart-define CONVENIENT_TEST_MANAGER_HOST=10.0.2.2 --dart-define CONVENIENT_TEST_APP_CODE_DIR=$PWD
-
 
 ## apis:
 * https://github.com/nextcloud/deck/blob/master/docs/API.md

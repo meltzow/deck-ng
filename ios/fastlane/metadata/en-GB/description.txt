@@ -1,3 +1,6 @@
-Manage Your Tasks on Nextcloud Deck from Your iOS Device
+Nextcloud Deck NG is the ultimate app to manage your projects and tasks – flexible, secure, and fully integrated with your Nextcloud server. Whether for personal use or team collaboration, Nextcloud Deck NG helps you stay organized and work more efficiently.
 
-This app is currently in its early stages and is only a Minimum Viable Product (MVP). As such, it may not yet offer a full range of features. We encourage you to contribute to its development by providing feedback and sharing your suggestions. Your constructive criticism is valuable as we work to enhance the app. Thank you for your support!
+Compatibility:
+Requires Nextcloud Server version X.X or higher with the Deck app enabled.
+
+Download Nextcloud Deck NG today and take your organization to the next level – anywhere, anytime!
