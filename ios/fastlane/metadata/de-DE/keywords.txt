@@ -1,8 +1,8 @@
+Nextcloud
 Projektmanagement
 Aufgabenmanager
 Teamarbeit
 To-Do-Liste
-Deck-App
+Deck
 Selbstgehostet
 Datenschutz
-Produktivität

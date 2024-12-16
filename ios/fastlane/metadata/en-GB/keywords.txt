@@ -1,8 +1,9 @@
+Nextcloud
 Project management
 task manager
 teamwork
 to-do list
-Deck app
+Deck
 self-hosted
 privacy
 productivity
