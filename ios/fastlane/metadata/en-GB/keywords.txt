@@ -1,22 +1,8 @@
-Project Management
-Task Manager
-Team Collaboration
-To-Do List
-Workflow
-Task Tracking
-Board View
-Kanban
-Nextcloud
-Deck App
-Private Cloud
-Data Security
-Self-hosted
-Offline Access
-Privacy-first
-Intuitive
-Productivity
-Teamwork
-Personal Organization
-Task Planning
-Agile Workflow
-Remote Work
+Project management
+task manager
+teamwork
+to-do list
+Deck app
+self-hosted
+privacy
+productivity

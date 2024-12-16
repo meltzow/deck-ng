@@ -1,22 +1,8 @@
 Projektmanagement
 Aufgabenmanager
-Teamzusammenarbeit
-To-Do-Liste
-Arbeitsablauf
-Aufgabenverfolgung
-Board-Ansicht
-Kanban
-Nextcloud
-Deck-App
-Private Cloud
-Datensicherheit
-Selbstgehostet
-Offline-Zugriff
-Datenschutzorientiert
-Intuitiv
-Produktivität
 Teamarbeit
-Persönliche Organisation
-Aufgabenplanung
-Agiler Arbeitsablauf
-Remote-Arbeit
+To-Do-Liste
+Deck-App
+Selbstgehostet
+Datenschutz
+Produktivität
