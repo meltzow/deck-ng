@@ -150,3 +150,4 @@ scripts:
   generate_screenshots_android: screenshots --config=screenshots.yaml
   generate_screenshots_ios: screenshots --config=screenshots-ios.yaml
   generate_licenses: flutter pub run flutter_oss_licenses:generate.dart
+  update_deps: cd ios && bundle update fastlane && bundle exec fastlane update_plugins
