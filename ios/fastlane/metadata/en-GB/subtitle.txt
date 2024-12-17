@@ -1,1 +1,1 @@
-Streamlined teamwork and organization for your Nextcloud server.
+Teamwork & Org for Nextcloud
