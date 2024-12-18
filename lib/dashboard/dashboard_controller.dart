@@ -1,6 +1,5 @@
 import 'package:deck_ng/model/board.dart';
 import 'package:deck_ng/service/services.dart';
-import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +30,6 @@ class DashboardController extends GetxController {
 
   final BoardService _boardService = Get.find<BoardService>();
   final StackService _stackService = Get.find<StackService>();
-  final AuthService _authService = Get.find<AuthService>();
   final TrackingService _trackingService = Get.find<TrackingService>();
 
   List<DashboardData> get dashboardData => _dashboardData.value;
@@ -110,5 +108,9 @@ class DashboardController extends GetxController {
   refreshBtnClick() {
     _trackingService.onButtonClickedEvent("refresh Btn clicked");
     fetchData();
+  }
+
+  checkSurveys() {
+    _trackingService.checkForSurvey();
   }
 }

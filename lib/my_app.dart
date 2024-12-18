@@ -18,11 +18,11 @@ import 'package:deck_ng/service/impl/board_service_impl.dart';
 import 'package:deck_ng/service/impl/card_service_impl.dart';
 import 'package:deck_ng/service/impl/http_service.dart';
 import 'package:deck_ng/service/impl/notification_service_impl.dart';
+import 'package:deck_ng/service/impl/posthog_service.dart';
 import 'package:deck_ng/service/impl/stack_repository_impl.dart';
 import 'package:deck_ng/service/impl/storage_service_impl.dart';
 import 'package:deck_ng/service/impl/tracking_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
-import 'package:deck_ng/service/tracking_service.dart';
 import 'package:deck_ng/settings/settings_controller.dart';
 import 'package:deck_ng/settings/settings_screen.dart';
 import 'package:deck_ng/theme.dart';
@@ -164,5 +164,6 @@ class InitialBinding implements Bindings {
     Get.put<AuthService>(AuthServiceImpl());
     Get.put<StorageService>(StorageServiceImpl());
     Get.put<TrackingService>(TrackingServiceImpl());
+    Get.put<PosthogService>(PosthogService());
   }
 }

@@ -28,4 +28,6 @@ abstract class TrackingService {
   }
 
   void modifyMetaData();
+
+  void checkForSurvey();
 }

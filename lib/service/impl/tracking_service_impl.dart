@@ -1,9 +1,11 @@
 import 'package:deck_ng/env/env.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/auth_service.dart';
+import 'package:deck_ng/service/impl/posthog_service.dart';
 import 'package:deck_ng/service/storage_service.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -152,5 +154,35 @@ class TrackingServiceImpl extends GetxService implements TrackingService {
           Get.find<AuthService>().getAccount()!.version;
       return metaData;
     });
+  }
+
+  @override
+  void checkForSurvey() async {
+    var posthogService = Get.find<PosthogService>();
+    final surveys = await posthogService.fetchSurveys();
+    if (surveys.isNotEmpty) {
+      final firstSurvey = surveys.first;
+      // Beispiel: Zeige die Umfrage in einem Dialog oder Widget
+      showDialog(
+        context: Get.context!,
+        builder: (context) => AlertDialog(
+          title: Text(firstSurvey['question']),
+          content: Column(
+            children: (firstSurvey['answers'] as List<String>).map((answer) {
+              return ElevatedButton(
+                onPressed: () {
+                  Posthog().capture(
+                    eventName: 'Survey Answered',
+                    properties: {'answer': answer},
+                  );
+                  Navigator.pop(context);
+                },
+                child: Text(answer),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+    }
   }
 }
