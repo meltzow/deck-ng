@@ -31,7 +31,6 @@ class DashboardController extends GetxController {
 
   final BoardService _boardService = Get.find<BoardService>();
   final StackService _stackService = Get.find<StackService>();
-  final AuthService _authService = Get.find<AuthService>();
   final TrackingService _trackingService = Get.find<TrackingService>();
 
   List<DashboardData> get dashboardData => _dashboardData.value;

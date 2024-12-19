@@ -83,7 +83,7 @@ dev_dependencies:
   plugin_platform_interface: any
   flutter_oss_licenses: ^3.0.2
   envied_generator: ^1.0.0
-
+  golden_screenshot: ^2.2.2
 
 flutter_launcher_icons:
   android: true
