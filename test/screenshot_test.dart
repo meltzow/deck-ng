@@ -10,6 +10,7 @@ import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:golden_screenshot/golden_screenshot.dart';
@@ -21,7 +22,8 @@ import 'screenshot_test.mocks.dart';
 @GenerateMocks(
     [BoardService, StackService, CardService, TrackingService, AuthService])
 void main() {
-  ScreenshotDevice.screenshotsFolder = 'android/fastlane/metadata/android/';
+  ScreenshotDevice.screenshotsFolder =
+      '../android/fastlane/metadata/android/\$langCode/images/';
   Get.testMode = true;
   Get.replace<BoardService>(MockBoardService());
   var boardServiceMock = Get.find<BoardService>();
@@ -96,38 +98,76 @@ void _screenshotWidget({
   required Widget child,
 }) {
   group(goldenFileName, () {
-    for (final goldenDevice in GoldenScreenshotDevices.values) {
-      testWidgets('for ${goldenDevice.name}', (tester) async {
-        final device = goldenDevice.device;
+    for (final locale in const [
+      Locale('en', 'GB'), // English
+      Locale('de', 'DE'), // German
+    ]) {
+      for (final goldenDevice in MyAndroidDevices.values) {
+        testWidgets('for ${goldenDevice.name}', (tester) async {
+          final device = goldenDevice.device;
 
-        // Enable shadows which are normally disabled in golden tests.
-        // Make sure to disable them again at the end of the test.
-        debugDisableShadows = false;
+          // Enable shadows which are normally disabled in golden tests.
+          // Make sure to disable them again at the end of the test.
+          debugDisableShadows = false;
 
-        final widget = ScreenshotApp(
-          theme: theme,
-          device: device,
-          frameColors: frameColors,
-          child: child,
-        );
-        await tester.pumpWidget(widget);
+          final widget = ScreenshotApp(
+            theme: theme,
+            device: device,
+            frameColors: frameColors,
+            locale: const Locale('de'),
+            supportedLocales: const [
+              Locale('en'), // English
+              Locale('de'), // German
+            ],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            child: child,
+          );
+          await tester.pumpWidget(widget);
 
-        // await tester.pumpAndSettle();
+          // await tester.pumpAndSettle();
 
-        // Precache the images and fonts
-        // so they're ready for the screenshot.
-        await tester.precacheImagesInWidgetTree();
-        await tester.precacheTopbarImages();
-        await tester.loadFonts();
+          // Precache the images and fonts
+          // so they're ready for the screenshot.
+          await tester.precacheImagesInWidgetTree();
+          await tester.precacheTopbarImages();
+          await tester.loadFonts();
 
-        // Pump the widget for a second to ensure animations are complete.
-        await tester.pumpFrames(widget, const Duration(seconds: 1));
+          // Pump the widget for a second to ensure animations are complete.
+          await tester.pumpFrames(widget, const Duration(seconds: 1));
 
-        // Take the screenshot and compare it to the golden file.
-        await tester.expectScreenshot(device, goldenFileName);
+          // Take the screenshot and compare it to the golden file.
+          await tester.expectScreenshot(device, goldenFileName,
+              langCode: '${locale.languageCode}-${locale.countryCode!}');
 
-        debugDisableShadows = true;
-      });
+          debugDisableShadows = true;
+        });
+      }
     }
   });
+}
+
+enum MyAndroidDevices {
+  /// An Android phone based on the Pixel 6 Pro.
+  android(ScreenshotDevice(
+    platform: TargetPlatform.android,
+    resolution: Size(1080, 2280),
+    pixelRatio: 10 / 3,
+    goldenSubFolder: 'phoneScreenshots/',
+    frameBuilder: ScreenshotFrame.android,
+  )),
+
+  android2(ScreenshotDevice(
+    platform: TargetPlatform.android,
+    resolution: Size(2048, 1536),
+    pixelRatio: 10 / 3,
+    goldenSubFolder: 'tenInchScreenshots/',
+    frameBuilder: ScreenshotFrame.android,
+  ));
+
+  const MyAndroidDevices(this.device);
+  final ScreenshotDevice device;
 }

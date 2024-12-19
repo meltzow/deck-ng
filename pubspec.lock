@@ -519,10 +519,11 @@ packages:
   golden_screenshot:
     dependency: "direct dev"
     description:
-      name: golden_screenshot
-      sha256: "6c800c8e1338434ccb68dec788b5121bf97d256aa6a98b43a4330190572f144a"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: d27782fbd132eb94cf52141d1c2e2545da27497c
+      url: "https://github.com/meltzow/golden_screenshot"
+    source: git
     version: "2.2.2"
   golden_toolkit:
     dependency: transitive
