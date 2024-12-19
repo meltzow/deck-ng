@@ -75,4 +75,9 @@ platform :android do
        upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY_FILE'], skip_upload_apk: true, skip_upload_aab: true, skip_upload_changelogs: true, track: "beta")
     end
 
+    lane :screenshots do
+        sh("flutter build apk --debug")
+        gradle(task: 'assembleAndroidTest')
+        screengrab()
+    end
 end

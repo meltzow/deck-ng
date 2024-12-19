@@ -35,8 +35,8 @@ Nextcloud Deck NG – Your Project Management Tool in your Nextcloud
 * https://appstoreconnect.apple.com/apps/6443334702/distribution
 
 # Marketing
-titel: Nextcloud Deck NG
-slogan: efficient teamwork for your nexcloud
+title: Nextcloud Deck NG
+slogan: efficient teamwork for your nextcloud
 description: Nextcloud Deck NG is the ultimate app to manage your projects and tasks – flexible, secure, and fully integrated with your Nextcloud server. Whether for personal use or team collaboration, Nextcloud Deck NG helps you stay organized and work more efficiently.
 Compatibility: Requires Nextcloud Server version X.X or higher with the Deck app enabled.
 call-to-action-links:  https://play.google.com/store/apps/details?id=net.meltzow.deckng, https://apps.apple.com/us/app/deck-ng/id6443334702

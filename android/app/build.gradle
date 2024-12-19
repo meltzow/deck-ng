@@ -19,7 +19,7 @@ dependencies {
 android {
     namespace "net.meltzow.deckng"
     compileSdkVersion 34
-    ndkVersion "26.1.10909125"
+//    ndkVersion "26.1.10909125"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_15
@@ -35,7 +35,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk 21
-        targetSdk 34
+//        targetSdk 34
         versionCode 99
         versionName '2.0.0'
     }
@@ -51,6 +51,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            minifyEnabled true // Optional: ProGuard verwenden
         }
     }
 }

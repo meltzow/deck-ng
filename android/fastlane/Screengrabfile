@@ -3,8 +3,8 @@
 # app_package_name('your.app.package')
 # use_tests_in_packages(['your.screenshot.tests.package'])
 
-app_apk_path('android/app/build/outputs/apk/debug/app-debug.apk')
-tests_apk_path('android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk')
+app_apk_path('../build/app/outputs/apk/debug/app-debug.apk')
+#tests_apk_path('android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk')
 
 locales(['en-GB', 'de-DE'])
 #locales(['de-DE'])
@@ -15,3 +15,13 @@ use_timestamp_suffix(false)
 
 # For more information about all available options run
 #   fastlane screengrab --help
+
+# Verzeichnis für die Screenshots
+output_directory './screenshots/android'
+
+# Gerätegrößen für die Screenshots (optional)
+device_type 'phone'
+
+# Optional: Automatisch Berechtigungen erteilen
+clear_previous_screenshots true
+use_adb_root false

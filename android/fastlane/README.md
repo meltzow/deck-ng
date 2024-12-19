@@ -63,13 +63,13 @@ Deploy a new version to the Google Play
 
 
 
-### android beta_bkp
+### android screenshots
 
 ```sh
-[bundle exec] fastlane android beta_bkp
+[bundle exec] fastlane android screenshots
 ```
 
-Submit a new Beta Build to Crashlytics Beta
+
 
 ----
 

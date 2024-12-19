@@ -20,7 +20,7 @@ version: 2.0.5
 
 environment:
   sdk: '>=3.3.3 <4.0.0'
-  flutter: 3.24.5
+  flutter: 3.27.1
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -45,13 +45,12 @@ dependencies:
   intl: ^0.19.0
   google_fonts: ^6.2.1
   flutter_colorpicker: ^1.1.0
-  device_info_plus: ^10.1.2
+  device_info_plus: ^11.2.0
   envied: ^1.0.0
   barcode_scan2: ^4.3.3
   flutter_markdown: ^0.7.3+1
-  flutter_localizations:
-    sdk: flutter
-  posthog_flutter: ^4.5.0
+  flutter_localization: ^0.3.0
+  posthog_flutter: ^4.9.0
   yaml: ^3.1.0
   webview_flutter: ^4.9.0
   uuid: ^4.5.1
@@ -63,7 +62,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   mockito: ^5.4.4
-  build_runner: ^2.4.13
+  build_runner: ^2.4.14
 #  flutter_driver:
 #    sdk: flutter
   screenshots:
@@ -78,7 +77,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   json_serializable: any
-  devtools_extensions: ^0.2.1
+  devtools_extensions: ^0.3.0
   analyzer: ^6.4.1
   path_provider_platform_interface: any
   plugin_platform_interface: any
