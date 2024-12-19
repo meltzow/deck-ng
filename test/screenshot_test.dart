@@ -21,6 +21,7 @@ import 'screenshot_test.mocks.dart';
 @GenerateMocks(
     [BoardService, StackService, CardService, TrackingService, AuthService])
 void main() {
+  ScreenshotDevice.screenshotsFolder = 'android/fastlane/metadata/android/';
   Get.testMode = true;
   Get.replace<BoardService>(MockBoardService());
   var boardServiceMock = Get.find<BoardService>();
