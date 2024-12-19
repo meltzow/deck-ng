@@ -4,8 +4,11 @@
 /// or `flutter test` to compare the screenshots to the golden files.
 library;
 
+import 'package:deck_ng/board_details/kanban_board_screen.dart';
+import 'package:deck_ng/card_details/card_details_screen.dart';
 import 'package:deck_ng/dashboard/dashboard_controller.dart';
 import 'package:deck_ng/dashboard/dashboard_screen.dart';
+import 'package:deck_ng/login/login_screen.dart';
 import 'package:deck_ng/model/models.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
@@ -61,7 +64,17 @@ void main() {
       counter: 100,
       frameColors: homePageFrameColors,
       theme: homePageTheme,
-      goldenFileName: '1_counter_100',
+      goldenFileName: '01_login',
+      child: LoginScreen(
+          // title: 'Golden screenshot demo',
+          ),
+    );
+
+    _screenshotWidget(
+      counter: 998,
+      frameColors: homePageFrameColors,
+      theme: homePageTheme,
+      goldenFileName: '02_dashboard',
       child: DashboardScreen(
           // title: 'Golden screenshot demo',
           ),
@@ -71,9 +84,10 @@ void main() {
       counter: 998,
       frameColors: homePageFrameColors,
       theme: homePageTheme,
-      goldenFileName: '2_counter_998',
-      child: DashboardScreen(
-          // title: 'Golden screenshot demo',
+      goldenFileName: '03_boarddetails',
+      child: KanbanBoardScreen(
+          // title: 'Golden screenshot dialog demo',
+          // showDialog: true,
           ),
     );
 
@@ -81,8 +95,8 @@ void main() {
       counter: 998,
       frameColors: homePageFrameColors,
       theme: homePageTheme,
-      goldenFileName: '3_dialog',
-      child: DashboardScreen(
+      goldenFileName: '04_carddetails',
+      child: CardDetailsScreen(
           // title: 'Golden screenshot dialog demo',
           // showDialog: true,
           ),
@@ -114,7 +128,7 @@ void _screenshotWidget({
             theme: theme,
             device: device,
             frameColors: frameColors,
-            locale: const Locale('de'),
+            locale: locale,
             supportedLocales: const [
               Locale('en'), // English
               Locale('de'), // German
