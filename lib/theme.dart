@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final ThemeData myTheme = ThemeData(
   brightness: Brightness.light,
@@ -53,7 +52,7 @@ final ThemeData myTheme = ThemeData(
       brightness: Brightness.light,
     ),
   ),
-  textTheme: GoogleFonts.assistantTextTheme(),
+  // textTheme: GoogleFonts.assistantTextTheme(),
   primaryTextTheme: const TextTheme(),
   inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(
