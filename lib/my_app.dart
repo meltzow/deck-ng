@@ -3,14 +3,14 @@ import 'package:deck_ng/board_details/kanban_board_controller.dart';
 import 'package:deck_ng/board_details/kanban_board_screen.dart';
 import 'package:deck_ng/card_details/card_details_controller.dart';
 import 'package:deck_ng/card_details/card_details_screen.dart';
-import 'package:deck_ng/dashboard/dashboard_controller.dart';
-import 'package:deck_ng/dashboard/dashboard_screen.dart';
 import 'package:deck_ng/env/env.dart';
 import 'package:deck_ng/guard.dart';
 import 'package:deck_ng/l10n/translation.dart';
 import 'package:deck_ng/licenses/oss_licenses_screen.dart';
 import 'package:deck_ng/login/login_controller.dart';
 import 'package:deck_ng/login/login_screen.dart';
+import 'package:deck_ng/modules/home/binding.dart';
+import 'package:deck_ng/modules/home/view.dart';
 import 'package:deck_ng/privacy_policy/privacy_policy_controller.dart';
 import 'package:deck_ng/privacy_policy/privacy_policy_screen.dart';
 import 'package:deck_ng/service/impl/auth_service_impl.dart';
@@ -25,9 +25,9 @@ import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:deck_ng/settings/settings_controller.dart';
 import 'package:deck_ng/settings/settings_screen.dart';
-import 'package:deck_ng/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
@@ -74,22 +74,17 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           title: 'deck NG',
-          theme: myTheme,
           initialRoute: initialRoute ?? AppRoutes.home,
           initialBinding: InitialBinding(),
+          builder: EasyLoading.init(),
           getPages: initialPages ??
               [
                 GetPage(
                     name: AppRoutes.home,
-                    page: () => DashboardScreen(),
-                    middlewares: [Guard()],
-                    binding: BindingsBuilder(() {
-                      Get.lazyPut<HttpService>(() => HttpServiceImpl());
-                      Get.lazyPut<BoardService>(() => BoardServiceImpl());
-                      Get.lazyPut<StackService>(() => StackRepositoryImpl());
-                      Get.lazyPut<DashboardController>(
-                          () => DashboardController());
-                    })),
+                    page: () => HomePage(),
+                    //FIXME: Add the middleware here
+                    // middlewares: [Guard()],
+                    binding: HomeBinding()),
                 GetPage(
                   name: AppRoutes.kanbanBoard,
                   page: () => KanbanBoardScreen(),

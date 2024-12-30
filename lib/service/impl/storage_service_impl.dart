@@ -10,12 +10,13 @@ import 'package:get_storage/get_storage.dart';
 class StorageServiceImpl extends GetxService implements StorageService {
   final String keyUser = 'user';
   final String keySetting = 'setting';
-  final GetStorage _box = GetStorage();
+  late GetStorage _box;
 
   @override
   void onInit() {
     super.onInit();
 
+    _box = GetStorage();
     if (hasSettings()) {
       if (getSetting() != null && getSetting()!.language.isNotEmpty) {
         Get.updateLocale(Locale(getSetting()!.language));

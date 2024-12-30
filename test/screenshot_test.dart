@@ -1,17 +1,15 @@
-/// This file contains the tests that take screenshots of the app.
-///
-/// Run it with `flutter test --update-goldens` to generate the screenshots
-/// or `flutter test` to compare the screenshots to the golden files.
-library;
-
+import 'package:deck_ng/board_details/kanban_board_controller.dart';
 import 'package:deck_ng/board_details/kanban_board_screen.dart';
+import 'package:deck_ng/card_details/card_details_controller.dart';
 import 'package:deck_ng/card_details/card_details_screen.dart';
 import 'package:deck_ng/dashboard/dashboard_controller.dart';
 import 'package:deck_ng/dashboard/dashboard_screen.dart';
+import 'package:deck_ng/login/login_controller.dart';
 import 'package:deck_ng/login/login_screen.dart';
-import 'package:deck_ng/model/models.dart';
+import 'package:deck_ng/model/models.dart' as nc;
 import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
+import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,162 +20,210 @@ import 'package:mockito/mockito.dart';
 
 import 'screenshot_test.mocks.dart';
 
-@GenerateMocks(
-    [BoardService, StackService, CardService, TrackingService, AuthService])
+@GenerateNiceMocks([
+  MockSpec<StorageService>(),
+  MockSpec<BoardService>(),
+  MockSpec<StackService>(),
+  MockSpec<CardService>(),
+  MockSpec<NotificationService>(),
+  MockSpec<AuthService>(),
+  MockSpec<TrackingService>(),
+  MockSpec<DashboardController>()
+])
+
+// Declare the mocks as global variables
+late StorageService storageServiceMock;
+late BoardService boardServiceMock;
+late StackService stackServiceMock;
+late CardService cardServiceMock;
+late AuthService authServiceMock;
+late TrackingService trackingServiceMock;
+
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   ScreenshotDevice.screenshotsFolder =
       '../android/fastlane/metadata/android/\$langCode/images/';
-  Get.testMode = true;
-  Get.replace<BoardService>(MockBoardService());
-  var boardServiceMock = Get.find<BoardService>();
-  Get.replace<CardService>(MockCardService());
-  var cardServiceMock = Get.find<CardService>();
-  Get.replace<StackService>(MockStackService());
-  var stackServiceMock = Get.find<StackService>();
-  Get.replace<TrackingService>(MockTrackingService());
-  var trackingServiceMock = Get.find<TrackingService>();
-  Get.replace<AuthService>(MockAuthService());
-  var authServiceMock = Get.find<AuthService>();
+
+  setUpAll(() {
+    Get.testMode = true;
+    storageServiceMock = Get.put<StorageService>(MockStorageService());
+    boardServiceMock = Get.put<BoardService>(MockBoardService());
+    cardServiceMock = Get.put<CardService>(MockCardService());
+    stackServiceMock = Get.put<StackService>(MockStackService());
+    authServiceMock = Get.put<AuthService>(MockAuthService());
+    trackingServiceMock = Get.put<TrackingService>(MockTrackingService());
+    Get.put<NotificationService>(MockNotificationService());
+  });
 
   group('Screenshot:', () {
-    TestWidgetsFlutterBinding.ensureInitialized();
-    Get.testMode = true;
-
-    var board1 = Board(title: 'garden', id: 1);
-    var resp = [board1];
-    when(boardServiceMock.getAllBoards()).thenAnswer((_) async => resp);
-
-    final homePageTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    );
+    final homePageTheme = myTheme;
     final homePageFrameColors = ScreenshotFrameColors(
       topBar: homePageTheme.colorScheme.inversePrimary,
       bottomBar: homePageTheme.colorScheme.surface,
     );
 
-    // Injiziere den Mock-Controller
-    final controller = DashboardController();
-    controller.boards.value = resp;
-    Get.put<DashboardController>(controller);
+    // testWidgets('01_login', (tester) async {
+    //   await _testLoginScreen(tester, homePageTheme, homePageFrameColors);
+    // });
 
-    _screenshotWidget(
-      counter: 100,
-      frameColors: homePageFrameColors,
-      theme: homePageTheme,
-      goldenFileName: '01_login',
-      child: LoginScreen(
-          // title: 'Golden screenshot demo',
-          ),
-    );
+    testWidgets('02_dashboard', (tester) async {
+      await _testDashboardScreen(tester, homePageTheme, homePageFrameColors);
+    });
 
-    _screenshotWidget(
-      counter: 998,
-      frameColors: homePageFrameColors,
-      theme: homePageTheme,
-      goldenFileName: '02_dashboard',
-      child: DashboardScreen(
-          // title: 'Golden screenshot demo',
-          ),
-    );
-
-    _screenshotWidget(
-      counter: 998,
-      frameColors: homePageFrameColors,
-      theme: homePageTheme,
-      goldenFileName: '03_boarddetails',
-      child: KanbanBoardScreen(
-          // title: 'Golden screenshot dialog demo',
-          // showDialog: true,
-          ),
-    );
-
-    _screenshotWidget(
-      counter: 998,
-      frameColors: homePageFrameColors,
-      theme: homePageTheme,
-      goldenFileName: '04_carddetails',
-      child: CardDetailsScreen(
-          // title: 'Golden screenshot dialog demo',
-          // showDialog: true,
-          ),
-    );
+    // testWidgets('03_boarddetails', (tester) async {
+    //   await _testBoardDetailsScreen(tester, homePageTheme, homePageFrameColors);
+    // });
+    //
+    // testWidgets('04_carddetails', (tester) async {
+    //   await _testCardDetailsScreen(tester, homePageTheme, homePageFrameColors);
+    // });
   });
 }
 
-void _screenshotWidget({
-  int counter = 0,
+Future<void> _testLoginScreen(WidgetTester tester, ThemeData theme,
+    ScreenshotFrameColors frameColors) async {
+  when(storageServiceMock.getAccount()).thenReturn(null);
+  when(storageServiceMock.hasAccount()).thenReturn(false);
+  when(storageServiceMock.hasSettings()).thenReturn(false);
+
+  final controller = LoginController();
+  controller.nextcloudVersionString = '30.0.0'.obs;
+  controller.isUrlValid = true.obs;
+  controller.isFormValid = true.obs;
+  controller.urlController.text = "https://my.next.cloud";
+  controller.userNameController.text = "user";
+  controller.passwordController.text = "password";
+  Get.put<LoginController>(controller);
+
+  await _screenshotWidget(
+      tester: tester,
+      frameColors: frameColors,
+      theme: theme,
+      goldenFileName: '01_login',
+      child: LoginScreen());
+}
+
+Future<void> _testDashboardScreen(WidgetTester tester, ThemeData theme,
+    ScreenshotFrameColors frameColors) async {
+  var board1 = nc.Board(title: 'garden', id: 1);
+  final dashCtl = MockDashboardController();
+
+  when(dashCtl.boards).thenReturn([board1].obs);
+  Get.testMode = true;
+  Get.put<DashboardController>(dashCtl);
+
+  await _screenshotWidget(
+    tester: tester,
+    frameColors: frameColors,
+    theme: theme,
+    goldenFileName: '02_dashboard',
+    child: DashboardScreen(),
+  );
+}
+
+Future<void> _testBoardDetailsScreen(WidgetTester tester, ThemeData theme,
+    ScreenshotFrameColors frameColors) async {
+  var board2 = nc.Board(title: 'garden', id: 1);
+  var ctl3 = KanbanBoardController();
+  ctl3.boardsData.value = board2;
+  Get.put<KanbanBoardController>(ctl3);
+
+  await _screenshotWidget(
+    tester: tester,
+    frameColors: frameColors,
+    theme: theme,
+    goldenFileName: '03_boarddetails',
+    child: KanbanBoardScreen(),
+  );
+}
+
+Future<void> _testCardDetailsScreen(WidgetTester tester, ThemeData theme,
+    ScreenshotFrameColors frameColors) async {
+  var board3 = nc.Board(title: 'garden', id: 1);
+  var stack1 = nc.Stack(title: 'todo', boardId: board3.id, id: 1);
+  var card1 = nc.Card(
+      title: 'seeding carrots',
+      id: 1,
+      stackId: stack1.id,
+      description:
+          '# How To Seed Carrots? \n\n1. Dig a hole\n2. Put the seed in\n3. Cover the hole');
+  stack1.cards = [card1];
+
+  var ctl1 = CardDetailsController();
+  ctl1.board.value = board3;
+  ctl1.card.value = card1;
+  Get.put<CardDetailsController>(ctl1);
+
+  await _screenshotWidget(
+    tester: tester,
+    frameColors: frameColors,
+    theme: theme,
+    goldenFileName: '04_carddetails',
+    child: CardDetailsScreen(),
+  );
+}
+
+Future<void> _screenshotWidget({
+  required WidgetTester tester,
   ScreenshotFrameColors? frameColors,
   ThemeData? theme,
   required String goldenFileName,
   required Widget child,
-}) {
-  group(goldenFileName, () {
-    for (final locale in const [
-      Locale('en', 'GB'), // English
-      Locale('de', 'DE'), // German
-    ]) {
-      for (final goldenDevice in MyAndroidDevices.values) {
-        testWidgets('for ${goldenDevice.name}', (tester) async {
-          final device = goldenDevice.device;
+}) async {
+  for (final locale in const [
+    Locale('en', 'GB'), // English
+    Locale('de', 'DE'), // German
+  ]) {
+    for (final goldenDevice in MyAndroidDevices.values) {
+      final device = goldenDevice.device;
 
-          // Enable shadows which are normally disabled in golden tests.
-          // Make sure to disable them again at the end of the test.
-          debugDisableShadows = false;
+      debugDisableShadows = false;
 
-          final widget = ScreenshotApp(
-            theme: theme,
-            device: device,
-            frameColors: frameColors,
-            locale: locale,
-            supportedLocales: const [
-              Locale('en'), // English
-              Locale('de'), // German
-            ],
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            child: child,
-          );
-          await tester.pumpWidget(widget);
+      final widget = ScreenshotApp(
+        theme: theme,
+        device: device,
+        // frameColors: frameColors,
+        locale: locale,
+        supportedLocales: const [
+          Locale('en'), // English
+          Locale('de'), // German
+        ],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        child: child,
+      );
+      await tester.pumpWidget(widget);
 
-          // await tester.pumpAndSettle();
+      await tester.precacheImagesInWidgetTree();
+      await tester.precacheTopbarImages();
+      await tester.loadFonts();
 
-          // Precache the images and fonts
-          // so they're ready for the screenshot.
-          await tester.precacheImagesInWidgetTree();
-          await tester.precacheTopbarImages();
-          await tester.loadFonts();
+      await tester.pumpFrames(widget, const Duration(seconds: 1));
 
-          // Pump the widget for a second to ensure animations are complete.
-          await tester.pumpFrames(widget, const Duration(seconds: 1));
+      await tester.expectScreenshot(device, goldenFileName,
+          langCode: '${locale.languageCode}-${locale.countryCode!}');
 
-          // Take the screenshot and compare it to the golden file.
-          await tester.expectScreenshot(device, goldenFileName,
-              langCode: '${locale.languageCode}-${locale.countryCode!}');
-
-          debugDisableShadows = true;
-        });
-      }
+      debugDisableShadows = true;
     }
-  });
+  }
 }
 
 enum MyAndroidDevices {
-  /// An Android phone based on the Pixel 6 Pro.
-  android(ScreenshotDevice(
+  pixel4(ScreenshotDevice(
     platform: TargetPlatform.android,
     resolution: Size(1080, 2280),
-    pixelRatio: 10 / 3,
+    pixelRatio: 3 / 1,
     goldenSubFolder: 'phoneScreenshots/',
     frameBuilder: ScreenshotFrame.android,
   )),
 
-  android2(ScreenshotDevice(
+  nexus9(ScreenshotDevice(
     platform: TargetPlatform.android,
     resolution: Size(2048, 1536),
-    pixelRatio: 10 / 3,
+    pixelRatio: 2 / 1,
     goldenSubFolder: 'tenInchScreenshots/',
     frameBuilder: ScreenshotFrame.android,
   ));

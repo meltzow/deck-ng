@@ -9,7 +9,7 @@ import 'package:wiredash/wiredash.dart';
 class KanbanBoardController extends GetxController {
   late AppFlowyBoardController boardController;
 
-  final Rxn<NC.Board> _boardsData = Rxn<NC.Board>();
+  final Rxn<NC.Board> boardsData = Rxn<NC.Board>();
   final Rx<List<NC.Stack>> _stackData = Rx<List<NC.Stack>>([]);
   late int boardId;
   // final Rxn<int> _selectedStackId = Rxn();
@@ -20,8 +20,6 @@ class KanbanBoardController extends GetxController {
   final CardService _cardService = Get.find<CardService>();
   final NotificationService _notificationService =
       Get.find<NotificationService>();
-
-  NC.Board? get boardData => _boardsData.value;
 
   @visibleForTesting
   set stackData(List<NC.Stack> stacks) => _stackData.value = stacks;
@@ -39,7 +37,7 @@ class KanbanBoardController extends GetxController {
 
   Future<void> refreshData() async {
     isLoading.value = true;
-    _boardsData.value = await _boardService.getBoard(boardId);
+    boardsData.value = await _boardService.getBoard(boardId);
     _stackData.value = (await _stackService.getAll(boardId))!
       ..sort((a, b) => a.order.compareTo(b.order));
     // _selectedStackId.value =

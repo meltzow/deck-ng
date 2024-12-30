@@ -39,8 +39,8 @@ class _FakeAppFlowyBoardController_0 extends _i1.SmartFake
         );
 }
 
-class _FakeRxBool_1 extends _i1.SmartFake implements _i3.RxBool {
-  _FakeRxBool_1(
+class _FakeRxn_1<T> extends _i1.SmartFake implements _i3.Rxn<T> {
+  _FakeRxn_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -49,9 +49,19 @@ class _FakeRxBool_1 extends _i1.SmartFake implements _i3.RxBool {
         );
 }
 
-class _FakeInternalFinalCallback_2<T> extends _i1.SmartFake
+class _FakeRxBool_2 extends _i1.SmartFake implements _i3.RxBool {
+  _FakeRxBool_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeInternalFinalCallback_3<T> extends _i1.SmartFake
     implements _i3.InternalFinalCallback<T> {
-  _FakeInternalFinalCallback_2(
+  _FakeInternalFinalCallback_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -60,8 +70,8 @@ class _FakeInternalFinalCallback_2<T> extends _i1.SmartFake
         );
 }
 
-class _FakeBoard_3 extends _i1.SmartFake implements _i4.Board {
-  _FakeBoard_3(
+class _FakeBoard_4 extends _i1.SmartFake implements _i4.Board {
+  _FakeBoard_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -70,8 +80,8 @@ class _FakeBoard_3 extends _i1.SmartFake implements _i4.Board {
         );
 }
 
-class _FakeCard_4 extends _i1.SmartFake implements _i4.Card {
-  _FakeCard_4(
+class _FakeCard_5 extends _i1.SmartFake implements _i4.Card {
+  _FakeCard_5(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -80,8 +90,8 @@ class _FakeCard_4 extends _i1.SmartFake implements _i4.Card {
         );
 }
 
-class _FakeAssignment_5 extends _i1.SmartFake implements _i4.Assignment {
-  _FakeAssignment_5(
+class _FakeAssignment_6 extends _i1.SmartFake implements _i4.Assignment {
+  _FakeAssignment_6(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -90,8 +100,8 @@ class _FakeAssignment_5 extends _i1.SmartFake implements _i4.Assignment {
         );
 }
 
-class _FakeAttachment_6 extends _i1.SmartFake implements _i4.Attachment {
-  _FakeAttachment_6(
+class _FakeAttachment_7 extends _i1.SmartFake implements _i4.Attachment {
+  _FakeAttachment_7(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -100,8 +110,8 @@ class _FakeAttachment_6 extends _i1.SmartFake implements _i4.Attachment {
         );
 }
 
-class _FakeCapabilities_7 extends _i1.SmartFake implements _i5.Capabilities {
-  _FakeCapabilities_7(
+class _FakeCapabilities_8 extends _i1.SmartFake implements _i5.Capabilities {
+  _FakeCapabilities_8(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -139,6 +149,15 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
+  _i3.Rxn<_i4.Board> get boardsData => (super.noSuchMethod(
+        Invocation.getter(#boardsData),
+        returnValue: _FakeRxn_1<_i4.Board>(
+          this,
+          Invocation.getter(#boardsData),
+        ),
+      ) as _i3.Rxn<_i4.Board>);
+
+  @override
   int get boardId => (super.noSuchMethod(
         Invocation.getter(#boardId),
         returnValue: 0,
@@ -156,7 +175,7 @@ class MockKanbanBoardController extends _i1.Mock
   @override
   _i3.RxBool get isLoading => (super.noSuchMethod(
         Invocation.getter(#isLoading),
-        returnValue: _FakeRxBool_1(
+        returnValue: _FakeRxBool_2(
           this,
           Invocation.getter(#isLoading),
         ),
@@ -189,7 +208,7 @@ class MockKanbanBoardController extends _i1.Mock
   @override
   _i3.InternalFinalCallback<void> get onStart => (super.noSuchMethod(
         Invocation.getter(#onStart),
-        returnValue: _FakeInternalFinalCallback_2<void>(
+        returnValue: _FakeInternalFinalCallback_3<void>(
           this,
           Invocation.getter(#onStart),
         ),
@@ -198,7 +217,7 @@ class MockKanbanBoardController extends _i1.Mock
   @override
   _i3.InternalFinalCallback<void> get onDelete => (super.noSuchMethod(
         Invocation.getter(#onDelete),
-        returnValue: _FakeInternalFinalCallback_2<void>(
+        returnValue: _FakeInternalFinalCallback_3<void>(
           this,
           Invocation.getter(#onDelete),
         ),
@@ -229,9 +248,9 @@ class MockKanbanBoardController extends _i1.Mock
       ) as int);
 
   @override
-  void onInit() => super.noSuchMethod(
+  void onReady() => super.noSuchMethod(
         Invocation.method(
-          #onInit,
+          #onReady,
           [],
         ),
         returnValueForMissingStub: null,
@@ -324,9 +343,9 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
-  void onReady() => super.noSuchMethod(
+  void onInit() => super.noSuchMethod(
         Invocation.method(
-          #onReady,
+          #onInit,
           [],
         ),
         returnValueForMissingStub: null,
@@ -469,7 +488,7 @@ class MockBoardService extends _i1.Mock implements _i5.BoardService {
           #getBoard,
           [boardId],
         ),
-        returnValue: _i7.Future<_i4.Board>.value(_FakeBoard_3(
+        returnValue: _i7.Future<_i4.Board>.value(_FakeBoard_4(
           this,
           Invocation.method(
             #getBoard,
@@ -556,7 +575,7 @@ class MockCardService extends _i1.Mock implements _i5.CardService {
             title,
           ],
         ),
-        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_4(
+        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_5(
           this,
           Invocation.method(
             #createCard,
@@ -586,7 +605,7 @@ class MockCardService extends _i1.Mock implements _i5.CardService {
             card,
           ],
         ),
-        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_4(
+        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_5(
           this,
           Invocation.method(
             #updateCard,
@@ -615,7 +634,7 @@ class MockCardService extends _i1.Mock implements _i5.CardService {
             cardId,
           ],
         ),
-        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_4(
+        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_5(
           this,
           Invocation.method(
             #getCard,
@@ -668,7 +687,7 @@ class MockCardService extends _i1.Mock implements _i5.CardService {
             newStackId,
           ],
         ),
-        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_4(
+        returnValue: _i7.Future<_i4.Card>.value(_FakeCard_5(
           this,
           Invocation.method(
             #reorderCard,
@@ -743,7 +762,7 @@ class MockCardService extends _i1.Mock implements _i5.CardService {
             userId,
           ],
         ),
-        returnValue: _i7.Future<_i4.Assignment>.value(_FakeAssignment_5(
+        returnValue: _i7.Future<_i4.Assignment>.value(_FakeAssignment_6(
           this,
           Invocation.method(
             #assignUser2Card,
@@ -774,7 +793,7 @@ class MockCardService extends _i1.Mock implements _i5.CardService {
             userId,
           ],
         ),
-        returnValue: _i7.Future<_i4.Assignment>.value(_FakeAssignment_5(
+        returnValue: _i7.Future<_i4.Assignment>.value(_FakeAssignment_6(
           this,
           Invocation.method(
             #unassignUser2Card,
@@ -805,7 +824,7 @@ class MockCardService extends _i1.Mock implements _i5.CardService {
             attachment,
           ],
         ),
-        returnValue: _i7.Future<_i4.Attachment>.value(_FakeAttachment_6(
+        returnValue: _i7.Future<_i4.Attachment>.value(_FakeAttachment_7(
           this,
           Invocation.method(
             #addAttachmentToCard,
@@ -855,7 +874,7 @@ class MockAuthService extends _i1.Mock implements _i5.AuthService {
           #checkServer,
           [serverUrl],
         ),
-        returnValue: _i7.Future<_i5.Capabilities>.value(_FakeCapabilities_7(
+        returnValue: _i7.Future<_i5.Capabilities>.value(_FakeCapabilities_8(
           this,
           Invocation.method(
             #checkServer,

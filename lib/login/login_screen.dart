@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController _controller = Get.find<LoginController>();
-  final GlobalKey _tooltipKey = GlobalKey();
 
   LoginScreen({super.key});
 
@@ -14,7 +13,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       drawer: DrawerWidget(),
       appBar: AppBar(
-        title: const Text('deck NG'),
+        title: const Text('Nextcloud deck NG'),
       ),
       body: Center(
         child: Padding(
