@@ -1,5 +1,5 @@
 import 'package:deck_ng/model/board.dart';
-import 'package:deck_ng/service/impl/board_service_impl.dart';
+import 'package:deck_ng/service/impl/nextcloud/board_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';

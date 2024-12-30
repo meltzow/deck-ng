@@ -1,5 +1,5 @@
 import 'package:deck_ng/model/account.dart';
-import 'package:deck_ng/service/impl/auth_service_impl.dart';
+import 'package:deck_ng/service/impl/nextcloud/auth_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter_test/flutter_test.dart';

@@ -1,12 +1,13 @@
 import 'package:deck_ng/core/utils/extensions.dart';
-import 'package:deck_ng/modules/home/controller.dart';
-import 'package:deck_ng/modules/home/widgets/add_card.dart';
-import 'package:deck_ng/modules/home/widgets/task_card.dart';
+import 'package:deck_ng/home/controller.dart';
+import 'package:deck_ng/home/dashboard_screen.dart';
+import 'package:deck_ng/home/widgets/add_card.dart';
+import 'package:deck_ng/home/widgets/task_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../core/values/colors.dart';
-import '../report/view.dart';
+import '../core/values/colors.dart';
+import '../modules/report/view.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -55,9 +56,7 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
           ReportPage(),
-          ReportPage(),
-          ReportPage(),
-          ReportPage()
+          DashboardScreen(),
         ]),
       ),
       // floatingActionButton: DragTarget<Task>(

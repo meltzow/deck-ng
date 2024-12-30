@@ -248,9 +248,9 @@ class MockKanbanBoardController extends _i1.Mock
       ) as int);
 
   @override
-  void onReady() => super.noSuchMethod(
+  void onInit() => super.noSuchMethod(
         Invocation.method(
-          #onReady,
+          #onInit,
           [],
         ),
         returnValueForMissingStub: null,
@@ -343,9 +343,9 @@ class MockKanbanBoardController extends _i1.Mock
       );
 
   @override
-  void onInit() => super.noSuchMethod(
+  void onReady() => super.noSuchMethod(
         Invocation.method(
-          #onInit,
+          #onReady,
           [],
         ),
         returnValueForMissingStub: null,

@@ -1,10 +1,10 @@
+import 'package:deck_ng/modules/detail/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../../core/utils/extensions.dart';
 import '../../../data/models/task.dart';
-import '../../detail/view.dart';
 import '../controller.dart';
 
 class TaskCard extends StatelessWidget {

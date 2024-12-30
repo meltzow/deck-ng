@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:deck_ng/model/card.dart';
 import 'package:deck_ng/model/label.dart';
-import 'package:deck_ng/service/impl/card_service_impl.dart';
+import 'package:deck_ng/service/impl/nextcloud/card_service_impl.dart';
 import 'package:deck_ng/service/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';

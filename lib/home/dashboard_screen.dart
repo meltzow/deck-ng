@@ -1,7 +1,7 @@
 import 'package:deck_ng/app_routes.dart';
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/component/loading_indicator.dart';
-import 'package:deck_ng/dashboard/dashboard_controller.dart';
+import 'package:deck_ng/home/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +15,7 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       drawer: DrawerWidget(),
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: const Text('My Boards'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

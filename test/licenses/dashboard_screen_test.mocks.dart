@@ -6,7 +6,7 @@
 import 'dart:async' as _i6;
 import 'dart:ui' as _i8;
 
-import 'package:deck_ng/dashboard/dashboard_controller.dart' as _i5;
+import 'package:deck_ng/home/dashboard_controller.dart' as _i5;
 import 'package:deck_ng/model/board.dart' as _i3;
 import 'package:deck_ng/model/models.dart' as _i10;
 import 'package:deck_ng/model/stack.dart' as _i9;

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../data/models/task.dart';
+import '../data/models/task.dart';
 
 class HomeController extends GetxController {
   final formKey = GlobalKey<FormState>();

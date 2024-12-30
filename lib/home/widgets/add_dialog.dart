@@ -1,5 +1,5 @@
 import 'package:deck_ng/core/utils/extensions.dart';
-import 'package:deck_ng/modules/home/controller.dart';
+import 'package:deck_ng/home/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';

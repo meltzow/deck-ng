@@ -5,6 +5,7 @@ Nextcloud Deck NG – Your Project Management Tool in your Nextcloud
 * start the dockerservices in docker-compose.yml ("nextcloud" and "database")
 * cp example.env .env
 * comment out all lines with "static final String" in lib/env/env.dart
+* dart pub global activate flutter_scripts
 * flutter_scripts run => "generate_files"
 
 ## running integration test (disabled currently)
@@ -23,7 +24,6 @@ Nextcloud Deck NG – Your Project Management Tool in your Nextcloud
 * https://flutterviz.io/
 
 ### automatic screenshots
-* dart pub global activate flutter_scripts
 * dart pub global activate -s git https://github.com/meltzow/screenshots.git
 * export PATH="$PATH":"$HOME/.pub-cache/bin"
 * flutter_scripts run
