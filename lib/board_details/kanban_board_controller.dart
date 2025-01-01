@@ -2,6 +2,7 @@ import 'package:appflowy_board/appflowy_board.dart';
 import 'package:deck_ng/board_details/kanban_board_screen.dart';
 import 'package:deck_ng/model/models.dart' as NC;
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
@@ -18,6 +19,7 @@ class KanbanBoardController extends GetxController {
   final BoardService _boardService = Get.find<BoardService>();
   final StackService _stackService = Get.find<StackService>();
   final CardService _cardService = Get.find<CardService>();
+  final TrackingService trackingService = Get.find<TrackingService>();
   final NotificationService _notificationService =
       Get.find<NotificationService>();
 
@@ -101,7 +103,7 @@ class KanbanBoardController extends GetxController {
         currentDraggedCard.stackId, currentDraggedCard.id!, currentDraggedCard);
 
     cardSuccessMsg();
-    Wiredash.trackEvent("reorder card on kanban board", data: {
+    trackingService.trackEvent("reorder card on kanban board", properties: {
       "selectedStackIndex": selectedStackIndex,
       "oldIndex": oldIndex,
       "newIndex": newIndex

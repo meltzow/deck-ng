@@ -9,7 +9,7 @@ abstract class TrackingService {
 
   void optIn();
 
-  void trackEvent(String eventName, {Map<String, dynamic>? properties});
+  Future<void> trackEvent(String eventName, {Map<String, dynamic>? properties});
 
   void onScreenEvent(String screenName);
 

@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:deck_ng/service/services.dart';
+import 'package:deck_ng/service/tracking_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wiredash/wiredash.dart';
 
 class BarcodeScanData {
   late String url;
@@ -20,6 +20,7 @@ class LoginController extends GetxController {
   var credService = Get.find<StorageService>();
   var authService = Get.find<AuthService>();
   var notificationService = Get.find<NotificationService>();
+  var trackingService = Get.find<TrackingService>();
 
   final focusNode = FocusNode();
   Timer? typingTimer;
@@ -131,14 +132,14 @@ class LoginController extends GetxController {
       //     "Login", "Login not Successful. ${e.message}");
     }
     if (successful) {
-      await Wiredash.trackEvent('successfully login', data: {
+      trackingService.trackEvent('successfully login', properties: {
         'url': url.value,
         'nextcloudVersion': nextcloudVersionString.value
       });
       Get.toNamed('/boards');
       notificationService.successMsg("Login", "Login Successful");
     } else {
-      await Wiredash.trackEvent('not successfully login', data: {
+      trackingService.trackEvent('not successfully login', properties: {
         'url': url.value,
         'nextcloudVersion': nextcloudVersionString.value
       });
@@ -178,15 +179,15 @@ class LoginController extends GetxController {
         urlController.text = data.url;
         userNameController.text = data.username;
         passwordController.text = data.password;
-        await Wiredash.trackEvent('wants to login with barcode');
+        trackingService.trackEvent('wants to login with barcode');
         login();
       } else {
         notificationService.errorMsg("Login", "Invalid barcode format");
-        await Wiredash.trackEvent('unsuccessfully login with barcode');
+        trackingService.trackEvent('unsuccessfully login with barcode');
       }
     } catch (e) {
       notificationService.errorMsg("Login", "Failed to scan barcode: $e");
-      await Wiredash.trackEvent('unsuccessfully login with barcode');
+      trackingService.trackEvent('unsuccessfully login with barcode');
     }
   }
 

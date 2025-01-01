@@ -84,8 +84,9 @@ class TrackingServiceImpl extends GetxService implements TrackingService {
   }
 
   @override
-  void trackEvent(String eventName, {Map<String, dynamic>? properties}) {
-    if (isOptedOut()) return;
+  Future<void> trackEvent(String eventName,
+      {Map<String, dynamic>? properties}) {
+    if (isOptedOut()) return Future.value();
 
     final distinctId = storageService.getSetting()?.distinctId ?? '';
     Posthog().capture(
@@ -95,6 +96,7 @@ class TrackingServiceImpl extends GetxService implements TrackingService {
         'distinct_id': distinctId,
       },
     );
+    return Wiredash.trackEvent(eventName, data: properties);
   }
 
   @override
@@ -153,4 +155,34 @@ class TrackingServiceImpl extends GetxService implements TrackingService {
       return metaData;
     });
   }
+
+  // @override
+  // void checkForSurvey() async {
+  //   var posthogService = Get.find<PosthogService>();
+  //   final surveys = await posthogService.fetchSurveys();
+  //   if (surveys.isNotEmpty) {
+  //     final firstSurvey = surveys.first;
+  //     // Beispiel: Zeige die Umfrage in einem Dialog oder Widget
+  //     showDialog(
+  //       context: Get.context!,
+  //       builder: (context) => AlertDialog(
+  //         title: Text(firstSurvey['question']),
+  //         content: Column(
+  //           children: (firstSurvey['answers'] as List<String>).map((answer) {
+  //             return ElevatedButton(
+  //               onPressed: () {
+  //                 Posthog().capture(
+  //                   eventName: 'Survey Answered',
+  //                   properties: {'answer': answer},
+  //                 );
+  //                 Navigator.pop(context);
+  //               },
+  //               child: Text(answer),
+  //             );
+  //           }).toList(),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  // }
 }
