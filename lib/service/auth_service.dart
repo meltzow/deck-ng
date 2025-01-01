@@ -144,6 +144,8 @@ abstract class AuthService {
   Future<bool> login(
       String serverUrl, String username, String password, String? version);
 
+  Future<bool> login2(String serverUrl);
+
   logout();
 
   Future<Capabilities> checkServer(String serverUrl);

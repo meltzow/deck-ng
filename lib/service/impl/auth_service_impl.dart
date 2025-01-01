@@ -108,4 +108,59 @@ class AuthServiceImpl extends GetxService implements AuthService {
       storageService.saveAccount(acc);
     }
   }
+
+  @override
+  Future<bool> login2(String serverUrl) async {
+    try {
+      // Schritt 1: Initialisierung des Login-Flows
+      final initResponse =
+          await http.post(Uri.parse('$serverUrl/index.php/login/v2'));
+
+      if (initResponse.statusCode != 200) {
+        throw Exception(
+            'Fehler bei der Initialisierung des Login-Flows: ${initResponse.statusCode}');
+      }
+
+      final initData = json.decode(initResponse.body);
+      final loginUrl = initData['login'];
+      final pollEndpoint = initData['poll']['endpoint'];
+      final pollToken = initData['poll']['token'];
+
+      // Schritt 2: Öffnen der Login-URL im Browser
+      if (!await launchUrl(Uri.parse(loginUrl))) {
+        throw Exception('Die Login-URL konnte nicht geöffnet werden.');
+      }
+
+      // Schritt 3: Abfrage des Login-Status
+      final result = await _pollLoginStatus(pollEndpoint, pollToken);
+
+      print(
+          'Login erfolgreich! Benutzername: ${result['loginName']}, Token: ${result['appPassword']}');
+    } catch (e) {
+      print('Ein Fehler ist aufgetreten: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> _pollLoginStatus(
+      String endpoint, String token) async {
+    const pollingInterval = Duration(seconds: 5);
+
+    while (true) {
+      final pollResponse = await http.post(
+        Uri.parse(endpoint),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'token': token}),
+      );
+
+      if (pollResponse.statusCode == 200) {
+        return json.decode(pollResponse.body);
+      } else if (pollResponse.statusCode == 404) {
+        // Token ist noch nicht bestätigt, Wartezeit vor dem nächsten Versuch
+        await Future.delayed(pollingInterval);
+      } else {
+        throw Exception(
+            'Fehler beim Abrufen des Login-Status: ${pollResponse.statusCode}');
+      }
+    }
+  }
 }

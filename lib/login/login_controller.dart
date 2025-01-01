@@ -214,4 +214,16 @@ class LoginController extends GetxController {
 
     return BarcodeScanData(url: server, username: username, password: password);
   }
+
+  void listAccounts() async {
+    try {
+      final accounts = await FlutterAccountManager.getAccountsByType(
+          'com.nextcloud.account');
+      for (var account in accounts) {
+        print('Found account: ${account.name}');
+      }
+    } catch (e) {
+      print('Error fetching accounts: $e');
+    }
+  }
 }
