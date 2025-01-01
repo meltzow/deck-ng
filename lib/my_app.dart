@@ -25,6 +25,7 @@ import 'package:deck_ng/service/services.dart';
 import 'package:deck_ng/service/tracking_service.dart';
 import 'package:deck_ng/settings/settings_controller.dart';
 import 'package:deck_ng/settings/settings_screen.dart';
+import 'package:deck_ng/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -77,13 +78,13 @@ class MyApp extends StatelessWidget {
           initialRoute: initialRoute ?? AppRoutes.home,
           initialBinding: InitialBinding(),
           builder: EasyLoading.init(),
+          theme: AppTheme.theme,
           getPages: initialPages ??
               [
                 GetPage(
                     name: AppRoutes.home,
                     page: () => HomePage(),
-                    //FIXME: Add the middleware here
-                    // middlewares: [Guard()],
+                    middlewares: [Guard()],
                     binding: HomeBinding()),
                 GetPage(
                   name: AppRoutes.kanbanBoard,

@@ -56,7 +56,7 @@ void main() {
   });
 
   group('Screenshot:', () {
-    final homePageTheme = myTheme;
+    final homePageTheme = AppTheme.theme;
     final homePageFrameColors = ScreenshotFrameColors(
       topBar: homePageTheme.colorScheme.inversePrimary,
       bottomBar: homePageTheme.colorScheme.surface,

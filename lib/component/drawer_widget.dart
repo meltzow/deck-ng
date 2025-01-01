@@ -21,7 +21,7 @@ class DrawerWidget extends StatelessWidget {
           GestureDetector(
             child: DrawerHeader(
               decoration: BoxDecoration(
-                color: myTheme.primaryColor,
+                color: AppTheme.theme.primaryColor,
               ),
               child: Text('deck NG'.tr,
                   style: const TextStyle(color: Colors.white, fontSize: 24)),
