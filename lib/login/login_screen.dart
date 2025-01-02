@@ -1,5 +1,6 @@
 import 'package:deck_ng/component/drawer_widget.dart';
 import 'package:deck_ng/login/login_controller.dart';
+import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: Image(
-                      image: const AssetImage("assets/images/placeIndex.png"),
+                      image: const AssetImage("assets/logo.png"),
                       height: 120,
                       width: 120,
                       fit: BoxFit.contain,
@@ -72,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                     _controller.startValidationTimer(value);
                   },
                   decoration: InputDecoration(
-                    labelText: 'URL or IP Address',
+                    labelText: 'URL of your Nextcloud server',
                     prefixIcon: const Icon(Icons.link),
                   ),
                 ),
@@ -117,46 +118,27 @@ class LoginScreen extends StatelessWidget {
                     )),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
-                  child: MaterialButton(
-                    onPressed: _controller.login,
-                    color: const Color(0xff3a57e8),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    padding: const EdgeInsets.all(16),
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                      ),
-                    ),
-                    textColor: const Color(0xffffffff),
-                    height: 50,
-                    minWidth: MediaQuery.of(context).size.width,
+                  child: ElevatedButton(
+                    onPressed: _controller.isFormValid.value
+                        ? _controller.login
+                        : null,
+                    style: AppTheme.theme.elevatedButtonTheme.style,
+                    child: const Text("Login"),
                   ),
                 ),
-                MaterialButton(
+                ElevatedButton(
                   onPressed: _controller.scanBarcode,
-                  color: const Color(0x2d3a57e8),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: const Text(
-                    "Login with QR-Code",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      fontStyle: FontStyle.normal,
+                  style: AppTheme.theme.elevatedButtonTheme.style!.copyWith(
+                    backgroundColor: WidgetStateProperty.all(
+                      AppTheme.theme.primaryColor.withOpacity(0.18),
+                    ),
+                    textStyle: WidgetStateProperty.all(
+                      AppTheme.theme.textTheme.bodyLarge!.copyWith(
+                        color: AppTheme.theme.primaryColor,
+                      ),
                     ),
                   ),
-                  textColor: const Color(0xff3a57e8),
-                  height: 50,
-                  minWidth: MediaQuery.of(context).size.width,
+                  child: const Text("Login with QR-Code"),
                 ),
               ],
             ),
