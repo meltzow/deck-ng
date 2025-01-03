@@ -99,7 +99,7 @@ class LoginController extends GetxController {
     }
 
     isUrlValid.value = result;
-    checkCapabilties();
+    checkCapabilities();
   }
 
   void togglePasswordVisibility() {
@@ -148,7 +148,7 @@ class LoginController extends GetxController {
     isLoading.value = false;
   }
 
-  void checkCapabilties() async {
+  void checkCapabilities() async {
     isLoading.value = true;
     try {
       Capabilities resp = await authService.checkServer(url.value);

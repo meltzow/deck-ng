@@ -4,7 +4,7 @@ class AppTheme {
   static ThemeData get theme {
     return ThemeData(
       primaryColor: Color(0xff3a57e8),
-      scaffoldBackgroundColor: Color(0xffffffff),
+      scaffoldBackgroundColor: Colors.white,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: Color(0xff3a57e8),
@@ -13,8 +13,8 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12.0),
           ),
           padding: EdgeInsets.all(16),
+          foregroundColor: Colors.white,
           textStyle: TextStyle(
-            color: Color(0xffffffff),
             fontSize: 16,
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.normal,

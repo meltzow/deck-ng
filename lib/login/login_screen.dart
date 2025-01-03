@@ -1,4 +1,5 @@
 import 'package:deck_ng/component/drawer_widget.dart';
+import 'package:deck_ng/component/loading_indicator.dart';
 import 'package:deck_ng/login/login_controller.dart';
 import 'package:deck_ng/theme.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                     _controller.startValidationTimer(value);
                   },
                   decoration: InputDecoration(
-                    labelText: 'URL of your Nextcloud server',
+                    labelText: 'URL or IP Address',
                     prefixIcon: const Icon(Icons.link),
                   ),
                 ),
@@ -116,21 +117,27 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     )),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
-                  child: ElevatedButton(
-                    onPressed: _controller.isFormValid.value
-                        ? _controller.login
-                        : null,
-                    style: AppTheme.theme.elevatedButtonTheme.style,
-                    child: const Text("Login"),
-                  ),
-                ),
-                ElevatedButton(
+                Obx(() => Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 50),
+                      child: ElevatedButton(
+                        key: const Key('LoginBtn'),
+                        onPressed: _controller.isFormValid.value
+                            ? _controller.login
+                            : null,
+                        style: AppTheme.theme.elevatedButtonTheme.style,
+                        child: const Text("Login"),
+                      ),
+                    )),
+                ElevatedButton.icon(
+                  key: const Key('LoginQRBtn'),
+                  icon: const Icon(Icons.qr_code_scanner),
                   onPressed: _controller.scanBarcode,
                   style: AppTheme.theme.elevatedButtonTheme.style!.copyWith(
                     backgroundColor: WidgetStateProperty.all(
                       AppTheme.theme.primaryColor.withOpacity(0.18),
+                    ),
+                    foregroundColor: WidgetStateProperty.all(
+                      AppTheme.theme.primaryColor,
                     ),
                     textStyle: WidgetStateProperty.all(
                       AppTheme.theme.textTheme.bodyLarge!.copyWith(
@@ -138,8 +145,11 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: const Text("Login with QR-Code"),
+                  label: const Text("Login with QR-Code"),
                 ),
+                Obx(() => _controller.isLoading.value
+                    ? const LoadingIndicator()
+                    : const SizedBox.shrink()),
               ],
             ),
           ),
