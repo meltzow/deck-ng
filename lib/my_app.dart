@@ -3,13 +3,14 @@ import 'package:deck_ng/board_details/kanban_board_controller.dart';
 import 'package:deck_ng/board_details/kanban_board_screen.dart';
 import 'package:deck_ng/card_details/card_details_controller.dart';
 import 'package:deck_ng/card_details/card_details_screen.dart';
+import 'package:deck_ng/card_details/card_view_screen.dart';
 import 'package:deck_ng/env/env.dart';
 import 'package:deck_ng/guard.dart';
 import 'package:deck_ng/home/binding.dart';
-import 'package:deck_ng/home/view.dart';
+import 'package:deck_ng/home/dashboard_screen.dart';
 import 'package:deck_ng/l10n/translation.dart';
 import 'package:deck_ng/licenses/oss_licenses_screen.dart';
-import 'package:deck_ng/login/login_controller.dart';
+import 'package:deck_ng/login/binding.dart';
 import 'package:deck_ng/login/login_screen.dart';
 import 'package:deck_ng/privacy_policy/privacy_policy_controller.dart';
 import 'package:deck_ng/privacy_policy/privacy_policy_screen.dart';
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
               [
                 GetPage(
                     name: AppRoutes.home,
-                    page: () => HomePage(),
+                    page: () => DashboardScreen(),
                     middlewares: [Guard()],
                     binding: HomeBinding()),
                 GetPage(
@@ -120,13 +121,49 @@ class MyApp extends StatelessWidget {
                   }),
                 ),
                 GetPage(
-                    name: AppRoutes.login,
-                    page: () => LoginScreen(),
-                    binding: BindingsBuilder(() {
-                      Get.lazyPut<NotificationService>(
-                          () => NotificationServiceImpl());
-                      Get.lazyPut<LoginController>(() => LoginController());
-                    })),
+                  name: AppRoutes.cardView,
+                  page: () => TicketDetailScreen(
+                      ticket: Ticket(
+                          id: "T-123",
+                          title: "Login-Fehler bei iOS App",
+                          description:
+                              "Benutzer berichten von sporadischen Login-Fehlern in der iOS App Version 2.1.0. Der Fehler tritt besonders häufig nach einem App-Update auf.",
+                          status: "In Bearbeitung",
+                          priority: "Hoch",
+                          labels: [
+                        "iOS",
+                        "Authentication",
+                        "Bug"
+                      ],
+                          attachments: [
+                        Attachment(name: "error_log.txt", size: 0.5),
+                        Attachment(name: "screenshot.png", size: 2.3)
+                      ],
+                          comments: [
+                        Comment(
+                          authorName: "Max Mustermann",
+                          content:
+                              "Ich konnte den Fehler reproduzieren. Es scheint ein Problem mit dem Token-Refresh zu sein.",
+                          createdAt: DateTime.tryParse("2024-01-04T14:30:00")!,
+                          authorAvatar: 'https://via',
+                        ),
+                        Comment(
+                          authorName: "Anna Schmidt",
+                          content:
+                              "Das Token-Refresh Problem wurde in der API bereits behoben. Bitte testen.",
+                          createdAt: DateTime.tryParse("2024-01-05T09:15:00")!,
+                          authorAvatar: 'https://via',
+                        )
+                      ])),
+                  middlewares: [
+                    Guard(), // Add the middleware here
+                  ],
+                ),
+                GetPage(
+                  name: AppRoutes.login,
+                  page: () => LoginScreen(),
+                  binding: LoginBinding(),
+                ),
                 GetPage(
                   name: AppRoutes.licenses,
                   page: () => const OssLicensesPage(),
