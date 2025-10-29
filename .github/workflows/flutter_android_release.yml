@@ -75,11 +75,6 @@ jobs:
             android/*.gradle*
             android/**/gradle-wrapper.properties
 
-      - name: install gradle
-        working-directory: android
-        run: |
-          gradle wrapper --no-daemon
-
       - name: Generate .jks file
         working-directory: android
         run: |
