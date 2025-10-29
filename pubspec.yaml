@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 2.0.5
+version: 2.0.6
 
 environment:
   sdk: '>=3.3.3 <4.0.0'
@@ -42,7 +42,7 @@ dependencies:
   wiredash: ^2.2.1
   flutter_gen: any
   appflowy_board: ^0.1.2
-  intl: ^0.19.0
+  intl: ^0.20.2
   google_fonts: ^6.2.1
   flutter_colorpicker: ^1.1.0
   device_info_plus: ^10.1.2
@@ -51,7 +51,7 @@ dependencies:
   flutter_markdown: ^0.7.3+1
   flutter_localizations:
     sdk: flutter
-  posthog_flutter: ^4.5.0
+  posthog_flutter: ^5.6.0
   yaml: ^3.1.0
   webview_flutter: ^4.9.0
   uuid: ^4.5.1
@@ -68,7 +68,8 @@ dev_dependencies:
 #    sdk: flutter
   screenshots:
     git:
-      url: https://github.com/meltzow/screenshots
+      #url: https://github.com/meltzow/screenshots
+      url: https://github.com/daniele-athome/screenshots
 
   http_mock_adapter: ^0.6.1
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -145,9 +146,9 @@ flutter:
 #flutter_scripts
 # see https://pub.dev/documentation/flutter_scripts/latest/
 scripts:
-  generate_files: flutter pub run build_runner build --delete-conflicting-outputs
-  generate_icons: flutter pub run flutter_launcher_icons:main
+  generate_files: dart pub run build_runner build --delete-conflicting-outputs
+  generate_icons: dart pub run flutter_launcher_icons:main
   generate_screenshots_android: screenshots --config=screenshots.yaml
   generate_screenshots_ios: screenshots --config=screenshots-ios.yaml
-  generate_licenses: flutter pub run flutter_oss_licenses:generate.dart
+  generate_licenses: dart pub run flutter_oss_licenses:generate.dart
   update_deps: cd ios && bundle update fastlane && bundle exec fastlane update_plugins
